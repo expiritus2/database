@@ -1,0 +1,25 @@
+@import "styles/functions";
+@import "styles/mixins";
+
+.wrapper {
+    margin: setUnit(15) 0;
+    width: 100%;
+
+    label {
+        @include label;
+
+        .altLabel {
+
+        }
+    }
+
+    .buttons {
+        display: flex;
+        white-space: nowrap;
+
+        &.disabled {
+            opacity: .5;
+            pointer-events: none;
+        }
+    }
+}

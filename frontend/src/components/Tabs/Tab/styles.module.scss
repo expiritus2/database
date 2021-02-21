@@ -1,0 +1,28 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.tab {
+    padding: setUnit(10);
+    cursor: pointer;
+
+    &:hover {
+        background-color: $grey-color;
+    }
+
+    &.horizontal {
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        margin-right: setUnit(15);
+
+        &.active {
+            border-bottom-color: $primary-color;
+            font-weight: 600;
+        }
+    }
+
+    &.vertical {
+        &.active {
+            background-color: $grey-color;
+        }
+    }
+}

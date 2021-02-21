@@ -1,0 +1,18 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.track {
+    height: setUnit(8);
+    background: $primary-color;
+    border-radius: setUnit(5);
+}
+
+.track-0,
+.track-2 {
+    background: #ffffff;
+    border: 1px solid $grey-color;
+}
+
+.track-1 {
+    background: $primary-color;
+}

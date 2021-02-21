@@ -1,0 +1,35 @@
+@import "styles/functions";
+
+.react-hint {
+    &--top {
+        padding-bottom: setUnit(15);
+
+        &:after {
+            content: '';
+            display: inline-block;
+            border-top: setUnit(10) solid #ffffff;
+            border-left: setUnit(8) solid transparent;
+            border-right: setUnit(8) solid transparent;
+            position: absolute;
+            bottom: setUnit(5);
+        }
+    }
+
+    &--bottom {
+        &:after {
+            border-bottom: none;
+        }
+    }
+
+    &--left {
+        &:after {
+            border-left-color: #ffffff !important;
+        }
+    }
+
+    &--right {
+        &:after {
+            border-right-color: #ffffff !important;
+        }
+    }
+}

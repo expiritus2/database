@@ -1,0 +1,25 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.hint {
+    box-shadow: setUnit(5) setUnit(5) setUnit(15) rgba(#000000, 0.15);
+
+    border-radius: setUnit(16);
+    padding: setUnit(12) setUnit(12);
+    background: #ffffff;
+    width: setUnit(200);
+}
+
+.popup {
+    box-shadow: setUnit(5) setUnit(5) setUnit(15) rgba(#000000, 0.15);
+
+    border-radius: setUnit(16);
+    padding: setUnit(20) setUnit(24);
+    background: #ffffff;
+    min-width: setUnit(280);
+
+    &:after {
+        border: none;
+    }
+}

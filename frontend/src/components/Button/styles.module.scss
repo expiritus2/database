@@ -1,0 +1,19 @@
+@import "styles/mixins";
+
+.button {
+    @include button();
+
+    .loader {
+        font-size: setUnit(4);
+        color: #ffffff;
+    }
+
+    &.disabled {
+        opacity: .7;
+
+        &:hover {
+            background-color: $secondary-color;
+            cursor: not-allowed;
+        }
+    }
+}

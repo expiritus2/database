@@ -1,0 +1,41 @@
+@import "styles/variables";
+@import "styles/functions";
+
+.button {
+    $border-radius: setUnit(8);
+    $border-color: #ADADAD;
+    $active-border-color: #E66F3E;
+
+    border: 1px solid $border-color;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    min-width: setUnit(70);
+    width: 100%;
+    padding: setUnit(14) 0;
+    border-right: none;
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+
+    &:first-child {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+
+    &:last-child {
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        border-right: 1px solid $border-color;
+    }
+
+    &.active {
+        background: #FFF4F3;
+        border-color: $active-border-color;
+
+        &+button {
+            border-left-color: $active-border-color;
+        }
+    }
+}

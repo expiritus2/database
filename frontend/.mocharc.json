@@ -1,0 +1,6 @@
+{
+    "exit": true,
+    "require": ["./src/tests/ui/hooks.mjs"],
+    "timeout": 30000,
+    "reporter": "mochawesome"
+}

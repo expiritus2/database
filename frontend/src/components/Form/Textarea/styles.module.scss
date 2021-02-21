@@ -1,0 +1,58 @@
+@import "../../../styles/mixins";
+
+.inputWrapper {
+    @include inputFull;
+
+    &.light {
+        margin: 0 !important;
+        position: relative;
+        width: 100%;
+        @include inputLight;
+
+        .error {
+            color: $error-color;
+            font-size: setUnit(12);
+            padding-top: setUnit(8);
+
+            &::before {
+                content: "\0021";
+                font-weight: bold;
+                color: $white;
+                width: 1.2em;
+                height: 1.2em;
+                display: inline-block;
+                background: $error-color;
+                text-align: center;
+                padding: 0.2em;
+                border-radius: 100%;
+                font-size: 0.8em;
+                margin-right: 0.5em;
+            }
+
+            &::after {
+                content: "\00D7";
+                content: "×";
+                font-size: 14px;
+                color: $white;
+                width: 18px;
+                height: 18px;
+                display: inline-block;
+                text-align: center;
+                background: $error-color;
+                top: 14px;
+                right: 0;
+                position: absolute;
+                border-radius: 100%;
+            }
+        }
+
+    }
+
+    .inputField {
+        resize: none;
+    }
+
+    .error {
+        @include inputError;
+    }
+}

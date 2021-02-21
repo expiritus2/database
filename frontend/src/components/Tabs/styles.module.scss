@@ -1,0 +1,24 @@
+@import 'styles/functions';
+@import 'styles/variables';
+
+.wrapper {
+    .contentWrapper {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    &.horizontal {
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid $grey-color;
+        }
+    }
+
+    &.vertical {
+        display: flex;
+
+        .tabs {
+            border-right: 1px solid $grey-color;
+        }
+    }
+}
