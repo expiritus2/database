@@ -3,14 +3,18 @@ const { passport } = require('../passport');
 
 const router = express.Router();
 
-router.get('/api/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
-}));
+const passportMiddleware = passport.authenticate('local', { failureRedirect: `${process.env.FRONTEND_DOMAIN}/login` });
 
-router.get('/api/auth/google/callback', passport.authenticate('google', {
-    successRedirect: 'http://localhost:8080/user',
-    failureRedirect: 'http://localhost:8080'
-}));
+router.post('/api/auth/login', passportMiddleware, (req, res) => {
+    if (req.user) {
+        return res.send({ user: req.user });
+    }
+    return res.send({ user: null });
+});
+
+router.get('/api/auth/current-user', (req, res) => {
+    res.send({ user: req.user });
+});
 
 module.exports = {
     authRouter: router,
