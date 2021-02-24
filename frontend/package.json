@@ -39,6 +39,7 @@
     }
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "axios": "^0.21.0",
     "classnames": "^2.2.6",
     "formik": "^2.2.6",
@@ -65,7 +66,7 @@
     "sass": "^1.30.0",
     "toastr": "^2.1.4",
     "web-vitals": "^0.2.4",
-    "yup": "^0.32.8",
+    "yup": "^0.32.9",
     "yup-password": "^0.1.2",
     "yup-phone": "^1.2.19"
   },

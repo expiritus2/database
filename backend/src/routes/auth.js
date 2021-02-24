@@ -3,7 +3,7 @@ const { passport } = require('../passport');
 
 const router = express.Router();
 
-const passportMiddleware = passport.authenticate('local', { failureRedirect: `${process.env.FRONTEND_DOMAIN}/login` });
+const passportMiddleware = passport.authenticate('local');
 
 router.post('/api/auth/login', passportMiddleware, (req, res) => {
     if (req.user) {

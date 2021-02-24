@@ -13,7 +13,7 @@ const sequelize = require('./util/database');
 const app = express();
 
 app.use(cors());
-
+// app.set('trust proxy', true);
 app.use(express.json());
 app.use(cookieSession({
     name: process.env.COOKIE_SESSION_NAME,

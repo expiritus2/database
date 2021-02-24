@@ -1,0 +1,32 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.formWrapper {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+
+    .title {
+        margin-bottom: setUnit(5);
+    }
+
+    .card {
+        width: setUnit(400);
+        margin: auto 0;
+        padding: setUnit(32) setUnit(40) setUnit(52);
+    }
+
+    .field {
+        width: 100%;
+        margin-top: setUnit(20);
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &.submit {
+            margin-top: setUnit(32);
+        }
+    }
+}
