@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getUserSelector } from 'store/selectors/auth';
 import { getCurrentUserEffect } from 'store/effects/auth';
-import { PENDING } from 'settings/constants/apiState';
+import { PENDING, IDLE } from 'settings/constants/apiState';
 
 const useAuth = () => {
     const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const useAuth = () => {
 
     useEffect(() => dispatch(getCurrentUserEffect()), []); // eslint-disable-line
 
-    return { isPending: user?.state === PENDING };
+    return { isPending: user?.state === IDLE || user?.state === PENDING };
 };
 
 export default useAuth;

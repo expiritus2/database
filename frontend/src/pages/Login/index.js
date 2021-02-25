@@ -18,7 +18,7 @@ const Login = () => {
     const { translate } = useTranslate();
 
     const formik = useFormik({
-        initialValues: { email: '', password: '' },
+        initialValues: { username: '', password: '' },
         validationSchema: ValidationSchema(translate),
         onSubmit(values) {
             setIsPending(true);
@@ -36,13 +36,13 @@ const Login = () => {
                 </Typography>
                 <form onSubmit={formik.handleSubmit}>
                     <Input
-                        name="email"
+                        name="username"
                         className={styles.field}
                         label={translate.Email}
                         onChange={formik.handleChange}
                         value={formik.values.email}
-                        error={formik.touched.email && !!formik.errors.email}
-                        helperText={formik.touched.email ? formik.errors.email : ''}
+                        error={formik.touched.username && !!formik.errors.username}
+                        helperText={formik.touched.username ? formik.errors.username : ''}
                     />
                     <Input
                         type="password"
