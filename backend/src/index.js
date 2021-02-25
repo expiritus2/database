@@ -7,19 +7,17 @@ const passport = require('passport');
 const cors = require('cors');
 
 const { authRouter } = require('./routes/auth');
-
+const errorHandler = require('./middlewares/error-handler');
 const sequelize = require('./util/database');
 
 const app = express();
 
-app.use(cors());
-// app.set('trust proxy', true);
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieSession({
     name: process.env.COOKIE_SESSION_NAME,
     keys: [process.env.COOKIE_KEY],
     expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 30)), // one month
-    sameSite: 'none',
 }));
 
 app.use(passport.initialize());
@@ -30,6 +28,8 @@ app.use(authRouter);
 app.all('*', async () => {
     console.log('Route not found!');
 });
+
+app.use(errorHandler);
 
 sequelize.sync()
     .then(() => {
