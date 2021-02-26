@@ -1,0 +1,10 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.modal {
+    display: flex;
+    margin: auto 0;
+    height: fit-content;
+    justify-content: center;
+    outline: none;
+}

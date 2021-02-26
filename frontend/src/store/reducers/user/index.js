@@ -12,12 +12,12 @@ const initialData = {
 export default handleActions({
     [requestGetCurrentUserAction]: (state, { payload }) => ({
         state: get(payload, 'state', initialData.state),
-        data: get(payload, 'data', initialData.data),
+        data: get(payload, 'data.user', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),
     [requestPostLoginAction]: (state, { payload }) => ({
         state: get(payload, 'state', initialData.state),
-        data: get(payload, 'data', initialData.data),
+        data: get(payload, 'data.user', initialData.data),
         meta: omit(get(payload, 'meta', initialData.meta), 'password'),
     }),
 }, initialData);

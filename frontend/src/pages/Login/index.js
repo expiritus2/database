@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -11,9 +12,11 @@ import { Input, Button } from 'components';
 import { ValidationSchema } from './validation';
 
 import styles from './styles.module.scss';
+import { routes } from '../../settings/navigation/routes';
 
 const Login = () => {
     const [isPending, setIsPending] = useState(false);
+    const history = useHistory();
     const dispatch = useDispatch();
     const { translate } = useTranslate();
 
@@ -24,6 +27,7 @@ const Login = () => {
             setIsPending(true);
             dispatch(loginEffect(values, {}, () => {
                 setIsPending(false);
+                history.push(routes.index);
             }));
         },
     });

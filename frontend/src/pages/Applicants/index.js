@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { Header } from 'components';
+import AddModal from './AddModal';
 
-const Main = () => (
+const Applicants = () => (
     <div>
         <Header />
+        <AddModal />
     </div>
 );
 
-export default Main;
+export default Applicants;

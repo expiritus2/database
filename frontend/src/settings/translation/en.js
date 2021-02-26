@@ -5,4 +5,11 @@ export default {
     Submit: 'Submit',
     EmailError: 'Email not valid',
     FieldRequired: 'Required',
+    Main: 'Main',
+    Events: 'Events',
+    Applicants: 'Applicants',
+    Vacancies: 'Vacancies',
+    Companies: 'Companies',
+    Contacts: 'Contacts',
+    Add: 'Add',
 };

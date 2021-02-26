@@ -1,0 +1,36 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.header {
+    .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navButton {
+        margin-right: setUnit(20);
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .link {
+        color: #ffffff;
+        text-decoration: none;
+        margin-right: setUnit(20);
+        display: inline-block;
+        padding: setUnit(10) setUnit(15);
+        border-radius: setUnit(5);
+
+        &.active {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

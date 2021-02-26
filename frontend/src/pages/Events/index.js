@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Header } from 'components';
 
-const Main = () => (
+const Events = () => (
     <div>
         <Header />
     </div>
 );
 
-export default Main;
+export default Events;

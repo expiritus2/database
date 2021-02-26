@@ -1,3 +1,15 @@
 export default {
+    Login: 'Вход',
     Email: 'Почта',
+    Password: 'Пароль',
+    Submit: 'Отправить',
+    EmailError: 'Почта не валидная',
+    FieldRequired: 'Обязательно',
+    Main: 'Главная',
+    Events: 'События',
+    Applicants: 'Кандидаты',
+    Vacancies: 'Вакансии',
+    Companies: 'Компании',
+    Contacts: 'Контакты',
+    Add: 'Добавить',
 };

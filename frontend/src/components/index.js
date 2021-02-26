@@ -6,3 +6,5 @@ export { default as FormattedPhone } from './FormattedPhone';
 export { default as Input } from './Form/Input';
 export { default as Card } from './Card';
 export { default as Button } from './Button';
+export { default as Header } from './Header';
+export { default as Modal } from './Modal';

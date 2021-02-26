@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Header } from 'components';
 
-const Main = () => (
+const Vacancies = () => (
     <div>
         <Header />
     </div>
 );
 
-export default Main;
+export default Vacancies;
