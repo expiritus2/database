@@ -13,6 +13,7 @@ const SelectComponent = (props) => {
 
     return (
         <FormControl className={classNames(styles.formControl, className)}>
+            <InputLabel className={styles.label}>{label}</InputLabel>
             <Select
                 native
                 className={classNames(styles.wrapper)}
@@ -28,7 +29,6 @@ const SelectComponent = (props) => {
                     ))}
                 </>
             </Select>
-            <InputLabel className={styles.label}>{label}</InputLabel>
         </FormControl>
     );
 };

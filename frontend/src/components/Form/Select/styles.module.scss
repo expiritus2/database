@@ -9,6 +9,8 @@
         top: -12px;
         left: 10px;
         background: #ffffff;
+        pointer-events: none;
+        z-index: 1;
     }
 
     .wrapper {
