@@ -5,6 +5,7 @@ const initialData = {
     modal: {
         id: null,
         open: false,
+        mode: null,
     },
 };
 
@@ -14,6 +15,7 @@ export default handleActions({
         modal: {
             id: payload.modalId,
             open: payload.open,
+            mode: payload.mode,
         },
     }),
 }, initialData);

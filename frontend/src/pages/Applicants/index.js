@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Header } from 'components';
-import AddModal from './AddModal';
+import AddModal from './Modal';
 
 const Applicants = () => (
     <div>

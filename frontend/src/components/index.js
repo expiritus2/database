@@ -8,3 +8,6 @@ export { default as Card } from './Card';
 export { default as Button } from './Button';
 export { default as Header } from './Header';
 export { default as Modal } from './Modal';
+export { default as Tabs } from './Tabs';
+export { default as Checkbox } from './Form/Checkbox';
+export { default as Select } from './Form/Select';

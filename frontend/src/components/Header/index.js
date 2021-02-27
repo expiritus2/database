@@ -8,8 +8,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import { Button } from 'components';
 import { useTranslate } from 'hooks';
+import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';
-
 import { getUserEmail } from 'store/selectors/auth';
 
 import styles from './styles.module.scss';
@@ -21,7 +21,7 @@ const Header = () => {
     const { translate } = useTranslate();
 
     const onAddHandler = () => {
-        dispatch(openModalEffect({ modalId: location.pathname, open: true }));
+        dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: ADD }));
     };
 
     return (
