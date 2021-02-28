@@ -10,26 +10,28 @@ import styles from './styles.module.scss';
 const AutocompleteComponent = (props) => {
     const { className, options, label, variant, autoCompleteClassName, size, value, loading, ...otherProps } = props;
 
+    const renderInput = (params) => (
+        <Input
+            {...params}
+            label={label}
+            variant={variant}
+            InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                    <>
+                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                    </>
+                ),
+            }}
+        />
+    );
+
     return (
         <div className={classNames(styles.wrapper, className)}>
             <Autocomplete
                 className={autoCompleteClassName}
-                renderInput={(params) => (
-                    <Input
-                        {...params}
-                        label={label}
-                        variant={variant}
-                        InputProps={{
-                            ...params.InputProps,
-                            endAdornment: (
-                                <>
-                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                    {params.InputProps.endAdornment}
-                                </>
-                            ),
-                        }}
-                    />
-                )}
+                renderInput={renderInput}
                 getOptionLabel={(option) => (option?.label || option)}
                 options={options}
                 size={size}

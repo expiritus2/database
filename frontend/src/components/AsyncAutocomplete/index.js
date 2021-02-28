@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { Autocomplete } from 'components';
 
-import { merge } from 'lodash-es';
+import { uniqBy } from 'lodash-es';
 
 import styles from './styles.module.scss';
 
@@ -28,7 +28,7 @@ const AsyncAutocomplete = (props) => {
             if (promise?.then) {
                 getThrottle(newValue)
                     .then((response) => {
-                        setOptionsValue(merge(optionsValue, createOptions(response?.data)));
+                        setOptionsValue(uniqBy([...optionsValue, ...createOptions(response?.data)], 'value'));
                         setLoading(false);
                     }).catch(() => setLoading(false));
             }
