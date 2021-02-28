@@ -1,51 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Autocomplete } from 'components';
+import { AsyncAutocomplete } from 'components';
+
+import { throttle } from 'lodash-es';
+import axios from 'axios';
 
 import styles from './styles.module.scss';
 
-const Skills = (props) => {
-    const { className, onChange, value, multiple } = props;
-    const { translate } = useTranslate();
-    const [defaultValue] = useState(value);
+const getThrottle = throttle((val) => axios.get(`http://api.dataatwork.org/v1/skills/autocomplete?begins_with=${val}`), 300);
 
+const Skills = (props) => {
+    const { className, onChange, value, multiple, defaultValue } = props;
+
+    const { translate } = useTranslate();
+
+    const createOptions = (arr) => arr.map(({ suggestion, normalized_skill_name: val }) => ({
+        label: suggestion, value: val,
+    }));
     return (
-        <div className={classNames(styles.position, className)}>
-            <Autocomplete
-                multiple={multiple}
-                label={translate.Skills}
-                options={Skills.options(translate)}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                getOptionSelected={(option) => (
-                    value.map((val) => val?.value).includes(option?.value)
-                )}
-            />
-        </div>
+        <AsyncAutocomplete
+            label={translate.Skills}
+            className={classNames(styles.position, className)}
+            onChange={onChange}
+            value={value}
+            multiple={multiple}
+            defaultValue={defaultValue}
+            getThrottle={getThrottle}
+            createOptions={createOptions}
+        />
     );
 };
-
-Skills.options = () => [
-    { id: 'test', label: 'Test', value: 'test' },
-    { id: 'test2', label: 'Test2', value: 'test2' },
-    { id: 'test3', label: 'Test3', value: 'test3' },
-];
 
 Skills.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
     multiple: PropTypes.bool,
+    defaultValue: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Skills.defaultProps = {
     className: '',
     onChange: () => {},
-    value: [],
+    value: undefined,
     multiple: true,
+    defaultValue: undefined,
 };
 
 export default Skills;

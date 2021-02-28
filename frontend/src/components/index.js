@@ -17,3 +17,5 @@ export { default as Position } from './Position';
 export { default as Skills } from './Skills';
 export { default as Textarea } from './Form/Textarea';
 export { default as Currency } from './Currency';
+export { default as NumberInput } from './Form/NumberInput';
+export { default as AsyncAutocomplete } from './AsyncAutocomplete';

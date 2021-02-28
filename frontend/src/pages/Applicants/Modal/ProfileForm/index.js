@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import { Logger } from 'services';
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, Currency } from 'components';
+import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -28,7 +28,7 @@ const ProfileForm = (props) => {
             salary: '',
             currency: '',
             education: '',
-            position: '',
+            position: [],
             skills: [],
             place: '',
         },
@@ -65,10 +65,8 @@ const ProfileForm = (props) => {
                     value={formik.values.experience}
                 />
                 <FormControl className={classNames(styles.field, styles.formControl)}>
-                    <Input
-                        isNumberFormat
+                    <NumberInput
                         name="salary"
-                        type="number"
                         className={classNames(styles.salary)}
                         label={translate.Salary}
                         onChange={formik.handleChange}
@@ -89,7 +87,7 @@ const ProfileForm = (props) => {
                 />
                 <Position
                     className={styles.field}
-                    onChange={(e, val) => formik.setFieldValue('position', val?.value || '')}
+                    onChange={(e, val) => formik.setFieldValue('position', val)}
                     value={formik.values.position}
                 />
                 <Skills

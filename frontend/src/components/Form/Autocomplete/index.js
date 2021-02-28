@@ -1,20 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { Input } from 'components';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styles from './styles.module.scss';
 
 const AutocompleteComponent = (props) => {
-    const { className, options, label, variant, autoCompleteClassName, size, value, ...otherProps } = props;
+    const { className, options, label, variant, autoCompleteClassName, size, value, loading, ...otherProps } = props;
 
     return (
         <div className={classNames(styles.wrapper, className)}>
             <Autocomplete
                 className={autoCompleteClassName}
                 renderInput={(params) => (
-                    <Input {...params} label={label} variant={variant} />
+                    <Input
+                        {...params}
+                        label={label}
+                        variant={variant}
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                                <>
+                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                    {params.InputProps.endAdornment}
+                                </>
+                            ),
+                        }}
+                    />
                 )}
                 getOptionLabel={(option) => (option?.label || option)}
                 options={options}
@@ -35,7 +49,13 @@ AutocompleteComponent.propTypes = {
     })).isRequired,
     variant: PropTypes.string,
     size: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.shape({})),
+    ]),
+    loading: PropTypes.bool,
+
 };
 
 AutocompleteComponent.defaultProps = {
@@ -45,6 +65,7 @@ AutocompleteComponent.defaultProps = {
     variant: 'outlined',
     size: 'small',
     value: '',
+    loading: false,
 };
 
 export default AutocompleteComponent;

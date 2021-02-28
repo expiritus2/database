@@ -2,7 +2,9 @@
 @import "styles/variables";
 
 .formControl {
-    width: 100%;
+    & > div {
+        width: 100%;
+    }
 
     .label {
         padding: 0 2px;
@@ -14,18 +16,6 @@
 
         &.focus {
             top: 0;
-        }
-    }
-
-    .wrapper {
-        select {
-            padding-top: 10px;
-            padding-bottom: 11px;
-            background: none;
-
-            &:focus {
-                background: none;
-            }
         }
     }
 }
