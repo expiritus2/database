@@ -47,6 +47,7 @@ const Login = () => {
                         value={formik.values.email}
                         error={formik.touched.username && !!formik.errors.username}
                         helperText={formik.touched.username ? formik.errors.username : ''}
+                        variant="standard"
                     />
                     <Input
                         type="password"
@@ -57,6 +58,7 @@ const Login = () => {
                         value={formik.values.password}
                         error={formik.touched.password && !!formik.errors.password}
                         helperText={formik.touched.password ? formik.errors.password : ''}
+                        variant="standard"
                     />
                     <Button
                         type="submit"

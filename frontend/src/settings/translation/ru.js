@@ -24,4 +24,13 @@ export default {
     InActiveSearch: 'В активном поиске',
     Salary: 'ЗП',
     Currency: 'Валюта',
+    Education: 'Образование',
+    HighEducation: 'Высшее',
+    SecondaryEducation: 'Среднее',
+    Position: 'Позиция',
+    Skills: 'Навыки',
+    Place: 'Место',
+    Regions: 'Регион',
+    Address: 'Адрес',
+    Languages: 'Языки',
 };

@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Select } from 'components';
+import { Input, Checkbox, Select, Education, Position, Skills } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import { ContentWrapper } from '../components';
 
 import styles from './styles.module.scss';
 
@@ -13,46 +15,65 @@ const ProfileForm = ({ className }) => {
     const { translate } = useTranslate();
 
     return (
-        <div className={classNames(styles.profileWrapper, className)}>
+        <ContentWrapper className={classNames(className)}>
             <Input
                 className={styles.field}
-                variant="outlined"
                 label={translate.FIO}
-                size="small"
             />
             <FormControlLabel
-                className={styles.field}
+                className={classNames(styles.field, styles.inActiveSearch)}
                 control={<Checkbox />}
                 label={translate.InActiveSearch}
             />
             <Input
                 type="number"
                 className={styles.field}
-                variant="outlined"
                 label={translate.Experience}
-                size="small"
             />
-            <FormControl className={styles.formControl}>
+            <FormControl className={classNames(styles.field, styles.formControl)}>
                 <Input
                     type="number"
-                    className={classNames(styles.field, styles.salary)}
-                    variant="outlined"
+                    className={classNames(styles.salary)}
                     label={translate.Salary}
-                    size="small"
                 />
                 <Select
-                    className={classNames(styles.field, styles.currency)}
+                    className={classNames(styles.currency)}
                     label={translate.Currency}
                     options={ProfileForm.currencyOptions}
                 />
             </FormControl>
-        </div>
+            <Education
+                className={styles.field}
+            />
+            <Position
+                className={styles.field}
+            />
+            <Skills
+                className={styles.field}
+            />
+            <Input
+                className={styles.field}
+                label={translate.Place}
+            />
+            <Input
+                className={styles.field}
+                label={translate.Regions}
+            />
+            <Input
+                className={styles.field}
+                label={translate.Address}
+            />
+            <Input
+                className={styles.field}
+                label={translate.Languages}
+            />
+        </ContentWrapper>
     );
 };
 
 ProfileForm.currencyOptions = [
-    { id: 'dollars', label: '$', value: 'dollars' },
-    { id: 'euro', label: 'E', value: 'euro' },
+    { id: 'dollars', label: 'USD', value: 'dollars' },
+    { id: 'euro', label: 'EU', value: 'euro' },
 ];
 
 ProfileForm.propTypes = {

@@ -37,7 +37,7 @@ const ModalComponent = (props) => {
                         </IconButton>
                     )}
                 />
-                <CardContent className={cardContentClassName}>
+                <CardContent className={classNames(styles.cardContent, cardContentClassName)}>
                     {children}
                 </CardContent>
                 <CardActions className={cardActionsClassName}>

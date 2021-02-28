@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { ContentWrapper } from '../components';
+
 import styles from './styles.module.scss';
 
 const FilesForm = ({ className }) => (
-    <div className={classNames(styles.wrapper, className)}>
+    <ContentWrapper className={classNames(styles.wrapper, className)}>
         Files
-    </div>
+    </ContentWrapper>
 );
 
 FilesForm.propTypes = {

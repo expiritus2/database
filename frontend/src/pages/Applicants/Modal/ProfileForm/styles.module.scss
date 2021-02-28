@@ -1,27 +1,31 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.profileWrapper {
-    padding: setUnit(32) 0;
+.field {
+    margin-top: setUnit(15);
+    width: 100%;
 
-    .field {
-        margin-top: setUnit(10);
-        width: 100%;
-
-        &.salary {
-            width: 100%;
-        }
-
-        &.currency {
-            width: 100%;
-            margin-left: setUnit(10);
-        }
+    &:first-child {
+        margin-top: 0;
     }
+}
 
-    .formControl {
-        margin-top: setUnit(12);
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+.inActiveSearch {
+    margin-top: 2px;
+    margin-bottom: -9px;
+}
+
+.salary {
+    width: 100%;
+}
+
+.currency {
+    width: 30%;
+    margin-left: setUnit(10);
+}
+
+.formControl {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

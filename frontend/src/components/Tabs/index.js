@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 const TabsComponent = (props) => {
-    const { tabs, activeTab, className, ...otherProps } = props;
+    const { tabs, activeTab, className, tabsClassName, ...otherProps } = props;
     const [activeTabVal, setActiveTabVal] = useState(activeTab);
 
     const handleChange = (event, newValue) => {
@@ -15,6 +15,7 @@ const TabsComponent = (props) => {
     return (
         <div className={className}>
             <Tabs
+                className={tabsClassName}
                 value={activeTabVal}
                 indicatorColor="primary"
                 textColor="primary"
@@ -35,6 +36,7 @@ const TabsComponent = (props) => {
 
 TabsComponent.propTypes = {
     className: PropTypes.string,
+    tabsClassName: PropTypes.string,
     tabs: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string,
     })).isRequired,
@@ -43,6 +45,7 @@ TabsComponent.propTypes = {
 
 TabsComponent.defaultProps = {
     className: '',
+    tabsClassName: '',
     activeTab: 0,
 };
 

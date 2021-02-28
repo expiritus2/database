@@ -15,6 +15,8 @@ import InfoForm from './InfoForm';
 import ExperienceForm from './ExperienceForm';
 import FilesForm from './FilesForm';
 
+import styles from './styles.module.scss';
+
 const ApplicantModal = ({ className }) => {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -41,8 +43,9 @@ const ApplicantModal = ({ className }) => {
             className={classNames(className)}
             open={location.pathname === modal.id && modal.open}
             onClose={handleClose}
+            cardActionsClassName={styles.cardActions}
         >
-            <Tabs tabs={ApplicantModal.tabs(translate)} />
+            <Tabs tabsClassName={styles.tabs} tabs={ApplicantModal.tabs(translate)} />
         </Modal>
     );
 };

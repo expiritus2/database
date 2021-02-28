@@ -24,8 +24,8 @@ const SelectComponent = (props) => {
             >
                 <>
                     <option aria-label="None" value="" />
-                    {options.map(({ id, label: lb, value: val }) => (
-                        <option key={id} value={val}>{lb}</option>
+                    {options.map(({ id, label: lb, value: val }, index) => (
+                        <option key={id || index} value={val}>{lb}</option>
                     ))}
                 </>
             </Select>

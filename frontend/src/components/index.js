@@ -11,3 +11,7 @@ export { default as Modal } from './Modal';
 export { default as Tabs } from './Tabs';
 export { default as Checkbox } from './Form/Checkbox';
 export { default as Select } from './Form/Select';
+export { default as Education } from './Education';
+export { default as Autocomplete } from './Form/Autocomplete';
+export { default as Position } from './Position';
+export { default as Skills } from './Skills';
