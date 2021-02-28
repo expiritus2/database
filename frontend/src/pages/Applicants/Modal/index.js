@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { Modal, Tabs } from 'components';
+import { Button, Modal, Tabs } from 'components';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
@@ -37,6 +37,21 @@ const ApplicantModal = ({ className }) => {
         }
     };
 
+    const getActions = () => (
+        <div className={styles.actionButtons}>
+            <Button
+                type="submit"
+                form={modal.id}
+                className={styles.btn}
+                color="primary"
+            >
+                {translate.Save}
+            </Button>
+            <Button className={styles.btn} color="secondary">{translate.Delete}</Button>
+            <Button className={styles.btn}>{translate.Cancel}</Button>
+        </div>
+    );
+
     return (
         <Modal
             title={getTitle}
@@ -44,8 +59,9 @@ const ApplicantModal = ({ className }) => {
             open={location.pathname === modal.id && modal.open}
             onClose={handleClose}
             cardActionsClassName={styles.cardActions}
+            actionsChildren={getActions()}
         >
-            <Tabs tabsClassName={styles.tabs} tabs={ApplicantModal.tabs(translate)} />
+            <Tabs formId={modal.id} tabsClassName={styles.tabs} tabs={ApplicantModal.tabs(translate)} />
         </Modal>
     );
 };

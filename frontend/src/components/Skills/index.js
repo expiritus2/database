@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 const Skills = (props) => {
     const { className, onChange, value, multiple } = props;
     const { translate } = useTranslate();
+    const [defaultValue] = useState(value);
 
     return (
         <div className={classNames(styles.position, className)}>
@@ -17,8 +18,11 @@ const Skills = (props) => {
                 multiple={multiple}
                 label={translate.Skills}
                 options={Skills.options(translate)}
-                value={value}
+                defaultValue={defaultValue}
                 onChange={onChange}
+                getOptionSelected={(option) => (
+                    value.map((val) => val?.value).includes(option?.value)
+                )}
             />
         </div>
     );
@@ -33,14 +37,14 @@ Skills.options = () => [
 Skills.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
-    value: PropTypes.string,
+    value: PropTypes.arrayOf(PropTypes.shape({})),
     multiple: PropTypes.bool,
 };
 
 Skills.defaultProps = {
     className: '',
     onChange: () => {},
-    value: undefined,
+    value: [],
     multiple: true,
 };
 

@@ -6,11 +6,14 @@
 
     .label {
         padding: 0 2px;
-        top: -12px;
-        left: 10px;
+        top: -9px;
         background: #ffffff;
         pointer-events: none;
         z-index: 1;
+
+        &.focus {
+            top: 0;
+        }
     }
 
     .wrapper {

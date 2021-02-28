@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import styles from './styles.module.scss';
 
 const AutocompleteComponent = (props) => {
-    const { className, options, label, variant, autoCompleteClassName, size, ...otherProps } = props;
+    const { className, options, label, variant, autoCompleteClassName, size, value, ...otherProps } = props;
 
     return (
         <div className={classNames(styles.wrapper, className)}>
@@ -16,7 +16,7 @@ const AutocompleteComponent = (props) => {
                 renderInput={(params) => (
                     <Input {...params} label={label} variant={variant} />
                 )}
-                getOptionLabel={(option) => option.label}
+                getOptionLabel={(option) => (option?.label || option)}
                 options={options}
                 size={size}
                 {...otherProps}
@@ -35,6 +35,7 @@ AutocompleteComponent.propTypes = {
     })).isRequired,
     variant: PropTypes.string,
     size: PropTypes.string,
+    value: PropTypes.string,
 };
 
 AutocompleteComponent.defaultProps = {
@@ -43,6 +44,7 @@ AutocompleteComponent.defaultProps = {
     label: '',
     variant: 'outlined',
     size: 'small',
+    value: '',
 };
 
 export default AutocompleteComponent;

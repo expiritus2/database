@@ -8,12 +8,14 @@ import { useTranslate } from 'hooks';
 
 import styles from './styles.module.scss';
 
-const Education = ({ className, onChange, value }) => {
+const Education = (props) => {
+    const { className, onChange, value, name } = props;
     const { translate } = useTranslate();
 
     return (
         <div className={classNames(styles.education, className)}>
             <Select
+                name={name}
                 label={translate.Education}
                 options={Education.options(translate)}
                 value={value}
@@ -32,12 +34,14 @@ Education.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.string,
+    name: PropTypes.string,
 };
 
 Education.defaultProps = {
     className: '',
     onChange: () => {},
     value: undefined,
+    name: undefined,
 };
 
 export default Education;

@@ -10,7 +10,7 @@ const Input = (props) => {
     const { variant, className, isNumberFormat, value, type, size, ...otherProps } = props;
 
     const getValue = () => {
-        if (type === 'number' && value) {
+        if (type === 'number' && isNumberFormat && value) {
             return formatNumber(value);
         }
 
@@ -19,6 +19,7 @@ const Input = (props) => {
 
     return (
         <TextField
+            type={type}
             className={classNames(styles.input, className)}
             value={getValue()}
             variant={variant}

@@ -3,18 +3,25 @@
 
 .modal {
     display: flex;
-    margin: auto 0;
-    height: fit-content;
+    height: 100%;
     justify-content: center;
     outline: none;
+    padding: setUnit(20);
 
     .card {
         width: 100%;
+        margin: auto 0;
         max-width: setUnit(800);
+        max-height: 100%;
+        overflow: auto;
         outline: none;
     }
 
     .cardContent {
         padding: 0;
+    }
+
+    .actions {
+        padding: setUnit(10) setUnit(20);
     }
 }

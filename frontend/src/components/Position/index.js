@@ -7,7 +7,8 @@ import { Autocomplete } from 'components';
 
 import styles from './styles.module.scss';
 
-const Position = ({ className, onChange, value }) => {
+const Position = (props) => {
+    const { className, onChange, value } = props;
     const { translate } = useTranslate();
 
     return (
@@ -17,6 +18,7 @@ const Position = ({ className, onChange, value }) => {
                 options={Position.options(translate)}
                 value={value}
                 onChange={onChange}
+                getOptionSelected={(option) => option?.value || option}
             />
         </div>
     );

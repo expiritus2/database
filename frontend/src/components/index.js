@@ -15,3 +15,5 @@ export { default as Education } from './Education';
 export { default as Autocomplete } from './Form/Autocomplete';
 export { default as Position } from './Position';
 export { default as Skills } from './Skills';
+export { default as Textarea } from './Form/Textarea';
+export { default as Currency } from './Currency';

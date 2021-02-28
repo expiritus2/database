@@ -44,7 +44,7 @@ const Login = () => {
                         className={styles.field}
                         label={translate.Email}
                         onChange={formik.handleChange}
-                        value={formik.values.email}
+                        value={formik.values.username}
                         error={formik.touched.username && !!formik.errors.username}
                         helperText={formik.touched.username ? formik.errors.username : ''}
                         variant="standard"

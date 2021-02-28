@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -10,10 +10,11 @@ import styles from './styles.module.scss';
 
 const SelectComponent = (props) => {
     const { name, options, value, onChange, className, label } = props;
+    const [focus, setFocus] = useState(false);
 
     return (
         <FormControl className={classNames(styles.formControl, className)}>
-            <InputLabel className={styles.label}>{label}</InputLabel>
+            <InputLabel variant="outlined" className={classNames(styles.label, { [styles.focus]: focus || !!value })}>{label}</InputLabel>
             <Select
                 native
                 className={classNames(styles.wrapper)}
@@ -21,6 +22,8 @@ const SelectComponent = (props) => {
                 inputProps={{ name }}
                 variant="outlined"
                 onChange={onChange}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
             >
                 <>
                     <option aria-label="None" value="" />

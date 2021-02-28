@@ -10,3 +10,14 @@
     margin-right: setUnit(20);
     border-bottom: 1px solid $border-gray-color;
 }
+
+.actionButtons {
+
+    .btn {
+        margin-right: setUnit(10);
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

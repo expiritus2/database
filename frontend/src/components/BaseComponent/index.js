@@ -4,11 +4,15 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const BaseComponent = ({ className }) => (
-    <div className={classNames(styles.wrapper, className)}>
-        Base Component
-    </div>
-);
+const BaseComponent = (props) => {
+    const { className } = props;
+
+    return (
+        <div className={classNames(styles.wrapper, className)}>
+            Base Component
+        </div>
+    );
+};
 
 BaseComponent.propTypes = {
     className: PropTypes.string,
