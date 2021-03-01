@@ -4,12 +4,14 @@ import classNames from 'classnames';
 
 import { Autocomplete } from 'components';
 
-import { uniqBy } from 'lodash-es';
+import { uniqBy, snakeCase } from 'lodash-es';
+import { titleCase } from 'helpers/utils';
 
 import styles from './styles.module.scss';
 
 const AsyncAutocomplete = (props) => {
     const { className, onChange, value, multiple, defaultValue, getThrottle, createOptions, label } = props;
+    const { convertTitleCaseIfNew } = props;
 
     const [open, setOpen] = useState(false);
     const [optionsValue, setOptionsValue] = useState([]);
@@ -35,9 +37,39 @@ const AsyncAutocomplete = (props) => {
         }
     };
 
-    const onChangeHandler = (event, val) => {
-        onChange(event, val);
+    const onChangeHandler = (event, newValue) => {
+        const filteredNewValue = optionsValue.filter((option) => newValue.every((o) => o.value === option.value));
+        if (!filteredNewValue.length) {
+            setOptionsValue((prevState) => [...prevState, ...newValue]);
+        }
+        onChange(event, newValue);
         setInputValue('');
+    };
+
+    const onFilterOptions = (options, params) => {
+        const filtered = options.filter((option) => option?.value?.includes(params.inputValue));
+        const isOptionInOptions = optionsValue.some((option) => option.value.includes(params.inputValue));
+
+        if (params.inputValue !== '' && !isOptionInOptions) {
+            const newOption = {
+                label: convertTitleCaseIfNew ? titleCase(params.inputValue) : params.inputValue,
+                value: snakeCase(params.inputValue),
+            };
+            filtered.push(newOption);
+        }
+
+        return filtered;
+    };
+
+    const getOptionLabel = (option) => {
+        if (typeof option === 'string') {
+            return option;
+        }
+
+        if (option.inputValue) {
+            return option.inputValue;
+        }
+        return option.label;
     };
 
     return (
@@ -55,6 +87,8 @@ const AsyncAutocomplete = (props) => {
                 inputValue={inputValue}
                 onChange={onChangeHandler}
                 onInputChange={onInputChange}
+                filterOptions={onFilterOptions}
+                getOptionLabel={getOptionLabel}
                 getOptionSelected={(option, val) => option?.value === val?.value}
             />
         </div>
@@ -70,6 +104,7 @@ AsyncAutocomplete.propTypes = {
     getThrottle: PropTypes.func.isRequired,
     createOptions: PropTypes.func.isRequired,
     label: PropTypes.string,
+    convertTitleCaseIfNew: PropTypes.bool,
 };
 
 AsyncAutocomplete.defaultProps = {
@@ -79,6 +114,7 @@ AsyncAutocomplete.defaultProps = {
     multiple: true,
     defaultValue: undefined,
     label: '',
+    convertTitleCaseIfNew: true,
 };
 
 export default AsyncAutocomplete;

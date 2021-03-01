@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import { Logger } from 'services';
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput } from 'components';
+import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -30,7 +30,7 @@ const ProfileForm = (props) => {
             education: '',
             position: [],
             skills: [],
-            place: '',
+            place: [],
         },
         onSubmit(values) {
             Logger.log(values);
@@ -95,11 +95,10 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => formik.setFieldValue('skills', val)}
                     value={formik.values.skills}
                 />
-                <Input
-                    name="place"
+                <Place
                     className={styles.field}
                     label={translate.Place}
-                    onChange={formik.handleChange}
+                    onChange={(e, val) => formik.setFieldValue('place', val)}
                     value={formik.values.place}
                 />
                 <Input

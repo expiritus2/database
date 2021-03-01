@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { Input } from 'components';
+import { Input } from 'components/index';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styles from './styles.module.scss';
 

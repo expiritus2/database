@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 import styles from './styles.module.scss';
 
 const SelectComponent = (props) => {
-    const { name, options, value, onChange, className, label } = props;
+    const { name, options, value, onChange, className, label, multiple } = props;
     const [focus, setFocus] = useState(false);
 
     return (
@@ -17,6 +17,7 @@ const SelectComponent = (props) => {
             <InputLabel variant="outlined" className={classNames(styles.label, { [styles.focus]: focus || !!value })}>{label}</InputLabel>
             <Select
                 native
+                multiple={multiple}
                 className={classNames(styles.wrapper)}
                 value={value}
                 inputProps={{ name }}
@@ -45,8 +46,13 @@ SelectComponent.propTypes = {
     })).isRequired,
     onChange: PropTypes.func,
     name: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.shape({})),
+    ]),
     label: PropTypes.string,
+    multiple: PropTypes.bool,
 };
 
 SelectComponent.defaultProps = {
@@ -55,6 +61,7 @@ SelectComponent.defaultProps = {
     name: undefined,
     value: undefined,
     label: '',
+    multiple: false,
 };
 
 export default SelectComponent;

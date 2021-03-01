@@ -33,4 +33,6 @@ export default {
     Regions: 'Регион',
     Address: 'Адрес',
     Languages: 'Языки',
+    Remote: 'Удаленн',
+    Office: 'Офис',
 };

@@ -30,6 +30,7 @@ const Skills = (props) => {
             defaultValue={defaultValue}
             getThrottle={getThrottle}
             createOptions={createOptions}
+            convertTitleCaseIfNew={false}
         />
     );
 };
