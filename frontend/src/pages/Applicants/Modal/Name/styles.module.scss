@@ -1,0 +1,12 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "../styles.module";
+
+.field {
+    margin-top: setUnit(15);
+    width: 100%;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}

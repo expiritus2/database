@@ -21,6 +21,7 @@ export default {
     Experience: 'Опыт',
     Files: 'Файлы',
     FIO: 'ФИО',
+    FIOLat: 'ФИО Лат.',
     InActiveSearch: 'В активном поиске',
     Salary: 'ЗП',
     Currency: 'Валюта',

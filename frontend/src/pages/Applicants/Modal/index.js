@@ -9,15 +9,16 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
+import { setProfileFormStateEffect } from 'store/effects/forms';
 
-import ProfileForm from './ProfileForm';
 import InfoForm from './InfoForm';
-import ExperienceForm from './ExperienceForm';
 import FilesForm from './FilesForm';
+import ProfileForm from './ProfileForm';
+import ExperienceForm from './ExperienceForm';
 
 import styles from './styles.module.scss';
 
-const ApplicantModal = ({ className }) => {
+const ModalComponent = ({ className }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const modal = useSelector(getModalStateSelector);
@@ -25,6 +26,15 @@ const ApplicantModal = ({ className }) => {
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));
+    };
+
+    const onCustomFieldChange = (e, val, propName) => {
+        dispatch(setProfileFormStateEffect({ [propName]: val }));
+    };
+
+    const onChangeField = (e) => {
+        const { name, value } = e.target;
+        dispatch(setProfileFormStateEffect({ [name]: value }));
     };
 
     const getTitle = () => {
@@ -47,7 +57,7 @@ const ApplicantModal = ({ className }) => {
             >
                 {translate.Save}
             </Button>
-            <Button className={styles.btn} color="secondary">{translate.Delete}</Button>
+            {modal?.mode === EDIT && <Button className={styles.btn} color="secondary">{translate.Delete}</Button>}
             <Button className={styles.btn}>{translate.Cancel}</Button>
         </div>
     );
@@ -61,24 +71,30 @@ const ApplicantModal = ({ className }) => {
             cardActionsClassName={styles.cardActions}
             actionsChildren={getActions()}
         >
-            <Tabs formId={modal.id} tabsClassName={styles.tabs} tabs={ApplicantModal.tabs(translate)} />
+            <Tabs
+                formId={modal.id}
+                tabsClassName={styles.tabs}
+                tabs={ModalComponent.tabs(translate)}
+                onChangeField={onChangeField}
+                onCustomFieldChange={onCustomFieldChange}
+            />
         </Modal>
     );
 };
 
-ApplicantModal.tabs = (translate) => [
+ModalComponent.tabs = (translate) => [
     { id: 'profile', label: translate.Profile, Component: ProfileForm },
     { id: 'info', label: translate.Info, Component: InfoForm },
     { id: 'experience', label: translate.Experience, Component: ExperienceForm },
     { id: 'files', label: translate.Files, Component: FilesForm },
 ];
 
-ApplicantModal.propTypes = {
+ModalComponent.propTypes = {
     className: PropTypes.string,
 };
 
-ApplicantModal.defaultProps = {
+ModalComponent.defaultProps = {
     className: '',
 };
 
-export default ApplicantModal;
+export default ModalComponent;

@@ -3,57 +3,42 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
 
-import { Logger } from 'services';
 import { useTranslate } from 'hooks';
 import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
+import { getApplicantProfileFormStateSelector } from 'store/selectors/forms';
+import { submitApplicantFormEffect } from 'store/effects/forms';
 import { ContentWrapper } from '../components';
+import Name from '../Name';
 
 import styles from './styles.module.scss';
 
 const ProfileForm = (props) => {
-    const { className } = props;
+    const { className, onChangeField, onCustomFieldChange } = props;
     const { translate } = useTranslate();
+    const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
+    const profileFormState = useSelector(getApplicantProfileFormStateSelector);
 
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            inActiveSearch: false,
-            experience: '',
-            salary: '',
-            currency: '',
-            education: '',
-            position: [],
-            skills: [],
-            place: [],
-        },
-        onSubmit(values) {
-            Logger.log(values);
+        initialValues: { ...profileFormState },
+        enableReinitialize: true,
+        onSubmit() {
+            dispatch(submitApplicantFormEffect());
         },
     });
-
-    const onActiveSearchChange = (e, val) => {
-        formik.setFieldValue('inActiveSearch', val);
-    };
 
     return (
         <ContentWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
-                <Input
-                    name="name"
-                    className={styles.field}
-                    label={translate.FIO}
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                />
+                <Name />
                 <FormControlLabel
                     className={classNames(styles.field, styles.inActiveSearch)}
-                    control={<Checkbox onChange={onActiveSearchChange} checked={formik.values.inActiveSearch} />}
+                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'inActiveSearch')} checked={formik.values.inActiveSearch} />}
                     label={translate.InActiveSearch}
                 />
                 <Input
@@ -61,73 +46,73 @@ const ProfileForm = (props) => {
                     type="number"
                     className={styles.field}
                     label={translate.Experience}
-                    onChange={formik.handleChange}
-                    value={formik.values.experience}
+                    onChange={onChangeField}
+                    value={profileFormState.experience}
                 />
                 <FormControl className={classNames(styles.field, styles.formControl)}>
                     <NumberInput
                         name="salary"
                         className={classNames(styles.salary)}
                         label={translate.Salary}
-                        onChange={formik.handleChange}
-                        value={formik.values.salary}
+                        onChange={onChangeField}
+                        value={profileFormState.salary}
                     />
                     <Currency
                         name="currency"
                         className={styles.currency}
-                        onChange={formik.handleChange}
-                        value={formik.values.currency}
+                        onChange={onChangeField}
+                        value={profileFormState.currency}
                     />
                 </FormControl>
                 <Education
                     name="education"
                     className={styles.field}
-                    onChange={formik.handleChange}
-                    value={formik.values.education}
+                    onChange={onChangeField}
+                    value={profileFormState.education}
                 />
                 <Position
                     className={styles.field}
-                    onChange={(e, val) => formik.setFieldValue('position', val)}
-                    value={formik.values.position}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
+                    value={profileFormState.position}
                 />
                 <Skills
                     className={styles.field}
-                    onChange={(e, val) => formik.setFieldValue('skills', val)}
-                    value={formik.values.skills}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
+                    value={profileFormState.skills}
                 />
                 <Place
                     className={styles.field}
                     label={translate.Place}
-                    onChange={(e, val) => formik.setFieldValue('place', val)}
-                    value={formik.values.place}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
+                    value={profileFormState.place}
                 />
                 <Input
                     name="regions"
                     className={styles.field}
                     label={translate.Regions}
-                    onChange={formik.handleChange}
-                    value={formik.values.regions}
+                    onChange={onChangeField}
+                    value={profileFormState.regions}
                 />
                 <Input
                     name="address"
                     className={styles.field}
                     label={translate.Address}
-                    onChange={formik.handleChange}
-                    value={formik.values.address}
+                    onChange={onChangeField}
+                    value={profileFormState.address}
                 />
                 <Input
                     name="languages"
                     className={styles.field}
                     label={translate.Languages}
-                    onChange={formik.handleChange}
-                    value={formik.values.languages}
+                    onChange={onChangeField}
+                    value={profileFormState.languages}
                 />
                 <Textarea
                     name="info"
                     className={styles.field}
                     label={translate.Info}
-                    onChange={formik.handleChange}
-                    value={formik.values.info}
+                    onChange={onChangeField}
+                    value={profileFormState.info}
                 />
             </form>
         </ContentWrapper>
@@ -136,6 +121,8 @@ const ProfileForm = (props) => {
 
 ProfileForm.propTypes = {
     className: PropTypes.string,
+    onCustomFieldChange: PropTypes.func.isRequired,
+    onChangeField: PropTypes.func.isRequired,
 };
 
 ProfileForm.defaultProps = {
