@@ -5,5 +5,20 @@
 .wrapper {
     .field {
         @include field;
+
+        &.birthDate {
+            margin-top: setUnit(15);
+            margin-right: setUnit(10);
+            width: fit-content;
+        }
+
+        &.sex {
+            width: 100%;
+        }
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
     }
 }

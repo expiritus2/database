@@ -8,15 +8,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantInfoFormStateSelector } from 'store/selectors/forms';
 
-import { Input } from 'components';
-import { submitApplicantFormEffect } from 'store/effects/forms';
+import { Input, DatePicker, Sex } from 'components';
+import { setInfoFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
 import { ContentWrapper } from '../components';
 import Name from '../Name';
 
 import styles from './styles.module.scss';
 
 const InfoForm = (props) => {
-    const { className, onChangeField } = props;
+    const { className } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const modal = useSelector(getModalStateSelector);
@@ -30,6 +30,15 @@ const InfoForm = (props) => {
         },
     });
 
+    // const onCustomFieldChange = (e, val, propName) => {
+    //     dispatch(setProfileFormStateEffect({ [propName]: val }));
+    // };
+
+    const onChangeField = (e) => {
+        const { name, value } = e.target;
+        dispatch(setInfoFormStateEffect({ [name]: value }));
+    };
+
     return (
         <ContentWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
@@ -41,6 +50,29 @@ const InfoForm = (props) => {
                     onChange={onChangeField}
                     value={infoFormState.nameLat}
                 />
+                <Input
+                    name="photo"
+                    className={styles.field}
+                    label={translate.Photo}
+                    onChange={onChangeField}
+                    value={infoFormState.photo}
+                />
+                <div className={styles.block}>
+                    <DatePicker
+                        name="birthDate"
+                        className={classNames(styles.field, styles.birthDate)}
+                        label={translate.BirthDate}
+                        onChange={onChangeField}
+                        value={infoFormState.birthDate}
+                    />
+                    <Sex
+                        name="sex"
+                        className={classNames(styles.field, styles.sex)}
+                        label={translate.Sex}
+                        onChange={onChangeField}
+                        value={infoFormState.sex}
+                    />
+                </div>
             </form>
         </ContentWrapper>
     );
@@ -48,7 +80,6 @@ const InfoForm = (props) => {
 
 InfoForm.propTypes = {
     className: PropTypes.string,
-    onChangeField: PropTypes.func.isRequired,
 };
 
 InfoForm.defaultProps = {

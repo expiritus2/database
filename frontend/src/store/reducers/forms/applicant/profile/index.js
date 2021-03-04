@@ -12,6 +12,10 @@ const initialData = {
     position: [],
     skills: [],
     place: [],
+    regions: '',
+    address: '',
+    languages: [],
+    info: '',
 };
 
 export default handleActions({

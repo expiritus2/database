@@ -20,3 +20,6 @@ export { default as Currency } from './Currency';
 export { default as NumberInput } from './Form/NumberInput';
 export { default as AsyncAutocomplete } from './AsyncAutocomplete';
 export { default as Place } from './Place';
+export { default as Languages } from './Languages';
+export { default as DatePicker } from './DatePicker';
+export { default as Sex } from './Sex';

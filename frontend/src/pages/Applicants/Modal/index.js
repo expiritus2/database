@@ -9,7 +9,6 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { setProfileFormStateEffect } from 'store/effects/forms';
 
 import InfoForm from './InfoForm';
 import FilesForm from './FilesForm';
@@ -26,15 +25,6 @@ const ModalComponent = ({ className }) => {
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));
-    };
-
-    const onCustomFieldChange = (e, val, propName) => {
-        dispatch(setProfileFormStateEffect({ [propName]: val }));
-    };
-
-    const onChangeField = (e) => {
-        const { name, value } = e.target;
-        dispatch(setProfileFormStateEffect({ [name]: value }));
     };
 
     const getTitle = () => {
@@ -75,8 +65,6 @@ const ModalComponent = ({ className }) => {
                 formId={modal.id}
                 tabsClassName={styles.tabs}
                 tabs={ModalComponent.tabs(translate)}
-                onChangeField={onChangeField}
-                onCustomFieldChange={onCustomFieldChange}
             />
         </Modal>
     );

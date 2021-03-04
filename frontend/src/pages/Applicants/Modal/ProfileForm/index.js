@@ -4,21 +4,21 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place } from 'components';
+import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place, Languages } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantProfileFormStateSelector } from 'store/selectors/forms';
-import { submitApplicantFormEffect } from 'store/effects/forms';
+import { setProfileFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
 import { ContentWrapper } from '../components';
 import Name from '../Name';
 
 import styles from './styles.module.scss';
 
 const ProfileForm = (props) => {
-    const { className, onChangeField, onCustomFieldChange } = props;
+    const { className } = props;
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
@@ -31,6 +31,15 @@ const ProfileForm = (props) => {
             dispatch(submitApplicantFormEffect());
         },
     });
+
+    const onCustomFieldChange = (e, val, propName) => {
+        dispatch(setProfileFormStateEffect({ [propName]: val }));
+    };
+
+    const onChangeField = (e) => {
+        const { name, value } = e.target;
+        dispatch(setProfileFormStateEffect({ [name]: value }));
+    };
 
     return (
         <ContentWrapper className={classNames(styles.wrapper, className)}>
@@ -100,11 +109,11 @@ const ProfileForm = (props) => {
                     onChange={onChangeField}
                     value={profileFormState.address}
                 />
-                <Input
+                <Languages
                     name="languages"
                     className={styles.field}
                     label={translate.Languages}
-                    onChange={onChangeField}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'languages')}
                     value={profileFormState.languages}
                 />
                 <Textarea
@@ -121,8 +130,6 @@ const ProfileForm = (props) => {
 
 ProfileForm.propTypes = {
     className: PropTypes.string,
-    onCustomFieldChange: PropTypes.func.isRequired,
-    onChangeField: PropTypes.func.isRequired,
 };
 
 ProfileForm.defaultProps = {

@@ -36,4 +36,11 @@ export default {
     Languages: 'Языки',
     Remote: 'Удаленно',
     Office: 'Офис',
+    English: 'Английский',
+    Russian: 'Русский',
+    Photo: 'Фото',
+    Male: 'Мужской',
+    Female: 'Женский',
+    Sex: 'Пол',
+    BirthDate: 'Дата рождения',
 };

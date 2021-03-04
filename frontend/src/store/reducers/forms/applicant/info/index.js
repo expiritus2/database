@@ -4,6 +4,11 @@ import { cloneDeep } from 'lodash-es';
 
 const initialData = {
     nameLat: '',
+    photo: '',
+    birthDate: '',
+    sex: '',
+    phones: [],
+    emails: [],
 };
 
 export default handleActions({
