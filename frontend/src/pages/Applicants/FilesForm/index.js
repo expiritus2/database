@@ -8,7 +8,7 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { submitApplicantFormEffect } from 'store/effects/forms';
 import { getApplicantFilesFormStateSelector } from 'store/selectors/forms';
 
-import Name from '../Name';
+import Name from '../components/Name';
 import { ContentWrapper } from '../components';
 
 import styles from './styles.module.scss';

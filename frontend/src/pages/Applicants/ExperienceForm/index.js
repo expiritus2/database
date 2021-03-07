@@ -10,7 +10,7 @@ import { getApplicantExperienceFormStateSelector } from 'store/selectors/forms';
 
 import { ContentWrapper } from '../components';
 
-import Name from '../Name';
+import Name from '../components/Name';
 
 import styles from './styles.module.scss';
 

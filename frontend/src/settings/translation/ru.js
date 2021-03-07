@@ -43,4 +43,8 @@ export default {
     Female: 'Женский',
     Sex: 'Пол',
     BirthDate: 'Дата рождения',
+    Phones: 'Телефоны',
+    Private: 'Личный',
+    Work: 'Рабочий',
+    Type: 'Тип',
 };

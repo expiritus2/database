@@ -1,0 +1,35 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.fieldsArray {
+    .block {
+        display: flex;
+        align-items: center;
+        margin-bottom: setUnit(15);
+
+        .type {
+            width: 39%;
+            margin-right: setUnit(10);
+        }
+
+        .number {
+            width: 100%;
+        }
+
+        .removeIcon {
+            width: setUnit(35);
+            height: setUnit(35);
+            margin-left: setUnit(10);
+            fill: $primary-color;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .addPhone {
+        width: 100%;
+    }
+}

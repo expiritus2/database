@@ -13,7 +13,7 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantProfileFormStateSelector } from 'store/selectors/forms';
 import { setProfileFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
 import { ContentWrapper } from '../components';
-import Name from '../Name';
+import Name from '../components/Name';
 
 import styles from './styles.module.scss';
 

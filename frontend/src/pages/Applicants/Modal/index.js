@@ -10,10 +10,10 @@ import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 
-import InfoForm from './InfoForm';
-import FilesForm from './FilesForm';
-import ProfileForm from './ProfileForm';
-import ExperienceForm from './ExperienceForm';
+import InfoForm from '../InfoForm';
+import FilesForm from '../FilesForm';
+import ProfileForm from '../ProfileForm';
+import ExperienceForm from '../ExperienceForm';
 
 import styles from './styles.module.scss';
 

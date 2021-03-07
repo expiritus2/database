@@ -8,10 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantInfoFormStateSelector } from 'store/selectors/forms';
 
-import { Input, DatePicker, Sex } from 'components';
+import { Input, DatePicker, Sex, AddFile, Phones } from 'components';
 import { setInfoFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
 import { ContentWrapper } from '../components';
-import Name from '../Name';
+import Name from '../components/Name';
 
 import styles from './styles.module.scss';
 
@@ -30,9 +30,9 @@ const InfoForm = (props) => {
         },
     });
 
-    // const onCustomFieldChange = (e, val, propName) => {
-    //     dispatch(setProfileFormStateEffect({ [propName]: val }));
-    // };
+    const onCustomFieldChange = (e, val, propName) => {
+        dispatch(setInfoFormStateEffect({ [propName]: val }));
+    };
 
     const onChangeField = (e) => {
         const { name, value } = e.target;
@@ -50,12 +50,11 @@ const InfoForm = (props) => {
                     onChange={onChangeField}
                     value={infoFormState.nameLat}
                 />
-                <Input
-                    name="photo"
+                <AddFile
                     className={styles.field}
-                    label={translate.Photo}
-                    onChange={onChangeField}
-                    value={infoFormState.photo}
+                    onChange={(values) => {
+                        onCustomFieldChange(null, values, 'photo');
+                    }}
                 />
                 <div className={styles.block}>
                     <DatePicker
@@ -73,6 +72,10 @@ const InfoForm = (props) => {
                         value={infoFormState.sex}
                     />
                 </div>
+                <Phones
+                    className={styles.field}
+                    label={translate.Phones}
+                />
             </form>
         </ContentWrapper>
     );
