@@ -44,7 +44,12 @@ export default {
     Sex: 'Пол',
     BirthDate: 'Дата рождения',
     Phones: 'Телефоны',
+    Phone: 'Телефон',
     Private: 'Личный',
     Work: 'Рабочий',
     Type: 'Тип',
+    Emails: 'Почтовые ящики',
+    AddPhone: 'Добавить телефон',
+    AddEmail: 'Добавить почту',
+    AddFile: 'Добавить файл',
 };

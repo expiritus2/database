@@ -25,3 +25,5 @@ export { default as DatePicker } from './DatePicker';
 export { default as Sex } from './Sex';
 export { default as AddFile } from './Form/AddFile';
 export { default as Phones } from './Phones';
+export { default as Emails } from './Emails';
+export { default as OptionsPopup } from './OptionsPopup';
