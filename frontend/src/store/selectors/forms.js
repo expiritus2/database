@@ -19,10 +19,10 @@ export const getApplicantInfoFormStateSelector = createSelector(
 
 export const getApplicantExperienceFormStateSelector = createSelector(
     getApplicantFormSelector,
-    (applicant) => applicant?.info,
+    (applicant) => applicant?.experience,
 );
 
 export const getApplicantFilesFormStateSelector = createSelector(
     getApplicantFormSelector,
-    (applicant) => applicant?.info,
+    (applicant) => applicant?.files,
 );

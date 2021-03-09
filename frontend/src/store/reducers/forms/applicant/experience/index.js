@@ -2,14 +2,16 @@ import { handleActions } from 'redux-actions';
 import { setExperienceFormStateAction, resetExperienceFormStateAction } from 'store/actions/forms';
 import { cloneDeep } from 'lodash-es';
 
-const initialData = {
-
-};
+export const initialData = [
+    {
+        period: [],
+        company: '',
+        position: [],
+        info: '',
+    },
+];
 
 export default handleActions({
-    [setExperienceFormStateAction]: (state, { payload }) => ({
-        ...state,
-        ...payload,
-    }),
+    [setExperienceFormStateAction]: (state, { payload }) => payload,
     [resetExperienceFormStateAction]: () => cloneDeep(initialData),
 }, initialData);

@@ -52,4 +52,6 @@ export default {
     AddPhone: 'Добавить телефон',
     AddEmail: 'Добавить почту',
     AddFile: 'Добавить файл',
+    Period: 'Период',
+    Company: 'Компания',
 };

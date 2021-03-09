@@ -1,6 +1,38 @@
-@import "../../../styles/functions";
-@import "../../../styles/variables";
+@import "styles/functions";
+@import "styles/variables";
 
-.wrapper {
+.experienceForm {
+    .field {
+        margin-top: setUnit(15);
 
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    .block {
+        display: flex;
+        padding: setUnit(15);
+        margin-top: setUnit(15);
+    }
+
+    .fields {
+        width: 100%;
+    }
+
+    .addButton {
+        width: 100%;
+    }
+
+    .removeIcon {
+        width: setUnit(25);
+        height: setUnit(25);
+        fill: $primary-color;
+        cursor: pointer;
+        margin-left: setUnit(10);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 }

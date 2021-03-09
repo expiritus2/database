@@ -13,7 +13,7 @@ import { cloneDeep } from 'lodash-es';
 import styles from './styles.module.scss';
 
 const Emails = (props) => {
-    const { className, value, label, onChange } = props;
+    const { className, value, onChange } = props;
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
 
@@ -58,14 +58,12 @@ const Emails = (props) => {
 Emails.propTypes = {
     className: PropTypes.string,
     value: PropTypes.arrayOf(PropTypes.string),
-    label: PropTypes.string,
     onChange: PropTypes.func,
 };
 
 Emails.defaultProps = {
     className: '',
     value: [''],
-    label: '',
     onChange: () => {},
 };
 

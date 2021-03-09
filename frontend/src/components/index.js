@@ -27,3 +27,4 @@ export { default as AddFile } from './Form/AddFile';
 export { default as Phones } from './Phones';
 export { default as Emails } from './Emails';
 export { default as OptionsPopup } from './OptionsPopup';
+export { default as Period } from './Period';

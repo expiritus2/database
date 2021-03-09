@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -88,7 +88,7 @@ AddFile.file = 'file';
 
 AddFile.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.arrayOf(PropTypes.any),
     onChange: PropTypes.func,
     variant: PropTypes.string,
 };

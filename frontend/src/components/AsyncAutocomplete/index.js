@@ -14,9 +14,10 @@ const AsyncAutocomplete = (props) => {
     const { convertTitleCaseIfNew } = props;
 
     const [open, setOpen] = useState(false);
-    const [optionsValue, setOptionsValue] = useState([]);
+    const [optionsValue, setOptionsValue] = useState(value);
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
+    const [defaultValueVal] = useState(value || defaultValue);
 
     const onInputChange = (event) => {
         const newValue = event?.target?.value;
@@ -69,6 +70,7 @@ const AsyncAutocomplete = (props) => {
         if (option.inputValue) {
             return option.inputValue;
         }
+
         return option.label;
     };
 
@@ -83,7 +85,7 @@ const AsyncAutocomplete = (props) => {
                 onOpen={() => setOpen(true)}
                 onClose={() => setOpen(false)}
                 value={value}
-                defaultValue={defaultValue}
+                defaultValue={defaultValueVal}
                 inputValue={inputValue}
                 onChange={onChangeHandler}
                 onInputChange={onInputChange}

@@ -3,6 +3,29 @@
 @import "styles/mixins";
 
 .datePicker {
+    position: relative;
+
+    .dateInput {
+        width: 100%;
+        padding: setUnit(9);
+        border: 1px solid $border-gray-color;
+        border-radius: setUnit(4);
+        outline: none;
+        height: setUnit(40);
+    }
+
+    .label {
+        position: absolute;
+        top: setUnit(-8);
+        z-index: 9;
+        pointer-events: none;
+        background: #ffffff;
+        padding: 0 setUnit(5);
+
+        &.focus {
+            top: setUnit(1);
+        }
+    }
 
     .textField {
         width: setUnit(200);
