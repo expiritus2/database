@@ -53,9 +53,9 @@ const InfoForm = (props) => {
                 <AddFile
                     className={styles.field}
                     onChange={(values) => {
-                        onCustomFieldChange(null, values, 'photo');
+                        onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={infoFormState.photo}
+                    value={infoFormState.photos}
                 />
                 <div className={styles.block}>
                     <DatePicker

@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash-es';
 
 const initialData = {
     nameLat: '',
-    photo: [],
+    photos: [],
     birthDate: '',
     sex: '',
     phones: [{ type: '', number: '' }],

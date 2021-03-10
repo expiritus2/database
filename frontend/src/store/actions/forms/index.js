@@ -12,4 +12,5 @@ export const resetExperienceFormStateAction = createAction('FORMS/RESET_EXPERIEN
 export const setFilesFormStateAction = createAction('FORMS/SET_FILES_FORM_ACTION');
 export const resetFilesFormStateAction = createAction('FORMS/RESET_FILES_FORM_ACTION');
 
-export const submitApplicantForm = createAction('FORMS/SUBMIT_APPLICANT_FORM');
+export const submitApplicantFormAction = createAction('FORMS/SUBMIT_APPLICANT_FORM');
+export const uploadFilesAction = createAction('UPLOAD_FILES');

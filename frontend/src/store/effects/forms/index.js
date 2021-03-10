@@ -8,9 +8,10 @@ import {
     resetExperienceFormStateAction,
     setFilesFormStateAction,
     resetFilesFormStateAction,
-    submitApplicantForm,
+    submitApplicantFormAction,
+    uploadFilesAction,
 } from 'store/actions/forms';
-import { createApplicant } from 'api/applicant';
+import { createApplicant, uploadFiles } from 'api/applicant';
 import { getState } from 'store';
 import { Logger } from 'services';
 
@@ -46,10 +47,22 @@ export const resetFilesFormStateEffect = () => (dispatch) => {
     dispatch(resetFilesFormStateAction());
 };
 
-export const submitApplicantFormEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execBase({ action: submitApplicantForm, method: createApplicant });
+export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
+    // const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
+    const sendUploadFiles = Api.execBase({ action: uploadFilesAction, method: uploadFiles });
     const { forms: { applicant } } = getState();
 
-    Logger.log(applicant);
-    return sendRequest(cfg, options, cb);
+    const formData = new FormData();
+    applicant?.files?.files?.forEach((file) => {
+        formData.append('files', file);
+    });
+
+    applicant?.info?.photos?.forEach((photo) => {
+        formData.append('photos', photo);
+    });
+
+    dispatch(sendUploadFiles(formData, options, (err, response) => {
+        Logger.log(err, response);
+        cb?.(err, response);
+    }));
 };

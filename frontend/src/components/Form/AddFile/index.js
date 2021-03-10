@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -17,16 +17,27 @@ import styles from './styles.module.scss';
 const AddFile = (props) => {
     const { className, onChange, value, variant } = props;
     const { translate } = useTranslate();
-    const [previewValues, setPreviewValues] = useState(value || []);
+    const [previewValues, setPreviewValues] = useState([]);
     const [filesValue, setFilesValue] = useState(value || []);
+
+    useEffect(() => {
+        getImagesPreview(value)
+            .then((values) => {
+                const newPreviewValues = [...previewValues, ...values];
+                if (variant !== AddFile.file) {
+                    setPreviewValues(newPreviewValues);
+                }
+            }).catch(() => {});
+    }, []); // eslint-disable-line
 
     const onChangeHandler = (event) => {
         getImagesPreview(event.target.files).then((values) => {
-            const newPreviewValues = [...previewValues, ...values];
-            const newFilesValues = [...filesValue, ...event.target.files];
             if (variant !== AddFile.file) {
+                const newPreviewValues = [...previewValues, ...values];
                 setPreviewValues(newPreviewValues);
             }
+
+            const newFilesValues = [...filesValue, ...event.target.files];
             setFilesValue(newFilesValues);
             onChange(newFilesValues, event.target.files);
         });
@@ -43,6 +54,7 @@ const AddFile = (props) => {
 
         setPreviewValues(clonedPreviewValue);
         setFilesValue(clonedFilesValue);
+        onChange(clonedFilesValue, []);
     };
 
     const getPreview = () => {

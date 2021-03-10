@@ -3,7 +3,7 @@ import { setFilesFormStateAction, resetFilesFormStateAction } from 'store/action
 import { cloneDeep } from 'lodash-es';
 
 const initialData = {
-
+    files: [],
 };
 
 export default handleActions({
