@@ -1,4 +1,4 @@
-import NotAuthorizedError from '../errors/not-authorized-error';
+const NotAuthorizedError = require('../errors/not-authorized-error');
 
 const requireAuth = (req, res, next) => {
     if (!req.user) {

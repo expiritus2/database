@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const { authRouter } = require('./routes/auth');
 const { filesRouter } = require('./routes/files');
+const { applicantRouter } = require('./routes/applicant');
 const errorHandler = require('./middlewares/error-handler');
 const sequelize = require('./util/database');
 
@@ -26,6 +27,7 @@ app.use(passport.session({}));
 
 app.use(authRouter);
 app.use(filesRouter);
+app.use(applicantRouter);
 
 app.all('*', async () => {
     console.log('Route not found!');

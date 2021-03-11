@@ -28,7 +28,7 @@ const Languages = (props) => {
 
 Languages.options = (translate) => [
     { label: translate.English, value: 'english' },
-    { label: translate.Russian, value: 'русский' },
+    { label: translate.Russian, value: 'russian' },
 ];
 
 Languages.propTypes = {

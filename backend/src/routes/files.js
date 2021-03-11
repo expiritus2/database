@@ -1,11 +1,12 @@
 const express = require('express');
 const { upload } = require('../middlewares/file-upload');
+const requireAuth = require('../middlewares/require-auth');
 
 const router = express.Router();
 
-router.post('/api/files/upload', upload.fields([{ name: 'files' }, { name: 'photos' }]), (req, res) => {
-    const files = req.files.files.map(({ bucket, key, location }) => ({ bucket, key, location }));
-    const photos = req.files.photos.map(({ bucket, key, location }) => ({ bucket, key, location }));
+router.post('/api/files/upload', requireAuth, upload.fields([{ name: 'files' }, { name: 'photos' }]), (req, res) => {
+    const files = req.files.files.map(({ location }) => location);
+    const photos = req.files.photos.map(({ location }) => location);
     res.send({ files, photos });
 });
 

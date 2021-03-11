@@ -15,7 +15,7 @@ const upload = multer({
         acl: 'public-read',
         key: function (req, file, cb) {
             const [_, extension] = file.mimetype.split('/');
-            cb(null, `${Date.now().toString()}.${extension}`)
+            cb(null, `${req.user.id}-${Date.now().toString()}.${extension}`)
         }
     })
 });

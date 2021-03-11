@@ -10,7 +10,7 @@ import { Input } from 'components';
 import styles from './styles.module.scss';
 
 const NumberInput = (props) => {
-    const { className, label, inputClassName, thousandSeparator, value, ...otherProps } = props;
+    const { className, label, inputClassName, thousandSeparator, value, onChange, ...otherProps } = props;
     const [focus, setFocus] = useState(false);
 
     return (
@@ -31,6 +31,7 @@ const NumberInput = (props) => {
                 className={classNames(styles.input, inputClassName)}
                 customInput={Input}
                 value={value}
+                onChange={onChange}
                 {...otherProps}
             />
         </FormControl>
@@ -42,7 +43,8 @@ NumberInput.propTypes = {
     label: PropTypes.string,
     inputClassName: PropTypes.string,
     thousandSeparator: PropTypes.bool,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func,
 };
 
 NumberInput.defaultProps = {
@@ -51,6 +53,7 @@ NumberInput.defaultProps = {
     inputClassName: '',
     thousandSeparator: true,
     value: '',
+    onChange: () => {},
 };
 
 export default NumberInput;

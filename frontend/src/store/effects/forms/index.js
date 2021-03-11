@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Api from 'store/effects/core/api';
 import {
     setProfileFormStateAction,
@@ -13,7 +14,7 @@ import {
 } from 'store/actions/forms';
 import { createApplicant, uploadFiles } from 'api/applicant';
 import { getState } from 'store';
-import { Logger } from 'services';
+import { cloneDeep } from 'lodash-es';
 
 export const setProfileFormStateEffect = (cfg) => (dispatch) => {
     dispatch(setProfileFormStateAction(cfg));
@@ -48,8 +49,8 @@ export const resetFilesFormStateEffect = () => (dispatch) => {
 };
 
 export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
-    // const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
     const sendUploadFiles = Api.execBase({ action: uploadFilesAction, method: uploadFiles });
+    const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
     const { forms: { applicant } } = getState();
 
     const formData = new FormData();
@@ -61,8 +62,20 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
         formData.append('photos', photo);
     });
 
-    dispatch(sendUploadFiles(formData, options, (err, response) => {
-        Logger.log(err, response);
-        cb?.(err, response);
+    dispatch(sendUploadFiles(formData, options, (error, response) => {
+        const { data } = response || {};
+        const clonedApplicant = cloneDeep(applicant);
+
+        clonedApplicant.files = data?.files;
+        clonedApplicant.info.photos = data?.photos;
+        clonedApplicant.profile.languages = clonedApplicant.profile.languages.map(({ value }) => value);
+        clonedApplicant.profile.place = clonedApplicant.profile.place.map(({ value }) => value);
+        clonedApplicant.profile.position = clonedApplicant.profile.position.map(({ value }) => value);
+        clonedApplicant.profile.skills = clonedApplicant.profile.skills.map(({ value }) => value);
+        clonedApplicant.info.birthDate = moment(clonedApplicant.info?.birthDate?.[0]).valueOf();
+
+        dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
+            cb?.(err, resp);
+        }));
     }));
 };
