@@ -30,9 +30,9 @@ const Phones = (props) => {
         onChange(newValue);
     };
 
-    const onChangeNumber = (event, index) => {
+    const onChangeNumber = (floatValue, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], number: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], number: floatValue });
         setValues(clonedValues);
         onChange(clonedValues);
     };
@@ -62,7 +62,7 @@ const Phones = (props) => {
                         className={styles.number}
                         format="+375 (##) ###-##-##"
                         value={val?.number}
-                        onChange={(number) => onChangeNumber(number, index)}
+                        onValueChange={({ floatValue }) => onChangeNumber(floatValue, index)}
                     />
                     {values?.length > 1 && (
                         <IoIosRemoveCircle onClick={() => onRemove(index)} className={styles.removeIcon} />

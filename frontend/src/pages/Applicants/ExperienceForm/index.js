@@ -64,7 +64,7 @@ const ExperienceForm = (props) => {
                             <Period
                                 name="period"
                                 className={styles.field}
-                                onChange={(e, val) => onCustomFieldChange(val, 'period', index)}
+                                onChange={(e, val, timestamps) => onCustomFieldChange(timestamps, 'period', index)}
                                 value={period}
                             />
                             <Input

@@ -11,6 +11,7 @@ const { filesRouter } = require('./routes/files');
 const { applicantRouter } = require('./routes/applicant');
 const errorHandler = require('./middlewares/error-handler');
 const sequelize = require('./util/database');
+const { createAssociations } = require('./models/associations');
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.all('*', async () => {
 });
 
 app.use(errorHandler);
+
+createAssociations()
 
 sequelize.sync()
     .then(() => {

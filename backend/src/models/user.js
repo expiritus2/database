@@ -6,9 +6,7 @@ const { ADMIN, SUPER_ADMIN } = require('../constants/roles');
 
 const sequelize = require('../util/database');
 
-class User extends Model {}
-
-User.init({
+const User = sequelize.define('user', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -30,8 +28,6 @@ User.init({
     }
 }, {
     timestamps: true,
-    sequelize,
-    modelName: 'user'
 });
 
 User.prototype.validPassword = function (password) {

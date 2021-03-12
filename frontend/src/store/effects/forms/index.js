@@ -70,8 +70,8 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
         clonedApplicant.info.photos = data?.photos;
         clonedApplicant.profile.languages = clonedApplicant.profile.languages.map(({ value }) => value);
         clonedApplicant.profile.place = clonedApplicant.profile.place.map(({ value }) => value);
-        clonedApplicant.profile.position = clonedApplicant.profile.position.map(({ value }) => value);
-        clonedApplicant.profile.skills = clonedApplicant.profile.skills.map(({ value }) => value);
+        // clonedApplicant.profile.position = clonedApplicant.profile.position.map(({ value }) => value);
+        // clonedApplicant.profile.skills = clonedApplicant.profile.skills.map(({ value }) => value);
         clonedApplicant.info.birthDate = moment(clonedApplicant.info?.birthDate?.[0]).valueOf();
 
         dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
