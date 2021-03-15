@@ -30,20 +30,9 @@ const Applicant = sequelize.define('applicant', {
     education: {
         type: DataTypes.CHAR(100),
     },
-    position: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    skills: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
     place: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: [],
-    },
-    regions: {
-        type: DataTypes.STRING,
     },
     address: {
         type: DataTypes.STRING,
@@ -72,7 +61,18 @@ const Applicant = sequelize.define('applicant', {
     files: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: [],
-    }
+    },
+    // position: {
+    //     type: DataTypes.ARRAY(DataTypes.STRING),
+    //     defaultValue: [],
+    // },
+    // skills: {
+    //     type: DataTypes.ARRAY(DataTypes.STRING),
+    //     defaultValue: [],
+    // },
+    // regions: {
+    //     type: DataTypes.STRING,
+    // },
 }, {
     timestamps: true,
 });

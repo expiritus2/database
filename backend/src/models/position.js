@@ -2,22 +2,21 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Phone = sequelize.define('phone', {
+const Position = sequelize.define('position', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-    type: {
-        type: DataTypes.CHAR(100)
+    label: {
+        type: DataTypes.CHAR(255),
     },
-    number: {
-        type: DataTypes.INTEGER,
-        unique: true,
+    value: {
+        type: DataTypes.CHAR(255),
     }
 }, {
     timestamps: true,
 });
 
-module.exports = Phone;
+module.exports = Position;
