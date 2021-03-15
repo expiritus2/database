@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place, Languages } from 'components';
+import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place, Languages, Regions } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -95,11 +95,9 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
                     value={profileFormState.place}
                 />
-                <Input
-                    name="regions"
+                <Regions
                     className={styles.field}
-                    label={translate.Regions}
-                    onChange={onChangeField}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={profileFormState.regions}
                 />
                 <Input

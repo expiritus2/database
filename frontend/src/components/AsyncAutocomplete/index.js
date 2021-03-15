@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -18,6 +18,8 @@ const AsyncAutocomplete = (props) => {
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
     const [defaultValueVal] = useState(value || defaultValue);
+
+    useEffect(() => setOptionsValue(value), [value]);
 
     const onInputChange = (event) => {
         const newValue = event?.target?.value;

@@ -17,7 +17,7 @@ const Place = (props) => {
                 label={translate.Place}
                 options={Place.options(translate)}
                 onChange={onChange}
-                value={value}
+                defaultValue={value}
                 getOptionSelected={(option, val) => option?.value === val?.value}
                 filterSelectedOptions
             />

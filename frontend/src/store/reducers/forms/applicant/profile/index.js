@@ -12,7 +12,7 @@ const initialData = {
     position: [],
     skills: [],
     place: [],
-    regions: '',
+    regions: [],
     address: '',
     languages: [],
     info: '',

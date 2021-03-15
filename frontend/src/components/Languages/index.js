@@ -18,7 +18,7 @@ const Languages = (props) => {
                 label={label}
                 options={Languages.options(translate)}
                 onChange={onChange}
-                value={value}
+                defaultValue={value}
                 getOptionSelected={(option, val) => option?.value === val?.value}
                 filterSelectedOptions
             />
