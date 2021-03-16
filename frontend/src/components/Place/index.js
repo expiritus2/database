@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 const Place = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
+    const [defaultValue] = useState(value);
 
     return (
         <div className={classNames(styles.placeWrapper, className)}>
@@ -17,7 +18,7 @@ const Place = (props) => {
                 label={translate.Place}
                 options={Place.options(translate)}
                 onChange={onChange}
-                defaultValue={value}
+                defaultValue={defaultValue}
                 getOptionSelected={(option, val) => option?.value === val?.value}
                 filterSelectedOptions
             />

@@ -62,17 +62,6 @@ const Applicant = sequelize.define('applicant', {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: [],
     },
-    // position: {
-    //     type: DataTypes.ARRAY(DataTypes.STRING),
-    //     defaultValue: [],
-    // },
-    // skills: {
-    //     type: DataTypes.ARRAY(DataTypes.STRING),
-    //     defaultValue: [],
-    // },
-    // regions: {
-    //     type: DataTypes.STRING,
-    // },
 }, {
     timestamps: true,
 });

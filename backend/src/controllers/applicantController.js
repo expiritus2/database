@@ -2,7 +2,9 @@ const Applicant = require('../models/applicant');
 const Position = require('../models/position');
 const Skill = require('../models/skill');
 const Experience = require('../models/experience');
-const Phone  = require('../models/phone');
+const Phone = require('../models/phone');
+const Region = require('../models/region');
+const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 
 class ApplicantController {
@@ -24,18 +26,23 @@ class ApplicantController {
     }
 
     async create() {
-        this.newApplicant = await Applicant.create(this.joinedInfo);
-        this.createPhone();
-        this.createPosition();
-        this.createSkills();
-        this.createExperience();
+        try {
+            this.newApplicant = await Applicant.create(this.joinedInfo);
+            this.createPhone();
+            this.createPosition();
+            this.createSkills();
+            this.createExperience();
+            this.createRegion();
 
-        return this.newApplicant;
+            return this.newApplicant;
+        } catch (e) {
+            throw DatabaseCreationError();
+        }
     }
 
     async createPhone() {
         for (const phone of this.phones) {
-            this.savedPhone = await Phone.findOne({ where: { number: phone.number }});
+            this.savedPhone = await Phone.findOne({ where: { number: phone.number } });
             if (!this.savedPhone) {
                 this.savedPhone = await Phone.create(phone);
                 this.savedPhone.setApplicant(this.newApplicant);
@@ -45,7 +52,7 @@ class ApplicantController {
 
     async createPosition() {
         for (const pos of this.position) {
-            this.savedPosition = await Position.findOne({ where: { value: pos.value }});
+            this.savedPosition = await Position.findOne({ where: { value: pos.value } });
             if (!this.savedPosition) {
                 this.savedPosition = await Position.create(pos);
             }
@@ -56,7 +63,7 @@ class ApplicantController {
 
     async createSkills() {
         for (const skill of this.skills) {
-            this.savedSkill = await Skill.findOne({ where: { value: skill.value }});
+            this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
             if (!this.savedSkill) {
                 this.savedSkill = await Skill.create(skill);
             }
@@ -76,12 +83,23 @@ class ApplicantController {
             this.savedExperience.setApplicant(this.newApplicant);
 
             for (const pos of exp.position) {
-                this.savedPosition = await Position.findOne({ where: { value: pos.value }});
+                this.savedPosition = await Position.findOne({ where: { value: pos.value } });
                 if (!this.savedPosition) {
                     this.savedPosition = await Position.create(pos);
                 }
                 this.savedExperience.addPosition(this.savedPosition);
             }
+        }
+    }
+
+    async createRegion() {
+        for (const region of this.regions) {
+            this.savedRegion = await Region.findOne({ where: { value: region.value } });
+
+            if (!this.savedRegion) {
+                this.savedRegion = await Region.create(region);
+            }
+            this.newApplicant.addRegion(this.savedRegion);
         }
     }
 }

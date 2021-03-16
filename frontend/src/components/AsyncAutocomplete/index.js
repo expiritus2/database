@@ -6,8 +6,11 @@ import { Autocomplete } from 'components';
 
 import { uniqBy, snakeCase } from 'lodash-es';
 import { titleCase } from 'helpers/utils';
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 
 import styles from './styles.module.scss';
+
+const cyrillicToTranslit = new CyrillicToTranslit();
 
 const AsyncAutocomplete = (props) => {
     const { className, onChange, value, multiple, defaultValue, getThrottle, createOptions, label } = props;
@@ -56,7 +59,7 @@ const AsyncAutocomplete = (props) => {
         if (params.inputValue !== '' && !isOptionInOptions) {
             const newOption = {
                 label: convertTitleCaseIfNew ? titleCase(params.inputValue) : params.inputValue,
-                value: snakeCase(params.inputValue),
+                value: snakeCase(cyrillicToTranslit.transform(params.inputValue)),
             };
             filtered.push(newOption);
         }
