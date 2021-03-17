@@ -2,7 +2,6 @@ const Applicant = require('../models/applicant');
 const Position = require('../models/position');
 const Skill = require('../models/skill');
 const Experience = require('../models/experience');
-const Phone = require('../models/phone');
 const Region = require('../models/region');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
@@ -19,16 +18,14 @@ class ApplicantController {
         this.skills = this.profile.skills;
         this.position = this.profile.position;
 
-        this.flatInfo = omit(this.info, 'phones');
         this.flatProfile = omit(this.profile, ['regions', 'skills', 'position']);
 
-        this.joinedInfo = { ...this.flatProfile, ...this.flatInfo, files: this.files };
+        this.joinedInfo = { ...this.flatProfile, ...this.info, files: this.files };
     }
 
     async create() {
         try {
             this.newApplicant = await Applicant.create(this.joinedInfo);
-            this.createPhone();
             this.createPosition();
             this.createSkills();
             this.createExperience();
@@ -36,17 +33,7 @@ class ApplicantController {
 
             return this.newApplicant;
         } catch (e) {
-            throw DatabaseCreationError();
-        }
-    }
-
-    async createPhone() {
-        for (const phone of this.phones) {
-            this.savedPhone = await Phone.findOne({ where: { number: phone.number } });
-            if (!this.savedPhone) {
-                this.savedPhone = await Phone.create(phone);
-                this.savedPhone.setApplicant(this.newApplicant);
-            }
+            throw new DatabaseCreationError();
         }
     }
 

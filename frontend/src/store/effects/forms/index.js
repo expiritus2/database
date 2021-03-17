@@ -12,7 +12,7 @@ import {
     submitApplicantFormAction,
     uploadFilesAction,
 } from 'store/actions/forms';
-import { createApplicant, uploadFiles } from 'api/applicant';
+import { createApplicant, uploadFiles } from 'api/applicants';
 import { getState } from 'store';
 import { cloneDeep } from 'lodash-es';
 

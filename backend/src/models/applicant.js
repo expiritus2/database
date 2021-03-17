@@ -62,6 +62,9 @@ const Applicant = sequelize.define('applicant', {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: [],
     },
+    phones: {
+        type: DataTypes.JSONB,
+    }
 }, {
     timestamps: true,
 });

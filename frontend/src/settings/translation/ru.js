@@ -54,4 +54,5 @@ export default {
     AddFile: 'Добавить файл',
     Period: 'Период',
     Company: 'Компания',
+    Name: 'Имя',
 };
