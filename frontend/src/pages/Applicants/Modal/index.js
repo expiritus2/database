@@ -9,7 +9,10 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
+import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
 
+import { PENDING } from 'settings/constants/apiState';
+import { submitApplicantFormEffect } from 'store/effects/forms/applicant';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
 import ProfileForm from '../ProfileForm';
@@ -21,7 +24,10 @@ const ModalComponent = ({ className }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const modal = useSelector(getModalStateSelector);
+    const state = useSelector(getApplicantFormStateSelector);
     const { translate } = useTranslate();
+
+    const isPending = state === PENDING;
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));
@@ -37,17 +43,23 @@ const ModalComponent = ({ className }) => {
         }
     };
 
+    const onSubmit = () => {
+        dispatch(submitApplicantFormEffect());
+    };
+
     const getActions = () => (
         <div className={styles.actionButtons}>
             <Button
-                type="submit"
-                form={modal.id}
                 className={styles.btn}
                 color="primary"
+                isPending={isPending}
+                onClick={onSubmit}
             >
                 {translate.Save}
             </Button>
-            {modal?.mode === EDIT && <Button className={styles.btn} color="secondary">{translate.Delete}</Button>}
+            {modal?.mode === EDIT && (
+                <Button isPending={isPending} className={styles.btn} color="secondary">{translate.Delete}</Button>
+            )}
             <Button className={styles.btn}>{translate.Cancel}</Button>
         </div>
     );

@@ -55,7 +55,7 @@ Regions.propTypes = {
 Regions.defaultProps = {
     className: '',
     onChange: () => {},
-    value: undefined,
+    value: [],
     multiple: true,
 };
 

@@ -6,8 +6,8 @@ import { AddFile } from 'components';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { setFilesFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
-import { getApplicantFilesFormStateSelector } from 'store/selectors/forms';
+import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
+import { getApplicantFilesFormStateSelector } from 'store/selectors/applicantForm';
 
 import Name from '../components/Name';
 import { ContentWrapper } from '../components';
@@ -21,15 +21,12 @@ const FilesForm = (props) => {
     const filesFormState = useSelector(getApplicantFilesFormStateSelector);
 
     const formik = useFormik({
-        initialValues: { ...filesFormState },
+        initialValues: { files: filesFormState },
         enableReinitialize: true,
-        onSubmit() {
-            dispatch(submitApplicantFormEffect());
-        },
     });
 
     const onCustomFieldChange = (e, val, propName) => {
-        dispatch(setFilesFormStateEffect({ [propName]: val }));
+        dispatch(setApplicantFormStateEffect({ [propName]: val }));
     };
 
     // const onChangeField = (e) => {
@@ -47,7 +44,7 @@ const FilesForm = (props) => {
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
-                    value={filesFormState.files}
+                    value={filesFormState}
                 />
             </form>
         </ContentWrapper>

@@ -6,10 +6,10 @@ import { useFormik } from 'formik';
 import { useTranslate } from 'hooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { getApplicantInfoFormStateSelector } from 'store/selectors/forms';
+import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import { Input, DatePicker, Sex, AddFile, Phones, Emails } from 'components';
-import { setInfoFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
+import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { ContentWrapper } from '../components';
 import Name from '../components/Name';
 
@@ -20,23 +20,20 @@ const InfoForm = (props) => {
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const modal = useSelector(getModalStateSelector);
-    const infoFormState = useSelector(getApplicantInfoFormStateSelector);
+    const formFields = useSelector(getApplicantFormSelector);
 
     const formik = useFormik({
-        initialValues: { ...infoFormState },
+        initialValues: { ...formFields },
         enableReinitialize: true,
-        onSubmit() {
-            dispatch(submitApplicantFormEffect());
-        },
     });
 
     const onCustomFieldChange = (e, val, propName) => {
-        dispatch(setInfoFormStateEffect({ [propName]: val }));
+        dispatch(setApplicantFormStateEffect({ [propName]: val }));
     };
 
     const onChangeField = (e) => {
         const { name, value } = e.target;
-        dispatch(setInfoFormStateEffect({ [name]: value }));
+        dispatch(setApplicantFormStateEffect({ [name]: value }));
     };
 
     return (
@@ -48,14 +45,14 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.FIOLat}
                     onChange={onChangeField}
-                    value={infoFormState.nameLat}
+                    value={formFields.nameLat}
                 />
                 <AddFile
                     className={styles.field}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={infoFormState.photos}
+                    value={formFields.photos}
                 />
                 <div className={styles.block}>
                     <DatePicker
@@ -63,14 +60,14 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={infoFormState.birthDate}
+                        value={formFields.birthDate}
                     />
                     <Sex
                         name="sex"
                         className={classNames(styles.field, styles.sex)}
                         label={translate.Sex}
                         onChange={onChangeField}
-                        value={infoFormState.sex}
+                        value={formFields.sex}
                     />
                 </div>
                 <Phones
@@ -78,14 +75,14 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.Phone}
                     onChange={(val) => onCustomFieldChange(null, val, 'phones')}
-                    value={infoFormState.phones}
+                    value={formFields.phones}
                 />
                 <Emails
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
                     onChange={(val) => onCustomFieldChange(null, val, 'emails')}
-                    value={infoFormState.emails}
+                    value={formFields.emails}
                 />
             </form>
         </ContentWrapper>

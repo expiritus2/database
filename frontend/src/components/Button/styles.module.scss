@@ -1,8 +1,13 @@
 @import "styles/functions";
 @import "styles/variables";
 
+.button {
+    min-width: setUnit(117);
+    height: setUnit(37);
+}
+
 .spinner {
-    font-size: setUnit(4);
+    font-size: setUnit(3);
     color: #ffffff;
-    margin: setUnit(11) 0;
+    margin: 0;
 }

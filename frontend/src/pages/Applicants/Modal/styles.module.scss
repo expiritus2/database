@@ -24,6 +24,7 @@
 
     .btn {
         margin-right: setUnit(10);
+        min-width: setUnit(117.21);
 
         &:last-child {
             margin-right: 0;

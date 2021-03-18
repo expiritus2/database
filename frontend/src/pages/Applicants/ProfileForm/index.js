@@ -10,8 +10,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { getApplicantProfileFormStateSelector } from 'store/selectors/forms';
-import { setProfileFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
+import { getApplicantFormSelector } from 'store/selectors/applicantForm';
+import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { ContentWrapper } from '../components';
 import Name from '../components/Name';
 
@@ -22,23 +22,20 @@ const ProfileForm = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const profileFormState = useSelector(getApplicantProfileFormStateSelector);
+    const formFields = useSelector(getApplicantFormSelector);
 
     const formik = useFormik({
-        initialValues: { ...profileFormState },
+        initialValues: { ...formFields },
         enableReinitialize: true,
-        onSubmit() {
-            dispatch(submitApplicantFormEffect());
-        },
     });
 
     const onCustomFieldChange = (e, val, propName) => {
-        dispatch(setProfileFormStateEffect({ [propName]: val }));
+        dispatch(setApplicantFormStateEffect({ [propName]: val }));
     };
 
     const onChangeField = (e) => {
         const { name, value } = e.target;
-        dispatch(setProfileFormStateEffect({ [name]: value }));
+        dispatch(setApplicantFormStateEffect({ [name]: value }));
     };
 
     return (
@@ -51,12 +48,12 @@ const ProfileForm = (props) => {
                     label={translate.InActiveSearch}
                 />
                 <Input
-                    name="experience"
+                    name="experienceYears"
                     type="number"
                     className={styles.field}
                     label={translate.Experience}
                     onChange={onChangeField}
-                    value={profileFormState.experience}
+                    value={formFields.experienceYears}
                 />
                 <FormControl className={classNames(styles.field, styles.formControl)}>
                     <NumberInput
@@ -64,62 +61,62 @@ const ProfileForm = (props) => {
                         className={classNames(styles.salary)}
                         label={translate.Salary}
                         onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'salary')}
-                        value={profileFormState.salary}
+                        value={formFields.salary}
                     />
                     <Currency
                         name="currency"
                         className={styles.currency}
                         onChange={onChangeField}
-                        value={profileFormState.currency}
+                        value={formFields.currency}
                     />
                 </FormControl>
                 <Education
                     name="education"
                     className={styles.field}
                     onChange={onChangeField}
-                    value={profileFormState.education}
+                    value={formFields.education}
                 />
                 <Position
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
-                    value={profileFormState.position}
+                    value={formFields.position}
                 />
                 <Skills
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
-                    value={profileFormState.skills}
+                    value={formFields.skills}
                 />
                 <Place
                     className={styles.field}
                     label={translate.Place}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
-                    value={profileFormState.place}
+                    value={formFields.place}
                 />
                 <Regions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
-                    value={profileFormState.regions}
+                    value={formFields.regions}
                 />
                 <Input
                     name="address"
                     className={styles.field}
                     label={translate.Address}
                     onChange={onChangeField}
-                    value={profileFormState.address}
+                    value={formFields.address}
                 />
                 <Languages
                     name="languages"
                     className={styles.field}
                     label={translate.Languages}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'languages')}
-                    value={profileFormState.languages}
+                    value={formFields.languages}
                 />
                 <Textarea
                     name="info"
                     className={styles.field}
                     label={translate.Info}
                     onChange={onChangeField}
-                    value={profileFormState.info}
+                    value={formFields.info}
                 />
             </form>
         </ContentWrapper>

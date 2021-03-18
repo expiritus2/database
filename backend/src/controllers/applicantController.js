@@ -9,18 +9,14 @@ const { omit } = require('lodash');
 class ApplicantController {
     constructor(body) {
         this.body = body;
-        this.profile = this.body.profile;
-        this.files = this.body.files;
-        this.info = this.body.info;
+        this.regions = this.body.regions;
+        this.skills = this.body.skills;
+        this.position = this.body.position;
         this.experience = this.body.experience;
-        this.phones = this.info.phones;
-        this.regions = this.profile.regions;
-        this.skills = this.profile.skills;
-        this.position = this.profile.position;
 
-        this.flatProfile = omit(this.profile, ['regions', 'skills', 'position']);
+        this.flatProfile = omit(this.body, ['regions', 'skills', 'position', 'experience']);
 
-        this.joinedInfo = { ...this.flatProfile, ...this.info, files: this.files };
+        this.joinedInfo = { ...this.flatProfile };
     }
 
     async create() {
@@ -67,14 +63,13 @@ class ApplicantController {
                 period: exp.period,
             });
 
-            this.savedExperience.setApplicant(this.newApplicant);
-
             for (const pos of exp.position) {
                 this.savedPosition = await Position.findOne({ where: { value: pos.value } });
                 if (!this.savedPosition) {
                     this.savedPosition = await Position.create(pos);
                 }
                 this.savedExperience.addPosition(this.savedPosition);
+                this.newApplicant.addExperience(this.savedExperience);
             }
         }
     }

@@ -20,7 +20,7 @@ const AsyncAutocomplete = (props) => {
     const [optionsValue, setOptionsValue] = useState(value);
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
-    const [defaultValueVal] = useState(value || defaultValue);
+    const [defaultValueVal] = useState(value?.length ? value : defaultValue);
 
     useEffect(() => setOptionsValue(value), [value]);
 
@@ -117,7 +117,7 @@ AsyncAutocomplete.propTypes = {
 AsyncAutocomplete.defaultProps = {
     className: '',
     onChange: () => {},
-    value: undefined,
+    value: [],
     multiple: true,
     defaultValue: undefined,
     label: '',

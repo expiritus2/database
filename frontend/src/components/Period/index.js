@@ -37,7 +37,10 @@ const Period = (props) => {
 
 Period.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.instanceOf(Date)), PropTypes.arrayOf(PropTypes.number)]),
+    value: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+        PropTypes.arrayOf(PropTypes.number),
+    ]),
     onChange: PropTypes.func,
     name: PropTypes.string,
 };

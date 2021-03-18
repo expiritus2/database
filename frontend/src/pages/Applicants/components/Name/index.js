@@ -4,11 +4,10 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setProfileFormStateAction } from 'store/actions/forms';
+import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { useTranslate } from 'hooks';
-import { Logger } from 'services';
 import { Input } from 'components';
-import { getApplicantProfileFormStateSelector } from 'store/selectors/forms';
+import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import styles from './styles.module.scss';
 
@@ -16,19 +15,16 @@ const Name = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const profileFormState = useSelector(getApplicantProfileFormStateSelector);
+    const profileFormState = useSelector(getApplicantFormSelector);
 
     useFormik({
         initialValues: { name: profileFormState?.name },
         enableReinitialize: true,
-        onSubmit(values) {
-            Logger.log(values);
-        },
     });
 
     const onChangeField = (e) => {
         const { name, value } = e.target;
-        dispatch(setProfileFormStateAction({ [name]: value }));
+        dispatch(setApplicantFormStateEffect({ [name]: value }));
     };
 
     return (

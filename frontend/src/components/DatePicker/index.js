@@ -49,7 +49,12 @@ DatePicker.propTypes = {
     inputClassName: PropTypes.string,
     name: PropTypes.string,
     label: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.instanceOf(Date)), PropTypes.number]),
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.number),
+    ]),
     onChange: PropTypes.func,
     dataEnableTime: PropTypes.bool,
     options: PropTypes.shape({}),

@@ -7,13 +7,13 @@ import Paper from '@material-ui/core/Paper';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { setExperienceFormStateEffect, submitApplicantFormEffect } from 'store/effects/forms';
-import { getApplicantExperienceFormStateSelector } from 'store/selectors/forms';
+import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
+import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';
 import { useTranslate } from 'hooks';
 import { Period, Input, Position, Textarea, Button } from 'components';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
-import { initialData } from 'store/reducers/forms/applicant/experience';
+import { experienceInitialData } from 'store/reducers/forms/applicant';
 import { ContentWrapper } from '../components';
 
 import Name from '../components/Name';
@@ -31,27 +31,24 @@ const ExperienceForm = (props) => {
     const formik = useFormik({
         initialValues: { ...experienceFormState },
         enableReinitialize: true,
-        onSubmit() {
-            dispatch(submitApplicantFormEffect());
-        },
     });
 
     const onCustomFieldChange = (val, propName, index) => {
         const clonedValue = cloneDeep(experienceFormState);
         clonedValue[index][propName] = val;
-        dispatch(setExperienceFormStateEffect(clonedValue));
+        dispatch(setApplicantExperienceFormStateEffect(clonedValue));
     };
 
     const onAdd = () => {
         const clonedValues = cloneDeep(experienceFormState);
-        clonedValues.push(cloneDeep(initialData?.[0]));
-        dispatch(setExperienceFormStateEffect(clonedValues));
+        clonedValues.push(cloneDeep(experienceInitialData));
+        dispatch(setApplicantExperienceFormStateEffect(clonedValues));
     };
 
     const onRemove = (index) => {
         const clonedValues = cloneDeep(experienceFormState);
         clonedValues.splice(index, 1);
-        dispatch(setExperienceFormStateEffect(clonedValues));
+        dispatch(setApplicantExperienceFormStateEffect(clonedValues));
     };
 
     return (
