@@ -23,7 +23,7 @@ TH.propTypes = {
 };
 
 TH.defaultProps = {
-    filter: () => {},
+    filter: null,
 };
 
 export default memo(TH);

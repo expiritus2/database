@@ -8,8 +8,9 @@ import 'flatpickr/dist/themes/material_blue.css';
 import styles from './styles.module.scss';
 
 const DatePicker = (props) => {
-    const { className, name, label, dataEnableTime, onChange, options, value, inputClassName } = props;
+    const { className, name, label, dataEnableTime, onChange, options, value, inputClassName, defaultOptions } = props;
 
+    const [optionsValue] = useState({ ...defaultOptions, defaultDate: value, ...options });
     const [focus, setFocus] = useState(false);
     const inputRef = useRef();
 
@@ -27,10 +28,12 @@ const DatePicker = (props) => {
     return (
         <div className={classNames(styles.datePicker, className)}>
             <InputLabel
-                className={classNames(styles.label, { [styles.focus]: focus || !!value || !!options?.defaultDate })}
+                className={classNames(styles.label, {
+                    [styles.focus]: focus || !!value || !!optionsValue?.defaultDate,
+                })}
                 variant="outlined"
                 color="primary"
-                shrink={focus || !!value || !!options?.defaultDate}
+                shrink={focus || !!value || !!optionsValue?.defaultDate}
                 focused={focus}
             >
                 {label}
@@ -43,11 +46,7 @@ const DatePicker = (props) => {
                 onBlur={() => setFocus(false)}
                 name={name}
                 onChange={onChangeHandler}
-                options={{
-                    allowInput: true,
-                    dateFormat: 'd M Y',
-                    ...options,
-                }}
+                options={optionsValue}
             />
         </div>
     );
@@ -60,14 +59,8 @@ DatePicker.propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func,
     dataEnableTime: PropTypes.bool,
-    options: PropTypes.shape({
-        defaultDate: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-            PropTypes.number,
-            PropTypes.arrayOf(PropTypes.number),
-        ]),
-    }),
+    options: PropTypes.shape({}),
+    defaultOptions: PropTypes.shape({}),
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.instanceOf(Date)),
@@ -85,6 +78,9 @@ DatePicker.defaultProps = {
     onChange: () => {},
     dataEnableTime: false,
     options: {},
+    defaultOptions: {
+        dateFormat: 'd M Y',
+    },
 };
 
 export default DatePicker;

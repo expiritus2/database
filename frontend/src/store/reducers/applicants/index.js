@@ -11,7 +11,7 @@ const initialData = {
 
 export default handleActions({
     [getApplicantsAction]: (state, { payload }) => ({
-        state: payload.static,
+        state: payload.state,
         data: get(payload, 'data.result', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),

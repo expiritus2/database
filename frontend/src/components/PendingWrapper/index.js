@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { Spinner } from 'components';
 
+import styles from './styles.module.scss';
+
 const PendingWrapper = ({ isPending, className, spinnerClassname, children, loaderClassName }) => (
-    <div className={className}>
+    <div className={classNames(className, styles.pendingWrapper)}>
         {isPending ? <Spinner className={spinnerClassname} loaderClassName={loaderClassName} /> : children}
     </div>
 );

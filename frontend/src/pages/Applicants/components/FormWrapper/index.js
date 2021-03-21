@@ -4,19 +4,19 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const ContentWrapper = ({ className, children }) => (
-    <div className={classNames(styles.contentWrapper, className)}>
+const FormWrapper = ({ className, children }) => (
+    <div className={classNames(styles.formWrapper, className)}>
         {children}
     </div>
 );
 
-ContentWrapper.propTypes = {
+FormWrapper.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node.isRequired,
 };
 
-ContentWrapper.defaultProps = {
+FormWrapper.defaultProps = {
     className: '',
 };
 
-export default ContentWrapper;
+export default FormWrapper;

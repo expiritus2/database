@@ -2,95 +2,89 @@
 @import "styles/mixins";
 @import "styles/variables";
 
-.table {
-    margin-bottom: 0;
+.tableHolder {
+    @include box-shadow;
     width: 100%;
-    border-collapse: collapse;
+    overflow: auto;
 
-    &__holder {
-        @include box-shadow;
-        border: 1px solid #dee2e6;
-        border-radius: setUnit(4);
-        margin-bottom: setUnit(20);
+
+    .table {
+        margin-bottom: 0;
         width: 100%;
-        overflow: auto;
-    }
+        border-collapse: collapse;
 
-    thead {
-        .thead {
-            position: sticky;
-            top: 49px;
-        }
+        thead {
 
-        .filter {
-            margin-top: setUnit(5);
-        }
-
-        tr {
-            border-bottom: 1px solid #dee2e6;
-
-            th {
-                border: none;
-                text-align: left;
-            }
-        }
-    }
-
-    tbody {
-        tr {
-            border-bottom: 1px solid #dee2e6;
-
-            &:last-child {
-                border-bottom: none;
+            .filter {
+                margin-top: setUnit(5);
             }
 
-            &:hover {
-                background-color: $primary-color;
-                color: #ffffff;
+            tr {
+                border-bottom: 1px solid #dee2e6;
 
-                .link {
-                    color: #ffffff;
+                th {
+                    border: none;
+                    text-align: left;
+                    padding: setUnit(10);
                 }
             }
         }
 
-        td {
-            border: none;
+        tbody {
+            tr {
+                border-bottom: 1px solid #dee2e6;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: #ffffff;
+
+                    .link {
+                        color: #ffffff;
+                    }
+                }
+            }
+
+            td {
+                border: none;
+            }
+
         }
 
-    }
+        .select {
+            width: setUnit(50);
 
-    .select {
-        width: setUnit(50);
+            &__all {
+                position: relative;
+                top: setUnit(-3);
+            }
 
-        &__all {
-            position: relative;
-            top: setUnit(-3);
+            .checkbox {
+                width: 100%;
+                text-align: center;
+            }
         }
 
-        .checkbox {
-            width: 100%;
-            text-align: center;
+        .row {
+            cursor: pointer;
         }
-    }
 
-    .row {
-        cursor: pointer;
-    }
+        .cell {
+            padding: setUnit(10);
 
-    .cell {
-        padding: 0 !important;
-
-
-        .link {
-            display: block;
-            width: 100%;
-            padding: setUnit(12);
-            text-decoration: none;
-            color: #000000;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            .link {
+                display: block;
+                width: 100%;
+                padding: setUnit(12);
+                text-decoration: none;
+                color: #000000;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
     }
 }

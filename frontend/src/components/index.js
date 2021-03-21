@@ -30,3 +30,4 @@ export { default as OptionsPopup } from './OptionsPopup';
 export { default as Period } from './Period';
 export { default as Regions } from './Regions';
 export { default as Table } from './Table';
+export { default as ContentWrapper } from './ContentWrapper';

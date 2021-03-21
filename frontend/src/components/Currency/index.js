@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { USD, EU } from 'settings/constants/currency';
 
 import { useTranslate } from 'hooks';
 import { Select } from 'components';
@@ -26,8 +27,8 @@ const Currency = (props) => {
 };
 
 Currency.options = [
-    { id: 'dollars', label: 'USD', value: 'USD' },
-    { id: 'euro', label: 'EU', value: 'EU' },
+    { id: 'dollars', label: 'USD', value: USD },
+    { id: 'euro', label: 'EU', value: EU },
 ];
 
 Currency.propTypes = {

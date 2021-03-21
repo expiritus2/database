@@ -14,7 +14,7 @@ import { Period, Input, Position, Textarea, Button } from 'components';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
-import { ContentWrapper } from '../components';
+import { FormWrapper } from '../components';
 
 import Name from '../components/Name';
 
@@ -52,7 +52,7 @@ const ExperienceForm = (props) => {
     };
 
     return (
-        <ContentWrapper className={classNames(styles.experienceForm, className)}>
+        <FormWrapper className={classNames(styles.experienceForm, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 {experienceFormState?.map(({ period, company, position, info }, index) => (
@@ -62,7 +62,7 @@ const ExperienceForm = (props) => {
                                 name="period"
                                 className={styles.field}
                                 onChange={(e, val, timestamps) => onCustomFieldChange(timestamps, 'period', index)}
-                                defaultDate={period}
+                                value={period}
                             />
                             <Input
                                 name="company"
@@ -99,7 +99,7 @@ const ExperienceForm = (props) => {
                     {translate.Add}
                 </Button>
             </form>
-        </ContentWrapper>
+        </FormWrapper>
     );
 };
 

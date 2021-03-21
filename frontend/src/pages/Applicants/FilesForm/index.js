@@ -10,7 +10,7 @@ import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantFilesFormStateSelector } from 'store/selectors/applicantForm';
 
 import Name from '../components/Name';
-import { ContentWrapper } from '../components';
+import { FormWrapper } from '../components';
 
 import styles from './styles.module.scss';
 
@@ -35,7 +35,7 @@ const FilesForm = (props) => {
     // };
 
     return (
-        <ContentWrapper className={classNames(styles.wrapper, className)}>
+        <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 <AddFile
@@ -47,7 +47,7 @@ const FilesForm = (props) => {
                     value={filesFormState}
                 />
             </form>
-        </ContentWrapper>
+        </FormWrapper>
     );
 };
 

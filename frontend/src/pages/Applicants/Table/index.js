@@ -3,32 +3,47 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Table as CommonTable } from 'components';
+import { Table as CommonTable, PendingWrapper } from 'components';
+
+import { useSelector } from 'react-redux';
+import { getApplicantsSelector } from 'store/selectors/applicants';
+import Salary from './Salary';
+import Name from './Name';
 
 import styles from './styles.module.scss';
 
 const ApplicantTable = (props) => {
-    const { data, className } = props;
+    const { className } = props;
+
+    const { isPending, data } = useSelector(getApplicantsSelector);
+
     const { translate } = useTranslate();
 
     const getColumns = () => [
-        { key: 'id', title: 'ID', width: '5%' },
-        { key: 'salary', title: translate.Salary, width: '47.5%' },
-        { key: 'name', title: translate.Name, width: '47.5%' },
+        { key: 'id', title: 'ID', width: '7%' },
+        { key: 'salary', title: translate.Salary, width: '15%' },
+        { key: 'name', title: translate.Name, width: '78%' },
     ];
 
     const getRows = () => {
-        if (!data?.rows) return [];
-        return data?.rows?.map((row) => ({
+        if (!data) return [];
+        return data?.map((row) => ({
             id: row?.id,
-            salary: row?.salary?.amount,
-            name: row?.name,
+            salary: <Salary value={row?.salary.amount} currency={row?.salary?.currency} />,
+            name: <Name {...row} />,
         }));
     };
 
     return (
         <div className={classNames(styles.applicantsTable, className)}>
-            <CommonTable columns={getColumns()} data={getRows()} selectable={false} />
+            <PendingWrapper isPending={isPending}>
+                <CommonTable
+                    className={styles.tableHolder}
+                    columns={getColumns()}
+                    data={getRows()}
+                    selectable={false}
+                />
+            </PendingWrapper>
         </div>
     );
 };

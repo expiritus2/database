@@ -9,7 +9,7 @@ import { DatePicker } from 'components';
 import styles from './styles.module.scss';
 
 const Period = (props) => {
-    const { className, defaultDate, onChange, name } = props;
+    const { className, onChange, name, value } = props;
     const { translate } = useTranslate();
 
     const onChangeHandler = (e, val) => {
@@ -25,8 +25,8 @@ const Period = (props) => {
                 name={name}
                 label={translate.Period}
                 onChange={onChangeHandler}
+                value={value?.length ? value : undefined}
                 options={{
-                    defaultDate: defaultDate?.length ? defaultDate : undefined,
                     mode: 'range',
                 }}
             />
@@ -36,7 +36,7 @@ const Period = (props) => {
 
 Period.propTypes = {
     className: PropTypes.string,
-    defaultDate: PropTypes.oneOfType([
+    value: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.instanceOf(Date)),
         PropTypes.arrayOf(PropTypes.number),
     ]),
@@ -46,7 +46,7 @@ Period.propTypes = {
 
 Period.defaultProps = {
     className: '',
-    defaultDate: [],
+    value: [],
     onChange: () => {},
     name: undefined,
 };

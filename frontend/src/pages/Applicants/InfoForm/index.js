@@ -10,7 +10,7 @@ import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import { Input, DatePicker, Sex, AddFile, Phones, Emails } from 'components';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
-import { ContentWrapper } from '../components';
+import { FormWrapper } from '../components';
 import Name from '../components/Name';
 
 import styles from './styles.module.scss';
@@ -37,7 +37,7 @@ const InfoForm = (props) => {
     };
 
     return (
-        <ContentWrapper className={classNames(styles.wrapper, className)}>
+        <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 <Input
@@ -60,7 +60,6 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        defaultDate={formFields.birthDate}
                         value={formFields.birthDate}
                     />
                     <Sex
@@ -86,7 +85,7 @@ const InfoForm = (props) => {
                     value={formFields.emails}
                 />
             </form>
-        </ContentWrapper>
+        </FormWrapper>
     );
 };
 

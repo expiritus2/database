@@ -3,31 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getApplicantsEffect } from 'store/effects/applicant';
 import { getApplicantsSelector } from 'store/selectors/applicants';
-import { Header, PendingWrapper } from 'components';
-import { IDLE, PENDING } from 'settings/constants/apiState';
+import { Header, ContentWrapper } from 'components';
 import AddModal from './Modal';
 import Table from './Table';
 
 const Applicants = () => {
-    const applicants = useSelector(getApplicantsSelector);
+    const { isIdle } = useSelector(getApplicantsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (applicants.state === IDLE) {
+        if (isIdle) {
             dispatch(getApplicantsEffect());
         } else {
             dispatch(getApplicantsEffect({}, { silent: true }));
         }
     }, []); // eslint-disable-line
 
-    const isPending = applicants?.state === PENDING;
-
     return (
         <div>
             <Header />
-            <PendingWrapper isPending={isPending}>
-                <Table data={applicants?.data} />
-            </PendingWrapper>
+            <ContentWrapper>
+                <Table />
+            </ContentWrapper>
             <AddModal />
         </div>
     );

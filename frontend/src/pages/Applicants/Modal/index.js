@@ -13,6 +13,7 @@ import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
 
 import { PENDING } from 'settings/constants/apiState';
 import { submitApplicantFormEffect } from 'store/effects/forms/applicant';
+import { getApplicantsEffect } from 'store/effects/applicant';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
 import ProfileForm from '../ProfileForm';
@@ -44,7 +45,12 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        dispatch(submitApplicantFormEffect());
+        dispatch(submitApplicantFormEffect({}, {}, (err) => {
+            if (!err) {
+                dispatch(openModalEffect({ modalId: null, open: true, mode: null }));
+                dispatch(getApplicantsEffect());
+            }
+        }));
     };
 
     const getActions = () => (

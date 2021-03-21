@@ -40,7 +40,7 @@ const TableComponent = (props) => {
     };
 
     return (
-        <div className={classNames(styles.table__holder, className)}>
+        <div className={classNames(styles.tableHolder, className)}>
             <table className={styles.table}>
                 <THead
                     data={data}

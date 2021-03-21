@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
-import { ContentWrapper } from '../components';
+import { FormWrapper } from '../components';
 import Name from '../components/Name';
 
 import styles from './styles.module.scss';
@@ -39,7 +39,7 @@ const ProfileForm = (props) => {
     };
 
     return (
-        <ContentWrapper className={classNames(styles.wrapper, className)}>
+        <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 <FormControlLabel
@@ -47,12 +47,11 @@ const ProfileForm = (props) => {
                     control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'inActiveSearch')} checked={formik.values.inActiveSearch} />}
                     label={translate.InActiveSearch}
                 />
-                <Input
+                <NumberInput
                     name="experienceYears"
-                    type="number"
                     className={styles.field}
-                    label={translate.Experience}
-                    onChange={onChangeField}
+                    label={translate.ExperienceYears}
+                    onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')}
                     value={formFields.experienceYears}
                 />
                 <FormControl className={classNames(styles.field, styles.formControl)}>
@@ -121,7 +120,7 @@ const ProfileForm = (props) => {
                     value={formFields.info}
                 />
             </form>
-        </ContentWrapper>
+        </FormWrapper>
     );
 };
 

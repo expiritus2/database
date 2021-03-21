@@ -7,7 +7,7 @@ import styles from '../../styles.module.scss';
 
 const TR = ({ row, onClickRow, selectable, selections, onSelect, children }) => (
     <tr
-        key={row.id || row.name}
+        key={row.id}
         className={styles.row}
         onClick={(e) => onClickRow && onClickRow(e, row)}
     >
@@ -25,7 +25,6 @@ const TR = ({ row, onClickRow, selectable, selections, onSelect, children }) => 
 TR.propTypes = {
     row: PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        name: PropTypes.string,
     }).isRequired,
     onClickRow: PropTypes.func,
     selectable: PropTypes.bool.isRequired,

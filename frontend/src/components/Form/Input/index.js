@@ -15,6 +15,7 @@ const Input = (props) => {
             value={value}
             variant={variant}
             size={size}
+            autoComplete="off"
             {...otherProps}
         />
     );
