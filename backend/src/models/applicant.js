@@ -22,10 +22,7 @@ const Applicant = sequelize.define('applicant', {
         type: DataTypes.FLOAT,
     },
     salary: {
-        type: DataTypes.FLOAT,
-    },
-    currency: {
-        type: DataTypes.CHAR(100),
+        type: DataTypes.JSONB
     },
     education: {
         type: DataTypes.CHAR(100),

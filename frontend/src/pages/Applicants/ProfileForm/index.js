@@ -60,14 +60,16 @@ const ProfileForm = (props) => {
                         name="salary"
                         className={classNames(styles.salary)}
                         label={translate.Salary}
-                        onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'salary')}
-                        value={formFields.salary}
+                        onValueChange={(values) => onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary')}
+                        value={formFields.salary?.amount}
                     />
                     <Currency
                         name="currency"
                         className={styles.currency}
-                        onChange={onChangeField}
-                        value={formFields.currency}
+                        onChange={(e) => {
+                            onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary');
+                        }}
+                        value={formFields.salary?.currency}
                     />
                 </FormControl>
                 <Education

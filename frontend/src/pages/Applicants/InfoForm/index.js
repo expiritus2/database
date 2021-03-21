@@ -60,6 +60,7 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
+                        defaultDate={formFields.birthDate}
                         value={formFields.birthDate}
                     />
                     <Sex

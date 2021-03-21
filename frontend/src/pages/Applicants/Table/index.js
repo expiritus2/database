@@ -21,7 +21,7 @@ const ApplicantTable = (props) => {
         if (!data?.rows) return [];
         return data?.rows?.map((row) => ({
             id: row?.id,
-            salary: row?.salary,
+            salary: row?.salary?.amount,
             name: row?.name,
         }));
     };
