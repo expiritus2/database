@@ -1,0 +1,11 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.pendingWrapper {
+    height: calc(100vh - #{$header-height});
+}
+
+.tablePagination {
+    position: relative;
+    z-index: 2;
+}

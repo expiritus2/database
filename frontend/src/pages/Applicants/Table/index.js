@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { setCurrentApplicantEffect } from 'store/effects/applicants';
 import { useTranslate } from 'hooks';
-import { Table as CommonTable, PendingWrapper } from 'components';
+import { Table as CommonTable } from 'components';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getApplicantsSelector } from 'store/selectors/applicants';
 import Salary from './Salary';
 import Name from './Name';
@@ -14,8 +15,8 @@ import styles from './styles.module.scss';
 
 const ApplicantTable = (props) => {
     const { className } = props;
-
-    const { isPending, data } = useSelector(getApplicantsSelector);
+    const dispatch = useDispatch();
+    const { data } = useSelector(getApplicantsSelector);
 
     const { translate } = useTranslate();
 
@@ -34,16 +35,19 @@ const ApplicantTable = (props) => {
         }));
     };
 
+    const onClickRow = (event, rowInfo) => {
+        dispatch(setCurrentApplicantEffect({ id: rowInfo?.id }));
+    };
+
     return (
         <div className={classNames(styles.applicantsTable, className)}>
-            <PendingWrapper isPending={isPending}>
-                <CommonTable
-                    className={styles.tableHolder}
-                    columns={getColumns()}
-                    data={getRows()}
-                    selectable={false}
-                />
-            </PendingWrapper>
+            <CommonTable
+                className={styles.tableHolder}
+                columns={getColumns()}
+                data={getRows()}
+                selectable={false}
+                onClickRow={onClickRow}
+            />
         </div>
     );
 };

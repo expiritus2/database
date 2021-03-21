@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Spinner } from 'components';
+import { Spinner } from 'components/index';
 
 import styles from './styles.module.scss';
 

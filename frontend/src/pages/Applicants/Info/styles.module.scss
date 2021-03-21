@@ -1,0 +1,8 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.info {
+    &.scroll {
+        height: calc(100vh - 154px);
+    }
+}

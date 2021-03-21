@@ -1,0 +1,7 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.mainWrapper {
+    display: flex;
+    height: calc(100vh - 64px);
+}

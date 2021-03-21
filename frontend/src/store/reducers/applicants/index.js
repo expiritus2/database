@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
-import { getApplicantsAction } from 'store/actions/applicant';
+import { getApplicantsAction } from 'store/actions/applicants';
 import { get } from 'lodash-es';
 
 const initialData = {

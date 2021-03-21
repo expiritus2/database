@@ -1,4 +1,4 @@
-export { default as PendingWrapper } from './PendingWrapper';
+export { default as PendingWrapper } from './Wrappers/PendingWrapper';
 export { default as App } from './App';
 export { default as AppRouter } from './App/AppRouter';
 export { default as Spinner } from './Spinner';
@@ -30,4 +30,8 @@ export { default as OptionsPopup } from './OptionsPopup';
 export { default as Period } from './Period';
 export { default as Regions } from './Regions';
 export { default as Table } from './Table';
-export { default as ContentWrapper } from './ContentWrapper';
+export { default as ScrollWrapper } from './Wrappers/ScrollWrapper';
+export { default as ContentWrapper } from './Wrappers/ContentWrapper';
+export { default as InfoWrapper } from './Wrappers/InfoWrapper';
+export { default as MainWrapper } from './Wrappers/MainWrapper';
+export { default as TablePagination } from './TablePagination';

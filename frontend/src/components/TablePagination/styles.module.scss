@@ -1,0 +1,8 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.pagination {
+    @include box-shadow;
+    background: lighten($border-gray-color, 20);
+}

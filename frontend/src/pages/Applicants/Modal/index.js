@@ -13,7 +13,7 @@ import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
 
 import { PENDING } from 'settings/constants/apiState';
 import { submitApplicantFormEffect } from 'store/effects/forms/applicant';
-import { getApplicantsEffect } from 'store/effects/applicant';
+import { getApplicantsEffect } from 'store/effects/applicants';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
 import ProfileForm from '../ProfileForm';
@@ -66,7 +66,7 @@ const ModalComponent = ({ className }) => {
             {modal?.mode === EDIT && (
                 <Button isPending={isPending} className={styles.btn} color="secondary">{translate.Delete}</Button>
             )}
-            <Button className={styles.btn}>{translate.Cancel}</Button>
+            <Button onClick={handleClose} className={styles.btn}>{translate.Cancel}</Button>
         </div>
     );
 
