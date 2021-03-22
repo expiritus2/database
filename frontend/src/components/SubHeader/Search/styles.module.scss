@@ -1,0 +1,20 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.searchWrapper {
+    position: relative;
+
+    .searchIcon {
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        transition: all .15s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

@@ -56,4 +56,6 @@ export default {
     Period: 'Период',
     Company: 'Компания',
     Name: 'Имя',
+    Search: 'Поиск',
+    Active: 'Активные',
 };

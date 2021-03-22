@@ -1,11 +1,7 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.header {
-    min-height: 52px;
-    border-bottom: 1px solid $border-light-gray-color;
-
-    .name {
-        color: $primary-color;
-    }
+.name {
+    color: $primary-color;
 }
+

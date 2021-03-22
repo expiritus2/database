@@ -1,0 +1,17 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.header {
+    border-right: 1px solid $border-gray-color;
+    padding-left: setUnit(20);
+    padding-right: setUnit(20);
+
+    .search {
+        width: 30%;
+        min-width: setUnit(400);
+    }
+
+    .actives {
+        margin-left: setUnit(10);
+    }
+}

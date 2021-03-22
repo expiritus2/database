@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
+import { SubheaderWrapper } from 'components';
+
 import PaddingWrapper from '../PaddingWrapper';
 
 import styles from './styles.module.scss';
@@ -15,13 +17,15 @@ const Header = (props) => {
     const applicant = useSelector(getCurrentApplicantSelector);
 
     return (
-        <PaddingWrapper className={classNames(styles.header, className)}>
-            <Typography variant="h5">
-                <Box fontWeight="fontWeightBold" className={styles.name}>
-                    {applicant?.id ? `${applicant?.name} (#${applicant?.id})` : null}
-                </Box>
-            </Typography>
-        </PaddingWrapper>
+        <SubheaderWrapper className={classNames(className)}>
+            <PaddingWrapper>
+                <Typography variant="h5">
+                    <Box fontWeight="fontWeightBold" className={styles.name}>
+                        {applicant?.id ? `${applicant?.name} (#${applicant?.id})` : null}
+                    </Box>
+                </Typography>
+            </PaddingWrapper>
+        </SubheaderWrapper>
     );
 };
 

@@ -11,6 +11,7 @@ import {
     MainWrapper,
     TablePagination,
     PendingWrapper,
+    SubHeader,
 } from 'components';
 import AddModal from './Modal';
 import Table from './Table';
@@ -36,6 +37,7 @@ const Applicants = () => {
             <PendingWrapper className={styles.pendingWrapper} isPending={isPending}>
                 <MainWrapper>
                     <ContentWrapper>
+                        <SubHeader />
                         <ScrollWrapper>
                             <Table />
                         </ScrollWrapper>

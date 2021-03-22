@@ -50,7 +50,7 @@ export class LocationService {
         }
 
         const search = this.getQuery(options);
-        return queryString.stringify({ ...search, ...params }, { sort: false, ...options });
+        return queryString.stringify({ ...search, ...params }, { sort: false, skipEmptyString: true, ...options });
     }
 
     /**

@@ -1,11 +1,15 @@
 import { handleActions } from 'redux-actions';
-import { openModalAction } from 'store/actions/app';
+import { openModalAction, setSearchAction } from 'store/actions/app';
 
 const initialData = {
     modal: {
         id: null,
         open: false,
         mode: null,
+    },
+    search: {
+        string: '',
+        active: false,
     },
 };
 
@@ -16,6 +20,13 @@ export default handleActions({
             id: payload.modalId,
             open: payload.open,
             mode: payload.mode,
+        },
+    }),
+    [setSearchAction]: (state, { payload }) => ({
+        ...state,
+        search: {
+            ...state.search,
+            ...payload,
         },
     }),
 }, initialData);

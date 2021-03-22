@@ -35,3 +35,5 @@ export { default as ContentWrapper } from './Wrappers/ContentWrapper';
 export { default as InfoWrapper } from './Wrappers/InfoWrapper';
 export { default as MainWrapper } from './Wrappers/MainWrapper';
 export { default as TablePagination } from './TablePagination';
+export { default as SubheaderWrapper } from './Wrappers/SubheaderWrapper';
+export { default as SubHeader } from './SubHeader';

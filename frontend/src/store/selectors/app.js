@@ -7,3 +7,8 @@ export const getModalStateSelector = createSelector(
     localState,
     (app) => get(app, 'modal'),
 );
+
+export const getSearchSelector = createSelector(
+    localState,
+    (app) => get(app, 'search'),
+);

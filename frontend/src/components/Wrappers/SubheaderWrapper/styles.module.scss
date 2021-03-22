@@ -1,0 +1,9 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.subheaderWrapper {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border-light-gray-color;
+}

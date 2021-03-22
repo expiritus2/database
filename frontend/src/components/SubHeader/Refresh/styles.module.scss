@@ -1,0 +1,19 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.refresh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .icon {
+        width: 30px;
+        height: 30px;
+        transition: all .15s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
