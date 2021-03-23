@@ -17,3 +17,8 @@ export const getApplicantsSelector = createSelector(
         })),
     }),
 );
+
+export const getApplicantsSearchSelector = createSelector(
+    localState,
+    (applicants) => applicants?.search,
+);

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getApplicantsEffect } from 'store/effects/applicants';
-import { getApplicantsSelector } from 'store/selectors/applicants';
+import { getApplicantsEffect, setApplicantsSearchEffect, requestRefreshApplicantsEffect } from 'store/effects/applicants';
+import { getApplicantsSearchSelector, getApplicantsSelector } from 'store/selectors/applicants';
 import {
     Header,
     ScrollWrapper,
@@ -37,7 +37,11 @@ const Applicants = () => {
             <PendingWrapper className={styles.pendingWrapper} isPending={isPending}>
                 <MainWrapper>
                     <ContentWrapper>
-                        <SubHeader />
+                        <SubHeader
+                            searchEffect={setApplicantsSearchEffect}
+                            searchSelector={getApplicantsSearchSelector}
+                            refreshEffect={requestRefreshApplicantsEffect}
+                        />
                         <ScrollWrapper>
                             <Table />
                         </ScrollWrapper>

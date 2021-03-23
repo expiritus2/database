@@ -1,38 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FcSearch } from 'react-icons/fc';
-import { useDispatch } from 'react-redux';
-import { setSearchEffect } from 'store/effects/app';
-import { useLocation, useHistory } from 'react-router-dom';
-import { LocationService } from 'services';
 import { useTranslate } from 'hooks';
 import { Input } from 'components';
 
 import styles from './styles.module.scss';
 
-const locationService = new LocationService();
-
 const Search = (props) => {
-    const { className } = props;
+    const { search, onSearch, className } = props;
     const { translate } = useTranslate();
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const history = useHistory();
-
-    useEffect(() => {
-        dispatch(setSearchEffect({ string: locationService.getQuery()?.search || '' }));
-    }, []); // eslint-disable-line
-
-    locationService.setLocation(location);
-
-    const onSearch = (event) => {
-        const searchString = event.target.value;
-        const urlWithQuery = locationService.setQuery({ search: searchString });
-        dispatch(setSearchEffect({ string: searchString }));
-        history.replace(urlWithQuery);
-    };
 
     return (
         <div className={classNames(styles.searchWrapper, className)}>
@@ -40,7 +18,7 @@ const Search = (props) => {
                 label={translate.Search}
                 type="search"
                 onChange={onSearch}
-                value={locationService.getQuery()?.search || ''}
+                value={search?.string || ''}
             />
             <FcSearch className={styles.searchIcon} />
         </div>
@@ -49,10 +27,15 @@ const Search = (props) => {
 
 Search.propTypes = {
     className: PropTypes.string,
+    search: PropTypes.shape({
+        string: PropTypes.string,
+    }).isRequired,
+    onSearch: PropTypes.func,
 };
 
 Search.defaultProps = {
     className: '',
+    onSearch: () => {},
 };
 
 export default Search;

@@ -3,20 +3,31 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ScrollWrapper } from 'components';
 
-import styles from './styles.module.scss';
-import Header from './Header';
+import { useSelector } from 'react-redux';
+import { getCurrentApplicantSelector } from 'store/selectors/applicant';
+
+import Name from './Name';
 import Actions from './Actions';
+import Header from './Header';
+import Empty from './Empty';
+
+import styles from './styles.module.scss';
 
 const Info = (props) => {
     const { className } = props;
+    const applicant = useSelector(getCurrentApplicantSelector);
 
     return (
         <>
             <Header />
-            <Actions />
-            <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
-                Base Component
-            </ScrollWrapper>
+            {applicant ? (
+                <>
+                    <Actions />
+                    <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
+                        <Name {...applicant} />
+                    </ScrollWrapper>
+                </>
+            ) : <Empty />}
         </>
     );
 };

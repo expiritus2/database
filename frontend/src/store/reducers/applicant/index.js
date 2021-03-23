@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { resetCurrentApplicantAction, setCurrentApplicantAction } from 'store/actions/applicants';
 
-const initialData = {};
+const initialData = null;
 
 export default handleActions({
     [setCurrentApplicantAction]: (state, { payload }) => ({

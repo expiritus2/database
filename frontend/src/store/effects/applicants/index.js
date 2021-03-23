@@ -1,10 +1,17 @@
 import Api from 'store/effects/core/api';
-import { getApplicantsAction, setCurrentApplicantAction, resetCurrentApplicantAction } from 'store/actions/applicants';
+import {
+    getApplicantsAction,
+    setCurrentApplicantAction,
+    resetCurrentApplicantAction,
+    setApplicantsSearchAction,
+    requestRefreshApplicantsAction,
+} from 'store/actions/applicants';
 import { getApplicants } from 'api/applicants';
 import { getState } from 'store';
 import { get } from 'lodash-es';
 
 export const getApplicantsEffect = (cfg, options = {}, cb) => {
+    const { applicants } = getState();
     const requestParams = { action: getApplicantsAction, method: getApplicants };
 
     let sendRequest = Api.execBase(requestParams);
@@ -13,7 +20,12 @@ export const getApplicantsEffect = (cfg, options = {}, cb) => {
         sendRequest = Api.execResult(requestParams);
     }
 
-    return sendRequest(cfg, options, cb);
+    const config = {
+        search: applicants?.search?.string || undefined,
+        active: applicants?.search?.active || undefined,
+    };
+
+    return sendRequest(config, options, cb);
 };
 
 export const setCurrentApplicantEffect = (cfg) => (dispatch) => {
@@ -28,4 +40,14 @@ export const setCurrentApplicantEffect = (cfg) => (dispatch) => {
 
 export const resetApplicantEffect = () => (dispatch) => {
     dispatch(resetCurrentApplicantAction());
+};
+
+export const setApplicantsSearchEffect = (cfg) => (dispatch) => {
+    dispatch(setApplicantsSearchAction(cfg));
+};
+
+export const requestRefreshApplicantsEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: requestRefreshApplicantsAction, method: getApplicants });
+
+    return sendRequest(cfg, options, cb);
 };

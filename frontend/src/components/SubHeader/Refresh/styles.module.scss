@@ -6,6 +6,18 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    min-width: setUnit(30);
+
+    .pendingWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loader {
+        font-size: setUnit(3);
+        margin: 0;
+    }
 
     .icon {
         width: 30px;

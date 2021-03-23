@@ -3,6 +3,7 @@
 
 .info {
     &.scroll {
-        height: calc(100vh - 166px);
+        height: calc(100vh - 172px);
+        padding: setUnit(16);
     }
 }

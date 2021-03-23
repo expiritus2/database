@@ -1,0 +1,18 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.avatar {
+    width: setUnit(120);
+    min-width: setUnit(120);
+    height: setUnit(140);
+    border: 1px solid $border-gray-color;
+    border-radius: setUnit(5);
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        object-fit: cover;
+    }
+}

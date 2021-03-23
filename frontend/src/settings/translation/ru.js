@@ -24,6 +24,7 @@ export default {
     FIO: 'ФИО',
     FIOLat: 'ФИО Лат.',
     InActiveSearch: 'В активном поиске',
+    InNotActiveSearch: 'Не в активном поиске',
     Salary: 'ЗП',
     Currency: 'Валюта',
     Education: 'Образование',
@@ -58,4 +59,5 @@ export default {
     Name: 'Имя',
     Search: 'Поиск',
     Active: 'Активные',
+    EmptyApplicant: 'Выбирите кандидата',
 };

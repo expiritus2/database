@@ -2,9 +2,9 @@ import React, { forwardRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
+import { useScreen } from 'hooks';
 
 import styles from './styles.module.scss';
-import { useScreen } from '../../hooks';
 
 const OptionsPopup = forwardRef((props, ref) => {
     const { className, children, open, parentRef, offsetTop, offsetLeft } = props;

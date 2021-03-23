@@ -37,3 +37,4 @@ export { default as MainWrapper } from './Wrappers/MainWrapper';
 export { default as TablePagination } from './TablePagination';
 export { default as SubheaderWrapper } from './Wrappers/SubheaderWrapper';
 export { default as SubHeader } from './SubHeader';
+export { default as Avatar } from './Avatar';
