@@ -49,6 +49,7 @@ export default {
     Phone: 'Телефон',
     Private: 'Личный',
     Work: 'Рабочий',
+    Home: 'Личный',
     Type: 'Тип',
     Emails: 'Почтовые ящики',
     AddPhone: 'Добавить телефон',
@@ -60,4 +61,6 @@ export default {
     Search: 'Поиск',
     Active: 'Активные',
     EmptyApplicant: 'Выбирите кандидата',
+    Skype: 'Skype',
+    Years: 'Года',
 };

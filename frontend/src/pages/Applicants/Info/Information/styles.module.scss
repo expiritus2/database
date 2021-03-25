@@ -1,0 +1,11 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.information {
+    margin-top: setUnit(10);
+    border-top: 1px solid $border-gray-color;
+
+    .title {
+        text-align: center;
+    }
+}

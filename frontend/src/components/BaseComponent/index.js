@@ -9,7 +9,7 @@ const BaseComponent = (props) => {
 
     return (
         <div className={classNames(styles.wrapper, className)}>
-            Base Component
+            BaseComponent
         </div>
     );
 };

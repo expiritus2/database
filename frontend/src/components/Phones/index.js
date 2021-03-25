@@ -75,7 +75,7 @@ const Phones = (props) => {
 };
 
 Phones.typeOptions = (translate) => [
-    { value: 'home', label: translate.Private },
+    { value: 'private', label: translate.Private },
     { value: 'work', label: translate.Work },
 ];
 

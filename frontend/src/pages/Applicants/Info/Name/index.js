@@ -21,12 +21,12 @@ const Name = (props) => {
                 <Typography variant="h5">{name}</Typography>
                 <Typography variant="body1">{nameLat}</Typography>
                 <Typography variant="body1">
-                    <Box fontWeight="fontWeightBold">
+                    <Box component="span" fontWeight="fontWeightBold">
                         {inActiveSearch ? translate.InActiveSearch : translate.InNotActiveSearch}
                     </Box>
                 </Typography>
                 <Typography variant="body1">
-                    <Box fontStyle="italic">
+                    <Box component="span" fontStyle="italic">
                         {translate[capitalize(sex)]}
                     </Box>
                 </Typography>

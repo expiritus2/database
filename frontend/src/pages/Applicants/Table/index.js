@@ -4,11 +4,10 @@ import classNames from 'classnames';
 
 import { setCurrentApplicantEffect } from 'store/effects/applicants';
 import { useTranslate } from 'hooks';
-import { Table as CommonTable } from 'components';
+import { Table as CommonTable, Salary } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getApplicantsSelector } from 'store/selectors/applicants';
-import Salary from './Salary';
 import Name from './Name';
 
 import styles from './styles.module.scss';

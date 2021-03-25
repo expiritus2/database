@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 import NumberFormat from 'react-number-format';
 
+import { EU } from 'settings/constants/currency';
 import styles from './styles.module.scss';
-import { EU } from '../../../../settings/constants/currency';
 
 const Salary = (props) => {
     const { value, currency, className } = props;
