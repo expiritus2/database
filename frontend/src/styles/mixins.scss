@@ -11,6 +11,13 @@
     }
 }
 
+@mixin outlinedInput() {
+    padding: 10px 14px;
+    border-radius: setUnit(4);
+    border: 1px solid $border-gray-color;
+    outline: none;
+}
+
 @mixin box-shadow($color: #000000) {
     box-shadow: 0 setUnit(3) setUnit(12) rgba($color, 0.15);
 }

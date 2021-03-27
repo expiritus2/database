@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Currency, NumberInput } from 'components';
+import { Currency, NumberInput } from 'components/index';
 import FormControl from '@material-ui/core/FormControl';
 import styles from './styles.module.scss';
 

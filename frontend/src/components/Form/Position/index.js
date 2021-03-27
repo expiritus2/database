@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { AsyncAutocomplete } from 'components/index';
 
 import { useTranslate } from 'hooks';
-import { AsyncAutocomplete } from 'components';
 
 import { throttle } from 'lodash-es';
 import axios from 'axios';
 
 import styles from './styles.module.scss';
 
-const getThrottle = throttle((val) => axios.get(`http://api.dataatwork.org/v1/skills/autocomplete?begins_with=${val}`), 300);
+const getThrottle = throttle((val) => axios.get(`http://api.dataatwork.org/v1/jobs/autocomplete?begins_with=${val}`), 300);
 
-const Skills = (props) => {
+const Position = (props) => {
     const { className, onChange, value, multiple, defaultValue } = props;
 
     const { translate } = useTranslate();
 
-    const createOptions = (arr) => arr.map(({ suggestion, normalized_skill_name: val }) => ({
+    const createOptions = (arr) => arr.map(({ suggestion, normalized_job_title: val }) => ({
         label: suggestion, value: val,
     }));
+
     return (
         <AsyncAutocomplete
-            label={translate.Skills}
+            label={translate.Position}
             className={classNames(styles.position, className)}
             onChange={onChange}
             value={value}
@@ -30,12 +31,11 @@ const Skills = (props) => {
             defaultValue={defaultValue}
             getThrottle={getThrottle}
             createOptions={createOptions}
-            convertTitleCaseIfNew={false}
         />
     );
 };
 
-Skills.propTypes = {
+Position.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
@@ -43,7 +43,7 @@ Skills.propTypes = {
     defaultValue: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-Skills.defaultProps = {
+Position.defaultProps = {
     className: '',
     onChange: () => {},
     value: undefined,
@@ -51,4 +51,4 @@ Skills.defaultProps = {
     defaultValue: undefined,
 };
 
-export default Skills;
+export default Position;

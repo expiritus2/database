@@ -45,6 +45,7 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
         clonedApplicant.photos = data?.photos;
         clonedApplicant.place = clonedApplicant?.place?.map(({ value }) => value);
         clonedApplicant.birthDate = moment(clonedApplicant?.birthDate?.[0]).valueOf();
+        clonedApplicant.experienceYears = clonedApplicant.experienceYears || undefined;
 
         dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
             if (!err) {

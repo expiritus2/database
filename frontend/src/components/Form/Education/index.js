@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { HIGH_EDUCATION, SECONDARY_EDUCATION } from 'settings/constants/education';
-import { Select } from 'components';
+import { Select } from 'components/index';
 import { useTranslate } from 'hooks';
 
 import styles from './styles.module.scss';

@@ -16,10 +16,7 @@ const Emails = (props) => {
 
     return (
         <div className={classNames(styles.emails, className)}>
-            <Item
-                label={translate.Email}
-                value={emails.join(', ')}
-            />
+            <Item label={translate.Email} value={emails.join(', ')} />
         </div>
     );
 };

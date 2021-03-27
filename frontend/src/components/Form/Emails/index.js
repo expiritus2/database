@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Button, Input } from 'components';
+import { Button, Input } from 'components/index';
 
 import { cloneDeep } from 'lodash-es';
 import styles from './styles.module.scss';

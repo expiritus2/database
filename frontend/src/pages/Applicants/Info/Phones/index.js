@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { capitalize } from 'lodash-es';
 
+import { FormattedPhone } from 'components';
 import { useTranslate } from 'hooks';
-import NumberFormat from 'react-number-format';
 import { Item } from 'pages/Applicants/Info/components';
 
 import styles from './styles.module.scss';
@@ -22,13 +22,7 @@ const Phones = (props) => {
                 <Item
                     key={index}
                     label={translate[capitalize(phone?.type)] || translate.Phone}
-                    value={(
-                        <NumberFormat
-                            displayType="text"
-                            format="+375 (##) ###-##-##"
-                            value={phone?.number}
-                        />
-                    )}
+                    value={<FormattedPhone>{phone?.number}</FormattedPhone>}
                 />
             ))}
         </div>

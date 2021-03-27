@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Autocomplete } from 'components';
+import { Autocomplete } from 'components/index';
 import styles from './styles.module.scss';
 
 const Place = (props) => {

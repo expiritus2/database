@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { AsyncAutocomplete } from 'components';
+import { AsyncAutocomplete } from 'components/index';
 import { intersectionBy, uniqBy } from 'lodash-es';
 
 import { useTranslate } from 'hooks';

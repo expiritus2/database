@@ -21,13 +21,13 @@ class ApplicantController {
 
     async create() {
         try {
-            this.newApplicant = await Applicant.create(this.joinedInfo);
+            this.newApplicant = await Applicant.build(this.joinedInfo);
             this.createPosition();
             this.createSkills();
             this.createExperience();
             this.createRegion();
 
-            return this.newApplicant;
+            return this.newApplicant.save();
         } catch (e) {
             throw new DatabaseCreationError();
         }

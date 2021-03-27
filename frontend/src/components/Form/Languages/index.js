@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Button, Select } from 'components';
+import { Button, Select } from 'components/index';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import Paper from '@material-ui/core/Paper';
@@ -83,6 +83,10 @@ Languages.options = (translate) => [
 Languages.levelOptions = (translate) => [
     { label: translate.Elementary, value: 'elementary' },
     { label: translate.PreIntermediate, value: 'preIntermediate' },
+    { label: translate.Intermediate, value: 'intermediate' },
+    { label: translate.UpperIntermediate, value: 'upperIntermediate' },
+    { label: translate.Advanced, value: 'advanced' },
+    { label: translate.Native, value: 'native' },
 ];
 
 Languages.propTypes = {

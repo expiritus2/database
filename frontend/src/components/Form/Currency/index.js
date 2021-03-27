@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { USD, EU } from 'settings/constants/currency';
 
 import { useTranslate } from 'hooks';
-import { Select } from 'components';
+import { Select } from 'components/index';
 
 import styles from './styles.module.scss';
 

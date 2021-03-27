@@ -21,6 +21,8 @@ const FormattedPhone = (props) => {
                 autocompleteSearch
                 countryCodeEditable
                 disableDropdown
+                specialLabel=""
+                placeholder=""
                 {...options}
             />
         </div>

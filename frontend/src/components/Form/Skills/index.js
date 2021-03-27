@@ -1,29 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { AsyncAutocomplete } from 'components';
 
 import { useTranslate } from 'hooks';
+import { AsyncAutocomplete } from 'components/index';
 
 import { throttle } from 'lodash-es';
 import axios from 'axios';
 
 import styles from './styles.module.scss';
 
-const getThrottle = throttle((val) => axios.get(`http://api.dataatwork.org/v1/jobs/autocomplete?begins_with=${val}`), 300);
+const getThrottle = throttle((val) => axios.get(`http://api.dataatwork.org/v1/skills/autocomplete?begins_with=${val}`), 300);
 
-const Position = (props) => {
+const Skills = (props) => {
     const { className, onChange, value, multiple, defaultValue } = props;
 
     const { translate } = useTranslate();
 
-    const createOptions = (arr) => arr.map(({ suggestion, normalized_job_title: val }) => ({
+    const createOptions = (arr) => arr.map(({ suggestion, normalized_skill_name: val }) => ({
         label: suggestion, value: val,
     }));
-
     return (
         <AsyncAutocomplete
-            label={translate.Position}
+            label={translate.Skills}
             className={classNames(styles.position, className)}
             onChange={onChange}
             value={value}
@@ -31,11 +30,12 @@ const Position = (props) => {
             defaultValue={defaultValue}
             getThrottle={getThrottle}
             createOptions={createOptions}
+            convertTitleCaseIfNew={false}
         />
     );
 };
 
-Position.propTypes = {
+Skills.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
@@ -43,7 +43,7 @@ Position.propTypes = {
     defaultValue: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-Position.defaultProps = {
+Skills.defaultProps = {
     className: '',
     onChange: () => {},
     value: undefined,
@@ -51,4 +51,4 @@ Position.defaultProps = {
     defaultValue: undefined,
 };
 
-export default Position;
+export default Skills;

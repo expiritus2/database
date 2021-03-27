@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 import { useTranslate } from 'hooks';
-import { DatePicker } from 'components';
+import { DatePicker } from 'components/index';
 
 import styles from './styles.module.scss';
 

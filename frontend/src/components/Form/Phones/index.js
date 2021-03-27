@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
-
 import Typography from '@material-ui/core/Typography';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { NumberInput, Select, Button } from 'components';
+import { Select, Button, PhoneInput } from 'components';
+
 import Paper from '@material-ui/core/Paper';
 
 import styles from './styles.module.scss';
@@ -57,12 +57,11 @@ const Phones = (props) => {
                         onChange={(event) => onChangeType(event, index)}
                         value={val?.type || ''}
                     />
-                    <NumberInput
+                    <PhoneInput
                         label={translate.Phone}
                         className={styles.number}
-                        format="+375 (##) ###-##-##"
                         value={val?.number}
-                        onValueChange={({ floatValue }) => onChangeNumber(floatValue, index)}
+                        onChange={(phoneNumber) => onChangeNumber(phoneNumber, index)}
                     />
                     {values?.length > 1 && (
                         <IoIosRemoveCircle onClick={() => onRemove(index)} className={styles.removeIcon} />

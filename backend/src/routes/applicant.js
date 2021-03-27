@@ -4,7 +4,7 @@ const requireAuth = require('../middlewares/require-auth');
 const validateRequest = require('../middlewares/validate-request');
 const Applicant = require('../models/applicant');
 const Position = require('../models/position');
-const Skills = require('../models/skill');
+const Skill = require('../models/skill');
 const Region = require('../models/region');
 const Experience = require('../models/experience');
 
@@ -30,7 +30,7 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
         offset: 0,
         include: [
             { model: Position, attributes: ['id', 'label', 'value'] },
-            { model: Skills, attributes: ['id', 'label', 'value'] },
+            { model: Skill, attributes: ['id', 'label', 'value'] },
             { model: Region, attributes: ['id', 'label', 'value'] },
             { model: Experience, include: [{ model: Position }] },
         ],

@@ -65,7 +65,11 @@ export default {
     EmptyApplicant: 'Выбирите кандидата',
     Skype: 'Skype',
     Years: 'Года',
+    AddLanguage: 'Добавить язык',
     Elementary: 'Elementary',
     PreIntermediate: 'Pre-Intermediate',
-    AddLanguage: 'Добавить язык',
+    Intermediate: 'Intermediate',
+    UpperIntermediate: 'UpperIntermediate',
+    Advanced: 'Advanced',
+    Native: 'Native',
 };
