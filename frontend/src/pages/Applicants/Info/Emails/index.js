@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import NumberFormat from 'react-number-format';
 import { Item } from 'pages/Applicants/Info/components';
 
 import styles from './styles.module.scss';
