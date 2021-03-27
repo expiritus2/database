@@ -1,0 +1,19 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.salaryInput {
+    .formControl {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .salary {
+            width: 100%;
+        }
+
+        .currency {
+            width: 30%;
+            margin-left: setUnit(10);
+        }
+    }
+}

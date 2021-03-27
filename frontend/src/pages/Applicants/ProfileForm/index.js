@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, Currency, NumberInput, Place, Languages, Regions } from 'components';
-import FormControl from '@material-ui/core/FormControl';
+import { Input, Checkbox, Education, Position, Skills, Textarea, NumberInput, Place, Languages, Regions, SalaryInput } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,23 +53,14 @@ const ProfileForm = (props) => {
                     onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')}
                     value={formFields.experienceYears}
                 />
-                <FormControl className={classNames(styles.field, styles.formControl)}>
-                    <NumberInput
-                        name="salary"
-                        className={classNames(styles.salary)}
-                        label={translate.Salary}
-                        onValueChange={(values) => onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary')}
-                        value={formFields.salary?.amount}
-                    />
-                    <Currency
-                        name="currency"
-                        className={styles.currency}
-                        onChange={(e) => {
-                            onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary');
-                        }}
-                        value={formFields.salary?.currency}
-                    />
-                </FormControl>
+                <SalaryInput
+                    className={styles.field}
+                    onChange={(values) => {
+                        onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary');
+                    }}
+                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
+                    value={formFields?.salary}
+                />
                 <Education
                     name="education"
                     className={styles.field}
@@ -109,7 +99,7 @@ const ProfileForm = (props) => {
                     name="languages"
                     className={styles.field}
                     label={translate.Languages}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'languages')}
+                    onChange={(val) => onCustomFieldChange(null, val, 'languages')}
                     value={formFields.languages}
                 />
                 <Textarea

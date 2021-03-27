@@ -7,7 +7,7 @@ import NumberFormat from 'react-number-format';
 import { EU } from 'settings/constants/currency';
 import styles from './styles.module.scss';
 
-const Salary = (props) => {
+const SalaryValue = (props) => {
     const { value, currency, className } = props;
 
     return (
@@ -22,14 +22,14 @@ const Salary = (props) => {
     );
 };
 
-Salary.propTypes = {
+SalaryValue.propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     currency: PropTypes.string.isRequired,
 };
 
-Salary.defaultProps = {
+SalaryValue.defaultProps = {
     className: '',
 };
 
-export default Salary;
+export default SalaryValue;

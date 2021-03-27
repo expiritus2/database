@@ -16,16 +16,10 @@ const Emails = (props) => {
     if (!emails || !emails.length) return null;
 
     return (
-        <div className={classNames(styles.phones, className)}>
+        <div className={classNames(styles.emails, className)}>
             <Item
                 label={translate.Email}
-                value={(
-                    <NumberFormat
-                        displayType="text"
-                        format="+375 (##) ###-##-##"
-                        value={emails.join(', ')}
-                    />
-                )}
+                value={emails.join(', ')}
             />
         </div>
     );

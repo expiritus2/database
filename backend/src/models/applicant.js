@@ -18,7 +18,7 @@ const Applicant = sequelize.define('applicant', {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
-    experience: {
+    experienceYears: {
         type: DataTypes.FLOAT,
     },
     salary: {
@@ -35,8 +35,7 @@ const Applicant = sequelize.define('applicant', {
         type: DataTypes.STRING,
     },
     languages: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
+        type: DataTypes.JSONB,
     },
     info: {
         type: DataTypes.TEXT,

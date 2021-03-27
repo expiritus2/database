@@ -38,4 +38,5 @@ export { default as TablePagination } from './TablePagination';
 export { default as SubheaderWrapper } from './Wrappers/SubheaderWrapper';
 export { default as SubHeader } from './SubHeader';
 export { default as Avatar } from './Avatar';
-export { default as Salary } from './Salary';
+export { default as SalaryValue } from './SalaryValue';
+export { default as SalaryInput } from './SalaryInput';

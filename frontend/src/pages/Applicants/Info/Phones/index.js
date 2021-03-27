@@ -21,7 +21,7 @@ const Phones = (props) => {
             {phones.map((phone, index) => (
                 <Item
                     key={index}
-                    label={translate[capitalize(phone?.type)]}
+                    label={translate[capitalize(phone?.type)] || translate.Phone}
                     value={(
                         <NumberFormat
                             displayType="text"
@@ -39,7 +39,7 @@ Phones.propTypes = {
     className: PropTypes.string,
     phones: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
-        number: PropTypes.number,
+        number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     })).isRequired,
 };
 

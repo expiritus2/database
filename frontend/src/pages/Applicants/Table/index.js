@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { setCurrentApplicantEffect } from 'store/effects/applicants';
 import { useTranslate } from 'hooks';
-import { Table as CommonTable, Salary } from 'components';
+import { Table as CommonTable, SalaryValue } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getApplicantsSelector } from 'store/selectors/applicants';
@@ -29,7 +29,7 @@ const ApplicantTable = (props) => {
         if (!data) return [];
         return data?.map((row) => ({
             id: row?.id,
-            salary: <Salary value={row?.salary.amount} currency={row?.salary?.currency} />,
+            salary: <SalaryValue value={row?.salary.amount} currency={row?.salary?.currency} />,
             name: <Name {...row} />,
         }));
     };

@@ -43,7 +43,6 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
 
         clonedApplicant.files = data?.files;
         clonedApplicant.photos = data?.photos;
-        clonedApplicant.languages = clonedApplicant?.languages?.map(({ value }) => value);
         clonedApplicant.place = clonedApplicant?.place?.map(({ value }) => value);
         clonedApplicant.birthDate = moment(clonedApplicant?.birthDate?.[0]).valueOf();
 

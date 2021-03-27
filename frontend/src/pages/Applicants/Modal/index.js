@@ -47,7 +47,7 @@ const ModalComponent = ({ className }) => {
     const onSubmit = () => {
         dispatch(submitApplicantFormEffect({}, {}, (err) => {
             if (!err) {
-                dispatch(openModalEffect({ modalId: null, open: true, mode: null }));
+                dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
                 dispatch(getApplicantsEffect());
             }
         }));

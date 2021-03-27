@@ -1,7 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, Salary } from 'components';
+import { ScrollWrapper, SalaryValue } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
@@ -27,6 +28,20 @@ const Info = (props) => {
     const { translate } = useTranslate();
     const applicant = useSelector(getCurrentApplicantSelector);
 
+    const getLanguageValue = () => {
+        const applicantLanguages = applicant?.languages;
+        if (!applicant || !applicantLanguages) return [];
+        return applicant.languages.map((language, index) => {
+            if (!language?.name) return null;
+            const name = capitalize(language?.name);
+            return (
+                <div key={index}>
+                    {`${translate[name]}${language?.level ? ` - ${language?.level}` : ''}`}
+                </div>
+            );
+        }).filter((language) => language);
+    };
+
     return (
         <>
             <Header />
@@ -42,7 +57,7 @@ const Info = (props) => {
                             <Item
                                 label={translate.Salary}
                                 value={(
-                                    <Salary
+                                    <SalaryValue
                                         currency={applicant?.salary?.currency}
                                         value={applicant?.salary?.amount}
                                     />
@@ -69,7 +84,7 @@ const Info = (props) => {
                             />
                             <Item
                                 label={translate.Languages}
-                                value={applicant?.languages?.map((language) => translate[capitalize(language)]).join(', ')}
+                                value={getLanguageValue()}
                             />
                             <Information value={applicant?.info} />
                         </div>

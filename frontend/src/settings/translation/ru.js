@@ -36,6 +36,8 @@ export default {
     Regions: 'Регионы',
     Address: 'Адрес',
     Languages: 'Языки',
+    Language: 'Язык',
+    Level: 'Уровень',
     Remote: 'Удаленно',
     Office: 'Офис',
     English: 'Английский',
@@ -63,4 +65,7 @@ export default {
     EmptyApplicant: 'Выбирите кандидата',
     Skype: 'Skype',
     Years: 'Года',
+    Elementary: 'Elementary',
+    PreIntermediate: 'Pre-Intermediate',
+    AddLanguage: 'Добавить язык',
 };

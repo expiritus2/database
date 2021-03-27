@@ -22,7 +22,11 @@ const Item = (props) => {
 Item.propTypes = {
     className: PropTypes.string,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object),
+    ]),
 };
 
 Item.defaultProps = {

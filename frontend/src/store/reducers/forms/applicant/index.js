@@ -26,7 +26,7 @@ const initialData = {
     place: [],
     regions: [],
     address: '',
-    languages: [],
+    languages: [{ name: '', level: '' }],
     info: '',
     nameLat: '',
     photos: [],

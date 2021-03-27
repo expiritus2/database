@@ -1,6 +1,41 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.languages {
+.fieldsArray {
+    padding: setUnit(10);
 
+    .label {
+        margin-bottom: setUnit(5);
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+        margin-bottom: setUnit(15);
+    }
+
+    .language {
+        width: 50%;
+    }
+
+    .level {
+        width: 50%;
+        margin-left: setUnit(10);
+    }
+
+    .addLanguage {
+        width: 100%;
+    }
+
+    .removeIcon {
+        width: setUnit(25);
+        height: setUnit(25);
+        margin-left: setUnit(10);
+        fill: $primary-color;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 }
