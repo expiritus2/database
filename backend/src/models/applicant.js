@@ -45,7 +45,7 @@ const Applicant = sequelize.define('applicant', {
         defaultValue: [],
     },
     birthDate: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.DATE,
     },
     sex: {
         type: DataTypes.STRING,

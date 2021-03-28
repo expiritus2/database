@@ -3,17 +3,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Paper from '@material-ui/core/Paper';
 import { useFormik } from 'formik';
+import { useTranslate } from 'hooks';
+import { cloneDeep } from 'lodash-es';
+import Paper from '@material-ui/core/Paper';
+import { IoIosRemoveCircle } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
+import { experienceInitialData } from 'store/reducers/forms/applicant';
+import { Period, Input, Position, Textarea, Button } from 'components';
 import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';
-import { useTranslate } from 'hooks';
-import { Period, Input, Position, Textarea, Button } from 'components';
-import { cloneDeep } from 'lodash-es';
-import { IoIosRemoveCircle } from 'react-icons/io';
-import { experienceInitialData } from 'store/reducers/forms/applicant';
+
 import { FormWrapper } from '../components';
 
 import Name from '../components/Name';
@@ -61,7 +62,7 @@ const ExperienceForm = (props) => {
                             <Period
                                 name="period"
                                 className={styles.field}
-                                onChange={(e, val, timestamps) => onCustomFieldChange(timestamps, 'period', index)}
+                                onChange={(e, val) => onCustomFieldChange(val, 'period', index)}
                                 value={period}
                             />
                             <Input
@@ -73,7 +74,7 @@ const ExperienceForm = (props) => {
                             />
                             <Position
                                 className={styles.field}
-                                onChange={(e, val) => onCustomFieldChange(val, 'position', index)}
+                                onChange={(e, val) => onCustomFieldChange(val, 'positions', index)}
                                 value={positions}
                             />
                             <Textarea

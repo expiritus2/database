@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import moment from 'moment';
 
 import { useTranslate } from 'hooks';
 import { DatePicker } from 'components/index';
@@ -13,10 +12,7 @@ const Period = (props) => {
     const { translate } = useTranslate();
 
     const onChangeHandler = (e, val) => {
-        const [from, to] = val;
-        const fromTimestamp = moment(from).valueOf();
-        const toTimestamp = moment(to).valueOf();
-        onChange(e, val, [fromTimestamp, toTimestamp]);
+        onChange(e, val);
     };
 
     return (
@@ -25,7 +21,7 @@ const Period = (props) => {
                 name={name}
                 label={translate.Period}
                 onChange={onChangeHandler}
-                value={value?.length ? value.map((date) => +date) : undefined}
+                value={value?.length ? value : undefined}
                 options={{
                     mode: 'range',
                 }}

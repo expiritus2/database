@@ -60,7 +60,7 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={+formFields.birthDate}
+                        value={formFields.birthDate}
                     />
                     <Sex
                         name="sex"

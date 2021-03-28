@@ -13,7 +13,7 @@ import { get } from 'lodash-es';
 export const experienceInitialData = {
     period: [],
     company: '',
-    position: [],
+    positions: [],
     info: '',
 };
 
@@ -61,7 +61,7 @@ export default handleActions({
     }),
     [setApplicantExperienceFormStateAction]: (state, { payload }) => ({
         ...state,
-        experience: payload,
+        experiences: payload,
     }),
     [setApplicantFormDataAction]: (state, { payload }) => ({
         ...state,

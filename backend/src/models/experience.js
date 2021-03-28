@@ -16,7 +16,7 @@ const Experience = sequelize.define('experience', {
         type: DataTypes.TEXT,
     },
     period: {
-        type: DataTypes.ARRAY(DataTypes.BIGINT),
+        type: DataTypes.ARRAY(DataTypes.DATE),
     }
 }, {
     timestamps: true,

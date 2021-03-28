@@ -32,7 +32,12 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
             { model: Position, attributes: ['id', 'label', 'value'] },
             { model: Skill, attributes: ['id', 'label', 'value'] },
             { model: Region, attributes: ['id', 'label', 'value'] },
-            { model: Experience, include: [{ model: Position }] },
+            {
+                model: Experience,
+                include: [
+                    { model: Position }
+                ]
+            },
         ],
     });
 
