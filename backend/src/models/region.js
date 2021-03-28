@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Region = sequelize.define('region', {
+class Region extends Model {}
+
+Region.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -16,8 +18,6 @@ const Region = sequelize.define('region', {
         type: DataTypes.STRING,
         unique: true,
     }
-}, {
-    timestamps: true,
-});
+}, { sequelize, modelName: 'region' });
 
 module.exports = Region;

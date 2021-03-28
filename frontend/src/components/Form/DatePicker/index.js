@@ -63,6 +63,8 @@ DatePicker.propTypes = {
     defaultOptions: PropTypes.shape({}),
     value: PropTypes.oneOfType([
         PropTypes.string,
+        PropTypes.any,
+        PropTypes.arrayOf(PointerEvent.any),
         PropTypes.arrayOf(PropTypes.instanceOf(Date)),
         PropTypes.number,
         PropTypes.arrayOf(PropTypes.number),

@@ -1,7 +1,9 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../util/database');
 
-const Applicant = sequelize.define('applicant', {
+class Applicant extends Model {}
+
+Applicant.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -61,9 +63,7 @@ const Applicant = sequelize.define('applicant', {
     phones: {
         type: DataTypes.JSONB,
     }
-}, {
-    timestamps: true,
-});
+}, { sequelize, modelName: 'applicant' });
 
 module.exports = Applicant;
 

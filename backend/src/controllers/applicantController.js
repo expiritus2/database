@@ -19,67 +19,80 @@ class ApplicantController {
         this.joinedInfo = { ...this.flatProfile };
     }
 
-    async create() {
-        try {
-            this.newApplicant = await Applicant.create(this.joinedInfo);
-            this.createExperience();
-            this.createPosition();
-            this.createSkills();
-            this.createRegion();
+    create(options = {}) {
+        return new Promise(async (resolve) => {
+            try {
+                this.newApplicant = await Applicant.create(this.joinedInfo, options);
+                await this.createPosition();
+                await this.createSkills();
+                await this.createRegion();
+                await this.createExperience();
 
-            return this.newApplicant;
-        } catch (e) {
-            throw new DatabaseCreationError();
-        }
-    }
-
-    async createPosition() {
-        for await (const pos of this.positions) {
-            this.savedPosition = await Position.findOne({ where: { value: pos.value } });
-            if (!this.savedPosition) {
-                this.savedPosition = await Position.create(pos);
+                resolve(this.newApplicant);
+            } catch (e) {
+                throw new DatabaseCreationError();
             }
-
-            await this.newApplicant.addPosition(this.savedPosition);
-        }
+        });
     }
 
-    async createSkills() {
-        for await (const skill of this.skills) {
-            this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
-            if (!this.savedSkill) {
-                this.savedSkill = await Skill.create(skill);
-            }
-
-            await this.newApplicant.addSkill(this.savedSkill);
-        }
-    }
-
-    async createExperience() {
-        for await (const exp of this.experiences) {
-            console.log(JSON.stringify(exp, undefined, 2));
-            this.savedExperience = await Experience.create(exp);
-            await this.newApplicant.addExperience(this.savedExperience);
-
-            for await (const pos of exp.positions) {
+    createPosition() {
+        return new Promise(async (resolve) => {
+            for await (const pos of this.positions) {
                 this.savedPosition = await Position.findOne({ where: { value: pos.value } });
                 if (!this.savedPosition) {
                     this.savedPosition = await Position.create(pos);
                 }
-                await this.savedExperience.addPosition(this.savedPosition);
+
+                await this.newApplicant.addPosition(this.savedPosition);
             }
-        }
+            resolve(this.savedPosition);
+        });
+    }
+
+    createSkills() {
+        return new Promise(async (resolve) => {
+            for await (const skill of this.skills) {
+                this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
+                if (!this.savedSkill) {
+                    this.savedSkill = await Skill.create(skill);
+                }
+
+                await this.newApplicant.addSkill(this.savedSkill);
+            }
+            resolve(this.savedSkill);
+        });
+    }
+
+    createExperience() {
+        return new Promise(async (resolve) => {
+            for await (const exp of this.experiences) {
+                this.savedExperience = await Experience.create(exp);
+                await this.newApplicant.addExperience(this.savedExperience);
+
+                for await (const pos of exp.positions) {
+                    this.savedPosition = await Position.findOne({ where: { value: pos.value } });
+                    if (!this.savedPosition) {
+                        this.savedPosition = await Position.create(pos);
+                    }
+                    await this.savedExperience.addPosition(this.savedPosition);
+                }
+            }
+            resolve(this.savedExperience);
+        })
     }
 
     async createRegion() {
-        for await (const region of this.regions) {
-            this.savedRegion = await Region.findOne({ where: { value: region.value } });
+        return new Promise(async (resolve) => {
+            for await (const region of this.regions) {
+                this.savedRegion = await Region.findOne({ where: { value: region.value } });
 
-            if (!this.savedRegion) {
-                this.savedRegion = await Region.create(region);
+                if (!this.savedRegion) {
+                    this.savedRegion = await Region.create(region);
+                }
+                await this.newApplicant.addRegion(this.savedRegion);
             }
-            await this.newApplicant.addRegion(this.savedRegion);
-        }
+            resolve(this.savedRegion);
+        });
     }
 }
 

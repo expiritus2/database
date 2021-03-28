@@ -6,7 +6,18 @@ const { ADMIN, SUPER_ADMIN } = require('../constants/roles');
 
 const sequelize = require('../util/database');
 
-const User = sequelize.define('user', {
+class User extends Model {
+    validPassword(password) {
+        return bcrypt.compareSync(password, this.password)
+    }
+
+    isSuperAdmin(email) {
+        const superAdminEmail = JSON.parse(process.env.SUPER_ADMIN_EMAILS);
+        return superAdminEmail.includes(email);
+    }
+}
+
+User.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -26,18 +37,7 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         defaultValue: ADMIN,
     }
-}, {
-    timestamps: true,
-});
-
-User.prototype.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password)
-}
-
-User.prototype.isSuperAdmin = function (email) {
-    const superAdminEmail = JSON.parse(process.env.SUPER_ADMIN_EMAILS);
-    return superAdminEmail.includes(email);
-}
+}, { sequelize, modelName: 'user' });
 
 User.beforeCreate((user) => {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);

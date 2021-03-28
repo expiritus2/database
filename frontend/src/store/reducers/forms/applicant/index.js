@@ -61,7 +61,7 @@ export default handleActions({
     }),
     [setApplicantExperienceFormStateAction]: (state, { payload }) => ({
         ...state,
-        experiences: payload,
+        experiences: [...payload],
     }),
     [setApplicantFormDataAction]: (state, { payload }) => ({
         ...state,

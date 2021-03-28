@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Position = sequelize.define('position', {
+class Position extends Model {}
+
+Position.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -15,8 +17,6 @@ const Position = sequelize.define('position', {
     value: {
         type: DataTypes.CHAR(255),
     }
-}, {
-    timestamps: true,
-});
+}, { sequelize, modelName: 'position' });
 
 module.exports = Position;

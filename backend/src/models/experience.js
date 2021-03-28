@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Experience = sequelize.define('experience', {
+class Experience extends Model {}
+
+Experience.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -18,8 +20,6 @@ const Experience = sequelize.define('experience', {
     period: {
         type: DataTypes.ARRAY(DataTypes.DATE),
     }
-}, {
-    timestamps: true,
-});
+}, { sequelize, modelName: 'experience' });
 
 module.exports = Experience;

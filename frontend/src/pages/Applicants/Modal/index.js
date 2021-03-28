@@ -12,7 +12,11 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
 
 import { PENDING } from 'settings/constants/apiState';
-import { submitApplicantFormEffect, updateApplicantFormEffect, resetApplicantFormEffect } from 'store/effects/forms/applicant';
+import {
+    submitApplicantFormEffect,
+    updateApplicantFormEffect,
+    resetApplicantFormEffect,
+} from 'store/effects/forms/applicant';
 import { getApplicantsEffect } from 'store/effects/applicants';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
