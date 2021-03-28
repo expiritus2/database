@@ -9,7 +9,7 @@ export const getApplicantFormSelector = createSelector(
 
 export const getApplicantExperienceFormStateSelector = createSelector(
     getApplicantFormSelector,
-    (applicant) => applicant?.experience,
+    (applicant) => applicant?.experiences,
 );
 
 export const getApplicantFilesFormStateSelector = createSelector(

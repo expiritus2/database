@@ -18,7 +18,7 @@ const Education = (props) => {
                 name={name}
                 label={translate.Education}
                 options={Education.options(translate)}
-                value={value}
+                value={value?.trim()}
                 onChange={onChange}
             />
         </div>

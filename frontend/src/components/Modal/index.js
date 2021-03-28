@@ -13,7 +13,7 @@ import Card from '@material-ui/core/Card';
 import styles from './styles.module.scss';
 
 const ModalComponent = (props) => {
-    const { className, children, open, onClose, closeAfterTransition } = props;
+    const { className, children, open, onClose, closeAfterTransition, title } = props;
     const { cardClassName, cardHeaderClassName, cardContentClassName, cardActionsClassName } = props;
     const { actionsChildren } = props;
 
@@ -27,7 +27,7 @@ const ModalComponent = (props) => {
             <Card className={classNames(styles.card, cardClassName)}>
                 <CardHeader
                     className={cardHeaderClassName}
-                    title="Добавить"
+                    title={title}
                     action={(
                         <IconButton onClick={onClose} aria-label="settings">
                             <Close />
@@ -56,6 +56,7 @@ ModalComponent.propTypes = {
     onClose: PropTypes.func,
     closeAfterTransition: PropTypes.bool,
     actionsChildren: PropTypes.node,
+    title: PropTypes.string,
 };
 
 ModalComponent.defaultProps = {
@@ -67,6 +68,7 @@ ModalComponent.defaultProps = {
     onClose: PropTypes.func,
     closeAfterTransition: true,
     actionsChildren: undefined,
+    title: '',
 };
 
 export default ModalComponent;

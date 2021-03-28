@@ -8,7 +8,9 @@
     border-radius: setUnit(5);
     position: fixed;
     background: #ffffff;
-    width: setUnit(150);
+    min-width: setUnit(150);
+    max-width: setUnit(600);
+    width: fit-content;
     z-index: 9999;
     opacity: 0;
     animation-name: fade-in;

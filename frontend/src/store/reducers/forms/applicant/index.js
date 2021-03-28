@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions';
 import {
-    resetApplicantFormSelector,
+    resetApplicantFormAction,
     setApplicantExperienceFormStateAction,
     setApplicantFormStateAction,
     submitApplicantFormAction,
     uploadFilesAction,
+    setApplicantFormDataAction,
 } from 'store/actions/forms/applicant';
 import { IDLE } from 'settings/constants/apiState';
 import { get } from 'lodash-es';
@@ -21,7 +22,7 @@ const initialData = {
     inActiveSearch: false,
     salary: { amount: '', currency: '' },
     education: '',
-    position: [],
+    positions: [],
     skills: [],
     place: [],
     regions: [],
@@ -36,7 +37,7 @@ const initialData = {
     emails: [''],
     files: [],
     experienceYears: '',
-    experience: [
+    experiences: [
         experienceInitialData,
     ],
     state: IDLE,
@@ -62,5 +63,9 @@ export default handleActions({
         ...state,
         experience: payload,
     }),
-    [resetApplicantFormSelector]: () => initialData,
+    [setApplicantFormDataAction]: (state, { payload }) => ({
+        ...state,
+        ...payload,
+    }),
+    [resetApplicantFormAction]: () => initialData,
 }, initialData);

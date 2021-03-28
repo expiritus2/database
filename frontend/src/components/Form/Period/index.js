@@ -25,7 +25,7 @@ const Period = (props) => {
                 name={name}
                 label={translate.Period}
                 onChange={onChangeHandler}
-                value={value?.length ? value : undefined}
+                value={value?.length ? value.map((date) => +date) : undefined}
                 options={{
                     mode: 'range',
                 }}
@@ -39,6 +39,7 @@ Period.propTypes = {
     value: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.instanceOf(Date)),
         PropTypes.arrayOf(PropTypes.number),
+        PropTypes.arrayOf(PropTypes.string),
     ]),
     onChange: PropTypes.func,
     name: PropTypes.string,

@@ -1,15 +1,16 @@
-import moment from 'moment';
 import Api from 'store/effects/core/api';
 import {
     setApplicantExperienceFormStateAction,
     submitApplicantFormAction,
     uploadFilesAction,
     setApplicantFormStateAction,
-    resetApplicantFormSelector,
+    resetApplicantFormAction,
+    setApplicantFormDataAction,
+    updateApplicantFormAction,
 } from 'store/actions/forms/applicant';
-import { createApplicant, uploadFiles } from 'api/applicants';
+import { createApplicant, updateApplicant, uploadFiles } from 'api/applicants';
 import { getState } from 'store/index';
-import { cloneDeep } from 'lodash-es';
+import { prepareData } from './helpers';
 
 export const setApplicantFormStateEffect = (cfg) => (dispatch) => {
     dispatch(setApplicantFormStateAction(cfg));
@@ -20,7 +21,7 @@ export const setApplicantExperienceFormStateEffect = (cfg) => (dispatch) => {
 };
 
 export const resetApplicantFormEffect = () => (dispatch) => {
-    dispatch(resetApplicantFormSelector());
+    dispatch(resetApplicantFormAction());
 };
 
 export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
@@ -38,14 +39,8 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
     });
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data } = response || {};
-        const clonedApplicant = cloneDeep(applicant);
-
-        clonedApplicant.files = data?.files;
-        clonedApplicant.photos = data?.photos;
-        clonedApplicant.place = clonedApplicant?.place?.map(({ value }) => value);
-        clonedApplicant.birthDate = moment(clonedApplicant?.birthDate?.[0]).valueOf();
-        clonedApplicant.experienceYears = clonedApplicant.experienceYears || undefined;
+        const { data: uploadedFiles } = response || {};
+        const clonedApplicant = prepareData(applicant, uploadedFiles);
 
         dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
             if (!err) {
@@ -55,4 +50,36 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
             cb?.(err, resp);
         }));
     }));
+};
+
+export const updateApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
+    const sendUploadFiles = Api.execBase({ action: uploadFilesAction, method: uploadFiles });
+    const sendRequest = Api.execBase({ action: updateApplicantFormAction, method: updateApplicant });
+    const { forms: { applicant } } = getState();
+
+    const formData = new FormData();
+    applicant?.files?.filter((file) => file instanceof File).forEach((file) => {
+        formData.append('files', file);
+    });
+
+    applicant?.photos?.filter((file) => file instanceof File).forEach((photo) => {
+        formData.append('photos', photo);
+    });
+
+    dispatch(sendUploadFiles(formData, options, (error, response) => {
+        const { data: uploadedFiles } = response || {};
+        const clonedApplicant = prepareData(applicant, uploadedFiles);
+
+        dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
+            if (!err) {
+                dispatch(resetApplicantFormEffect());
+            }
+
+            cb?.(err, resp);
+        }));
+    }));
+};
+
+export const setApplicantFormDataEffect = (cfg) => (dispatch) => {
+    dispatch(setApplicantFormDataAction(cfg));
 };

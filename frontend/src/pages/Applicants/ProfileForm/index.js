@@ -69,8 +69,8 @@ const ProfileForm = (props) => {
                 />
                 <Position
                     className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
-                    value={formFields.position}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
+                    value={formFields.positions}
                 />
                 <Skills
                     className={styles.field}

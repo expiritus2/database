@@ -72,4 +72,9 @@ export default {
     UpperIntermediate: 'UpperIntermediate',
     Advanced: 'Advanced',
     Native: 'Native',
+    AddEvent: 'Добавить событие',
+    PrintCard: 'Распечатать карточку',
+    CopyCard: 'Копировать карточку',
+    CopyText: 'Копировать текст',
+    History: 'История',
 };

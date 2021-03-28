@@ -55,7 +55,7 @@ const ExperienceForm = (props) => {
         <FormWrapper className={classNames(styles.experienceForm, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
-                {experienceFormState?.map(({ period, company, position, info }, index) => (
+                {experienceFormState?.map(({ period, company, positions, info }, index) => (
                     <Paper key={index} className={styles.block} elevation={3}>
                         <div className={styles.fields}>
                             <Period
@@ -74,7 +74,7 @@ const ExperienceForm = (props) => {
                             <Position
                                 className={styles.field}
                                 onChange={(e, val) => onCustomFieldChange(val, 'position', index)}
-                                value={position}
+                                value={positions}
                             />
                             <Textarea
                                 name="info"

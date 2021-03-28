@@ -37,6 +37,10 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
     });
 
     res.send({ result: allApplicants });
+});
+
+router.put('/api/applicants/:id/update', async (req, res) => {
+    res.send({ success: true });
 })
 
 module.exports = {

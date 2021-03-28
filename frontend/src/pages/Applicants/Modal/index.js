@@ -12,7 +12,7 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
 
 import { PENDING } from 'settings/constants/apiState';
-import { submitApplicantFormEffect } from 'store/effects/forms/applicant';
+import { submitApplicantFormEffect, updateApplicantFormEffect, resetApplicantFormEffect } from 'store/effects/forms/applicant';
 import { getApplicantsEffect } from 'store/effects/applicants';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
@@ -32,6 +32,10 @@ const ModalComponent = ({ className }) => {
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));
+
+        if (modal.mode === EDIT) {
+            dispatch(resetApplicantFormEffect());
+        }
     };
 
     const getTitle = () => {
@@ -45,7 +49,11 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        dispatch(submitApplicantFormEffect({}, {}, (err) => {
+        let effect = submitApplicantFormEffect;
+        if (modal.mode === EDIT) {
+            effect = updateApplicantFormEffect;
+        }
+        dispatch(effect({}, {}, (err) => {
             if (!err) {
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
                 dispatch(getApplicantsEffect());
@@ -63,16 +71,13 @@ const ModalComponent = ({ className }) => {
             >
                 {translate.Save}
             </Button>
-            {modal?.mode === EDIT && (
-                <Button isPending={isPending} className={styles.btn} color="secondary">{translate.Delete}</Button>
-            )}
             <Button onClick={handleClose} className={styles.btn}>{translate.Cancel}</Button>
         </div>
     );
 
     return (
         <Modal
-            title={getTitle}
+            title={getTitle()}
             className={classNames(className)}
             open={location.pathname === modal.id && modal.open}
             onClose={handleClose}

@@ -52,7 +52,7 @@ const InfoForm = (props) => {
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={formFields.photos}
+                    value={formFields.photos.map((photo) => ({ url: photo }))}
                 />
                 <div className={styles.block}>
                     <DatePicker
@@ -60,7 +60,7 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={formFields.birthDate}
+                        value={+formFields.birthDate}
                     />
                     <Sex
                         name="sex"

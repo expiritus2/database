@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 const AddFile = (props) => {
     const { className, onChange, value, variant } = props;
     const { translate } = useTranslate();
-    const [previewValues, setPreviewValues] = useState([]);
+    const [previewValues, setPreviewValues] = useState(value);
     const [filesValue, setFilesValue] = useState(value || []);
 
     useEffect(() => {

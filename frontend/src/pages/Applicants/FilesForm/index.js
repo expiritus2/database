@@ -44,7 +44,7 @@ const FilesForm = (props) => {
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
-                    value={filesFormState}
+                    value={filesFormState?.map((file) => ({ url: file }))}
                 />
             </form>
         </FormWrapper>

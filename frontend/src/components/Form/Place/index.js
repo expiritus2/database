@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -9,7 +9,11 @@ import styles from './styles.module.scss';
 const Place = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
-    const [defaultValue] = useState(value);
+
+    const getDefaultValue = useCallback(() => value.map((val) => {
+        if (val?.value) return val;
+        return Place.options(translate).find((option) => option?.value === val);
+    }), []); // eslint-disable-line
 
     return (
         <div className={classNames(styles.placeWrapper, className)}>
@@ -18,7 +22,7 @@ const Place = (props) => {
                 label={translate.Place}
                 options={Place.options(translate)}
                 onChange={onChange}
-                defaultValue={defaultValue}
+                defaultValue={getDefaultValue()}
                 getOptionSelected={(option, val) => option?.value === val?.value}
                 filterSelectedOptions
             />

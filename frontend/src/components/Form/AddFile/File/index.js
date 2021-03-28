@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { downloadFile } from 'helpers';
 import { CgSoftwareDownload } from 'react-icons/cg';
 import { OptionsPopup } from 'components';
 import Typography from '@material-ui/core/Typography';
@@ -31,7 +32,7 @@ const File = (props) => {
     };
 
     const getIcon = () => {
-        if (file.name.endsWith('.csv')) {
+        if (file?.name?.endsWith('.csv')) {
             return (
                 <div ref={csvRef}>
                     <GrDocumentCsv
@@ -52,7 +53,7 @@ const File = (props) => {
     };
 
     const onDownload = () => {
-
+        downloadFile().byLink(file?.url);
     };
 
     const onDeleteHandler = (event) => {
@@ -85,6 +86,7 @@ File.propTypes = {
     className: PropTypes.string,
     file: PropTypes.shape({
         name: PropTypes.string,
+        url: PropTypes.string,
     }).isRequired,
     onDelete: PropTypes.func,
 };
