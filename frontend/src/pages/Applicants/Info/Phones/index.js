@@ -22,7 +22,7 @@ const Phones = (props) => {
                 <Item
                     key={index}
                     label={translate[capitalize(phone?.type)] || translate.Phone}
-                    value={<FormattedPhone>{phone?.number}</FormattedPhone>}
+                    value={phone?.number && <FormattedPhone>{phone?.number}</FormattedPhone>}
                 />
             ))}
         </div>

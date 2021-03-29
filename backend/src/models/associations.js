@@ -14,8 +14,8 @@ function createAssociations() {
     Applicant.belongsToMany(Region, { through: 'applicant_region' });
     Region.belongsToMany(Applicant, { through: 'applicant_region' })
 
-    Applicant.belongsToMany(Experience, { through: 'applicant_experience' });
-    Experience.belongsToMany(Applicant, { through: 'applicant_experience' })
+    Applicant.hasMany(Experience);
+    Experience.belongsTo(Applicant)
 
     Experience.belongsToMany(Position, { through: 'experience_position' });
     Position.belongsToMany(Experience, { through: 'experience_position' });

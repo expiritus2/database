@@ -35,8 +35,11 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
     res.send({ result: allApplicants });
 });
 
-router.put('/api/applicants/:id/update', async (req, res) => {
-    res.send({ success: true });
+router.put('/api/applicants/:id', async (req, res) => {
+    const savedApplicant = new ApplicantController(req.body);
+    const updatedApplicant = await savedApplicant.update(req.params.id);
+
+    res.send(updatedApplicant);
 })
 
 module.exports = {
