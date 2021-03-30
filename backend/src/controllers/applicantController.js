@@ -14,19 +14,17 @@ class ApplicantController {
         this.positions = this.body.positions;
         this.experiences = this.body.experiences;
 
-        this.flatProfile = omit(this.body, ['regions', 'skills', 'positions', 'experiences']);
-
-        this.joinedInfo = { ...this.flatProfile };
+        this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions', 'experiences']);
     }
 
     create(options = {}) {
         return new Promise(async (resolve) => {
             try {
                 this.newApplicant = await Applicant.create(this.joinedInfo, options);
-                await this.handlePosition();
+                await this.handlePositions(this.positions, this.newApplicant);
                 await this.handleSkills();
-                await this.handleRegion();
-                await this.createExperience();
+                await this.handleRegions();
+                await this.handleExperiences();
 
                 resolve(this.newApplicant);
             } catch (e) {
@@ -42,10 +40,10 @@ class ApplicantController {
                 this.newApplicant = await Applicant.findByPk(id, { include: { all: true, nested: true }});
 
                 if (this.newApplicant) {
-                    await this.handlePosition(true);
+                    await this.handlePositions(this.positions, this.newApplicant, true);
                     await this.handleSkills(true);
-                    await this.handleRegion(true);
-                    await this.createExperience(true);
+                    await this.handleRegions(true);
+                    await this.handleExperiences(true);
                 }
 
                 resolve(this.newApplicant);
@@ -56,25 +54,20 @@ class ApplicantController {
         });
     }
 
-    handlePosition(isUpdate) {
+    handlePositions(positions, parentModel, isUpdate) {
         return new Promise(async (resolve) => {
-            for await (const pos of this.positions) {
-                this.savedPosition = await Position.findOne({ where: { value: pos.value } });
-                if (!this.savedPosition) {
-                    this.savedPosition = await Position.create(pos);
-                }
+            if (positions && !positions.length) {
+                await this._deleteRemovedPositions(positions, parentModel);
+            }
+
+            for await (const pos of positions) {
+                await this._findOrCreatePosition(pos);
 
                 if (isUpdate) {
-                    for await (const prevPos of this.newApplicant.positions) {
-                        const newPositionsIds = this.positions.map((position) => position.id);
-                        if (!newPositionsIds.includes(prevPos.id)) {
-                            await this.newApplicant.removePosition(prevPos);
-                        }
-                    }
-
-                    await this.newApplicant.addPosition(this.savedPosition);
+                    await this._deleteRemovedPositions(positions, parentModel);
+                    await parentModel.addPosition(this.savedPosition);
                 } else {
-                    await this.newApplicant.addPosition(this.savedPosition);
+                    await parentModel.addPosition(this.savedPosition);
                 }
             }
             resolve(this.savedPosition);
@@ -84,19 +77,10 @@ class ApplicantController {
     handleSkills(isUpdate) {
         return new Promise(async (resolve) => {
             for await (const skill of this.skills) {
-                this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
-                if (!this.savedSkill) {
-                    this.savedSkill = await Skill.create(skill);
-                }
+                await this._findOrCreateSkill(skill);
 
                 if (isUpdate) {
-                    for await (const prevSkill of this.newApplicant.skills) {
-                        const newSkillsIds = this.skills.map((skills) => skills.id);
-                        if (!newSkillsIds.includes(prevSkill.id)) {
-                            await this.newApplicant.removeSkill(prevSkill);
-                        }
-                    }
-
+                    await this._deleteRemovedApplicantSkills();
                     await this.newApplicant.addSkill(this.savedSkill);
                 } else {
                     await this.newApplicant.addSkill(this.savedSkill);
@@ -106,22 +90,13 @@ class ApplicantController {
         });
     }
 
-    async handleRegion(isUpdate) {
+    async handleRegions(isUpdate) {
         return new Promise(async (resolve) => {
             for await (const region of this.regions) {
-                this.savedRegion = await Region.findOne({ where: { value: region.value } });
-
-                if (!this.savedRegion) {
-                    this.savedRegion = await Region.create(region);
-                }
+                await this._findOrCreateRegion(region);
 
                 if (isUpdate) {
-                    for await (const prevRegion of this.newApplicant.regions) {
-                        const newRegionsIds = this.regions.map((region) => region.id);
-                        if (!newRegionsIds.includes(prevRegion.id)) {
-                            await this.newApplicant.removeRegion(prevRegion);
-                        }
-                    }
+                    await this._deleteRemovedApplicantRegion();
                     await this.newApplicant.addRegion(this.savedRegion);
                 } else {
                     await this.newApplicant.addRegion(this.savedRegion);
@@ -131,27 +106,108 @@ class ApplicantController {
         });
     }
 
-    createExperience(isUpdate) {
+    handleExperiences(isUpdate) {
         return new Promise(async (resolve) => {
-            for await (const exp of this.experiences) {
-                this.savedExperience = await Experience.findOne({ where: { applicantId: this.newApplicant.id }});
+            if (isUpdate) {
+                await this._deleteRemovedApplicantExperience();
+            }
 
-                if (!this.savedExperience) {
-                    this.savedExperience = await Experience.create(exp);
-                    await this.savedExperience.setApplicant(this.newApplicant);
-                }
-
-                for await (const pos of exp.positions) {
-                    this.savedPosition = await Position.findOne({ where: { value: pos.value } });
-                    if (!this.savedPosition) {
-                        this.savedPosition = await Position.create(pos);
+            for await (const experience of this.experiences) {
+                if (isUpdate) {
+                    if (experience.id) {
+                        await this._updateExperience(experience);
+                    } else {
+                        await this._findOrCreateApplicantExperience(experience);
+                        await this.savedExperience.setApplicant(this.newApplicant);
+                        await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
                     }
-                    await this.savedExperience.addPosition(this.savedPosition);
+                } else {
+                    await this._findOrCreateApplicantExperience(experience);
+                    await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
                 }
             }
             resolve(this.savedExperience);
         })
-    }v
+    }
+
+    async _findOrCreateRegion(region) {
+        this.savedRegion = await Region.findOne({ where: { value: region.value } });
+
+        if (!this.savedRegion) {
+            this.savedRegion = await Region.create(region);
+        }
+    }
+
+    async _deleteRemovedApplicantRegion() {
+        const newRegionsIds = this.regions.map((region) => region.id);
+        for await (const prevRegion of this.newApplicant.regions) {
+            if (!newRegionsIds.includes(prevRegion.id)) {
+                await this.newApplicant.removeRegion(prevRegion);
+            }
+        }
+    }
+
+    async _findOrCreateSkill(skill) {
+        this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
+        if (!this.savedSkill) {
+            this.savedSkill = await Skill.create(skill);
+        }
+    }
+
+    async _deleteRemovedApplicantSkills() {
+        for await (const prevSkill of this.newApplicant.skills) {
+            const newSkillsIds = this.skills.map((skills) => skills.id);
+            if (!newSkillsIds.includes(prevSkill.id)) {
+                await this.newApplicant.removeSkill(prevSkill);
+            }
+        }
+    }
+
+    async _findOrCreatePosition(position) {
+        this.savedPosition = await Position.findOne({ where: { value: position.value } });
+        if (!this.savedPosition) {
+            this.savedPosition = await Position.create(position);
+        }
+    }
+
+    async _deleteRemovedPositions(positions, parentModel) {
+        for await (const prevPos of parentModel.positions || []) {
+            const newPositionsIds = positions.map((position) => position.id);
+            if (!newPositionsIds.includes(prevPos.id)) {
+                await parentModel.removePosition(prevPos);
+            }
+        }
+    }
+
+    async _deleteRemovedApplicantExperience() {
+        const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id }});
+        const newExperiencesIds = this.experiences.map((experience) => experience.id);
+        for await (const prevExperience of savedExperiences) {
+            if (!newExperiencesIds.includes(prevExperience.id)) {
+                await Experience.destroy({ where: { id: prevExperience.id }});
+            }
+        }
+    }
+
+    async _findOrCreateApplicantExperience(experience) {
+        this.savedExperience = await Experience.findByPk(experience.id);
+
+        if (!this.savedExperience) {
+            this.savedExperience = await Experience.create(experience);
+            await this.savedExperience.setApplicant(this.newApplicant);
+        }
+    }
+
+    async _updateExperience(experience) {
+        const expInfo = omit(experience, 'positions');
+        this.savedExperience = await Experience.findByPk(expInfo.id);
+
+        if (this.savedExperience) {
+            await Experience.update(expInfo, { where: { id: expInfo.id } });
+            this.savedExperience = await Experience.findByPk(expInfo.id, { include: { all: true, nested: true }});
+            await this.handlePositions(experience.positions, this.savedExperience, true);
+        }
+    }
 }
 
 

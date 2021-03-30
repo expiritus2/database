@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
@@ -9,9 +9,6 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { getApplicantFormStateSelector } from 'store/selectors/applicantForm';
-
-import { PENDING } from 'settings/constants/apiState';
 import {
     submitApplicantFormEffect,
     updateApplicantFormEffect,
@@ -29,10 +26,8 @@ const ModalComponent = ({ className }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const modal = useSelector(getModalStateSelector);
-    const state = useSelector(getApplicantFormStateSelector);
     const { translate } = useTranslate();
-
-    const isPending = state === PENDING;
+    const [isPending, setIsPending] = useState();
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));
@@ -57,10 +52,13 @@ const ModalComponent = ({ className }) => {
         if (modal.mode === EDIT) {
             effect = updateApplicantFormEffect;
         }
+        setIsPending(true);
         dispatch(effect({}, {}, (err) => {
             if (!err) {
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getApplicantsEffect());
+                dispatch(getApplicantsEffect({}, {}, () => {
+                    setIsPending(false);
+                }));
             }
         }));
     };

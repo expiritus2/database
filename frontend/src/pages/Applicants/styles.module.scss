@@ -2,7 +2,9 @@
 @import "styles/variables";
 
 .pendingWrapper {
-    height: calc(100vh - #{$header-height});
+    &.isPending {
+        border-right: 1px solid $border-gray-color;
+    }
 }
 
 .tablePagination {

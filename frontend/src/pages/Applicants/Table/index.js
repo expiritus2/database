@@ -19,11 +19,14 @@ const ApplicantTable = (props) => {
 
     const { translate } = useTranslate();
 
-    const getColumns = () => [
-        { key: 'id', title: 'ID', width: '7%' },
-        { key: 'salary', title: translate.Salary, width: '15%' },
-        { key: 'name', title: translate.Name, width: '78%' },
-    ];
+    const getColumns = () => {
+        if (!data) return [];
+        return [
+            { key: 'id', title: 'ID', width: '7%' },
+            { key: 'salary', title: translate.Salary, width: '15%' },
+            { key: 'name', title: translate.Name, width: '78%' },
+        ];
+    };
 
     const getRows = () => {
         if (!data) return [];

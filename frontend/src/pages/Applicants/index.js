@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { getApplicantsEffect, setApplicantsSearchEffect, requestRefreshApplicantsEffect } from 'store/effects/applicants';
 import { getApplicantsSearchSelector, getApplicantsSelector } from 'store/selectors/applicants';
@@ -20,7 +21,7 @@ import Info from './Info';
 import styles from './styles.module.scss';
 
 const Applicants = () => {
-    const { isPending, isIdle } = useSelector(getApplicantsSelector);
+    const { isPending, isIdle, data } = useSelector(getApplicantsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,24 +35,27 @@ const Applicants = () => {
     return (
         <>
             <Header />
-            <PendingWrapper className={styles.pendingWrapper} isPending={isPending}>
-                <MainWrapper>
-                    <ContentWrapper>
-                        <SubHeader
-                            searchEffect={setApplicantsSearchEffect}
-                            searchSelector={getApplicantsSearchSelector}
-                            refreshEffect={requestRefreshApplicantsEffect}
-                        />
-                        <ScrollWrapper>
+            <MainWrapper>
+                <ContentWrapper>
+                    <SubHeader
+                        searchEffect={setApplicantsSearchEffect}
+                        searchSelector={getApplicantsSearchSelector}
+                        refreshEffect={requestRefreshApplicantsEffect}
+                    />
+                    <ScrollWrapper>
+                        <PendingWrapper
+                            className={classNames(styles.pendingWrapper, { [styles.isPending]: isPending })}
+                            isPending={isPending}
+                        >
                             <Table />
-                        </ScrollWrapper>
-                        <TablePagination className={styles.tablePagination} />
-                    </ContentWrapper>
-                    <InfoWrapper>
-                        <Info />
-                    </InfoWrapper>
-                </MainWrapper>
-            </PendingWrapper>
+                        </PendingWrapper>
+                    </ScrollWrapper>
+                    <TablePagination className={styles.tablePagination} />
+                </ContentWrapper>
+                <InfoWrapper>
+                    <Info />
+                </InfoWrapper>
+            </MainWrapper>
             <AddModal />
         </>
     );

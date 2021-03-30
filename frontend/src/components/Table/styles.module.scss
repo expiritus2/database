@@ -34,10 +34,6 @@
             tr {
                 border-bottom: 1px solid #dee2e6;
 
-                &:last-child {
-                    border-bottom: none;
-                }
-
                 &:hover {
                     background-color: $primary-color;
                     color: #ffffff;
