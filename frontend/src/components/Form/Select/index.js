@@ -9,8 +9,9 @@ import Select from '@material-ui/core/Select';
 import styles from './styles.module.scss';
 
 const SelectComponent = (props) => {
-    const { name, options, value, onChange, className, label, multiple } = props;
+    const { name, options, value, onChange, className, label, multiple, defaultValue, isEmptyValue } = props;
     const [focus, setFocus] = useState(false);
+    const [defaultValueVal] = useState(defaultValue);
 
     return (
         <FormControl className={classNames(styles.formControl, className)}>
@@ -20,6 +21,7 @@ const SelectComponent = (props) => {
                 multiple={multiple}
                 className={classNames(styles.wrapper)}
                 value={value}
+                defaultValue={defaultValueVal || undefined}
                 inputProps={{ name }}
                 variant="outlined"
                 onChange={onChange}
@@ -27,7 +29,7 @@ const SelectComponent = (props) => {
                 onBlur={() => setFocus(false)}
             >
                 <>
-                    <option aria-label="None" value="" />
+                    {isEmptyValue && <option aria-label="None" value="" />}
                     {options.map(({ id, label: lb, value: val }, index) => (
                         <option key={id || index} value={val}>{lb}</option>
                     ))}
@@ -41,18 +43,26 @@ SelectComponent.propTypes = {
     className: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        label: PropTypes.string,
+        label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })).isRequired,
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([
         PropTypes.string,
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.shape({})),
+    ]),
+    defaultValue: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.shape({})),
     ]),
     label: PropTypes.string,
     multiple: PropTypes.bool,
+    isEmptyValue: PropTypes.bool,
 };
 
 SelectComponent.defaultProps = {
@@ -60,8 +70,10 @@ SelectComponent.defaultProps = {
     onChange: () => {},
     name: undefined,
     value: undefined,
+    defaultValue: undefined,
     label: '',
     multiple: false,
+    isEmptyValue: true,
 };
 
 export default SelectComponent;

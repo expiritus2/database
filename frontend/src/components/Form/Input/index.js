@@ -12,7 +12,7 @@ const Input = (props) => {
         <TextField
             type={type}
             className={classNames(styles.input, className)}
-            value={value}
+            value={value || ''}
             variant={variant}
             size={size}
             autoComplete="off"

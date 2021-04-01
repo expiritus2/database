@@ -1,78 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import PaginationControls from './PaginationControlls';
+import DisplayControls from './DisplayControls';
 
 import styles from './styles.module.scss';
 
 const PaginationComponent = (props) => {
-    const { className, count, page, rowsPerPage, onChangePage } = props;
+    const { className, count, onChangePage, page } = props;
+    const [rowsPerPageValue, setRowsPerPageValue] = useState(10);
+    const [pageValue, setPageValue] = useState(page);
 
     const handleFirstPageButtonClick = (event) => {
         onChangePage(event, 0);
+        setPageValue(0);
     };
 
     const handleBackButtonClick = (event) => {
-        onChangePage(event, page - 1);
+        onChangePage(event, pageValue - 1);
+        setPageValue(pageValue - 1);
     };
 
     const handleNextButtonClick = (event) => {
-        onChangePage(event, page + 1);
+        onChangePage(event, pageValue + 1);
+        setPageValue(pageValue + 1);
     };
 
     const handleLastPageButtonClick = (event) => {
-        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPageValue) - 1));
+        setPageValue(Math.max(0, Math.ceil(count / rowsPerPageValue) - 1));
+    };
+
+    const onChangeCountPerPage = (event) => {
+        setRowsPerPageValue(+event.target.value);
     };
 
     return (
         <div className={classNames(styles.pagination, className)}>
-            <IconButton
-                onClick={handleFirstPageButtonClick}
-                disabled={page === 0}
-                aria-label="first page"
-            >
-                <FirstPageIcon />
-            </IconButton>
-            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                <KeyboardArrowLeft />
-            </IconButton>
-            <IconButton
-                onClick={handleNextButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="next page"
-            >
-                <KeyboardArrowRight />
-            </IconButton>
-            <IconButton
-                onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="last page"
-            >
-                <LastPageIcon />
-            </IconButton>
+            <PaginationControls
+                handleFirstPageButtonClick={handleFirstPageButtonClick}
+                handleBackButtonClick={handleBackButtonClick}
+                handleNextButtonClick={handleNextButtonClick}
+                handleLastPageButtonClick={handleLastPageButtonClick}
+                page={pageValue}
+                count={count}
+                rowsPerPage={rowsPerPageValue}
+            />
+            <DisplayControls
+                page={pageValue}
+                count={count}
+                rowsPerPage={rowsPerPageValue}
+                onChangeCountPerPage={onChangeCountPerPage}
+            />
         </div>
     );
 };
 
 PaginationComponent.propTypes = {
     className: PropTypes.string,
-    rowsPerPage: PropTypes.number,
-    page: PropTypes.number,
     onChangePage: PropTypes.func,
     count: PropTypes.number,
+    page: PropTypes.number,
 };
 
 PaginationComponent.defaultProps = {
     className: '',
-    rowsPerPage: 10,
-    page: 1,
-    count: 100,
     onChangePage: () => {},
+    count: null,
+    page: 0,
 };
 
 export default PaginationComponent;

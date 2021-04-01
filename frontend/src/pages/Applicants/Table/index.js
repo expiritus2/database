@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 const ApplicantTable = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
-    const { data } = useSelector(getApplicantsSelector);
+    const { data, count } = useSelector(getApplicantsSelector);
 
     const { translate } = useTranslate();
 
@@ -32,7 +32,7 @@ const ApplicantTable = (props) => {
         if (!data) return [];
         return data?.map((row) => ({
             id: row?.id,
-            salary: <SalaryValue value={row?.salary.amount} currency={row?.salary?.currency} />,
+            salary: <SalaryValue value={row?.salary?.amount} currency={row?.salary?.currency} />,
             name: <Name {...row} />,
         }));
     };
@@ -45,6 +45,7 @@ const ApplicantTable = (props) => {
         <div className={classNames(styles.applicantsTable, className)}>
             <CommonTable
                 className={styles.tableHolder}
+                count={count}
                 columns={getColumns()}
                 data={getRows()}
                 selectable={false}

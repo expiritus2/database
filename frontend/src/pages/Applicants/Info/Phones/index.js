@@ -34,11 +34,12 @@ Phones.propTypes = {
     phones: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    })).isRequired,
+    })),
 };
 
 Phones.defaultProps = {
     className: '',
+    phones: undefined,
 };
 
 export default Phones;

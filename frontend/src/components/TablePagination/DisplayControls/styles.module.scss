@@ -1,0 +1,26 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.displayControls {
+    margin-right: setUnit(15);
+    display: flex;
+    align-items: center;
+
+    .rowsPerPage {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+
+        .text {
+            margin-right: setUnit(10);
+        }
+    }
+
+    .info {
+        margin-right: setUnit(10);
+
+        .of {
+            margin: 0 setUnit(5)
+        }
+    }
+}

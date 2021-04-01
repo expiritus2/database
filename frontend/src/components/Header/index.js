@@ -5,7 +5,7 @@ import { openModalEffect } from 'store/effects/app';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { NavLink, useLocation } from 'react-router-dom';
-
+import { generateDataEffect } from 'store/effects/fake';
 import { Button } from 'components';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
@@ -22,6 +22,10 @@ const Header = () => {
 
     const onAddHandler = () => {
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: ADD }));
+    };
+
+    const generateData = () => {
+        dispatch(generateDataEffect({ type: location.pathname.slice(1) }));
     };
 
     return (
@@ -51,6 +55,14 @@ const Header = () => {
                             {translate.Add}
                         </Button>
                         <Button className={styles.navButton} variant="contained" color="default">{userEmail}</Button>
+                        <Button
+                            onClick={generateData}
+                            className={styles.navButton}
+                            variant="contained"
+                            color="default"
+                        >
+                            Generate Data
+                        </Button>
                     </div>
                 </Toolbar>
             </AppBar>

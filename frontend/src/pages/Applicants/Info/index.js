@@ -80,7 +80,7 @@ const Info = (props) => {
                             <Regions regions={applicant?.regions} />
                             <Item
                                 label={translate.Education}
-                                value={translate[educationMap[applicant?.education.trim()]]}
+                                value={translate[educationMap[applicant?.education?.trim()]]}
                             />
                             <Item
                                 label={translate.Languages}

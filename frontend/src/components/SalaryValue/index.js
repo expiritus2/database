@@ -24,12 +24,14 @@ const SalaryValue = (props) => {
 
 SalaryValue.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    currency: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    currency: PropTypes.string,
 };
 
 SalaryValue.defaultProps = {
     className: '',
+    currency: undefined,
+    value: undefined,
 };
 
 export default SalaryValue;

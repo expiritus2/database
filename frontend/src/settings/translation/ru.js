@@ -77,4 +77,6 @@ export default {
     CopyCard: 'Копировать карточку',
     CopyText: 'Копировать текст',
     History: 'История',
+    RowsPerPage: 'Строк на странице',
+    Of: 'Из',
 };

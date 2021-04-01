@@ -24,7 +24,7 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
     const allApplicants = await Applicant.findAndCountAll({
-        limit: 25,
+        limit: 100,
         offset: 0,
         order: [
             ['updatedAt', 'DESC']

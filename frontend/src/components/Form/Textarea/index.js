@@ -30,7 +30,7 @@ const Textarea = (props) => {
                 className={classNames(styles.input, { [styles.focus]: focus }, inputClassName)}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
-                value={inputValue}
+                value={inputValue || ''}
                 {...otherProps}
             />
         </FormControl>

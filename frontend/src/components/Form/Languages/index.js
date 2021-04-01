@@ -47,7 +47,7 @@ const Languages = (props) => {
     return (
         <Paper elevation={3} className={classNames(styles.fieldsArray, className)}>
             <Typography className={styles.label}>{translate.Languages}</Typography>
-            {value.map((language, index) => (
+            {(value || []).map((language, index) => (
                 <div className={styles.block} key={index}>
                     <Select
                         className={styles.language}
