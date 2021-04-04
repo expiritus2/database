@@ -23,6 +23,8 @@ export const getApplicantsEffect = (cfg, options = {}, cb) => {
     const config = {
         search: applicants?.search?.string || undefined,
         active: applicants?.search?.active || undefined,
+        page: cfg?.page ?? applicants?.meta?.page,
+        countPerPage: cfg?.countPerPage ?? applicants?.meta?.countPerPage,
     };
 
     return sendRequest(config, options, cb);
@@ -42,8 +44,9 @@ export const resetApplicantEffect = () => (dispatch) => {
     dispatch(resetCurrentApplicantAction());
 };
 
-export const setApplicantsSearchEffect = (cfg) => (dispatch) => {
-    dispatch(setApplicantsSearchAction(cfg));
+export const setApplicantsSearchEffect = (cfg = {}) => (dispatch) => {
+    const { applicants } = getState();
+    dispatch(setApplicantsSearchAction({ ...(applicants?.search || {}), ...cfg }));
 };
 
 export const requestRefreshApplicantsEffect = (cfg, options, cb) => {

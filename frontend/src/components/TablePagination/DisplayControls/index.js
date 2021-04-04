@@ -15,14 +15,13 @@ const DisplayControls = (props) => {
 
     const getFrom = () => (page * rowsPerPage) + 1;
     const getTo = () => {
-        if (count >= rowsPerPage) {
-            return getFrom() + rowsPerPage - 1;
+        const toCount = getFrom() + rowsPerPage - 1;
+        if (count >= toCount) {
+            return toCount;
         }
 
         return count;
     };
-
-    if (!count) return null;
 
     return (
         <div className={classNames(styles.displayControls, className)}>

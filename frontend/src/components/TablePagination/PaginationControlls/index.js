@@ -14,8 +14,6 @@ const PaginationControls = (props) => {
     const { className, handleFirstPageButtonClick, page, handleBackButtonClick } = props;
     const { handleNextButtonClick, handleLastPageButtonClick, count, rowsPerPage } = props;
 
-    if (!count) return null;
-
     return (
         <div className={classNames(styles.paginationControls, className)}>
             <div>

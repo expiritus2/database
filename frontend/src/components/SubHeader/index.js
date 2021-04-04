@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { SubheaderWrapper } from 'components';
 
 import Search from './Search';
@@ -12,23 +12,21 @@ import Refresh from './Refresh';
 import styles from './styles.module.scss';
 
 const Header = (props) => {
-    const { searchSelector, searchEffect, refreshEffect, className } = props;
-    const dispatch = useDispatch();
+    const { searchSelector, refreshEffect, className, onSearch, onActive } = props;
     const search = useSelector(searchSelector);
 
-    const onSearch = (event) => {
-        const searchString = event.target.value;
-        dispatch(searchEffect({ string: searchString }));
+    const onSearchHandler = (searchString) => {
+        onSearch({ string: searchString });
     };
 
-    const onActive = (e, val) => {
-        dispatch(searchEffect({ active: val }));
+    const onActiveHandler = (e, val) => {
+        onActive({ active: val });
     };
 
     return (
         <SubheaderWrapper className={classNames(styles.header, className)}>
-            <Search onSearch={onSearch} search={search} className={styles.search} />
-            <Active onChange={onActive} search={search} className={styles.actives} />
+            <Search onSearch={onSearchHandler} search={search} className={styles.search} />
+            <Active onChange={onActiveHandler} search={search} className={styles.actives} />
             <Refresh refreshEffect={refreshEffect} />
         </SubheaderWrapper>
     );
@@ -37,12 +35,15 @@ const Header = (props) => {
 Header.propTypes = {
     className: PropTypes.string,
     searchSelector: PropTypes.func.isRequired,
-    searchEffect: PropTypes.func.isRequired,
+    onSearch: PropTypes.func,
+    onActive: PropTypes.func,
     refreshEffect: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
     className: '',
+    onSearch: () => {},
+    onActive: () => {},
 };
 
 export default Header;

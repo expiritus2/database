@@ -15,6 +15,7 @@ export const getApplicantsSelector = createSelector(
             skills: applicant?.skills?.map(({ label }) => label),
             regions: applicant?.regions?.map(({ label }) => label),
         })),
+        meta: applicants?.meta,
     }),
 );
 

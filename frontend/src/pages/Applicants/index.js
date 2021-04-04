@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { getApplicantsEffect, setApplicantsSearchEffect, requestRefreshApplicantsEffect } from 'store/effects/applicants';
 import { getApplicantsSearchSelector, getApplicantsSelector } from 'store/selectors/applicants';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
-import { Logger } from 'services';
 import AddModal from './Modal';
 import Table from './Table';
 import Info from './Info';
@@ -13,7 +12,7 @@ import Info from './Info';
 import styles from './styles.module.scss';
 
 const Applicants = () => {
-    const { isPending, isIdle, count } = useSelector(getApplicantsSelector);
+    const { isPending, isIdle, count, meta } = useSelector(getApplicantsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,13 +23,28 @@ const Applicants = () => {
         }
     }, []); // eslint-disable-line
 
+    const onChangePaginationValueHandler = (event, page, countPerPage) => {
+        dispatch(getApplicantsEffect({ page, countPerPage }));
+    };
+
+    const onSearchHandler = (search) => {
+        dispatch(setApplicantsSearchEffect(search));
+        dispatch(getApplicantsEffect());
+    };
+
+    const onActiveHandler = (search) => {
+        dispatch(setApplicantsSearchEffect(search));
+        dispatch(getApplicantsEffect({ page: 0 }));
+    };
+
     return (
         <>
             <Header />
             <MainWrapper>
                 <ContentWrapper>
                     <SubHeader
-                        searchEffect={setApplicantsSearchEffect}
+                        onSearch={onSearchHandler}
+                        onActive={onActiveHandler}
                         searchSelector={getApplicantsSearchSelector}
                         refreshEffect={requestRefreshApplicantsEffect}
                     />
@@ -43,9 +57,10 @@ const Applicants = () => {
                         </PendingWrapper>
                     </ScrollWrapper>
                     <TablePagination
-                        onChangePage={(event, page) => Logger.log(page)}
+                        onChangePage={onChangePaginationValueHandler}
+                        onChangeCountPerPage={onChangePaginationValueHandler}
                         className={styles.tablePagination}
-                        page={5}
+                        page={meta?.page}
                         count={count}
                     />
                 </ContentWrapper>

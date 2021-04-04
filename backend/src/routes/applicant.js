@@ -5,8 +5,11 @@ const validateRequest = require('../middlewares/validate-request');
 const Applicant = require('../models/applicant');
 
 const { ApplicantController } = require('../controllers/applicantController');
+const Sequelize = require('sequelize');
 
 const router = express.Router();
+
+const Op = Sequelize.Op;
 
 const middlewares = [
     requireAuth,
@@ -17,15 +20,52 @@ const middlewares = [
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
-    const populatedApplicant = await Applicant.findByPk(newApplicant.id, { include: { all: true, nested: true }});
+    const populatedApplicant = await Applicant.findByPk(newApplicant.id, { include: { all: true, nested: true } });
 
     res.send(populatedApplicant);
 });
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
+    const { page, countPerPage, search, active } = req.query || {};
+    let searchCriteria = {};
+
+    if (search && active !== undefined) {
+        searchCriteria = {
+            where: {
+                [Op.and]: [
+                    {
+                        name: {
+                            [Op.iLike]: `%${search}%`,
+                        }
+                    },
+                    {
+                        inActiveSearch: active
+                    },
+                ]
+            }
+        }
+    }
+
+    if (search && active === undefined) {
+        searchCriteria = {
+            where: {
+                name: {
+                    [Op.iLike]: `%${search}%`,
+                }
+            },
+        }
+    }
+
+    if (!search && active) {
+        searchCriteria = {
+            where: { inActiveSearch: active },
+        }
+    }
+
     const allApplicants = await Applicant.findAndCountAll({
-        limit: 100,
-        offset: 0,
+        ...searchCriteria,
+        limit: countPerPage || 25,
+        offset: (page * countPerPage) || 0,
         order: [
             ['updatedAt', 'DESC']
         ],

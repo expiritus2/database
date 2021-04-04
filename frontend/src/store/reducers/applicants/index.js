@@ -32,9 +32,6 @@ export default handleActions({
     }),
     [setApplicantsSearchAction]: (state, { payload }) => ({
         ...state,
-        search: {
-            ...state.search,
-            ...payload,
-        },
+        search: { ...payload },
     }),
 }, initialData);

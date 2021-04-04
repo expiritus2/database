@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -10,17 +10,33 @@ import styles from './styles.module.scss';
 
 const Search = (props) => {
     const { search, onSearch, className } = props;
+    const [searchString, setSearchString] = useState(search?.string || '');
     const { translate } = useTranslate();
+
+    const onSearchHandler = (event) => {
+        setSearchString(event.target.value);
+    };
+
+    const onSearchAction = () => {
+        onSearch(searchString);
+    };
+
+    const onKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            onSearch(event.target.value);
+        }
+    };
 
     return (
         <div className={classNames(styles.searchWrapper, className)}>
             <Input
                 label={translate.Search}
                 type="search"
-                onChange={onSearch}
-                value={search?.string || ''}
+                onChange={onSearchHandler}
+                value={searchString}
+                onKeyPress={onKeyPress}
             />
-            <FcSearch className={styles.searchIcon} />
+            <FcSearch onClick={onSearchAction} className={styles.searchIcon} />
         </div>
     );
 };
