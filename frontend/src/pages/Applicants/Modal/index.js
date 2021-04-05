@@ -37,6 +37,10 @@ const ModalComponent = ({ className }) => {
         }
     };
 
+    const handleReset = () => {
+        dispatch(resetApplicantFormEffect());
+    };
+
     const getTitle = () => {
         if (modal.mode === ADD) {
             return translate.Add;
@@ -74,6 +78,7 @@ const ModalComponent = ({ className }) => {
                 {translate.Save}
             </Button>
             <Button onClick={handleClose} className={styles.btn}>{translate.Cancel}</Button>
+            <Button onClick={handleReset} className={styles.btn}>{translate.Reset}</Button>
         </div>
     );
 

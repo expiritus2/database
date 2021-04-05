@@ -34,6 +34,8 @@ const initialData = {
     birthDate: '',
     sex: '',
     phones: [{ type: '', number: '' }],
+    messengers: [{ messenger: '', accountName: '' }],
+    links: [{ type: '', link: '' }],
     emails: [''],
     files: [],
     experienceYears: '',

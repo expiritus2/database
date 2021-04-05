@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cloneDeep from 'clone-deep';
 import classNames from 'classnames';
@@ -10,9 +10,11 @@ import styles from './styles.module.scss';
 
 const TableComponent = (props) => {
     const { selectable, columns, data, onClickRow, filter } = props;
-    const { initSelections, onSelectChane, link, className } = props;
+    const { initSelections, onSelectChange, link, className } = props;
 
     const [selectionsValue, setSelectionsValue] = useState(initSelections);
+
+    useEffect(() => setSelectionsValue(initSelections), [initSelections]);
 
     const onSelect = (value, selection) => {
         const cloneSelects = cloneDeep(selectionsValue);
@@ -24,8 +26,7 @@ const TableComponent = (props) => {
             cloneSelects.splice(selectionIndex, 1);
         }
         setSelectionsValue(cloneSelects);
-
-        onSelectChane(cloneSelects);
+        onSelectChange(cloneSelects);
     };
 
     const onSelectAll = (value, sel) => {
@@ -36,7 +37,7 @@ const TableComponent = (props) => {
         }
 
         setSelectionsValue(cloneSelects);
-        onSelectChane(cloneSelects);
+        onSelectChange(cloneSelects);
     };
 
     return (
@@ -70,7 +71,7 @@ TableComponent.propTypes = {
     selectable: PropTypes.bool,
     onClickRow: PropTypes.func,
     initSelections: PropTypes.arrayOf(PropTypes.object),
-    onSelectChane: PropTypes.func,
+    onSelectChange: PropTypes.func,
     link: PropTypes.func,
     className: PropTypes.string,
     filter: PropTypes.func,
@@ -81,7 +82,7 @@ TableComponent.defaultProps = {
     selectable: true,
     onClickRow: undefined,
     initSelections: [],
-    onSelectChane: () => {},
+    onSelectChange: () => {},
     link: () => {},
     filter: undefined,
 };

@@ -15,6 +15,11 @@
 
         thead {
 
+            .select {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
             .filter {
                 margin-top: setUnit(5);
             }
@@ -55,7 +60,6 @@
 
             &__all {
                 position: relative;
-                top: setUnit(-3);
             }
 
             .checkbox {

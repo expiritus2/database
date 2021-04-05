@@ -27,38 +27,12 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
     const { page, countPerPage, search, active } = req.query || {};
-    let searchCriteria = {};
-
-    if (search && active !== undefined) {
-        searchCriteria = {
-            where: {
-                [Op.and]: [
-                    {
-                        name: {
-                            [Op.iLike]: `%${search}%`,
-                        }
-                    },
-                    {
-                        inActiveSearch: active
-                    },
-                ]
-            }
-        }
-    }
-
-    if (search && active === undefined) {
-        searchCriteria = {
-            where: {
-                name: {
-                    [Op.iLike]: `%${search}%`,
-                }
-            },
-        }
-    }
-
-    if (!search && active) {
-        searchCriteria = {
-            where: { inActiveSearch: active },
+    const searchCriteria = {
+        where: {
+            [Op.and]: [
+                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
+                ...(active ? [{ inActiveSearch: active }] : []),
+            ]
         }
     }
 

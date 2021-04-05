@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { AddFile } from 'components';
+import { AddFiles } from 'components';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -29,22 +29,16 @@ const FilesForm = (props) => {
         dispatch(setApplicantFormStateEffect({ [propName]: val }));
     };
 
-    // const onChangeField = (e) => {
-    //     const { name, value } = e.target;
-    //     dispatch(setFilesFormStateEffect({ [name]: value }));
-    // };
-
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
-                <AddFile
+                <AddFiles
                     className={styles.field}
-                    variant={AddFile.file}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
-                    value={filesFormState?.map((file) => ({ url: file }))}
+                    value={filesFormState}
                 />
             </form>
         </FormWrapper>

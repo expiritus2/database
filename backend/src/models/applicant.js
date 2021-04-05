@@ -62,6 +62,12 @@ Applicant.init({
     },
     phones: {
         type: DataTypes.JSONB,
+    },
+    messengers: {
+        type: DataTypes.JSONB,
+    },
+    links: {
+        type: DataTypes.JSONB,
     }
 }, { sequelize, modelName: 'applicant' });
 

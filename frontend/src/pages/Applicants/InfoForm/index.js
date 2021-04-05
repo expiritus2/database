@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
-import { Input, DatePicker, Sex, AddFile, Phones, Emails } from 'components';
+import { Input, DatePicker, Sex, AddPhoto, Phones, Emails, Messengers, Links } from 'components';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { FormWrapper } from '../components';
 import Name from '../components/Name';
@@ -47,7 +47,7 @@ const InfoForm = (props) => {
                     onChange={onChangeField}
                     value={formFields.nameLat}
                 />
-                <AddFile
+                <AddPhoto
                     className={styles.field}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'photos');
@@ -83,6 +83,20 @@ const InfoForm = (props) => {
                     label={translate.Emails}
                     onChange={(val) => onCustomFieldChange(null, val, 'emails')}
                     value={formFields.emails}
+                />
+                <Messengers
+                    name="messengers"
+                    className={styles.field}
+                    label={translate.Messengers}
+                    onChange={(val) => onCustomFieldChange(null, val, 'messengers')}
+                    value={formFields.messengers}
+                />
+                <Links
+                    name="links"
+                    className={styles.field}
+                    label={translate.Links}
+                    onChange={(val) => onCustomFieldChange(null, val, 'links')}
+                    value={formFields.links}
                 />
             </form>
         </FormWrapper>
