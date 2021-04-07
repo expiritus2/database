@@ -5,6 +5,8 @@ import app from './app';
 import forms from './forms';
 import applicants from './applicants';
 import applicant from './applicant';
+import contacts from './contacts';
+import contact from './contact';
 
 export default combineReducers({
     app,
@@ -12,4 +14,6 @@ export default combineReducers({
     forms,
     applicants,
     applicant,
+    contacts,
+    contact,
 });

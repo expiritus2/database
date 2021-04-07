@@ -32,6 +32,7 @@ const Emails = (props) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1);
         setValues(clonedValues);
+        onChange(clonedValues);
     };
 
     return (

@@ -3,16 +3,20 @@ const Position = require('./position');
 const Skills = require('./skill');
 const Experience = require('./experience');
 const Region = require('./region');
+const Contact = require('./contact');
 
 function createAssociations() {
     Applicant.belongsToMany(Position, { through: 'applicant_position' });
-    Position.belongsToMany(Applicant, { through: 'applicant_position' })
+    Position.belongsToMany(Applicant, { through: 'applicant_position' });
+
+    Contact.belongsToMany(Position, { through: 'contact_position' });
+    Position.belongsToMany(Contact, { through: 'contact_position' });
 
     Applicant.belongsToMany(Skills, { through: 'applicant_skills' });
-    Skills.belongsToMany(Applicant, { through: 'applicant_skills' })
+    Skills.belongsToMany(Applicant, { through: 'applicant_skills' });
 
     Applicant.belongsToMany(Region, { through: 'applicant_region' });
-    Region.belongsToMany(Applicant, { through: 'applicant_region' })
+    Region.belongsToMany(Applicant, { through: 'applicant_region' });
 
     Applicant.hasMany(Experience);
     Experience.belongsTo(Applicant)

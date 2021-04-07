@@ -8,7 +8,8 @@ import {
     setApplicantFormDataAction,
     updateApplicantFormAction,
 } from 'store/actions/forms/applicant';
-import { createApplicant, updateApplicant, uploadFiles } from 'api/applicants';
+import { createApplicant, updateApplicant } from 'api/applicants';
+import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
 import { prepareData } from './helpers';
 

@@ -43,11 +43,11 @@ const ModalComponent = ({ className }) => {
 
     const getTitle = () => {
         if (modal.mode === ADD) {
-            return translate.Add;
+            return translate.AddApplicant;
         }
 
         if (modal.mode === EDIT) {
-            return translate.Edit;
+            return translate.EditApplicant;
         }
     };
 

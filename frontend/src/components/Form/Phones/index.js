@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
@@ -16,6 +16,8 @@ const Phones = (props) => {
     const { className, value, onChange } = props;
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
+
+    useEffect(() => setValues(value), [value]);
 
     const onChangeType = (event, index) => {
         const clonedValues = cloneDeep(values);

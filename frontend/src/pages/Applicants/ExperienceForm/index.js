@@ -11,7 +11,7 @@ import { IoIosRemoveCircle } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
-import { Period, Input, Position, Textarea, Button } from 'components';
+import { Period, Position, Textarea, Button, Company } from 'components';
 import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';
 
@@ -65,9 +65,8 @@ const ExperienceForm = (props) => {
                                 onChange={(e, val) => onCustomFieldChange(val, 'period', index)}
                                 value={period}
                             />
-                            <Input
+                            <Company
                                 name="company"
-                                label={translate.Company}
                                 className={styles.field}
                                 onChange={(e) => onCustomFieldChange(e.target.value, 'company', index)}
                                 value={company}

@@ -11,7 +11,7 @@ import Refresh from './Refresh';
 
 import styles from './styles.module.scss';
 
-const Header = (props) => {
+const SubHeader = (props) => {
     const { searchSelector, refreshEffect, className, onSearch, onActive } = props;
     const search = useSelector(searchSelector);
 
@@ -32,7 +32,7 @@ const Header = (props) => {
     );
 };
 
-Header.propTypes = {
+SubHeader.propTypes = {
     className: PropTypes.string,
     searchSelector: PropTypes.func.isRequired,
     onSearch: PropTypes.func,
@@ -40,10 +40,10 @@ Header.propTypes = {
     refreshEffect: PropTypes.func.isRequired,
 };
 
-Header.defaultProps = {
+SubHeader.defaultProps = {
     className: '',
     onSearch: () => {},
     onActive: () => {},
 };
 
-export default Header;
+export default SubHeader;

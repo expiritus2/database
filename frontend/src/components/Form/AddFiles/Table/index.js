@@ -17,8 +17,8 @@ const TableComponent = (props) => {
 
     const getRows = () => files.map((file) => ({
         id: file.id,
-        type: file.type,
-        name: file.name,
+        type: file?.url?.type,
+        name: file?.url?.name || file?.url,
     }));
 
     return (

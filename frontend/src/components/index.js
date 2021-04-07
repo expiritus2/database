@@ -44,3 +44,4 @@ export { default as PhoneInput } from './Form/PhoneInput';
 export { default as Messengers } from './Form/Messengers';
 export { default as Links } from './Form/Links';
 export { default as AddFiles } from './Form/AddFiles';
+export { default as Company } from './Company';

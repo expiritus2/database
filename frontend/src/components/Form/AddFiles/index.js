@@ -13,14 +13,12 @@ import styles from './styles.module.scss';
 const AddFile = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
-    const [filesValue, setFilesValue] = useState(value || []);
+    const [filesValue, setFilesValue] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     useEffect(() => {
-        value.forEach((val) => {
-            val.id = uniqueId();
-        });
-        setFilesValue(value);
+        const newValue = value.map((val) => ({ id: uniqueId(), url: val?.url || val }));
+        setFilesValue(newValue);
     }, [value]);
 
     const onChangeHandler = (event) => {
