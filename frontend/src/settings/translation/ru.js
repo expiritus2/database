@@ -66,6 +66,7 @@ export default {
     NotActives: 'Не активен',
     EmptyApplicant: 'Выбирите кандидата',
     EmptyContact: 'Выбирите контакт',
+    EmptyVacancy: 'Выбирите вакансию',
     Skype: 'Skype',
     Years: 'Года',
     AddLanguage: 'Добавить язык',
@@ -96,4 +97,7 @@ export default {
     EditApplicant: 'Изменить кандидата',
     AddContact: 'Добавить контакт',
     EditContact: 'Изменить контакт',
+    Recruiters: 'Рекрутеры',
+    WorkSchedule: 'График',
+    Test: 'Тестовое задание',
 };

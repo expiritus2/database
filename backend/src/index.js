@@ -10,6 +10,7 @@ const { authRouter } = require('./routes/auth');
 const { filesRouter } = require('./routes/files');
 const { applicantRouter } = require('./routes/applicant');
 const { contactRouter } = require('./routes/contact');
+const { vacancyRouter } = require('./routes/vacancy');
 
 const { fakeRouter } = require('./routes/fake');
 const errorHandler = require('./middlewares/error-handler');
@@ -33,6 +34,7 @@ app.use(authRouter);
 app.use(filesRouter);
 app.use(applicantRouter);
 app.use(contactRouter);
+app.use(vacancyRouter);
 
 app.use(fakeRouter);
 

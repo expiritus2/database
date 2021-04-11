@@ -1,0 +1,27 @@
+@import "styles/functions";
+@import "styles/variables";
+
+@mixin field() {
+    margin-top: setUnit(15);
+    width: 100%;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.cardActions {
+    border-top: 1px solid $border-gray-color;
+}
+
+.actionButtons {
+
+    .btn {
+        margin-right: setUnit(10);
+        min-width: setUnit(117.21);
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.pendingWrapper {
+    &.isPending {
+        border-right: 1px solid $border-gray-color;
+    }
+}
+
+.tablePagination {
+    position: relative;
+    z-index: 2;
+    border-right: 1px solid $border-gray-color;
+}
