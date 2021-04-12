@@ -11,6 +11,7 @@ const { filesRouter } = require('./routes/files');
 const { applicantRouter } = require('./routes/applicant');
 const { contactRouter } = require('./routes/contact');
 const { vacancyRouter } = require('./routes/vacancy');
+const { companyRouter } = require('./routes/company');
 
 const { fakeRouter } = require('./routes/fake');
 const errorHandler = require('./middlewares/error-handler');
@@ -35,6 +36,7 @@ app.use(filesRouter);
 app.use(applicantRouter);
 app.use(contactRouter);
 app.use(vacancyRouter);
+app.use(companyRouter);
 
 app.use(fakeRouter);
 
@@ -46,7 +48,7 @@ app.use(errorHandler);
 
 createAssociations()
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: true })
     .then(() => {
         app.listen(3000, () => {
             console.log('Listening on port 3000!');

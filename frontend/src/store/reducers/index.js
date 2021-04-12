@@ -9,6 +9,8 @@ import contacts from './contacts';
 import contact from './contact';
 import vacancies from './vacancies';
 import vacancy from './vacancy';
+import companies from './companies';
+import company from './company';
 
 export default combineReducers({
     app,
@@ -20,4 +22,6 @@ export default combineReducers({
     contact,
     vacancies,
     vacancy,
+    companies,
+    company,
 });

@@ -1,0 +1,34 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .edit,
+    .settings {
+        width: setUnit(20);
+        height: setUnit(20);
+        cursor: pointer;
+        transition: all .15s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.actionsList {
+    list-style: none;
+
+    li {
+        padding: setUnit(7) setUnit(15);
+        cursor: pointer;
+
+        &:hover {
+            background: $primary-color;
+            color: #ffffff;
+        }
+    }
+}

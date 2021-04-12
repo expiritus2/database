@@ -1,0 +1,13 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.name {
+    padding-left: setUnit(16);
+    padding-right: setUnit(16);
+    display: flex;
+    align-items: center;
+
+    .texts {
+        margin-left: setUnit(16);
+    }
+}

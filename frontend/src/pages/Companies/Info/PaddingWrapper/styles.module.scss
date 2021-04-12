@@ -1,0 +1,6 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.paddingWrapper {
+    padding: setUnit(10) setUnit(15);
+}

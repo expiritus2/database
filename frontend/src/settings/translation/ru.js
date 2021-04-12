@@ -100,4 +100,6 @@ export default {
     Recruiters: 'Рекрутеры',
     WorkSchedule: 'График',
     Test: 'Тестовое задание',
+    Logo: 'Логотип',
+    Addresses: 'Адреса',
 };
