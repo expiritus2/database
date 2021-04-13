@@ -22,7 +22,17 @@ const AsyncAutocomplete = (props) => {
     const [loading, setLoading] = useState(false);
     const [defaultValueVal] = useState(value?.length ? value : defaultValue);
 
-    useEffect(() => setOptionsValue(value), [value]);
+    const callThrottler = () => {
+        getThrottle()?.then((response) => {
+            setOptionsValue(uniqBy([...optionsValue, ...createOptions(response?.data)], 'value'));
+            setLoading(false);
+        }).catch(() => setLoading(false));
+    };
+
+    useEffect(() => {
+        setOptionsValue(value);
+        callThrottler();
+    }, [value]); // eslint-disable-line
 
     const onInputChange = (event) => {
         const newValue = event?.target?.value;
@@ -31,15 +41,7 @@ const AsyncAutocomplete = (props) => {
 
         if (newValue) {
             setLoading(true);
-            const promise = getThrottle(newValue);
-
-            if (promise?.then) {
-                getThrottle(newValue)
-                    .then((response) => {
-                        setOptionsValue(uniqBy([...optionsValue, ...createOptions(response?.data)], 'value'));
-                        setLoading(false);
-                    }).catch(() => setLoading(false));
-            }
+            callThrottler();
         }
     };
 

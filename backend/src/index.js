@@ -48,7 +48,7 @@ app.use(errorHandler);
 
 createAssociations()
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
     .then(() => {
         app.listen(3000, () => {
             console.log('Listening on port 3000!');

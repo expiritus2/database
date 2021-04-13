@@ -32,11 +32,6 @@ const SalaryInput = (props) => {
     );
 };
 
-SalaryInput.options = (translate) => [
-    { label: translate.English, value: 'english' },
-    { label: translate.Russian, value: 'russian' },
-];
-
 SalaryInput.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,

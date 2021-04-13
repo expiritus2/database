@@ -78,6 +78,12 @@ const Languages = (props) => {
 Languages.options = (translate) => [
     { label: translate.English, value: 'english' },
     { label: translate.Russian, value: 'russian' },
+    { label: translate.Spain, value: 'spain' },
+    { label: translate.Italian, value: 'italian' },
+    { label: translate.China, value: 'china' },
+    { label: translate.German, value: 'german' },
+    { label: translate.French, value: 'french' },
+    { label: translate.Japanese, value: 'japanese' },
 ];
 
 Languages.levelOptions = (translate) => [

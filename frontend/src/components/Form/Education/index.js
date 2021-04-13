@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { HIGH_EDUCATION, SECONDARY_EDUCATION } from 'settings/constants/education';
+import { BASE_EDUCATION, HIGH_EDUCATION, MIDDLE_EDUCATION, MIDDLE_SPECIAL_EDUCATION, NOT_FINISH_HIGH_EDUCATION } from 'settings/constants/education';
 import { Select } from 'components/index';
 import { useTranslate } from 'hooks';
 
@@ -26,8 +26,11 @@ const Education = (props) => {
 };
 
 Education.options = (translate) => [
+    { id: BASE_EDUCATION, label: translate.BaseEducation, value: BASE_EDUCATION },
     { id: HIGH_EDUCATION, label: translate.HighEducation, value: HIGH_EDUCATION },
-    { id: SECONDARY_EDUCATION, label: translate.SecondaryEducation, value: SECONDARY_EDUCATION },
+    { id: NOT_FINISH_HIGH_EDUCATION, label: translate.NotFinishHighEducation, value: NOT_FINISH_HIGH_EDUCATION },
+    { id: MIDDLE_EDUCATION, label: translate.MiddleEducation, value: MIDDLE_EDUCATION },
+    { id: MIDDLE_SPECIAL_EDUCATION, label: translate.MiddleSpecialEducation, value: MIDDLE_SPECIAL_EDUCATION },
 ];
 
 Education.propTypes = {

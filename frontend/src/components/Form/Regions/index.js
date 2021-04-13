@@ -1,46 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { AsyncAutocomplete } from 'components/index';
-import { intersectionBy, uniqBy } from 'lodash-es';
+import { BaseAutocomplete } from 'components/index';
 
 import { useTranslate } from 'hooks';
 
-import styles from './styles.module.scss';
-
 const Regions = (props) => {
-    const { className, onChange, value, multiple } = props;
-    const [options, setOptions] = useState([]);
+    const { className, onChange, value } = props;
 
     const { translate } = useTranslate();
 
-    const createOptions = (arr) => arr.map(({ label, value: val }) => ({
-        label, value: val,
-    }));
-
-    const getRegions = useMemo(() => () => new Promise((resolve) => {
-        resolve({
-            data: [...value, ...options],
-        });
-    }), [options, value]);
-
-    const onChangeHandler = (event, val) => {
-        if (!intersectionBy([val[val?.length - 1]], value, 'value').length) {
-            setOptions(val);
-        }
-        onChange(event, val);
-    };
-
     return (
-        <AsyncAutocomplete
+        <BaseAutocomplete
             label={translate.Regions}
-            className={classNames(styles.position, className)}
-            onChange={onChangeHandler}
-            value={uniqBy([...value, ...options], 'value')}
-            multiple={multiple}
-            defaultValue={value}
-            getThrottle={getRegions}
-            createOptions={createOptions}
+            className={classNames(className)}
+            onChange={onChange}
+            value={value}
+            options={[]}
         />
     );
 };
@@ -49,14 +25,12 @@ Regions.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
-    multiple: PropTypes.bool,
 };
 
 Regions.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
-    multiple: true,
 };
 
 export default Regions;

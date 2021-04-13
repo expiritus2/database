@@ -77,7 +77,9 @@ const Phones = (props) => {
 
 Phones.typeOptions = (translate) => [
     { value: 'private', label: translate.Private },
+    { value: 'mobile', label: translate.Mobile },
     { value: 'work', label: translate.Work },
+    { value: 'faks', label: translate.Faks },
 ];
 
 Phones.propTypes = {

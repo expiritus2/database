@@ -75,6 +75,7 @@ const Links = (props) => {
 
 Links.linksOptions = (translate) => [
     { value: 'linkedin', label: translate.Linkedin },
+    { value: 'site', label: translate.Site },
 ];
 
 Links.propTypes = {

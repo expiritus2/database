@@ -46,3 +46,4 @@ export { default as Links } from './Form/Links';
 export { default as AddFiles } from './Form/AddFiles';
 export { default as Company } from './Company';
 export { default as Addresses } from './Form/Addresses';
+export { default as BaseAutocomplete } from './Form/BaseInputAutocomplete';
