@@ -20,7 +20,11 @@ const middlewares = [
 router.post('/api/contacts/create', middlewares, async (req, res) => {
     const contactController = new ContactController(req.body);
     const newContact = await contactController.create();
-    const populatedContact = await Contact.findByPk(newContact.id, { include: { all: true, nested: true } });
+    const populatedContact = await Contact.findByPk(newContact.id, {
+        include: {
+            all: true,
+        }
+    });
 
     res.send(populatedContact);
 });
@@ -43,7 +47,9 @@ router.get('/api/contacts', requireAuth, async (req, res) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: { all: true, nested: true },
+        include: {
+            all: true,
+        },
     });
 
     res.send({ result: allContacts });

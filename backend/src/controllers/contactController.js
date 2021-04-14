@@ -28,7 +28,7 @@ class ContactController {
         return new Promise(async (resolve) => {
             try {
                 await Contact.update(this.joinedInfo, { where: { id }});
-                this.newContact = await Contact.findByPk(id, { include: { all: true, nested: true }});
+                this.newContact = await Contact.findByPk(id, { include: { all: true }});
 
                 if (this.newContact) {
                     await this.handlePositions(this.positions, this.newContact, true);

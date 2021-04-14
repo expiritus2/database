@@ -49,6 +49,7 @@
     "cyrillic-to-translit-js": "^3.1.0",
     "date-fns": "^2.18.0",
     "formik": "^2.2.6",
+    "is-url": "^1.2.4",
     "lodash-es": "^4.17.20",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",

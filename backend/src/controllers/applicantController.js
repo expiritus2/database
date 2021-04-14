@@ -37,7 +37,7 @@ class ApplicantController {
         return new Promise(async (resolve) => {
             try {
                 await Applicant.update(this.joinedInfo, { where: { id }});
-                this.newApplicant = await Applicant.findByPk(id, { include: { all: true, nested: true }});
+                this.newApplicant = await Applicant.findByPk(id, { include: { all: true }});
 
                 if (this.newApplicant) {
                     await this.handlePositions(this.positions, this.newApplicant, true);
@@ -204,7 +204,7 @@ class ApplicantController {
 
         if (this.savedExperience) {
             await Experience.update(expInfo, { where: { id: expInfo.id } });
-            this.savedExperience = await Experience.findByPk(expInfo.id, { include: { all: true, nested: true }});
+            this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position }});
             await this.handlePositions(experience.positions, this.savedExperience, true);
         }
     }

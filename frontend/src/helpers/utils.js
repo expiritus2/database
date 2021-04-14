@@ -20,7 +20,12 @@ export function getImagesPreview(files) {
 
             reader.onload = (e) => {
                 const { result } = e.target;
-                resolve({ url: result });
+                resolve({
+                    url: result,
+                    filename: file?.name,
+                    contentType: file?.type,
+                    size: file?.size,
+                });
             };
 
             reader.onerror = () => {

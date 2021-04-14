@@ -4,7 +4,7 @@ export const prepareData = (cfg, files) => {
     const clonedCfg = cloneDeep(cfg);
 
     clonedCfg.files = [
-        ...(cfg?.files?.filter((photo) => !(photo instanceof File)).map((ph) => ph?.url || ph) || []),
+        ...(cfg?.files?.filter((file) => !(file instanceof File)).map((ph) => ph?.url || ph) || []),
         ...(files?.files || []),
     ];
     clonedCfg.photos = [

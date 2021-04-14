@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import isUrl from 'is-url';
 
 import Paper from '@material-ui/core/Paper';
 import { IoIosClose } from 'react-icons/io';
@@ -13,13 +14,25 @@ import styles from './styles.module.scss';
 
 const AddPhoto = (props) => {
     const { className, onChange, value } = props;
-    const [previewValues, setPreviewValues] = useState(value);
-    const [filesValue, setFilesValue] = useState(value || []);
+    const [previewValues, setPreviewValues] = useState();
+    const [filesValue, setFilesValue] = useState([]);
 
     useEffect(() => {
-        getImagesPreview(value)
+        const files = [];
+        const urls = [];
+        value.forEach((val) => {
+            if (val?.url instanceof File) {
+                files.push(val?.url);
+            }
+
+            if (isUrl(val?.url)) {
+                urls.push(val);
+            }
+        });
+
+        getImagesPreview(files)
             .then((values) => {
-                const newPreviewValues = [...previewValues, ...values];
+                const newPreviewValues = [...urls, ...values];
                 setPreviewValues(newPreviewValues);
             }).catch(() => {});
     }, []); // eslint-disable-line

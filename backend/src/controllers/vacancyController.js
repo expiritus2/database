@@ -34,7 +34,7 @@ class VacancyController {
         return new Promise(async (resolve) => {
             try {
                 await Vacancy.update(this.joinedInfo, { where: { id }});
-                this.newVacancy = await Vacancy.findByPk(id, { include: { all: true, nested: true }});
+                this.newVacancy = await Vacancy.findByPk(id, { include: { all: true }});
 
                 if (this.newVacancy) {
                     await this.handlePositions(this.positions, this.newVacancy, true);

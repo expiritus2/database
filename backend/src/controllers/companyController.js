@@ -27,7 +27,7 @@ class CompanyController {
         return new Promise(async (resolve) => {
             try {
                 await Company.update(this.joinedInfo, { where: { id }});
-                this.newCompany = await Company.findByPk(id, { include: { all: true, nested: true }});
+                this.newCompany = await Company.findByPk(id, { include: { all: true }});
 
                 if (this.newCompany) {
                     await this.handleRegions(true);

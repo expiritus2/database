@@ -20,7 +20,11 @@ const middlewares = [
 router.post('/api/companies/create', middlewares, async (req, res) => {
     const companyController = new CompanyController(req.body);
     const newCompany = await companyController.create();
-    const populatedCompany = await Company.findByPk(newCompany.id, { include: { all: true, nested: true } });
+    const populatedCompany = await Company.findByPk(newCompany.id, {
+        include: {
+            all: true,
+        }
+    });
 
     res.send(populatedCompany);
 });
@@ -43,7 +47,9 @@ router.get('/api/companies', requireAuth, async (req, res) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: { all: true, nested: true },
+        include: {
+            all: true,
+        },
     });
 
     res.send({ result: allCompanies });

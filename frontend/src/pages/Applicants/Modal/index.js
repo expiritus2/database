@@ -60,10 +60,9 @@ const ModalComponent = ({ className }) => {
         dispatch(effect({}, {}, (err) => {
             if (!err) {
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getApplicantsEffect({}, {}, () => {
-                    setIsPending(false);
-                }));
+                dispatch(getApplicantsEffect());
             }
+            setIsPending(false);
         }));
     };
 

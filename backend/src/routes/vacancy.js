@@ -20,9 +20,13 @@ const middlewares = [
 router.post('/api/vacancies/create', middlewares, async (req, res) => {
     const contactController = new VacancyController(req.body);
     const newContact = await contactController.create();
-    const populatedContact = await Vacancy.findByPk(newContact.id, { include: { all: true, nested: true } });
+    const populatedVacancy = await Vacancy.findByPk(newContact.id, {
+        include: {
+            all: true,
+        }
+    });
 
-    res.send(populatedContact);
+    res.send(populatedVacancy);
 });
 
 router.get('/api/vacancies', requireAuth, async (req, res) => {
@@ -43,17 +47,19 @@ router.get('/api/vacancies', requireAuth, async (req, res) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: { all: true, nested: true },
+        include: {
+            all: true,
+        },
     });
 
     res.send({ result: allContacts });
 });
 
 router.put('/api/vacancies/:id', async (req, res) => {
-    const savedContact = new VacancyController(req.body);
-    const updatedContact = await savedContact.update(req.params.id);
+    const savedVacancy = new VacancyController(req.body);
+    const updatedVacancy = await savedVacancy.update(req.params.id);
 
-    res.send(updatedContact);
+    res.send(updatedVacancy);
 })
 
 module.exports = {

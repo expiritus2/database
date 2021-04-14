@@ -45,14 +45,14 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.FIOLat}
                     onChange={onChangeField}
-                    value={formFields.nameLat}
+                    value={formik.values.nameLat}
                 />
                 <AddPhoto
                     className={styles.field}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={formFields.photos.map((photo) => ({ url: photo }))}
+                    value={formik.values.photos.map((photo) => ({ url: photo }))}
                 />
                 <div className={styles.block}>
                     <DatePicker
@@ -60,14 +60,14 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={formFields.birthDate}
+                        value={formik.values.birthDate}
                     />
                     <Sex
                         name="sex"
                         className={classNames(styles.field, styles.sex)}
                         label={translate.Sex}
                         onChange={onChangeField}
-                        value={formFields.sex}
+                        value={formik.values.sex}
                     />
                 </div>
                 <Phones
@@ -75,28 +75,28 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.Phone}
                     onChange={(val) => onCustomFieldChange(null, val, 'phones')}
-                    value={formFields.phones}
+                    value={formik.values.phones}
                 />
                 <Emails
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
                     onChange={(val) => onCustomFieldChange(null, val, 'emails')}
-                    value={formFields.emails}
+                    value={formik.values.emails}
                 />
                 <Messengers
                     name="messengers"
                     className={styles.field}
                     label={translate.Messengers}
                     onChange={(val) => onCustomFieldChange(null, val, 'messengers')}
-                    value={formFields.messengers}
+                    value={formik.values.messengers}
                 />
                 <Links
                     name="links"
                     className={styles.field}
                     label={translate.Links}
                     onChange={(val) => onCustomFieldChange(null, val, 'links')}
-                    value={formFields.links}
+                    value={formik.values.links}
                 />
             </form>
         </FormWrapper>

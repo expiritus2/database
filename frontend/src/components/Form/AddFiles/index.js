@@ -19,7 +19,9 @@ const AddFile = (props) => {
     useEffect(() => {
         const newValue = value.map((val) => ({ id: uniqueId(), url: val?.url || val }));
         setFilesValue(newValue);
-    }, [value]);
+    }, [value]); // eslint-disable-line
+
+    console.log(filesValue);
 
     const onChangeHandler = (event) => {
         const newFilesValues = [...filesValue, ...event.target.files];
