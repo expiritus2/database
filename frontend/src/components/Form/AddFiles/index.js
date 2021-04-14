@@ -21,8 +21,6 @@ const AddFile = (props) => {
         setFilesValue(newValue);
     }, [value]); // eslint-disable-line
 
-    console.log(filesValue);
-
     const onChangeHandler = (event) => {
         const newFilesValues = [...filesValue, ...event.target.files];
         newFilesValues.forEach((newFile) => {
