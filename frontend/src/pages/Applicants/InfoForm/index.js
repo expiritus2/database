@@ -52,7 +52,7 @@ const InfoForm = (props) => {
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={formik.values.photos.map((photo) => ({ url: photo }))}
+                    value={formik.values.photos}
                 />
                 <div className={styles.block}>
                     <DatePicker

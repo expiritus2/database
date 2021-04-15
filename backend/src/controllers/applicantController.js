@@ -5,6 +5,7 @@ const Experience = require('../models/experience');
 const Region = require('../models/region');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
+const { s3 } = require('../middlewares/file-upload');
 
 class ApplicantController {
     constructor(body) {
@@ -36,8 +37,9 @@ class ApplicantController {
     update(id) {
         return new Promise(async (resolve) => {
             try {
-                await Applicant.update(this.joinedInfo, { where: { id }});
-                this.newApplicant = await Applicant.findByPk(id, { include: { all: true }});
+                this.prevApplicant = await Applicant.findByPk(id);
+                await Applicant.update(this.joinedInfo, { where: { id } });
+                this.newApplicant = await Applicant.findByPk(id, { include: { all: true } });
 
                 if (this.newApplicant) {
                     await this.handlePositions(this.positions, this.newApplicant, true);
@@ -46,12 +48,44 @@ class ApplicantController {
                     await this.handleExperiences(true);
                 }
 
+                await this.deleteFiles();
+
                 resolve(this.newApplicant);
             } catch (e) {
                 console.error(e);
                 throw new DatabaseCreationError();
             }
         });
+    }
+
+    deleteFiles() {
+        return new Promise(async (resolve) => {
+            for await (const fileUrl of this.prevApplicant.files) {
+                if (!this.newApplicant.files.includes(fileUrl)) {
+                    await this.deleteFile(fileUrl);
+                }
+            }
+
+            for await (const imageUrl of this.prevApplicant.photos) {
+                if (!this.newApplicant.photos.includes(imageUrl)) {
+                    await this.deleteFile(imageUrl);
+                }
+            }
+            resolve();
+        });
+    }
+
+    deleteFile(fileUrl){
+        return new Promise((resolve) => {
+            const key = fileUrl.split('/').pop();
+            s3.deleteObject({
+                Bucket: process.env.AWS_S3_BUCKET_NAME,
+                Key: key,
+            }, (err, data) => {
+                if (err) throw new Error();
+                resolve();
+            });
+        })
     }
 
     handlePositions(positions, parentModel, isUpdate) {
@@ -180,11 +214,11 @@ class ApplicantController {
     }
 
     async _deleteRemovedApplicantExperience() {
-        const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id }});
+        const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id } });
         const newExperiencesIds = this.experiences.map((experience) => experience.id);
         for await (const prevExperience of savedExperiences) {
             if (!newExperiencesIds.includes(prevExperience.id)) {
-                await Experience.destroy({ where: { id: prevExperience.id }});
+                await Experience.destroy({ where: { id: prevExperience.id } });
             }
         }
     }
@@ -204,7 +238,7 @@ class ApplicantController {
 
         if (this.savedExperience) {
             await Experience.update(expInfo, { where: { id: expInfo.id } });
-            this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position }});
+            this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position } });
             await this.handlePositions(experience.positions, this.savedExperience, true);
         }
     }

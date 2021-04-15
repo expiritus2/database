@@ -22,9 +22,7 @@ export function getImagesPreview(files) {
                 const { result } = e.target;
                 resolve({
                     url: result,
-                    filename: file?.name,
-                    contentType: file?.type,
-                    size: file?.size,
+                    data: file,
                 });
             };
 
@@ -40,11 +38,15 @@ export function getImagesPreview(files) {
     return Promise.all(promises);
 }
 
-export function downloadFile() {
+export function downloadFile(blank = false) {
     const createTemporaryLink = (url, filename) => {
         const element = document.createElement('a');
         element.setAttribute('href', url);
         element.setAttribute('download', filename);
+
+        if (blank) {
+            element.setAttribute('target', '_blank');
+        }
 
         element.style.display = 'none';
         document.body.appendChild(element);

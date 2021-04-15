@@ -39,7 +39,6 @@ const FilesForm = (props) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
                     value={formik.values.files}
-                    // value={formik.values.files.map((file) => ({ url: file }))}
                 />
             </form>
         </FormWrapper>

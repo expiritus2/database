@@ -11,6 +11,7 @@ import {
 import { createApplicant, updateApplicant } from 'api/applicants';
 import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
+import { uniqueId } from 'lodash-es';
 import { prepareData } from './helpers';
 
 export const setApplicantFormStateEffect = (cfg) => (dispatch) => {
@@ -32,11 +33,15 @@ export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
 
     const formData = new FormData();
     applicant?.files?.forEach((file) => {
-        formData.append('files', file);
+        if (file?.data) {
+            formData.append('files', file?.data);
+        }
     });
 
     applicant?.photos?.forEach((photo) => {
-        formData.append('photos', photo);
+        if (photo?.data) {
+            formData.append('photos', photo?.data);
+        }
     });
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
@@ -59,12 +64,17 @@ export const updateApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
     const { forms: { applicant } } = getState();
 
     const formData = new FormData();
-    applicant?.files?.filter((file) => file instanceof File).forEach((file) => {
-        formData.append('files', file);
+
+    applicant?.files?.forEach((file) => {
+        if (file?.data) {
+            formData.append('files', file?.data);
+        }
     });
 
-    applicant?.photos?.filter((file) => file instanceof File).forEach((photo) => {
-        formData.append('photos', photo);
+    applicant?.photos?.forEach((photo) => {
+        if (photo?.data) {
+            formData.append('photos', photo?.data);
+        }
     });
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
@@ -82,5 +92,10 @@ export const updateApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
 };
 
 export const setApplicantFormDataEffect = (cfg) => (dispatch) => {
-    dispatch(setApplicantFormDataAction(cfg));
+    const config = {
+        ...cfg,
+        photos: cfg.photos.map((photoUrl) => ({ url: photoUrl })),
+        files: cfg.files.map((fileUrl) => ({ id: uniqueId(), url: fileUrl })),
+    };
+    dispatch(setApplicantFormDataAction(config));
 };

@@ -10,16 +10,16 @@ const s3 = new aws.S3({
 const upload = multer({
     storage: multerS3({
         s3,
-        bucket: 'own-hr-database',
+        bucket: process.env.AWS_S3_BUCKET_NAME,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: function (req, file, cb) {
-            const [_, extension] = file.mimetype.split('/');
-            cb(null, `${req.user.id}-${Date.now().toString()}.${extension}`)
+            cb(null, `${Date.now().toString()}-${file.originalname}`)
         }
     })
 });
 
 module.exports = {
     upload,
+    s3,
 }

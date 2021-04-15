@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import isUrl from 'is-url';
 
 import Paper from '@material-ui/core/Paper';
 import { IoIosClose } from 'react-icons/io';
@@ -14,37 +13,14 @@ import styles from './styles.module.scss';
 
 const AddPhoto = (props) => {
     const { className, onChange, value } = props;
-    const [previewValues, setPreviewValues] = useState();
-    const [filesValue, setFilesValue] = useState([]);
-
-    useEffect(() => {
-        const files = [];
-        const urls = [];
-        value.forEach((val) => {
-            if (val?.url instanceof File) {
-                files.push(val?.url);
-            }
-
-            if (isUrl(val?.url)) {
-                urls.push(val);
-            }
-        });
-
-        getImagesPreview(files)
-            .then((values) => {
-                const newPreviewValues = [...urls, ...values];
-                setPreviewValues(newPreviewValues);
-            }).catch(() => {});
-    }, []); // eslint-disable-line
+    const [previewValues, setPreviewValues] = useState(value);
 
     const onChangeHandler = (event) => {
         getImagesPreview(event.target.files).then((values) => {
             const newPreviewValues = [...previewValues, ...values];
             setPreviewValues(newPreviewValues);
 
-            const newFilesValues = [...filesValue, ...event.target.files];
-            setFilesValue(newFilesValues);
-            onChange(newFilesValues, event.target.files);
+            onChange(newPreviewValues, event.target.files);
         });
     };
 
@@ -52,14 +28,11 @@ const AddPhoto = (props) => {
         event.stopPropagation();
         event.preventDefault();
         const clonedPreviewValue = cloneDeep(previewValues);
-        const clonedFilesValue = cloneDeep(filesValue);
 
         clonedPreviewValue.splice(index, 1);
-        clonedFilesValue.splice(index, 1);
-
         setPreviewValues(clonedPreviewValue);
-        setFilesValue(clonedFilesValue);
-        onChange(clonedFilesValue, []);
+
+        onChange(clonedPreviewValue, []);
     };
 
     const getPreview = () => (previewValues?.length ? previewValues.map(({ url }, index) => (

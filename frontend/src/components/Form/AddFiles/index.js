@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control,react/no-array-index-key,no-param-reassign */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -13,19 +13,14 @@ import styles from './styles.module.scss';
 const AddFile = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
-    const [filesValue, setFilesValue] = useState([]);
+    const [filesValue, setFilesValue] = useState(value);
     const [selectedFiles, setSelectedFiles] = useState([]);
 
-    useEffect(() => {
-        const newValue = value.map((val) => ({ id: uniqueId(), url: val?.url || val }));
-        setFilesValue(newValue);
-    }, [value]); // eslint-disable-line
-
     const onChangeHandler = (event) => {
-        const newFilesValues = [...filesValue, ...event.target.files];
-        newFilesValues.forEach((newFile) => {
-            newFile.id = uniqueId();
-        });
+        const newFilesValues = [
+            ...filesValue,
+            ...Array.from(event.target.files).map((file) => ({ id: uniqueId(), data: file })),
+        ];
 
         setFilesValue(newFilesValues);
         onChange(newFilesValues, event.target.files);
