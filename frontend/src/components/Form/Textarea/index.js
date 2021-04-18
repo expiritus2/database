@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -9,11 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import styles from './styles.module.scss';
 
 const Textarea = (props) => {
-    const { className, inputClassName, label, value, ...otherProps } = props;
+    const { className, inputClassName, label, value, onChange, name, ...otherProps } = props;
     const [focus, setFocus] = useState(false);
-    const [inputValue, setInputValue] = useState(value);
-
-    useEffect(() => setInputValue(value), [value]);
 
     return (
         <FormControl className={classNames(styles.formControl, className)}>
@@ -21,16 +18,18 @@ const Textarea = (props) => {
                 className={styles.label}
                 variant="outlined"
                 color="primary"
-                shrink={focus || !!inputValue}
+                shrink={focus || !!value}
                 focused={focus}
             >
                 {label}
             </InputLabel>
             <TextareaAutosize
+                name={name}
                 className={classNames(styles.input, { [styles.focus]: focus }, inputClassName)}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
-                value={inputValue || ''}
+                value={value || ''}
+                onChange={onChange}
                 {...otherProps}
             />
         </FormControl>
@@ -42,6 +41,8 @@ Textarea.propTypes = {
     label: PropTypes.string,
     inputClassName: PropTypes.string,
     value: PropTypes.string,
+    onChange: PropTypes.func,
+    name: PropTypes.string,
 };
 
 Textarea.defaultProps = {
@@ -49,6 +50,8 @@ Textarea.defaultProps = {
     label: '',
     inputClassName: '',
     value: '',
+    onChange: () => {},
+    name: undefined,
 };
 
 export default Textarea;

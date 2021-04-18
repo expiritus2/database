@@ -8,6 +8,7 @@ const sequelize = require('../util/database');
 
 class User extends Model {
     validPassword(password) {
+        console.log('this.password', this.password)
         return bcrypt.compareSync(password, this.password)
     }
 

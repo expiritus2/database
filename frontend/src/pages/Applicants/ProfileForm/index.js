@@ -50,13 +50,14 @@ const ProfileForm = (props) => {
                     name="experienceYears"
                     className={styles.field}
                     label={translate.ExperienceYears}
-                    onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')}
+                    onChange={(numberValue) => onCustomFieldChange(null, numberValue, 'experienceYears')}
                     value={formFields.experienceYears}
+                    interval={0.5}
                 />
                 <SalaryInput
                     className={styles.field}
-                    onChange={(values) => {
-                        onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary');
+                    onChange={(numberValue) => {
+                        onCustomFieldChange(null, { ...formFields.salary, amount: numberValue }, 'salary');
                     }}
                     onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
                     value={formFields?.salary}

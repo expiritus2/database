@@ -15,13 +15,17 @@ const Place = (props) => {
         return Place.options(translate).find((option) => option?.value === val);
     }), []); // eslint-disable-line
 
+    const onChangeHandler = (e, val) => {
+        onChange(e, val.map((v) => v?.value));
+    };
+
     return (
         <div className={classNames(styles.placeWrapper, className)}>
             <Autocomplete
                 multiple
                 label={translate.Place}
                 options={Place.options(translate)}
-                onChange={onChange}
+                onChange={onChangeHandler}
                 defaultValue={getDefaultValue()}
                 getOptionSelected={(option, val) => option?.value === val?.value}
                 filterSelectedOptions

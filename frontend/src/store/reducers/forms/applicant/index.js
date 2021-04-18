@@ -38,7 +38,7 @@ const initialData = {
     links: [{ type: '', link: '' }],
     emails: [''],
     files: [],
-    experienceYears: '',
+    experienceYears: 0,
     experiences: [
         experienceInitialData,
     ],

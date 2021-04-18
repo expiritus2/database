@@ -100,7 +100,7 @@ export default {
     Messengers: 'Messengers',
     AccountName: 'Имя аккаунта',
     Linkedin: 'Linkedin',
-    Site: 'Linkedin',
+    Site: 'Сайт',
     Links: 'Ссылки',
     Link: 'Ссылка',
     AddLink: 'Добавить ссылку',

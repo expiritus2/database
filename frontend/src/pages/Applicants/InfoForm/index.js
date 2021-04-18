@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
@@ -31,10 +31,10 @@ const InfoForm = (props) => {
         dispatch(setApplicantFormStateEffect({ [propName]: val }));
     };
 
-    const onChangeField = (e) => {
+    const onChangeField = useCallback((e) => {
         const { name, value } = e.target;
         dispatch(setApplicantFormStateEffect({ [name]: value }));
-    };
+    }, [dispatch]);
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
@@ -45,7 +45,7 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.FIOLat}
                     onChange={onChangeField}
-                    value={formik.values.nameLat}
+                    value={formFields.nameLat}
                 />
                 <AddPhoto
                     className={styles.field}

@@ -20,6 +20,7 @@ import Positions from './Positions';
 import Skills from './Skills';
 import Regions from './Regions';
 import Information from './Information';
+import Messengers from './Messengers';
 
 import styles from './styles.module.scss';
 
@@ -53,7 +54,7 @@ const Info = (props) => {
                         <div className={styles.details}>
                             <Phones phones={applicant?.phones} />
                             <Emails emails={applicant?.emails} />
-                            <Item label={translate.Skype} value={applicant?.skype} />
+                            <Messengers list={applicant?.messengers} />
                             <Item
                                 label={translate.Salary}
                                 value={(

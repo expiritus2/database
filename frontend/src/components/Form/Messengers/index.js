@@ -8,6 +8,7 @@ import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
 import { Select, Button, Input } from 'components';
 
+import { messengersOptions } from 'settings/constants/messengers';
 import Paper from '@material-ui/core/Paper';
 
 import styles from './styles.module.scss';
@@ -25,7 +26,7 @@ const Messengers = (props) => {
     };
 
     const onAddMessenger = () => {
-        const newValue = [...values, Messengers.defaultProps.value];
+        const newValue = [...values, ...Messengers.defaultProps.value];
         setValues(newValue);
         onChange(newValue);
     };
@@ -53,7 +54,7 @@ const Messengers = (props) => {
                         name="messenger"
                         label={translate.Messenger}
                         className={styles.type}
-                        options={Messengers.messengersOptions(translate)}
+                        options={messengersOptions(translate)}
                         onChange={(event) => onChangeMessenger(event, index)}
                         value={val?.messenger || ''}
                     />
@@ -72,11 +73,6 @@ const Messengers = (props) => {
         </Paper>
     );
 };
-
-Messengers.messengersOptions = (translate) => [
-    { value: 'skype', label: translate.Skype },
-    { value: 'telegram', label: translate.Telegram },
-];
 
 Messengers.propTypes = {
     className: PropTypes.string,

@@ -25,9 +25,11 @@ const Login = () => {
         validationSchema: ValidationSchema(translate),
         onSubmit(values) {
             setIsPending(true);
-            dispatch(loginEffect(values, {}, () => {
+            dispatch(loginEffect(values, {}, (err) => {
+                if (!err) {
+                    history.push(routes.index);
+                }
                 setIsPending(false);
-                history.push(routes.index);
             }));
         },
     });

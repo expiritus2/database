@@ -5,13 +5,30 @@ import NumberFormat from 'react-number-format';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { Input } from 'components';
 
 import styles from './styles.module.scss';
 
 const NumberInput = (props) => {
-    const { className, label, inputClassName, thousandSeparator, value, onChange, ...otherProps } = props;
+    const {
+        className, label, inputClassName, thousandSeparator, value, onChange, interval, allowNegative, name,
+    } = props;
     const [focus, setFocus] = useState(false);
+
+    const onPlus = () => {
+        onChange(value + interval);
+    };
+
+    const onMinus = () => {
+        if (!allowNegative && value <= 0) return onChange(0);
+        onChange(value - interval);
+    };
+
+    const onChangeHandler = (values) => {
+        const numberValue = values?.floatValue;
+        onChange(numberValue);
+    };
 
     return (
         <FormControl className={classNames(styles.formControl, className)}>
@@ -24,16 +41,23 @@ const NumberInput = (props) => {
             >
                 {label}
             </InputLabel>
-            <NumberFormat
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
-                thousandSeparator={thousandSeparator}
-                className={classNames(styles.input, inputClassName)}
-                customInput={Input}
-                value={value}
-                onChange={onChange}
-                {...otherProps}
-            />
+            <div className={styles.inputWrapper}>
+                <NumberFormat
+                    name={name}
+                    onFocus={() => setFocus(true)}
+                    onBlur={() => setFocus(false)}
+                    thousandSeparator={thousandSeparator}
+                    className={classNames(styles.input, inputClassName)}
+                    customInput={Input}
+                    value={value}
+                    onValueChange={onChangeHandler}
+                    allowNegative={allowNegative}
+                />
+                <div className={styles.actions}>
+                    <AiOutlineMinus onClick={onMinus} className={styles.minus} />
+                    <AiOutlinePlus onClick={onPlus} className={styles.plus} />
+                </div>
+            </div>
         </FormControl>
     );
 };
@@ -45,6 +69,9 @@ NumberInput.propTypes = {
     thousandSeparator: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
+    interval: PropTypes.number,
+    name: PropTypes.string,
+    allowNegative: PropTypes.bool,
 };
 
 NumberInput.defaultProps = {
@@ -52,8 +79,11 @@ NumberInput.defaultProps = {
     label: '',
     inputClassName: '',
     thousandSeparator: true,
-    value: '',
+    value: 0,
     onChange: () => {},
+    interval: 1,
+    name: undefined,
+    allowNegative: false,
 };
 
 export default NumberInput;
