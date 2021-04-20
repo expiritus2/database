@@ -105,8 +105,12 @@ export default {
     Link: 'Ссылка',
     AddLink: 'Добавить ссылку',
     Reset: 'Сбросить',
+
     AddApplicant: 'Добавить кандидата',
     EditApplicant: 'Изменить кандидата',
+    AddVacancy: 'Добавить вакансию',
+    EditVacancy: 'Изменить вакансию',
+
     AddContact: 'Добавить контакт',
     EditContact: 'Изменить контакт',
     Recruiters: 'Рекрутеры',

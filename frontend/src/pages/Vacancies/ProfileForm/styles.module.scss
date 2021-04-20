@@ -3,6 +3,8 @@
 @import "../Modal/styles.module";
 
 .wrapper {
+    padding-top: setUnit(20);
+
     .field {
         @include field;
 

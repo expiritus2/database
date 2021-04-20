@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getVacancyFormSelector } from 'store/selectors/vacancyForm';
 import { setVacancyFormStateEffect } from 'store/effects/forms/vacancy';
-import { FormWrapper } from '../componets';
+import { FormWrapper } from '../components';
 
 import styles from './styles.module.scss';
 

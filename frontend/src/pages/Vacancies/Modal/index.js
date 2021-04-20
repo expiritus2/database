@@ -96,7 +96,6 @@ const ModalComponent = ({ className }) => {
 
 ModalComponent.tabs = (translate) => [
     { id: 'profile', label: translate.Profile, Component: ProfileForm },
-
     { id: 'files', label: translate.Files, Component: FilesForm },
 ];
 
