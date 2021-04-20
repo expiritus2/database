@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es';
 import isUrl from 'is-url';
+import { cleanOptions } from 'helpers';
 
 export const prepareData = (cfg, files) => {
     const clonedCfg = cloneDeep(cfg);
@@ -14,7 +15,9 @@ export const prepareData = (cfg, files) => {
             .map((ph) => ph?.url || ph) || []),
         ...(files?.photos || []),
     ];
-    // clonedCfg.place = clonedCfg?.place?.map(({ value }) => value);
+    clonedCfg.positions = cleanOptions(clonedCfg?.positions);
+    clonedCfg.regions = cleanOptions(clonedCfg?.regions);
+    clonedCfg.skills = cleanOptions(clonedCfg?.skills);
     clonedCfg.birthDate = clonedCfg?.birthDate?.[0];
     clonedCfg.experienceYears = clonedCfg.experienceYears || undefined;
 

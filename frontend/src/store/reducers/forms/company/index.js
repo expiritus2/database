@@ -6,7 +6,6 @@ import {
     uploadContactFilesAction,
     setContactFormDataAction,
 } from 'store/actions/forms/contact';
-import { IDLE } from 'settings/constants/apiState';
 import { get } from 'lodash-es';
 
 const initialData = {
@@ -18,8 +17,6 @@ const initialData = {
     links: [{ type: '', link: '' }],
     addresses: [],
     info: '',
-    state: IDLE,
-    meta: {},
 };
 
 export default handleActions({

@@ -10,7 +10,12 @@ import {
     Company,
     Position,
     SalaryInput,
-    NumberInput, Skills, Place, Regions, Textarea,
+    NumberInput,
+    Skills,
+    Place,
+    Regions,
+    Textarea,
+    Recruiters,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -56,11 +61,10 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
                     value={formik.values.positions}
                 />
-                <Input
+                <Recruiters
                     name="recruiters"
                     className={classNames(className, styles.field)}
-                    label={translate.Recruiters}
-                    onChange={onChangeField}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'recruiters')}
                     value={formik.values.recruiters}
                 />
                 <Company

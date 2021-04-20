@@ -7,7 +7,6 @@ import {
     uploadFilesAction,
     setApplicantFormDataAction,
 } from 'store/actions/forms/applicant';
-import { IDLE } from 'settings/constants/apiState';
 import { get } from 'lodash-es';
 
 export const experienceInitialData = {
@@ -42,8 +41,6 @@ const initialData = {
     experiences: [
         experienceInitialData,
     ],
-    state: IDLE,
-    meta: {},
 };
 
 export default handleActions({

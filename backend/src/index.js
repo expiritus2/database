@@ -12,6 +12,7 @@ const { applicantRouter } = require('./routes/applicant');
 const { contactRouter } = require('./routes/contact');
 const { vacancyRouter } = require('./routes/vacancy');
 const { companyRouter } = require('./routes/company');
+const { resourcesRouter } = require('./routes/resources');
 
 const { fakeRouter } = require('./routes/fake');
 const errorHandler = require('./middlewares/error-handler');
@@ -37,6 +38,7 @@ app.use(applicantRouter);
 app.use(contactRouter);
 app.use(vacancyRouter);
 app.use(companyRouter);
+app.use(resourcesRouter);
 
 app.use(fakeRouter);
 

@@ -9,11 +9,7 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import {
-    submitApplicantFormEffect,
-    updateApplicantFormEffect,
-    resetApplicantFormEffect,
-} from 'store/effects/forms/applicant';
+import { submitApplicantFormEffect, updateApplicantFormEffect, resetApplicantFormEffect } from 'store/effects/forms/applicant';
 import { getApplicantsEffect } from 'store/effects/applicants';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';

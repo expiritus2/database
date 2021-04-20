@@ -11,6 +11,7 @@ import vacancies from './vacancies';
 import vacancy from './vacancy';
 import companies from './companies';
 import company from './company';
+import resources from './resources';
 
 export default combineReducers({
     app,
@@ -24,4 +25,5 @@ export default combineReducers({
     vacancy,
     companies,
     company,
+    resources,
 });

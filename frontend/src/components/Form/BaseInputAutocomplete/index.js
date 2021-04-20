@@ -8,9 +8,7 @@ const BaseInputAutocomplete = (props) => {
     const { className, onChange, value, multiple, label: propsLabel, options, convertTitleCaseIfNew } = props;
     const [optionsValue, setOptionsValue] = useState(options);
 
-    const createOptions = (arr) => arr.map(({ label, value: val }) => ({
-        label, value: val,
-    }));
+    const createOptions = (arr) => [...arr, ...options];
 
     const getThrottle = useMemo(() => () => new Promise((resolve) => {
         resolve({ data: [...value, ...optionsValue] });

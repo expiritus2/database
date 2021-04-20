@@ -65,3 +65,9 @@ export function downloadFile(blank = false) {
         },
     };
 }
+
+export const cleanOptions = (options) => {
+    if (!options) return options;
+
+    return options.map((option) => ({ id: option?.id, label: option?.label?.trim(), value: option?.value?.trim() }));
+};

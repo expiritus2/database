@@ -6,7 +6,6 @@ import {
     uploadVacancyFilesAction,
     setVacancyFormDataAction,
 } from 'store/actions/forms/vacancy';
-import { IDLE } from 'settings/constants/apiState';
 import { get } from 'lodash-es';
 
 const initialData = {
@@ -26,12 +25,9 @@ const initialData = {
     workSchedule: [],
     type: [],
     regions: [],
-    test: null,
+    test: '',
     info: '',
     files: [],
-
-    state: IDLE,
-    meta: {},
 };
 
 export default handleActions({

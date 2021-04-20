@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { BaseAutocomplete } from 'components';
-
+import { useSelector } from 'react-redux';
 import { useTranslate } from 'hooks';
+import { getResourcesPositionsSelector } from 'store/selectors/resources';
 
 const Position = (props) => {
     const { className, onChange, value } = props;
+    const positions = useSelector(getResourcesPositionsSelector);
 
     const { translate } = useTranslate();
 
@@ -16,7 +18,7 @@ const Position = (props) => {
             className={classNames(className)}
             onChange={onChange}
             value={value}
-            options={[]}
+            options={positions}
         />
     );
 };
