@@ -1,19 +1,55 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
-import { getResourcesAction } from 'store/actions/resources';
+import { getVocabularyResourcesAction, getVocabularyPositionsAction, getVocabularyRegionsAction, getVocabularySkillsAction, getVocabularyCompaniesAction } from 'store/actions/resources';
 import { get } from 'lodash-es';
 
 const initialData = {
     state: IDLE,
-    data: null,
+    data: {
+        positions: [],
+        regions: [],
+        skills: [],
+        companies: [],
+    },
     meta: {},
 };
 
 export default handleActions({
-    [getResourcesAction]: (state, { payload }) => ({
+    [getVocabularyResourcesAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
-        data: get(payload, 'data', initialData.data),
+        data: {
+            ...state.data,
+            ...get(payload, 'data', initialData.data),
+        },
         meta: get(payload, 'meta', initialData.meta),
+    }),
+    [getVocabularyPositionsAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            positions: get(payload, 'data', []),
+        },
+    }),
+    [getVocabularyRegionsAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            regions: get(payload, 'data', []),
+        },
+    }),
+    [getVocabularySkillsAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            skills: get(payload, 'data', []),
+        },
+    }),
+    [getVocabularyCompaniesAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            companies: get(payload, 'data', []),
+        },
     }),
 }, initialData);

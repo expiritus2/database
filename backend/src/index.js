@@ -6,18 +6,10 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const cors = require('cors');
 
-const { authRouter } = require('./routes/auth');
-const { filesRouter } = require('./routes/files');
-const { applicantRouter } = require('./routes/applicant');
-const { contactRouter } = require('./routes/contact');
-const { vacancyRouter } = require('./routes/vacancy');
-const { companyRouter } = require('./routes/company');
-const { resourcesRouter } = require('./routes/resources');
-
-const { fakeRouter } = require('./routes/fake');
 const errorHandler = require('./middlewares/error-handler');
 const sequelize = require('./util/database');
 const { createAssociations } = require('./models/associations');
+const allRoutes = require('./routes');
 
 const app = express();
 
@@ -32,15 +24,7 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session({}));
 
-app.use(authRouter);
-app.use(filesRouter);
-app.use(applicantRouter);
-app.use(contactRouter);
-app.use(vacancyRouter);
-app.use(companyRouter);
-app.use(resourcesRouter);
-
-app.use(fakeRouter);
+allRoutes(app);
 
 app.all('*', async () => {
     console.log('Route not found!');

@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { BaseAutocomplete } from 'components/index';
+import { useDispatch } from 'react-redux';
 
+import { getVocabularyRegionsEffect } from 'store/effects/resources';
+import { BaseAutocomplete } from 'components/index';
 import { useTranslate } from 'hooks';
 
 const Regions = (props) => {
     const { className, onChange, value } = props;
-
+    const dispatch = useDispatch();
     const { translate } = useTranslate();
+
+    useEffect(() => {
+        dispatch(getVocabularyRegionsEffect({}, { silent: true }));
+    }, []); // eslint-disable-line
 
     return (
         <BaseAutocomplete

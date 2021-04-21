@@ -55,6 +55,7 @@ AutocompleteComponent.propTypes = {
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.shape({})),
+        PropTypes.shape({}),
     ]),
     loading: PropTypes.bool,
 

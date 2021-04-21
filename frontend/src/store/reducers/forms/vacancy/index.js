@@ -12,7 +12,7 @@ const initialData = {
     active: false,
     positions: [],
     recruiters: [],
-    company: '',
+    company: {},
     contacts: [],
     salary: {
         min: '',

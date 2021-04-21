@@ -5,7 +5,7 @@ import { AsyncAutocomplete } from 'components/index';
 import { intersectionBy, uniqBy } from 'lodash-es';
 
 const BaseInputAutocomplete = (props) => {
-    const { className, onChange, value, multiple, label: propsLabel, options, convertTitleCaseIfNew } = props;
+    const { className, onChange, value, label: propsLabel, options, convertTitleCaseIfNew } = props;
     const [optionsValue, setOptionsValue] = useState(options);
 
     const createOptions = (arr) => [...arr, ...options];
@@ -27,7 +27,6 @@ const BaseInputAutocomplete = (props) => {
             className={classNames(className)}
             onChange={onChangeHandler}
             value={uniqBy([...value], 'value')}
-            multiple={multiple}
             defaultValue={value}
             getThrottle={getThrottle}
             createOptions={createOptions}
@@ -41,7 +40,6 @@ BaseInputAutocomplete.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
-    multiple: PropTypes.bool,
     label: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({})),
     convertTitleCaseIfNew: PropTypes.bool,
@@ -51,7 +49,6 @@ BaseInputAutocomplete.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
-    multiple: true,
     label: '',
     options: [],
     convertTitleCaseIfNew: true,

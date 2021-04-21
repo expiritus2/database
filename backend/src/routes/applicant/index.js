@@ -1,14 +1,14 @@
 const express = require('express');
 const { body } = require('express-validator');
-const requireAuth = require('../middlewares/require-auth');
-const validateRequest = require('../middlewares/validate-request');
-const Applicant = require('../models/applicant');
-const Position = require('../models/position');
-const Skill = require('../models/skill');
-const Region = require('../models/region');
-const Experience = require('../models/experience');
+const requireAuth = require('../../middlewares/require-auth');
+const validateRequest = require('../../middlewares/validate-request');
+const Index = require('../../models/applicant');
+const Position = require('../../models/position');
+const Skill = require('../../models/skill');
+const Region = require('../../models/region');
+const Experience = require('../../models/experience');
 
-const { ApplicantController } = require('../controllers/applicantController');
+const { ApplicantController } = require('../../controllers/applicantController');
 const Sequelize = require('sequelize');
 
 const router = express.Router();
@@ -27,7 +27,7 @@ const middlewares = [
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
-    const populatedApplicant = await Applicant.findByPk(newApplicant.id, {
+    const populatedApplicant = await Index.findByPk(newApplicant.id, {
         include: [
             { model: Position },
             { model: Skill },
@@ -54,7 +54,7 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
         }
     }
 
-    const allApplicants = await Applicant.findAndCountAll({
+    const allApplicants = await Index.findAndCountAll({
         ...searchCriteria,
         limit: countPerPage || 25,
         offset: (page * countPerPage) || 0,

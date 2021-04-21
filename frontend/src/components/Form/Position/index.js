@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { BaseAutocomplete } from 'components';
-import { useSelector } from 'react-redux';
 import { useTranslate } from 'hooks';
 import { getResourcesPositionsSelector } from 'store/selectors/resources';
+import { getVocabularyPositionsEffect } from 'store/effects/resources';
 
 const Position = (props) => {
     const { className, onChange, value } = props;
+    const dispatch = useDispatch();
+    const { translate } = useTranslate();
     const positions = useSelector(getResourcesPositionsSelector);
 
-    const { translate } = useTranslate();
+    useEffect(() => {
+        dispatch(getVocabularyPositionsEffect({}, { silent: true }));
+    }, []); // eslint-disable-line
 
     return (
         <BaseAutocomplete

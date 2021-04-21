@@ -1,10 +1,10 @@
 const express = require('express');
 const { body } = require('express-validator');
-const requireAuth = require('../middlewares/require-auth');
-const validateRequest = require('../middlewares/validate-request');
-const Company = require('../models/company');
+const requireAuth = require('../../middlewares/require-auth');
+const validateRequest = require('../../middlewares/validate-request');
+const Company = require('../../models/company');
 
-const { CompanyController } = require('../controllers/companyController');
+const { CompanyController } = require('../../controllers/companyController');
 const Sequelize = require('sequelize');
 
 const router = express.Router();

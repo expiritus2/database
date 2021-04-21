@@ -68,7 +68,7 @@ const ExperienceForm = (props) => {
                             <Company
                                 name="company"
                                 className={styles.field}
-                                onChange={(e) => onCustomFieldChange(e.target.value, 'company', index)}
+                                onChange={(e, val) => onCustomFieldChange(val, 'company', index)}
                                 value={company}
                             />
                             <Position

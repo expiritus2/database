@@ -5,17 +5,17 @@ import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import {
-    Input,
     Checkbox,
     Company,
     Position,
-    SalaryInput,
-    NumberInput,
-    Skills,
-    Place,
-    Regions,
-    Textarea,
     Recruiters,
+    // Input,
+    // SalaryInput,
+    // NumberInput,
+    // Skills,
+    // Place,
+    // Regions,
+    // Textarea,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -43,10 +43,10 @@ const ProfileForm = (props) => {
         dispatch(setVacancyFormStateEffect({ [propName]: val }));
     };
 
-    const onChangeField = (e) => {
-        const { name, value } = e.target;
-        dispatch(setVacancyFormStateEffect({ [name]: value }));
-    };
+    // const onChangeField = (e) => {
+    //     const { name, value } = e.target;
+    //     dispatch(setVacancyFormStateEffect({ [name]: value }));
+    // };
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
@@ -68,70 +68,69 @@ const ProfileForm = (props) => {
                     value={formik.values.recruiters}
                 />
                 <Company
-                    name="company"
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'company')}
                     value={formik.values.company}
                 />
-                <SalaryInput
-                    className={styles.field}
-                    onChange={(values) => {
-                        onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary');
-                    }}
-                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
-                    value={formFields?.salary}
-                />
-                <NumberInput
-                    name="experienceYears"
-                    className={styles.field}
-                    label={translate.ExperienceYears}
-                    onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')}
-                    value={formFields.experienceYears}
-                />
-                <Skills
-                    className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
-                    value={formFields.skills}
-                />
-                <Place
-                    className={styles.field}
-                    label={translate.Place}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
-                    value={formFields.place}
-                />
-                <Input
-                    name="workSchedule"
-                    className={classNames(className, styles.field)}
-                    label={translate.WorkSchedule}
-                    onChange={onChangeField}
-                    value={formik.values.workSchedule}
-                />
-                <Input
-                    name="type"
-                    className={classNames(className, styles.field)}
-                    label={translate.Type}
-                    onChange={onChangeField}
-                    value={formik.values.type}
-                />
-                <Regions
-                    className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
-                    value={formFields.regions}
-                />
-                <Input
-                    name="test"
-                    className={classNames(className, styles.field)}
-                    label={translate.Test}
-                    onChange={onChangeField}
-                    value={formik.values.test}
-                />
-                <Textarea
-                    name="info"
-                    className={styles.field}
-                    label={translate.Info}
-                    onChange={onChangeField}
-                    value={formFields.info}
-                />
+                {/* <SalaryInput */}
+                {/*    className={styles.field} */}
+                {/*    onChange={(values) => { */}
+                {/*        onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary'); */}
+                {/*    }} */}
+                {/*    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')} */}
+                {/*    value={formFields?.salary} */}
+                {/* /> */}
+                {/* <NumberInput */}
+                {/*    name="experienceYears" */}
+                {/*    className={styles.field} */}
+                {/*    label={translate.ExperienceYears} */}
+                {/*    onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')} */}
+                {/*    value={formFields.experienceYears} */}
+                {/* /> */}
+                {/* <Skills */}
+                {/*    className={styles.field} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'skills')} */}
+                {/*    value={formFields.skills} */}
+                {/* /> */}
+                {/* <Place */}
+                {/*    className={styles.field} */}
+                {/*    label={translate.Place} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'place')} */}
+                {/*    value={formFields.place} */}
+                {/* /> */}
+                {/* <Input */}
+                {/*    name="workSchedule" */}
+                {/*    className={classNames(className, styles.field)} */}
+                {/*    label={translate.WorkSchedule} */}
+                {/*    onChange={onChangeField} */}
+                {/*    value={formik.values.workSchedule} */}
+                {/* /> */}
+                {/* <Input */}
+                {/*    name="type" */}
+                {/*    className={classNames(className, styles.field)} */}
+                {/*    label={translate.Type} */}
+                {/*    onChange={onChangeField} */}
+                {/*    value={formik.values.type} */}
+                {/* /> */}
+                {/* <Regions */}
+                {/*    className={styles.field} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'regions')} */}
+                {/*    value={formFields.regions} */}
+                {/* /> */}
+                {/* <Input */}
+                {/*    name="test" */}
+                {/*    className={classNames(className, styles.field)} */}
+                {/*    label={translate.Test} */}
+                {/*    onChange={onChangeField} */}
+                {/*    value={formik.values.test} */}
+                {/* /> */}
+                {/* <Textarea */}
+                {/*    name="info" */}
+                {/*    className={styles.field} */}
+                {/*    label={translate.Info} */}
+                {/*    onChange={onChangeField} */}
+                {/*    value={formFields.info} */}
+                {/* /> */}
             </form>
         </FormWrapper>
     );

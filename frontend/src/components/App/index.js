@@ -23,10 +23,10 @@ toastr.options = {
 const App = () => {
     const { screen } = useResize();
     const { isPending } = useAuth();
-    const { isPending: isResourcesPending } = useResources();
+    useResources();
     const [locale, setLocale] = useState(DEFAULT_LOCALE);
 
-    if (isPending || isResourcesPending) {
+    if (isPending) {
         return <PendingWrapper className={styles.pendingWrapper} isPending={isPending} />;
     }
 
