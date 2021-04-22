@@ -1,6 +1,13 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
-import { getVocabularyResourcesAction, getVocabularyPositionsAction, getVocabularyRegionsAction, getVocabularySkillsAction, getVocabularyCompaniesAction } from 'store/actions/resources';
+import {
+    getVocabularyResourcesAction,
+    getVocabularyPositionsAction,
+    getVocabularyRegionsAction,
+    getVocabularySkillsAction,
+    getVocabularyCompaniesAction,
+    getVocabularyContactsAction,
+} from 'store/actions/resources';
 import { get } from 'lodash-es';
 
 const initialData = {
@@ -10,6 +17,7 @@ const initialData = {
         regions: [],
         skills: [],
         companies: [],
+        contacts: [],
     },
     meta: {},
 };
@@ -50,6 +58,13 @@ export default handleActions({
         data: {
             ...(state?.data || {}),
             companies: get(payload, 'data', []),
+        },
+    }),
+    [getVocabularyContactsAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            contacts: get(payload, 'data', []),
         },
     }),
 }, initialData);

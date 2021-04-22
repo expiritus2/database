@@ -9,13 +9,15 @@ import {
     Company,
     Position,
     Recruiters,
-    // Input,
-    // SalaryInput,
-    // NumberInput,
-    // Skills,
-    // Place,
-    // Regions,
-    // Textarea,
+    Contacts,
+    SalaryMinMax,
+    NumberInput,
+    Skills,
+    Place,
+    WorkSchedule,
+    Regions,
+    Test,
+    Textarea,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -43,94 +45,92 @@ const ProfileForm = (props) => {
         dispatch(setVacancyFormStateEffect({ [propName]: val }));
     };
 
-    // const onChangeField = (e) => {
-    //     const { name, value } = e.target;
-    //     dispatch(setVacancyFormStateEffect({ [name]: value }));
-    // };
+    const onChangeField = (e) => {
+        const { name, value } = e.target;
+        dispatch(setVacancyFormStateEffect({ [name]: value }));
+    };
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <FormControlLabel
                     className={classNames(styles.field, styles.active)}
-                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formik.values.active} />}
+                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formFields.active} />}
                     label={translate.Actives}
                 />
                 <Position
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
-                    value={formik.values.positions}
+                    value={formFields.positions}
                 />
                 <Recruiters
                     name="recruiters"
                     className={classNames(className, styles.field)}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'recruiters')}
-                    value={formik.values.recruiters}
+                    value={formFields.recruiters}
                 />
                 <Company
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'company')}
-                    value={formik.values.company}
+                    value={formFields.company}
                 />
-                {/* <SalaryInput */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(values) => { */}
-                {/*        onCustomFieldChange(null, { ...formFields.salary, amount: values?.floatValue }, 'salary'); */}
-                {/*    }} */}
-                {/*    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')} */}
-                {/*    value={formFields?.salary} */}
-                {/* /> */}
-                {/* <NumberInput */}
-                {/*    name="experienceYears" */}
-                {/*    className={styles.field} */}
-                {/*    label={translate.ExperienceYears} */}
-                {/*    onValueChange={(values) => onCustomFieldChange(null, values?.floatValue, 'experienceYears')} */}
-                {/*    value={formFields.experienceYears} */}
-                {/* /> */}
-                {/* <Skills */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'skills')} */}
-                {/*    value={formFields.skills} */}
-                {/* /> */}
-                {/* <Place */}
-                {/*    className={styles.field} */}
-                {/*    label={translate.Place} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'place')} */}
-                {/*    value={formFields.place} */}
-                {/* /> */}
-                {/* <Input */}
-                {/*    name="workSchedule" */}
-                {/*    className={classNames(className, styles.field)} */}
-                {/*    label={translate.WorkSchedule} */}
-                {/*    onChange={onChangeField} */}
-                {/*    value={formik.values.workSchedule} */}
-                {/* /> */}
-                {/* <Input */}
-                {/*    name="type" */}
-                {/*    className={classNames(className, styles.field)} */}
-                {/*    label={translate.Type} */}
-                {/*    onChange={onChangeField} */}
-                {/*    value={formik.values.type} */}
-                {/* /> */}
-                {/* <Regions */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'regions')} */}
-                {/*    value={formFields.regions} */}
-                {/* /> */}
-                {/* <Input */}
-                {/*    name="test" */}
-                {/*    className={classNames(className, styles.field)} */}
-                {/*    label={translate.Test} */}
-                {/*    onChange={onChangeField} */}
-                {/*    value={formik.values.test} */}
-                {/* /> */}
-                {/* <Textarea */}
-                {/*    name="info" */}
-                {/*    className={styles.field} */}
-                {/*    label={translate.Info} */}
-                {/*    onChange={onChangeField} */}
-                {/*    value={formFields.info} */}
-                {/* /> */}
+                <Contacts
+                    name="contacts"
+                    className={classNames(className, styles.field)}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'contacts')}
+                    value={formFields.contacts}
+                />
+                <SalaryMinMax
+                    className={styles.field}
+                    onChangeMin={(value) => {
+                        onCustomFieldChange(null, { ...formFields.salary, min: value }, 'salary');
+                    }}
+                    onChangeMax={(value) => {
+                        onCustomFieldChange(null, { ...formFields.salary, max: value }, 'salary');
+                    }}
+                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
+                    value={formFields?.salary}
+                />
+                <NumberInput
+                    name="experienceYears"
+                    className={styles.field}
+                    label={translate.ExperienceYears}
+                    onChange={(numberValue) => onCustomFieldChange(null, numberValue, 'experienceYears')}
+                    value={formFields.experienceYears}
+                    interval={0.5}
+                />
+                <Skills
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
+                    value={formFields.skills}
+                />
+                <Place
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
+                    value={formFields.place}
+                />
+                <WorkSchedule
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedule')}
+                    value={formFields.workSchedule}
+                />
+                <Regions
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
+                    value={formFields.regions}
+                />
+                <Test
+                    id="test"
+                    onChange={(newFile) => onCustomFieldChange(null, newFile, 'test')}
+                    value={formFields.test}
+                />
+                <Textarea
+                    name="info"
+                    className={styles.field}
+                    label={translate.Info}
+                    onChange={onChangeField}
+                    value={formFields.info}
+                />
             </form>
         </FormWrapper>
     );

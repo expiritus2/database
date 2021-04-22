@@ -32,6 +32,7 @@ const FilesForm = (props) => {
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <AddFiles
+                    id="vacancyFiles"
                     className={styles.field}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'files');

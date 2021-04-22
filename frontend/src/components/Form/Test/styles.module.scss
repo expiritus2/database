@@ -1,0 +1,37 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.test {
+    margin-top: setUnit(15);
+
+    .files {
+        cursor: pointer;
+
+        .actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .fileValue {
+            cursor: pointer;
+
+            input[disabled] {
+                cursor: pointer;
+                color: #000000;
+            }
+        }
+    }
+
+    .file {
+        display: none;
+    }
+
+    .actionButton {
+        pointer-events: none;
+        margin-left: setUnit(10);
+    }
+
+    .nativeInput {
+        display: none;
+    }
+}

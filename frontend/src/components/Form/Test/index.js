@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import { useTranslate } from 'hooks';
+import { Button, Input } from 'components';
+
+import styles from './styles.module.scss';
+
+const Test = (props) => {
+    const { id: elementId, className, value, onChange } = props;
+    const { translate } = useTranslate();
+    const [fileValue, setFileValue] = useState(value);
+
+    const onChangeHandler = (event) => {
+        const newFile = event.target.files?.[0];
+        setFileValue(newFile);
+        onChange(newFile, event.target.files);
+    };
+
+    const onClickInputField = () => {
+
+    };
+
+    return (
+        <div className={classNames(styles.test, className)}>
+            <label className={styles.files} htmlFor={elementId}>
+                <div className={styles.actions}>
+                    <Input
+                        className={styles.fileValue}
+                        disabled
+                        label={translate.Test}
+                        value={fileValue?.name || fileValue}
+                        onClick={onClickInputField}
+                    />
+                    <Button className={styles.actionButton} color="primary">{translate.Browse}</Button>
+                </div>
+                <input multiple className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} />
+            </label>
+        </div>
+    );
+};
+
+Test.propTypes = {
+    id: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+};
+
+Test.defaultProps = {
+    className: '',
+    onChange: () => {},
+    value: '',
+};
+
+export default Test;

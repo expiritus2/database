@@ -1,7 +1,20 @@
 import Api from 'store/effects/core/api';
-import { getVocabularyResourcesAction, getVocabularyPositionsAction, getVocabularyRegionsAction, getVocabularySkillsAction } from 'store/actions/resources';
-import { getVocabularyResources, getVocabularyPositions, getVocabularyRegions, getVocabularySkills, getVocabularyCompanies } from 'api/resources';
-import { getCompaniesAction } from '../../actions/companies';
+import {
+    getVocabularyResourcesAction,
+    getVocabularyPositionsAction,
+    getVocabularyRegionsAction,
+    getVocabularySkillsAction,
+    getVocabularyCompaniesAction,
+    getVocabularyContactsAction,
+} from 'store/actions/resources';
+import {
+    getVocabularyResources,
+    getVocabularyPositions,
+    getVocabularyRegions,
+    getVocabularySkills,
+    getVocabularyCompanies,
+    getVocabularyContacts,
+} from 'api/resources';
 
 export const getVocabularyResourcesEffect = (cfg, options = {}, cb) => {
     const requestParams = { action: getVocabularyResourcesAction, method: getVocabularyResources };
@@ -48,7 +61,21 @@ export const getVocabularySkillsEffect = (cfg, options = {}, cb) => {
 };
 
 export const getVocabularyCompaniesEffect = (cfg, options = {}, cb) => {
-    const requestParams = { action: getCompaniesAction, method: getVocabularyCompanies };
+    const requestParams = {
+        action: getVocabularyCompaniesAction,
+        method: getVocabularyCompanies,
+    };
+    let sendRequest = Api.execBase(requestParams);
+
+    if (options?.silent) {
+        sendRequest = Api.execResult(requestParams);
+    }
+
+    return sendRequest({}, options, cb);
+};
+
+export const getVocabularyContactsEffect = (cfg, options = {}, cb) => {
+    const requestParams = { action: getVocabularyContactsAction, method: getVocabularyContacts };
     let sendRequest = Api.execBase(requestParams);
 
     if (options?.silent) {

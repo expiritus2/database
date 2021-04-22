@@ -34,6 +34,7 @@ const FilesForm = (props) => {
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 <AddFiles
+                    id="applicantFiles"
                     className={styles.field}
                     onChange={(values) => {
                         onCustomFieldChange(null, values, 'files');

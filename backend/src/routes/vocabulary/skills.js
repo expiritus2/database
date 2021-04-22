@@ -13,5 +13,5 @@ router.get('/api/vocabulary/skills', middlewares, async (req, res) => {
 });
 
 module.exports = {
-    skillsRouter: router,
+    skillsVocabularyRouter: router,
 }

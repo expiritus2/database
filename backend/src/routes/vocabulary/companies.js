@@ -13,5 +13,5 @@ router.get('/api/vocabulary/companies', middlewares, async (req, res) => {
 });
 
 module.exports = {
-    positionsRouter: router,
+    companiesVocabularyRouter: router,
 }

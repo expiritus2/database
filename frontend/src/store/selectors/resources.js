@@ -36,3 +36,8 @@ export const getResourcesCompaniesSelector = createSelector(
     getResourcesDataSelector,
     (resourcesData) => resourcesData?.companies || [],
 );
+
+export const getResourcesContactsSelector = createSelector(
+    getResourcesDataSelector,
+    (resourcesData) => resourcesData?.contacts || [],
+);

@@ -19,5 +19,5 @@ router.get('/api/vocabulary/resources', middlewares, async (req, res) => {
 });
 
 module.exports = {
-    resourcesRouter: router,
+    resourcesVocabularyRouter: router,
 }

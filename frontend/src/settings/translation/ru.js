@@ -118,4 +118,8 @@ export default {
     Test: 'Тестовое задание',
     Logo: 'Логотип',
     Addresses: 'Адреса',
+    FlexibleSchedule: 'Гибкий график',
+    FullDay: 'Полный день',
+    ShiftWork: 'Сменный график',
+    Browse: 'Browse...',
 };

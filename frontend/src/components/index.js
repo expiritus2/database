@@ -48,3 +48,7 @@ export { default as Company } from './Form/Company';
 export { default as Addresses } from './Form/Addresses';
 export { default as BaseAutocomplete } from './Form/BaseInputAutocomplete';
 export { default as Recruiters } from './Form/Recruiters';
+export { default as Contacts } from './Form/Contacts';
+export { default as SalaryMinMax } from './Form/SalaryMinMax';
+export { default as WorkSchedule } from './Form/WorkSchedule';
+export { default as Test } from './Form/Test';

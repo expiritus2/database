@@ -11,7 +11,7 @@ import Table from './Table';
 import styles from './styles.module.scss';
 
 const AddFile = (props) => {
-    const { className, onChange, value } = props;
+    const { id: elementId, className, onChange, value } = props;
     const { translate } = useTranslate();
     const [filesValue, setFilesValue] = useState(value);
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -45,11 +45,11 @@ const AddFile = (props) => {
     return (
         <div className={classNames(styles.filesWrapper, className)}>
             <div className={styles.actionsWrapper}>
-                <label className={styles.files} htmlFor="file">
+                <label className={styles.files} htmlFor={elementId}>
                     <div className={styles.actions}>
                         <Button className={styles.actionButton} color="primary">{translate.AddFile}</Button>
                     </div>
-                    <input multiple className={styles.nativeInput} id="file" type="file" onChange={onChangeHandler} />
+                    <input multiple className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} />
                 </label>
                 <Button onClick={onRemove} className={styles.actionButton} color="primary">{translate.Delete}</Button>
             </div>
@@ -64,6 +64,7 @@ const AddFile = (props) => {
 };
 
 AddFile.propTypes = {
+    id: PropTypes.string.isRequired,
     className: PropTypes.string,
     value: PropTypes.arrayOf(PropTypes.any),
     onChange: PropTypes.func,

@@ -5,3 +5,4 @@ export const getVocabularyPositionsAction = createAction('GET_VOCABULARY_POSITIO
 export const getVocabularyRegionsAction = createAction('GET_VOCABULARY_REGIONS');
 export const getVocabularySkillsAction = createAction('GET_VOCABULARY_SKILLS');
 export const getVocabularyCompaniesAction = createAction('GET_VOCABULARY_COMPANIES');
+export const getVocabularyContactsAction = createAction('GET_VOCABULARY_CONTACTS');

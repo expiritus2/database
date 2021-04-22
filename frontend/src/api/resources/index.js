@@ -19,3 +19,7 @@ export function getVocabularySkills() {
 export function getVocabularyCompanies() {
     return apiServer.get('/api/vocabulary/companies');
 }
+
+export function getVocabularyContacts() {
+    return apiServer.get('/api/vocabulary/contacts');
+}
