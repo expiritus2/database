@@ -16,8 +16,8 @@ import {
     Place,
     WorkSchedule,
     Regions,
-    Test,
-    Textarea,
+    File,
+    Textarea, Input,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -119,8 +119,9 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={formFields.regions}
                 />
-                <Test
+                <File
                     id="test"
+                    label={translate.Test}
                     onChange={(newFile) => onCustomFieldChange(null, newFile, 'test')}
                     value={formFields.test}
                 />

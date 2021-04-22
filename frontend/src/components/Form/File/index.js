@@ -7,8 +7,8 @@ import { Button, Input } from 'components';
 
 import styles from './styles.module.scss';
 
-const Test = (props) => {
-    const { id: elementId, className, value, onChange } = props;
+const File = (props) => {
+    const { id: elementId, className, value, onChange, label } = props;
     const { translate } = useTranslate();
     const [fileValue, setFileValue] = useState(value);
 
@@ -29,7 +29,7 @@ const Test = (props) => {
                     <Input
                         className={styles.fileValue}
                         disabled
-                        label={translate.Test}
+                        label={label}
                         value={fileValue?.name || fileValue}
                         onClick={onClickInputField}
                     />
@@ -41,17 +41,19 @@ const Test = (props) => {
     );
 };
 
-Test.propTypes = {
+File.propTypes = {
     id: PropTypes.string.isRequired,
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    label: PropTypes.string,
 };
 
-Test.defaultProps = {
+File.defaultProps = {
     className: '',
     onChange: () => {},
     value: '',
+    label: undefined,
 };
 
-export default Test;
+export default File;
