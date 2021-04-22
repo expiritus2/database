@@ -17,7 +17,7 @@ import {
     WorkSchedule,
     Regions,
     File,
-    Textarea, Input,
+    Textarea,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
