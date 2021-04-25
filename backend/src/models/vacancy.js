@@ -29,8 +29,7 @@ Vacancy.init({
         defaultValue: [],
     },
     test: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
+        type: DataTypes.STRING,
     },
     info: {
         type: DataTypes.TEXT,

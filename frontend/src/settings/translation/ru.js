@@ -122,4 +122,6 @@ export default {
     FullDay: 'Полный день',
     ShiftWork: 'Сменный график',
     Browse: 'Browse...',
+    From: 'От',
+    To: 'До',
 };

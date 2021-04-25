@@ -54,10 +54,9 @@ const ModalComponent = ({ className }) => {
         dispatch(effect({}, {}, (err) => {
             if (!err) {
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getVacanciesEffect({}, {}, () => {
-                    setIsPending(false);
-                }));
+                dispatch(getVacanciesEffect());
             }
+            setIsPending(false);
         }));
     };
 

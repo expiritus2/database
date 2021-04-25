@@ -18,9 +18,9 @@ const middlewares = [
 ]
 
 router.post('/api/vacancies/create', middlewares, async (req, res) => {
-    const contactController = new VacancyController(req.body);
-    const newContact = await contactController.create();
-    const populatedVacancy = await Vacancy.findByPk(newContact.id, {
+    const vacancyController = new VacancyController(req.body);
+    const newVacancy = await vacancyController.create();
+    const populatedVacancy = await Vacancy.findByPk(newVacancy.id, {
         include: {
             all: true,
         }

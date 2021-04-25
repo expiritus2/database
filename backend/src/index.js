@@ -22,6 +22,7 @@ app.use(cookieSession({
 }));
 
 app.use(passport.initialize());
+
 app.use(passport.session({}));
 
 allRoutes(app);

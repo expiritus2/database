@@ -27,8 +27,14 @@ export const submitVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
 
     const formData = new FormData();
 
-    vacancy?.photos?.forEach((photo) => {
-        formData.append('photos', photo);
+    if (vacancy?.test) {
+        formData.append('test', vacancy?.test);
+    }
+
+    vacancy?.files?.forEach((file) => {
+        if (file?.data) {
+            formData.append('files', file?.data);
+        }
     });
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
@@ -52,7 +58,11 @@ export const updateVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
 
     const formData = new FormData();
 
-    vacancy?.photos?.filter((file) => file instanceof File).forEach((photo) => {
+    if (vacancy?.test instanceof File) {
+        formData.append('test', vacancy?.test);
+    }
+
+    vacancy?.files?.filter((file) => file instanceof File).forEach((photo) => {
         formData.append('photos', photo);
     });
 

@@ -1,0 +1,20 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.salary {
+    display: flex;
+
+    .prefix {
+        margin-right: setUnit(10);
+    }
+
+    .from {
+        margin-right: setUnit(10);
+    }
+
+    .from,
+    .to {
+        display: flex;
+        align-items: center;
+    }
+}

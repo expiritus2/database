@@ -2,8 +2,21 @@
 @import "styles/variables";
 
 .name {
+    display: flex;
 
-    .positions {
+    .activeIcon {
+        margin-top: setUnit(7);
+        width: setUnit(20);
+        height: setUnit(20);
+        margin-right: setUnit(10);
+        visibility: hidden;
+
+        &.active {
+            visibility: visible;
+        }
+    }
+
+    .skills {
         margin-top: setUnit(10);
     }
 }
