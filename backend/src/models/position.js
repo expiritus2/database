@@ -12,10 +12,10 @@ Position.init({
         primaryKey: true,
     },
     label: {
-        type: DataTypes.CHAR(255),
+        type: DataTypes.STRING,
     },
     value: {
-        type: DataTypes.CHAR(255),
+        type: DataTypes.STRING,
     }
 }, { sequelize, modelName: 'position' });
 

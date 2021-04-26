@@ -10,7 +10,7 @@ import { get } from 'lodash-es';
 
 const initialData = {
     active: false,
-    positions: [],
+    position: null,
     recruiters: [],
     company: {},
     contacts: [],

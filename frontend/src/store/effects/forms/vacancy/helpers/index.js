@@ -8,6 +8,12 @@ export const prepareData = (cfg, files) => {
         ...(cfg?.files.filter((file) => !file?.data).map((ph) => ph?.url || ph) || []),
         ...(files?.files || []),
     ];
+
+    clonedCfg.position = {
+        id: clonedCfg?.position?.id,
+        label: clonedCfg?.position?.label?.trim(),
+        value: clonedCfg?.position?.value?.trim(),
+    };
     // clonedCfg.recruiters = (clonedCfg?.recruiters || []).map((recruiter) => recruiter?.id);
 
     return clonedCfg;

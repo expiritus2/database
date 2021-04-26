@@ -7,7 +7,6 @@ import { useTranslate } from 'hooks';
 import {
     Checkbox,
     Company,
-    Position,
     Recruiters,
     Contacts,
     SalaryMinMax,
@@ -18,6 +17,7 @@ import {
     Regions,
     File,
     Textarea,
+    VacancyName,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -58,10 +58,10 @@ const ProfileForm = (props) => {
                     control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formFields.active} />}
                     label={translate.Actives}
                 />
-                <Position
+                <VacancyName
                     className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
-                    value={formFields.positions}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
+                    value={formFields.position}
                 />
                 <Recruiters
                     name="recruiters"

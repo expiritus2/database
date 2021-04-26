@@ -124,4 +124,5 @@ export default {
     Browse: 'Browse...',
     From: 'От',
     To: 'До',
+    VacancyName: 'Название вакансии',
 };

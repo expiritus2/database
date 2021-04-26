@@ -32,8 +32,8 @@ const SalaryValue = (props) => {
 SalaryValue.propTypes = {
     className: PropTypes.string,
     value: PropTypes.shape({
-        min: PropTypes.number,
-        max: PropTypes.number,
+        min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         currency: PropTypes.string,
     }),
     currency: PropTypes.string,

@@ -32,7 +32,6 @@ app.all('*', async () => {
 });
 
 app.use(errorHandler);
-
 createAssociations()
 
 sequelize.sync({ force: false })

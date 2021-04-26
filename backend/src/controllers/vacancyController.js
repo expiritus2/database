@@ -10,16 +10,16 @@ class VacancyController {
         this.body = body;
         this.regions = this.body.regions;
         this.skills = this.body.skills;
-        this.positions = this.body.positions;
+        this.position = this.body.position;
 
-        this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions']);
+        this.joinedInfo = omit(this.body, ['regions', 'skills', 'position']);
     }
 
     create(options = {}) {
         return new Promise(async (resolve) => {
             try {
                 this.newVacancy = await Vacancy.create(this.joinedInfo, options);
-                await this.handlePositions(this.positions, this.newVacancy);
+                await this.handlePosition(this.position, this.newVacancy);
                 await this.handleSkills();
                 await this.handleRegions();
 
@@ -33,11 +33,11 @@ class VacancyController {
     update(id) {
         return new Promise(async (resolve) => {
             try {
-                await Vacancy.update(this.joinedInfo, { where: { id }});
-                this.newVacancy = await Vacancy.findByPk(id, { include: { all: true }});
+                await Vacancy.update(this.joinedInfo, { where: { id } });
+                this.newVacancy = await Vacancy.findByPk(id, { include: { all: true } });
 
                 if (this.newVacancy) {
-                    await this.handlePositions(this.positions, this.newVacancy, true);
+                    await this.handlePosition(this.position, this.newVacancy, true);
                     await this.handleSkills(true);
                     await this.handleRegions(true);
                 }
@@ -50,21 +50,15 @@ class VacancyController {
         });
     }
 
-    handlePositions(positions, parentModel, isUpdate) {
+    handlePosition(position, parentModel, isUpdate) {
         return new Promise(async (resolve) => {
-            if (positions && !positions.length) {
-                await this._deleteRemovedPositions(positions, parentModel);
-            }
+            await this._findOrCreatePosition(position);
 
-            for await (const pos of positions) {
-                await this._findOrCreatePosition(pos);
-
-                if (isUpdate) {
-                    await this._deleteRemovedPositions(positions, parentModel);
-                    await parentModel.addPosition(this.savedPosition);
-                } else {
-                    await parentModel.addPosition(this.savedPosition);
-                }
+            if (isUpdate) {
+                await this._deleteRemovedPosition(position, parentModel);
+                await parentModel.addPosition(this.savedPosition);
+            } else {
+                await parentModel.addPosition(this.savedPosition);
             }
             resolve(this.savedPosition);
         });
@@ -142,10 +136,9 @@ class VacancyController {
         }
     }
 
-    async _deleteRemovedPositions(positions, parentModel) {
+    async _deleteRemovedPosition(position, parentModel) {
         for await (const prevPos of parentModel.positions || []) {
-            const newPositionsIds = positions.map((position) => position.id);
-            if (!newPositionsIds.includes(prevPos.id)) {
+            if (prevPos.value !== position.value) {
                 await parentModel.removePosition(prevPos);
             }
         }

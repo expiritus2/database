@@ -52,3 +52,4 @@ export { default as Contacts } from './Form/Contacts';
 export { default as SalaryMinMax } from './Form/SalaryMinMax';
 export { default as WorkSchedule } from './Form/WorkSchedule';
 export { default as File } from './Form/File';
+export { default as VacancyName } from './Form/VacancyName';
