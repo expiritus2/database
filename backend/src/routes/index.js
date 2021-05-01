@@ -4,6 +4,7 @@ const { applicantRouter } = require('./applicant');
 const { contactRouter } = require('./contact');
 const { vacancyRouter } = require('./vacancy');
 const { companyRouter } = require('./company');
+const { usersRouter } = require('./user');
 
 const { resourcesVocabularyRouter } = require('./vocabulary/resources');
 const { positionsVocabularyRouter } = require('./vocabulary/positions');
@@ -21,6 +22,7 @@ module.exports = (app) => {
     app.use(contactRouter);
     app.use(vacancyRouter);
     app.use(companyRouter);
+    app.use(usersRouter);
 
     app.use(resourcesVocabularyRouter);
     app.use(positionsVocabularyRouter);

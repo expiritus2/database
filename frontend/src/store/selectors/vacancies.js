@@ -11,7 +11,7 @@ export const getVacanciesSelector = createSelector(
         count: vacancies?.data?.count,
         data: vacancies?.data?.rows.map((vacancy) => ({
             ...vacancy,
-            positions: vacancy?.positions?.map(({ label }) => label),
+            position: vacancy?.position?.label,
             skills: vacancy?.skills?.map(({ label }) => label),
             regions: vacancy?.regions?.map(({ label }) => label),
         })),

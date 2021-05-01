@@ -30,7 +30,7 @@ function createAssociations() {
     User.belongsToMany(Vacancy, { through: 'user_vacancy' });
     Vacancy.belongsToMany(User, { through: 'user_vacancy' });
 
-    Vacancy.belongsToMany(Position, { through: 'vacancy_position' });
+    Vacancy.belongsTo(Position);
     Position.belongsToMany(Vacancy, { through: 'vacancy_position' });
 
     Vacancy.belongsToMany(Skill, { through: 'vacancy_skill' });

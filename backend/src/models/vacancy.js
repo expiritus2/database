@@ -34,6 +34,10 @@ Vacancy.init({
     info: {
         type: DataTypes.TEXT,
     },
+    files: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        defaultValue: [],
+    },
 }, { sequelize, modelName: 'vacancy' });
 
 module.exports = Vacancy;

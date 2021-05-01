@@ -10,6 +10,7 @@ import {
 import { createVacancy, updateVacancy } from 'api/vacancies';
 import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
+import { uniqueId } from 'lodash-es';
 import { prepareData } from './helpers';
 
 export const setVacancyFormStateEffect = (cfg) => (dispatch) => {
@@ -81,5 +82,9 @@ export const updateVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
 };
 
 export const setVacancyFormDataEffect = (cfg) => (dispatch) => {
-    dispatch(setVacancyFormDataAction(cfg));
+    const config = {
+        ...cfg,
+        files: cfg.files.map((fileUrl) => ({ id: uniqueId(), url: fileUrl })),
+    };
+    dispatch(setVacancyFormDataAction(config));
 };

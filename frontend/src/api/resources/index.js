@@ -23,3 +23,7 @@ export function getVocabularyCompanies() {
 export function getVocabularyContacts() {
     return apiServer.get('/api/vocabulary/contacts');
 }
+
+export function getUsers() {
+    return apiServer.get('/api/users');
+}

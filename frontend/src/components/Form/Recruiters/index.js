@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { getUsersEffect } from 'store/effects/resources';
 import { getResourcesUsersSelector } from 'store/selectors/resources';
 import { useTranslate } from 'hooks';
 import { Autocomplete } from 'components/index';
@@ -10,21 +11,28 @@ import styles from './styles.module.scss';
 
 const Recruiters = (props) => {
     const { className, onChange, value } = props;
+
+    const dispatch = useDispatch();
     const { translate } = useTranslate();
     const users = useSelector(getResourcesUsersSelector);
+    const [defaultValue] = useState(value);
+
+    useEffect(() => {
+        dispatch(getUsersEffect());
+    }, []); // eslint-disable-line
 
     const onChangeHandler = (e, val) => {
         onChange(e, val);
     };
 
-    const createOptions = (usersVal) => (
+    const createOptions = useCallback((usersVal) => (
         usersVal.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
-    );
+    ), []);
 
-    const getValue = () => {
-        const selectedUsers = users.filter((user) => value?.includes(user?.id));
+    const getValue = useCallback(() => {
+        const selectedUsers = users.filter((user) => defaultValue.map((val) => val?.id).includes(user?.id));
         return createOptions(selectedUsers);
-    };
+    }, []); // eslint-disable-line
 
     return (
         <div className={classNames(styles.recruiters, className)}>

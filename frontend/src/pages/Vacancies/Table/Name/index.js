@@ -9,13 +9,13 @@ import Regions from '../Regions';
 import styles from './styles.module.scss';
 
 const Name = (props) => {
-    const { className, active, positions, skills, regions } = props;
+    const { className, active, position, skills, regions } = props;
 
     return (
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
-                <Positions positions={positions} />
+                <Positions positions={[position]} />
                 <Skills className={styles.skills} skills={skills} />
                 <Regions regions={regions} />
             </div>
@@ -25,7 +25,7 @@ const Name = (props) => {
 
 Name.propTypes = {
     className: PropTypes.string,
-    positions: PropTypes.arrayOf(PropTypes.string),
+    position: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.string),
     regions: PropTypes.arrayOf(PropTypes.string),
     active: PropTypes.bool.isRequired,
@@ -33,7 +33,7 @@ Name.propTypes = {
 
 Name.defaultProps = {
     className: '',
-    positions: [],
+    position: '',
     skills: [],
     regions: [],
 };

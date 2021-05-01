@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -24,7 +24,7 @@ const VacancyName = (props) => {
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const positions = useSelector(getResourcesPositionsSelector);
-    const [valueVal, setValue] = React.useState(value);
+    const [valueVal, setValue] = useState(value);
 
     useEffect(() => {
         dispatch(getVocabularyPositionsEffect({}, { silent: true }));
@@ -82,6 +82,7 @@ const VacancyName = (props) => {
             handleHomeEndKeys
             options={uniqBy([...positions, ...(valueVal ? [valueVal] : [])], 'value')}
             getOptionLabel={getOptionsLabel}
+            getOptionSelected={(option, val) => option?.value === val?.value}
             renderOption={(option) => option.label}
             renderInput={(params) => <Input {...params} label={translate.VacancyName} />}
         />

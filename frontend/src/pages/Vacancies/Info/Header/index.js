@@ -21,7 +21,7 @@ const Header = (props) => {
             <PaddingWrapper>
                 <Typography variant="h5">
                     <Box fontWeight="fontWeightBold" className={styles.name}>
-                        {vacancy?.id ? `${vacancy?.name} (#${vacancy?.id})` : null}
+                        {vacancy?.id ? `${vacancy?.position?.label} (#${vacancy?.id})` : null}
                     </Box>
                 </Typography>
             </PaddingWrapper>

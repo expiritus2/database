@@ -2,6 +2,7 @@ const Vacancy = require('../models/vacancy');
 const Position = require('../models/position');
 const Skill = require('../models/skill');
 const Region = require('../models/region');
+const User = require('../models/user');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 
@@ -11,8 +12,9 @@ class VacancyController {
         this.regions = this.body.regions;
         this.skills = this.body.skills;
         this.position = this.body.position;
+        this.users = this.body.users;
 
-        this.joinedInfo = omit(this.body, ['regions', 'skills', 'position']);
+        this.joinedInfo = omit(this.body, ['regions', 'skills', 'position', 'users']);
     }
 
     create(options = {}) {
@@ -22,6 +24,7 @@ class VacancyController {
                 await this.handlePosition(this.position, this.newVacancy);
                 await this.handleSkills();
                 await this.handleRegions();
+                await this.handleUsers();
 
                 resolve(this.newVacancy);
             } catch (e) {
@@ -40,6 +43,7 @@ class VacancyController {
                     await this.handlePosition(this.position, this.newVacancy, true);
                     await this.handleSkills(true);
                     await this.handleRegions(true);
+                    await this.handleUsers(true);
                 }
 
                 resolve(this.newVacancy);
@@ -56,9 +60,11 @@ class VacancyController {
 
             if (isUpdate) {
                 await this._deleteRemovedPosition(position, parentModel);
-                await parentModel.addPosition(this.savedPosition);
+                await parentModel.setPosition(this.savedPosition);
+                await this.savedPosition.addVacancy(parentModel);
             } else {
-                await parentModel.addPosition(this.savedPosition);
+                await parentModel.setPosition(this.savedPosition);
+                await this.savedPosition.addVacancy(parentModel);
             }
             resolve(this.savedPosition);
         });
@@ -78,6 +84,28 @@ class VacancyController {
             }
             resolve(this.savedSkill);
         });
+    }
+
+    handleUsers(isUpdate) {
+        return new Promise(async (resolve) => {
+            for await (const recruiterId of this.users) {
+                this.savedRecruiter = await User.findByPk(recruiterId);
+
+                if (isUpdate) {
+                    await this._deleteRemovedUser();
+                    await this.newVacancy.addUser(this.savedRecruiter);
+                } else {
+                    await this.newVacancy.addUser(this.savedRecruiter);
+                }
+            }
+            resolve(this.savedSkill);
+        });
+    }
+
+    async _deleteRemovedUser() {
+        if (!this.users.includes(this.savedRecruiter.id)) {
+            await this.newVacancy.removeUser(this.savedRecruiter);
+        }
     }
 
     async handleRegions(isUpdate) {
@@ -128,6 +156,7 @@ class VacancyController {
             }
         }
     }
+
 
     async _findOrCreatePosition(position) {
         this.savedPosition = await Position.findOne({ where: { value: position.value } });

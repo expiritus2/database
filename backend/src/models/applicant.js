@@ -27,7 +27,7 @@ Applicant.init({
         type: DataTypes.JSONB
     },
     education: {
-        type: DataTypes.CHAR(100),
+        type: DataTypes.STRING,
     },
     place: {
         type: DataTypes.ARRAY(DataTypes.STRING),

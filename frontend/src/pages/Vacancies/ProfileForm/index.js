@@ -64,10 +64,10 @@ const ProfileForm = (props) => {
                     value={formFields.position}
                 />
                 <Recruiters
-                    name="recruiters"
+                    name="users"
                     className={classNames(className, styles.field)}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'recruiters')}
-                    value={formFields.recruiters}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'users')}
+                    value={formFields.users}
                 />
                 <Company
                     className={styles.field}

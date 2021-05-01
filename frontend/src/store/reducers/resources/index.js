@@ -7,6 +7,7 @@ import {
     getVocabularySkillsAction,
     getVocabularyCompaniesAction,
     getVocabularyContactsAction,
+    getUsersAction,
 } from 'store/actions/resources';
 import { get } from 'lodash-es';
 
@@ -18,6 +19,7 @@ const initialData = {
         skills: [],
         companies: [],
         contacts: [],
+        users: [],
     },
     meta: {},
 };
@@ -65,6 +67,13 @@ export default handleActions({
         data: {
             ...(state?.data || {}),
             contacts: get(payload, 'data', []),
+        },
+    }),
+    [getUsersAction]: (state, { payload }) => ({
+        ...state,
+        data: {
+            ...(state?.data || {}),
+            users: get(payload, 'data', []),
         },
     }),
 }, initialData);

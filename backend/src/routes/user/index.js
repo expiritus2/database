@@ -13,5 +13,5 @@ router.get('/api/users', middlewares, async (req, res) => {
 });
 
 module.exports = {
-    resourcesRouter: router,
+    usersRouter: router,
 }

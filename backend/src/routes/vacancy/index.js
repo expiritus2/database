@@ -3,6 +3,9 @@ const { body } = require('express-validator');
 const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Vacancy = require('../../models/vacancy');
+const Position = require('../../models/position');
+const Skill = require('../../models/skill');
+const User = require('../../models/user');
 
 const { VacancyController } = require('../../controllers/vacancyController');
 const Sequelize = require('sequelize');
@@ -21,9 +24,11 @@ router.post('/api/vacancies/create', middlewares, async (req, res) => {
     const vacancyController = new VacancyController(req.body);
     const newVacancy = await vacancyController.create();
     const populatedVacancy = await Vacancy.findByPk(newVacancy.id, {
-        include: {
-            all: true,
-        }
+        include: [
+            { model: Skill },
+            { model: Position },
+            { model: User, attributes: ['id', 'email'], through: { attributes: [] } }
+        ],
     });
 
     res.send(populatedVacancy);
@@ -47,9 +52,15 @@ router.get('/api/vacancies', requireAuth, async (req, res) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: {
-            all: true,
-        },
+        include: [
+            { model: Skill },
+            { model: Position, attributes: ['id', 'label', 'value'] },
+            {
+                model: User,
+                attributes: ['id', 'email'],
+                through: { attributes: [] }
+            }
+        ],
     });
 
     res.send({ result: allContacts });

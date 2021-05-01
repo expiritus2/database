@@ -6,6 +6,7 @@ import {
     getVocabularySkillsAction,
     getVocabularyCompaniesAction,
     getVocabularyContactsAction,
+    getUsersAction,
 } from 'store/actions/resources';
 import {
     getVocabularyResources,
@@ -14,6 +15,7 @@ import {
     getVocabularySkills,
     getVocabularyCompanies,
     getVocabularyContacts,
+    getUsers,
 } from 'api/resources';
 
 export const getVocabularyResourcesEffect = (cfg, options = {}, cb) => {
@@ -76,6 +78,17 @@ export const getVocabularyCompaniesEffect = (cfg, options = {}, cb) => {
 
 export const getVocabularyContactsEffect = (cfg, options = {}, cb) => {
     const requestParams = { action: getVocabularyContactsAction, method: getVocabularyContacts };
+    let sendRequest = Api.execBase(requestParams);
+
+    if (options?.silent) {
+        sendRequest = Api.execResult(requestParams);
+    }
+
+    return sendRequest({}, options, cb);
+};
+
+export const getUsersEffect = (cfg, options = {}, cb) => {
+    const requestParams = { action: getUsersAction, method: getUsers };
     let sendRequest = Api.execBase(requestParams);
 
     if (options?.silent) {
