@@ -10,6 +10,7 @@ import { useTranslate } from 'hooks';
 
 import { Item } from 'pages/Applicants/Info/components';
 import { capitalize } from 'lodash-es';
+import { workScheduleMap } from 'settings/constants/workSchedule';
 import Actions from './Actions';
 import Header from './Header';
 import Empty from './Empty';
@@ -23,7 +24,6 @@ import Information from './Information';
 import { SalaryValue } from '../components';
 
 import styles from './styles.module.scss';
-import { workScheduleMap } from '../../../settings/constants/workSchedule';
 
 const Info = (props) => {
     const { className } = props;
