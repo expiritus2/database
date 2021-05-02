@@ -1,5 +1,5 @@
 export const FLEXIBLE_SCHEDULE = 'flexibleSchedule';
-export const FULL_DAY = 'fulDay';
+export const FULL_DAY = 'fullDay';
 export const SHIFT_WORK = 'shiftWork';
 
 export const workScheduleMap = {

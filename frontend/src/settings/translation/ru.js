@@ -75,6 +75,8 @@ export default {
     Active: 'Активные',
     Actives: 'Активен',
     NotActives: 'Не активен',
+    SheActive: 'Активна',
+    SheNotActive: 'Не активна',
     EmptyApplicant: 'Выбирите кандидата',
     EmptyContact: 'Выбирите контакт',
     EmptyVacancy: 'Выбирите вакансию',

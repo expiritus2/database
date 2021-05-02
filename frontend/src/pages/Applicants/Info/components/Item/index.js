@@ -24,6 +24,7 @@ Item.propTypes = {
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.oneOfType([
         PropTypes.string,
+        PropTypes.number,
         PropTypes.object,
         PropTypes.arrayOf(PropTypes.object),
     ]),

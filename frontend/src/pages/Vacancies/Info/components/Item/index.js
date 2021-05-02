@@ -12,7 +12,7 @@ const Item = (props) => {
     return (
         <div className={classNames(styles.item, className)}>
             <Typography component="div" className={styles.label}>
-                <Box component="span" fontWeight="fontWeightBold">{`${label}:`}</Box>
+                {label && <Box component="span" fontWeight="fontWeightBold">{`${label}:`}</Box>}
             </Typography>
             <Typography component="div" className={styles.value}>{value}</Typography>
         </div>

@@ -8,8 +8,8 @@ import { Table as CommonTable } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getVacanciesSelector } from 'store/selectors/vacancies';
+import { SalaryValue } from '../components';
 import Name from './Name';
-import SalaryValue from './SalaryValue';
 
 import styles from './styles.module.scss';
 

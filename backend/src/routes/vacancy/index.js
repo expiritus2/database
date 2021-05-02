@@ -5,6 +5,7 @@ const validateRequest = require('../../middlewares/validate-request');
 const Vacancy = require('../../models/vacancy');
 const Position = require('../../models/position');
 const Skill = require('../../models/skill');
+const Region = require('../../models/region');
 const User = require('../../models/user');
 
 const { VacancyController } = require('../../controllers/vacancyController');
@@ -27,6 +28,7 @@ router.post('/api/vacancies/create', middlewares, async (req, res) => {
         include: [
             { model: Skill },
             { model: Position },
+            { model: Region },
             { model: User, attributes: ['id', 'email'], through: { attributes: [] } }
         ],
     });
@@ -55,6 +57,7 @@ router.get('/api/vacancies', requireAuth, async (req, res) => {
         include: [
             { model: Skill },
             { model: Position, attributes: ['id', 'label', 'value'] },
+            { model: Region },
             {
                 model: User,
                 attributes: ['id', 'email'],
