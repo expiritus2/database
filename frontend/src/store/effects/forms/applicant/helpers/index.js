@@ -20,6 +20,8 @@ export const prepareData = (cfg, files) => {
     clonedCfg.skills = cleanOptions(clonedCfg?.skills);
     clonedCfg.birthDate = clonedCfg?.birthDate?.[0];
     clonedCfg.experienceYears = clonedCfg.experienceYears || undefined;
+    // clonedCfg.experiences = (clonedCfg?.experiences)
+    //     .map((experience) => ({ ...experience, company: experience?.company?.label }));
 
     return clonedCfg;
 };

@@ -1,17 +1,17 @@
 import { handleActions } from 'redux-actions';
 import {
-    resetContactFormAction,
-    setContactFormStateAction,
-    submitContactFormAction,
-    uploadContactFilesAction,
-    setContactFormDataAction,
-} from 'store/actions/forms/contact';
+    resetCompanyFormAction,
+    setCompanyFormStateAction,
+    submitCompanyFormAction,
+    uploadCompanyFilesAction,
+    setCompanyFormDataAction,
+} from 'store/actions/forms/company';
 import { get } from 'lodash-es';
 
 const initialData = {
     active: false,
     name: '',
-    recruiters: [],
+    users: [],
     logo: null,
     regions: [],
     links: [{ type: '', link: '' }],
@@ -20,23 +20,23 @@ const initialData = {
 };
 
 export default handleActions({
-    [setContactFormStateAction]: (state, { payload }) => ({
+    [setCompanyFormStateAction]: (state, { payload }) => ({
         ...state,
         ...payload,
     }),
-    [uploadContactFilesAction]: (state, { payload }) => ({
+    [uploadCompanyFilesAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [submitContactFormAction]: (state, { payload }) => ({
+    [submitCompanyFormAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [setContactFormDataAction]: (state, { payload }) => ({
+    [setCompanyFormDataAction]: (state, { payload }) => ({
         ...state,
         ...payload,
     }),
-    [resetContactFormAction]: () => initialData,
+    [resetCompanyFormAction]: () => initialData,
 }, initialData);

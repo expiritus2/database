@@ -1,4 +1,6 @@
 const Company = require('../models/company');
+const User = require('../models/user');
+const Region = require('../models/region');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 
@@ -6,6 +8,7 @@ class CompanyController {
     constructor(body) {
         this.body = body;
         this.regions = this.body.regions;
+        this.users = this.body.users;
 
         this.joinedInfo = omit(this.body, ['regions']);
     }
@@ -15,6 +18,7 @@ class CompanyController {
             try {
                 this.newCompany = await Company.create(this.joinedInfo, options);
                 await this.handleRegions();
+                await this.handleUsers();
 
                 resolve(this.newCompany);
             } catch (e) {
@@ -31,6 +35,7 @@ class CompanyController {
 
                 if (this.newCompany) {
                     await this.handleRegions(true);
+                    await this.handleUsers(true);
                 }
 
                 resolve(this.newCompany);
@@ -55,6 +60,28 @@ class CompanyController {
             }
             resolve(this.savedRegion);
         });
+    }
+
+    handleUsers(isUpdate) {
+        return new Promise(async (resolve) => {
+            for await (const recruiterId of this.users) {
+                this.savedRecruiter = await User.findByPk(recruiterId);
+
+                if (isUpdate) {
+                    await this._deleteRemovedUser();
+                    await this.newCompany.addUser(this.savedRecruiter);
+                } else {
+                    await this.newCompany.addUser(this.savedRecruiter);
+                }
+            }
+            resolve();
+        });
+    }
+
+    async _deleteRemovedUser() {
+        if (!this.users.includes(this.savedRecruiter.id)) {
+            await this.newCompany.removeUser(this.savedRecruiter);
+        }
     }
 
     async _findOrCreateRegion(region) {

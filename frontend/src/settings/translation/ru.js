@@ -112,6 +112,8 @@ export default {
     EditApplicant: 'Изменить кандидата',
     AddVacancy: 'Добавить вакансию',
     EditVacancy: 'Изменить вакансию',
+    AddCompany: 'Добавить компанию',
+    EditCompany: 'Редактировать компанию',
 
     AddContact: 'Добавить контакт',
     EditContact: 'Изменить контакт',
@@ -127,4 +129,5 @@ export default {
     From: 'От',
     To: 'До',
     VacancyName: 'Название вакансии',
+    Calling: 'Название',
 };

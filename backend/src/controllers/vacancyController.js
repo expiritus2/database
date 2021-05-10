@@ -3,6 +3,7 @@ const Position = require('../models/position');
 const Skill = require('../models/skill');
 const Region = require('../models/region');
 const User = require('../models/user');
+const Company = require('../models/company');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 
@@ -13,6 +14,7 @@ class VacancyController {
         this.skills = this.body.skills;
         this.position = this.body.position;
         this.users = this.body.users;
+        this.company = this.body.company;
 
         this.joinedInfo = omit(this.body, ['regions', 'skills', 'position', 'users']);
     }
@@ -25,6 +27,7 @@ class VacancyController {
                 await this.handleSkills();
                 await this.handleRegions();
                 await this.handleUsers();
+                await this.handleCompany();
 
                 resolve(this.newVacancy);
             } catch (e) {
@@ -44,6 +47,7 @@ class VacancyController {
                     await this.handleSkills(true);
                     await this.handleRegions(true);
                     await this.handleUsers(true);
+                    await this.handleCompany(true);
                 }
 
                 resolve(this.newVacancy);
@@ -86,6 +90,19 @@ class VacancyController {
         });
     }
 
+    handleCompany(isUpdate) {
+        return new Promise(async (resolve) => {
+            this.savedCompany = await Company.findByPk(this.company);
+
+            if (isUpdate) {
+                await this.newVacancy.setCompany(this.savedCompany);
+            } else {
+                await this.newVacancy.setCompany(this.savedCompany);
+            }
+            resolve();
+        });
+    }
+
     handleUsers(isUpdate) {
         return new Promise(async (resolve) => {
             for await (const recruiterId of this.users) {
@@ -98,7 +115,7 @@ class VacancyController {
                     await this.newVacancy.addUser(this.savedRecruiter);
                 }
             }
-            resolve(this.savedSkill);
+            resolve();
         });
     }
 

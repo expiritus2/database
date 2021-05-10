@@ -9,12 +9,8 @@ export const prepareData = (cfg, files) => {
         ...(files?.files || []),
     ];
 
-    // clonedCfg.position = {
-    //     id: clonedCfg?.position?.id,
-    //     label: clonedCfg?.position?.label?.trim(),
-    //     value: clonedCfg?.position?.value?.trim(),
-    // };
     clonedCfg.users = (clonedCfg?.users || []).map((user) => user?.id);
+    clonedCfg.company = clonedCfg?.company?.id;
 
     return clonedCfg;
 };

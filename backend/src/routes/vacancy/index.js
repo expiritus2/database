@@ -7,6 +7,7 @@ const Position = require('../../models/position');
 const Skill = require('../../models/skill');
 const Region = require('../../models/region');
 const User = require('../../models/user');
+const Company = require('../../models/company');
 
 const { VacancyController } = require('../../controllers/vacancyController');
 const Sequelize = require('sequelize');
@@ -29,6 +30,7 @@ router.post('/api/vacancies/create', middlewares, async (req, res) => {
             { model: Skill },
             { model: Position },
             { model: Region },
+            { model: Company, attributes: ['id', 'name'] },
             { model: User, attributes: ['id', 'email'], through: { attributes: [] } }
         ],
     });
@@ -58,6 +60,7 @@ router.get('/api/vacancies', requireAuth, async (req, res) => {
             { model: Skill },
             { model: Position, attributes: ['id', 'label', 'value'] },
             { model: Region },
+            { model: Company, attributes: ['id', 'name'] },
             {
                 model: User,
                 attributes: ['id', 'email'],

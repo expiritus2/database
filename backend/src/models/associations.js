@@ -39,6 +39,9 @@ function createAssociations() {
     Vacancy.belongsToMany(Region, { through: 'vacancy_region' });
     Region.belongsToMany(Vacancy, { through: 'vacancy_region' });
 
+    Vacancy.belongsTo(Company);
+    Company.hasMany(Vacancy);
+
     User.belongsToMany(Company, { through: 'user_company' });
     Company.belongsToMany(User, { through: 'user_company' });
 

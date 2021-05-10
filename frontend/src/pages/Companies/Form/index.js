@@ -9,14 +9,14 @@ import {
     Checkbox,
     Regions,
     Links,
-    Addresses,
+    Addresses, Recruiters, File, Textarea,
 } from 'components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { getContactFormSelector } from 'store/selectors/contactForm';
-import { setContactFormStateEffect } from 'store/effects/forms/contact';
+import { getCompanyFormSelector } from 'store/selectors/companyForm';
+import { setCompanyFormStateEffect } from 'store/effects/forms/company';
 import { FormWrapper } from '../componets';
 
 import styles from './styles.module.scss';
@@ -26,7 +26,7 @@ const Form = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getContactFormSelector);
+    const formFields = useSelector(getCompanyFormSelector);
 
     const formik = useFormik({
         initialValues: { ...formFields },
@@ -34,12 +34,12 @@ const Form = (props) => {
     });
 
     const onCustomFieldChange = (e, val, propName) => {
-        dispatch(setContactFormStateEffect({ [propName]: val }));
+        dispatch(setCompanyFormStateEffect({ [propName]: val }));
     };
 
     const onChangeField = (e) => {
         const { name, value } = e.target;
-        dispatch(setContactFormStateEffect({ [name]: value }));
+        dispatch(setCompanyFormStateEffect({ [name]: value }));
     };
 
     return (
@@ -53,23 +53,21 @@ const Form = (props) => {
                 <Input
                     name="name"
                     className={classNames(className, styles.field)}
-                    label={translate.Name}
+                    label={translate.Calling}
                     onChange={onChangeField}
                     value={formik.values.name}
                 />
-                <Input
-                    name="recruiters"
+                <Recruiters
+                    name="users"
                     className={classNames(className, styles.field)}
-                    label={translate.Recruiters}
-                    onChange={onChangeField}
-                    value={formik.values.recruiters}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'users')}
+                    value={formFields.users}
                 />
-                <Input
-                    name="logo"
-                    className={classNames(className, styles.field)}
+                <File
+                    id="logo"
                     label={translate.Logo}
-                    onChange={onChangeField}
-                    value={formik.values.logo}
+                    onChange={(newFile) => onCustomFieldChange(null, newFile, 'logo')}
+                    value={formFields.logo}
                 />
                 <Regions
                     className={styles.field}
@@ -90,55 +88,13 @@ const Form = (props) => {
                     onChange={(val) => onCustomFieldChange(null, val, 'addresses')}
                     value={formFields.addresses}
                 />
-
-                {/* <Company */}
-                {/*    name="company" */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'company')} */}
-                {/*    value={formik.values.company} */}
-                {/* /> */}
-                {/* <Position */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'positions')} */}
-                {/*    value={formik.values.positions} */}
-                {/* /> */}
-                {/* <AddPhoto */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(values) => { */}
-                {/*        onCustomFieldChange(null, values, 'photos'); */}
-                {/*    }} */}
-                {/*    value={formik.values.photos.map((photo) => ({ url: photo }))} */}
-                {/* /> */}
-                {/* <div className={styles.block}> */}
-                {/*    <DatePicker */}
-                {/*        name="birthDate" */}
-                {/*        className={classNames(styles.field, styles.birthDate)} */}
-                {/*        label={translate.BirthDate} */}
-                {/*        onChange={onChangeField} */}
-                {/*        value={formik.values.birthDate} */}
-                {/*    /> */}
-                {/*    <Sex */}
-                {/*        name="sex" */}
-                {/*        className={classNames(styles.field, styles.sex)} */}
-                {/*        label={translate.Sex} */}
-                {/*        onChange={onChangeField} */}
-                {/*        value={formik.values.sex} */}
-                {/*    /> */}
-                {/* </div> */}
-                {/* <Phones */}
-                {/*    name="phones" */}
-                {/*    className={styles.field} */}
-                {/*    label={translate.Phone} */}
-                {/*    onChange={(val) => onCustomFieldChange(null, val, 'phones')} */}
-                {/*    value={formik.values.phones} */}
-                {/* /> */}
-                {/* <Emails */}
-                {/*    name="emails" */}
-                {/*    className={styles.field} */}
-                {/*    label={translate.Emails} */}
-                {/*    onChange={(val) => onCustomFieldChange(null, val, 'emails')} */}
-                {/*    value={formik.values.emails} */}
-                {/* /> */}
+                <Textarea
+                    name="info"
+                    className={styles.field}
+                    label={translate.Info}
+                    onChange={onChangeField}
+                    value={formFields.info}
+                />
             </form>
         </FormWrapper>
     );

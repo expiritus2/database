@@ -27,13 +27,13 @@ export const submitCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
 
     const formData = new FormData();
 
-    company?.photos?.forEach((photo) => {
-        formData.append('photos', photo);
-    });
+    if (company?.logo) {
+        formData.append('logo', company.logo);
+    }
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedCompany = prepareData(company, uploadedFiles);
+        const { data: uploadedFile } = response || {};
+        const clonedCompany = prepareData(company, uploadedFile);
 
         dispatch(sendRequest(clonedCompany, options, (err, resp) => {
             if (!err) {
@@ -52,13 +52,13 @@ export const updateCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
 
     const formData = new FormData();
 
-    company?.photos?.filter((file) => file instanceof File).forEach((photo) => {
-        formData.append('photos', photo);
-    });
+    if (company?.logo instanceof File) {
+        formData.append('logo', company.logo);
+    }
 
     dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedCompany = prepareData(company, uploadedFiles);
+        const { data: uploadedFile } = response || {};
+        const clonedCompany = prepareData(company, uploadedFile);
 
         dispatch(sendRequest(clonedCompany, options, (err, resp) => {
             if (!err) {

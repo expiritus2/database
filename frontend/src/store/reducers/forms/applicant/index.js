@@ -11,7 +11,7 @@ import { get } from 'lodash-es';
 
 export const experienceInitialData = {
     period: [],
-    company: {},
+    company: '',
     positions: [],
     info: '',
 };

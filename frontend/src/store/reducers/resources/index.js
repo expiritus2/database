@@ -55,13 +55,17 @@ export default handleActions({
             skills: get(payload, 'data', []),
         },
     }),
-    [getVocabularyCompaniesAction]: (state, { payload }) => ({
-        ...state,
-        data: {
-            ...(state?.data || {}),
-            companies: get(payload, 'data', []),
-        },
-    }),
+    [getVocabularyCompaniesAction]: (state, { payload }) => {
+        const companiesOptions = get(payload, 'data', [])
+            .map((company) => ({ id: company?.id, value: company?.id, label: company?.name }));
+        return ({
+            ...state,
+            data: {
+                ...(state?.data || {}),
+                companies: companiesOptions,
+            },
+        });
+    },
     [getVocabularyContactsAction]: (state, { payload }) => ({
         ...state,
         data: {

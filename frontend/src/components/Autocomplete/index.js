@@ -35,6 +35,7 @@ const AutocompleteComponent = (props) => {
                 getOptionLabel={(option) => (option?.label || option)}
                 options={options}
                 size={size}
+                value={value}
                 {...otherProps}
             />
         </div>
