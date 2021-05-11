@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { BaseAutocomplete } from 'components';
 import { useTranslate } from 'hooks';
-import { getResourcesPositionsSelector } from 'store/selectors/resources';
-import { getVocabularyPositionsEffect } from 'store/effects/resources';
+import { getVocabularyPositionsSelector } from 'store/selectors/vocabulary';
+import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
 
 const Position = (props) => {
     const { className, onChange, value } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const positions = useSelector(getResourcesPositionsSelector);
+    const positions = useSelector(getVocabularyPositionsSelector);
 
     useEffect(() => {
         dispatch(getVocabularyPositionsEffect({}, { silent: true }));

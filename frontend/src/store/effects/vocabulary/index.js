@@ -6,8 +6,8 @@ import {
     getVocabularySkillsAction,
     getVocabularyCompaniesAction,
     getVocabularyContactsAction,
-    getUsersAction,
-} from 'store/actions/resources';
+    getUsersAction, setVocabularyModeAction,
+} from 'store/actions/vocabulary';
 import {
     getVocabularyResources,
     getVocabularyPositions,
@@ -16,7 +16,7 @@ import {
     getVocabularyCompanies,
     getVocabularyContacts,
     getUsers,
-} from 'api/resources';
+} from 'api/vocabulary';
 
 export const getVocabularyResourcesEffect = (cfg, options = {}, cb) => {
     const requestParams = { action: getVocabularyResourcesAction, method: getVocabularyResources };
@@ -96,4 +96,8 @@ export const getUsersEffect = (cfg, options = {}, cb) => {
     }
 
     return sendRequest({}, options, cb);
+};
+
+export const setVocabularyModeEffect = (cfg) => (dispatch) => {
+    dispatch(setVocabularyModeAction(cfg));
 };

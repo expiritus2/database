@@ -7,3 +7,4 @@ export const getVocabularySkillsAction = createAction('GET_VOCABULARY_SKILLS');
 export const getVocabularyCompaniesAction = createAction('GET_VOCABULARY_COMPANIES');
 export const getVocabularyContactsAction = createAction('GET_VOCABULARY_CONTACTS');
 export const getUsersAction = createAction('GET_USERS');
+export const setVocabularyModeAction = createAction('SET/VOCABULARY_MODE');

@@ -25,8 +25,6 @@ const VocabularyModal = (props) => {
     return (
         <div className={classNames(styles.vocabularyModal, className)}>
             <SimpleModal
-                contentClassName={styles.modalContent}
-                innerHolderClassName={styles.innerHolder}
                 onClose={onClose}
                 isOpen={modal.id === modalsIds.VOCABULARIES && modal.open}
             >

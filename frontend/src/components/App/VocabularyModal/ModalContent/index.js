@@ -20,8 +20,13 @@ const ModalContent = (props) => {
             <CustomTabs
                 direction={CustomTabs.DIRECTION_VERTICAL}
                 tabsClassName={styles.tabs}
+                tabClassName={styles.tab}
                 wrapperClassName={styles.tabsWrapper}
                 tabs={ModalContent.options(translate)}
+                contentClassName={styles.tabsContentClassName}
+                innerContentClassName={styles.innerContentClassName}
+                listClassName={styles.listClassName}
+                elementClassName={styles.elementClassName}
             />
         </div>
     );

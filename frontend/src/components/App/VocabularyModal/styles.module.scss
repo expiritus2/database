@@ -1,16 +1,5 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.modalContent {
-    width: setUnit(800);
-    max-width: 100%;
-    border-radius: setUnit(8);
-    max-height: setUnit(600);
-
-    .innerHolder {
-        height: 100%;
-    }
-}
-
 .vocabularyModal {
 }

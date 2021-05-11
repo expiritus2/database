@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getVocabularyCompaniesEffect } from 'store/effects/resources';
-import { getResourcesCompaniesSelector } from 'store/selectors/resources';
+import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
+import { getVocabularyCompaniesSelector } from 'store/selectors/vocabulary';
 import { Autocomplete } from 'components';
 import { useTranslate } from 'hooks';
 
@@ -13,7 +13,7 @@ import styles from './styles.module.scss';
 const Company = (props) => {
     const { className, onChange, value, name } = props;
     const dispatch = useDispatch();
-    const companies = useSelector(getResourcesCompaniesSelector);
+    const companies = useSelector(getVocabularyCompaniesSelector);
 
     useEffect(() => {
         dispatch(getVocabularyCompaniesEffect({}, { silent: true }));

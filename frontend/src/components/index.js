@@ -56,3 +56,4 @@ export { default as VacancyName } from './Form/VacancyName';
 export { default as SimpleModal } from './SimpleModal';
 export { default as VerticalContentModal } from './VerticalContentModal';
 export { default as CustomTabs } from './CustomTabs';
+export { default as ActionList } from './ActionsList';

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getUsersEffect } from 'store/effects/resources';
-import { getResourcesUsersSelector } from 'store/selectors/resources';
+import { getUsersEffect } from 'store/effects/vocabulary';
+import { getResourcesUsersSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
 import { Autocomplete } from 'components/index';
 import styles from './styles.module.scss';

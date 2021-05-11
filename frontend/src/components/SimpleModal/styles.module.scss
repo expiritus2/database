@@ -23,7 +23,7 @@
 }
 
 .opacityLayer {
-    background-color: rgba(#000000,.45);
+    background-color: rgba(#000000, .45);
     opacity: 0;
     transition: opacity .2s;
     position: absolute;
@@ -49,6 +49,13 @@
     z-index: 9999;
     transition: all .3s;
     margin: auto setUnit(10);
+    width: setUnit(800);
+    border-radius: setUnit(8);
+    max-height: setUnit(615);
+
+    .innerHolder {
+        height: 100%;
+    }
 }
 
 .innerHolder {

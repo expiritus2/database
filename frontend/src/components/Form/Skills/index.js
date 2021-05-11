@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getVocabularySkillsEffect } from 'store/effects/resources';
+import { getVocabularySkillsEffect } from 'store/effects/vocabulary';
 import { useTranslate } from 'hooks';
 import { BaseAutocomplete } from 'components/index';
-import { getResourcesSkillsSelector } from 'store/selectors/resources';
+import { getVocabularySkillsSelector } from 'store/selectors/vocabulary';
 
 const Skills = (props) => {
     const { className, onChange, value } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const skills = useSelector(getResourcesSkillsSelector);
+    const skills = useSelector(getVocabularySkillsSelector);
 
     useEffect(() => {
         dispatch(getVocabularySkillsEffect({}, { silent: true }));

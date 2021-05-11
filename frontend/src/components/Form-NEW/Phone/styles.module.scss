@@ -1,0 +1,92 @@
+@import "styles/mixins";
+@import "styles/variables";
+
+.inputWrapper {
+    width: 100%;
+
+    .dropdownButton {
+        border: none;
+        border-top-left-radius: setUnit(8);
+        border-bottom-left-radius: setUnit(8);
+
+        &:hover {
+            background: $background-ligh-gray;
+        }
+    }
+
+    label {
+        & + div {
+            .phone {
+                width: 100%;
+                font-size: setUnit(16);
+            }
+        }
+    }
+
+    &.light {
+        @include inputLight;
+
+        .passwordIcon {
+
+        }
+    }
+
+    &.full {
+        @include inputFull;
+
+        position: relative;
+
+        .removeBtn {
+            position: absolute;
+            top: setUnit(17);
+            width: setUnit(20);
+            height: setUnit(20);
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            right: setUnit(10);
+            transition: all .1s;
+            cursor: pointer;
+
+            svg {
+                width: setUnit(20);
+                height: setUnit(20);
+            }
+
+            &:hover {
+                opacity: 0.85;
+            }
+        }
+
+        .passwordIcon {
+            position: absolute;
+            cursor: pointer;
+
+            &.text {
+                right: setUnit(23);
+                top: setUnit(43);
+
+                svg {
+                    width: setUnit(21);
+                }
+            }
+
+            &.password {
+                right: setUnit(20);
+                top: setUnit(39);
+
+                svg {
+                    width: setUnit(27);
+                }
+            }
+        }
+
+        input[type="password"] {
+            padding-right: setUnit(50);
+        }
+    }
+
+    .error {
+        @include inputError;
+    }
+}

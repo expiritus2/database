@@ -29,3 +29,184 @@
 @mixin box-shadow-hover($color: #000000) {
     box-shadow: 3px 5px 3px -3px rgba(0, 0, 0, 0.2), 3px 3px 3px 0px rgba(0, 0, 0, 0.14), 3px 3px 5px 0px rgba(0, 0, 0, 0.12);
 }
+
+@import "styles/variables";
+@import "styles/functions";
+
+@mixin label() {
+    font-weight: 600;
+    margin-bottom: setUnit(12);
+    color: $text-color;
+    font-size: setUnit(14);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin inputLight() {
+    margin: setUnit(15) 0;
+
+    label {
+        @include label;
+    }
+
+    input {
+        padding: setUnit(10) 0;
+        border-width: 1px;
+        border-style: solid;
+        border-top-width: 0;
+        border-right-width: 0;
+        border-left-width: 0;
+        border-color: $grey-color;
+        outline: none;
+        margin: 0;
+        width: 100%;
+        vertical-align: middle;
+        color: $text-color;
+        font-size: setUnit(16);
+        line-height: setUnit(21);
+        border-bottom: 2px solid $border-light-gray;
+    }
+
+    textarea,
+    select {
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        padding: setUnit(10) 0;
+        outline: none;
+        margin: 0;
+        vertical-align: middle;
+        width: 100%;
+        color: $text-color;
+        font-size: setUnit(16);
+        line-height: setUnit(21);
+        border-bottom: 2px solid $border-light-gray;
+    }
+}
+
+@mixin inputLightFull() {
+    label {
+        @include label;
+    }
+
+    input {
+        padding: 0 setUnit(10);
+        height: setUnit(40);
+        border: 1px solid $border-input-middle-gray;
+        border-radius: setUnit(8);
+        outline: none;
+        margin: 0;
+        width: 100%;
+        vertical-align: middle;
+    }
+
+    textarea,
+    select {
+        padding: setUnit(5);
+        border: 1px solid darken($grey-color, 10);
+        border-radius: setUnit(5);
+        outline: none;
+        margin: 0;
+        width: 100%;
+        vertical-align: middle;
+    }
+}
+
+@mixin inputFull() {
+    margin: setUnit(24) 0;
+
+    label {
+        @include label;
+    }
+
+    input,
+    textarea {
+        padding: 0 setUnit(15);
+        border: 1px solid $background-ligh-gray;
+        border-radius: setUnit(8);
+        background: $background-ligh-gray;
+        outline: none;
+        margin: 0;
+        width: 100%;
+        vertical-align: middle;
+        transition: .3s background;
+        font-weight: 400;
+
+        &:focus {
+            background: #ffffff;
+            border: 1px solid $border-middle-gray;
+        }
+
+        &::placeholder {
+            font-weight: 400;
+            color: #ADADAD;
+        }
+    }
+
+    input {
+        height: setUnit(56);
+    }
+
+    textarea {
+        padding-top: setUnit(15);
+        padding-bottom: setUnit(15);
+    }
+
+    select {
+        padding: setUnit(5);
+        border: 1px solid darken($grey-color, 10);
+        border-radius: setUnit(5);
+        outline: none;
+        margin: 0;
+        width: 100%;
+        vertical-align: middle;
+    }
+}
+
+@mixin inputError() {
+    font-size: setUnit(14);
+    color: $error-color;
+    margin-top: setUnit(3);
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+@mixin button($bg: $secondary-color, $color: #fff, $hover-color: lighten($bg, 20)) {
+    background-color: $bg;
+    color: $color;
+    border: none;
+    padding: 0 setUnit(15);
+    border-radius: setUnit(8);
+    cursor: pointer;
+    outline: none;
+    height: setUnit(40);
+
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+@mixin box-shadow($color: #000000) {
+    box-shadow: 0 setUnit(3) setUnit(12) rgba($color, 0.15);
+}
+
+@mixin box-shadow-left($color: rgb(48, 48, 48)) {
+    box-shadow: -4px 0px 16px rgba($color, 0.15);
+}
+
+@mixin box-shadow-hover($color: #000000) {
+    box-shadow: 3px 5px 3px -3px rgba(0, 0, 0, 0.2), 3px 3px 3px 0px rgba(0, 0, 0, 0.14), 3px 3px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+@mixin action-icon() {
+    background-color: $background-ligh-gray;
+
+    &:hover {
+        background-color: $light-gray;
+    }
+}
+

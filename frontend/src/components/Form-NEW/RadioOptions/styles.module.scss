@@ -1,0 +1,30 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.wrapper {
+    width: 100%;
+
+    .option {
+        border-bottom: 1px solid $grey-color;
+        padding: setUnit(12) 0;
+
+        .label {
+            display: inline-flex;
+            margin-bottom: 0;
+
+            .labelText {
+                margin-left: setUnit(15);
+            }
+        }
+    }
+
+    &.disabled {
+        opacity: .7;
+        pointer-events: none;
+    }
+
+    .error {
+        @include inputError;
+    }
+}

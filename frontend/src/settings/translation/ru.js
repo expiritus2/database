@@ -1,5 +1,3 @@
-import { PhoneTypes } from '../../components/App/VocabularyModal/ModalContent/Tabs';
-
 export default {
     Login: 'Вход',
     Email: 'Почта',

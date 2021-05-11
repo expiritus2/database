@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import {
-    Checkbox,
+    // Checkbox,
     Company,
     Recruiters,
     Contacts,

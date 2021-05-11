@@ -1,0 +1,36 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.listHolder {
+    @include box-shadow;
+
+    width: setUnit(196);
+    position: fixed;
+    display: none;
+    top: setUnit(42);
+    right: 0;
+    background: #ffffff;
+    border-radius: setUnit(8);
+    z-index: 99;
+    overflow: hidden;
+
+    &.open {
+        display: block;
+    }
+
+    .list {
+        list-style: none;
+
+        .item {
+            font-size: setUnit(14);
+            font-weight: 400;
+            padding: setUnit(14);
+            cursor: pointer;
+
+            &:hover {
+                background: $background-ligh-gray;
+            }
+        }
+    }
+}

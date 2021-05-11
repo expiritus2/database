@@ -1,0 +1,18 @@
+@import "styles/mixins";
+
+.button {
+    @include button($secondary-color, #fff, $hover-blue);
+
+    .loader {
+        font-size: setUnit(4);
+        color: #ffffff;
+    }
+
+    &.disabled {
+        opacity: .7;
+
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+}

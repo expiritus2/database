@@ -8,7 +8,8 @@ import {
     getVocabularyCompaniesAction,
     getVocabularyContactsAction,
     getUsersAction,
-} from 'store/actions/resources';
+    setVocabularyModeAction,
+} from 'store/actions/vocabulary';
 import { get } from 'lodash-es';
 
 const initialData = {
@@ -22,6 +23,7 @@ const initialData = {
         users: [],
     },
     meta: {},
+    mode: null,
 };
 
 export default handleActions({
@@ -79,5 +81,9 @@ export default handleActions({
             ...(state?.data || {}),
             users: get(payload, 'data', []),
         },
+    }),
+    [setVocabularyModeAction]: (state, { payload }) => ({
+        ...state,
+        mode: payload?.mode || initialData.mode,
     }),
 }, initialData);

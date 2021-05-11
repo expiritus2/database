@@ -1,0 +1,19 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.addMode {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: setUnit(10);
+
+    .input {
+        margin-right: setUnit(10);
+    }
+
+    &.hidden {
+        visibility: hidden;
+    }
+}

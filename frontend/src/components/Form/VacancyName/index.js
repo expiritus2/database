@@ -6,12 +6,12 @@ import { Input } from 'components';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import { useTranslate } from 'hooks';
 import { useSelector, useDispatch } from 'react-redux';
-import { getResourcesPositionsSelector } from 'store/selectors/resources';
+import { getVocabularyPositionsSelector } from 'store/selectors/vocabulary';
 import { titleCase } from 'helpers';
 
 import { snakeCase, uniqBy } from 'lodash-es';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
-import { getVocabularyPositionsEffect } from 'store/effects/resources';
+import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
 
 import styles from './styles.module.scss';
 
@@ -23,7 +23,7 @@ const VacancyName = (props) => {
     const { value, className, onChange } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const positions = useSelector(getResourcesPositionsSelector);
+    const positions = useSelector(getVocabularyPositionsSelector);
     const [valueVal, setValue] = useState(value);
 
     useEffect(() => {

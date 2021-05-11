@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 
-import { getVocabularyRegionsEffect } from 'store/effects/resources';
+import { getVocabularyRegionsEffect } from 'store/effects/vocabulary';
 import { BaseAutocomplete } from 'components/index';
 import { useTranslate } from 'hooks';
 

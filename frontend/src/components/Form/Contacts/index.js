@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { getResourcesContactsSelector } from 'store/selectors/resources';
+import { getVocabularyContactsSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
 import { Autocomplete } from 'components/index';
 import styles from './styles.module.scss';
@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 const Contacts = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
-    const contacts = useSelector(getResourcesContactsSelector);
+    const contacts = useSelector(getVocabularyContactsSelector);
 
     const onChangeHandler = (e, val) => {
         onChange(e, val);

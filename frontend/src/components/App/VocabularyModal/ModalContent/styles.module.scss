@@ -13,9 +13,36 @@
     }
 
     .tabs {
-        padding: setUnit(10);
+        padding: 0 setUnit(10) setUnit(10);
         height: 100%;
         overflow: auto;
-        min-width: setUnit(200);
+        min-width: setUnit(250);
+
+        .tab {
+            border: 1px solid $border-gray-color;
+            margin-bottom: setUnit(5);
+            border-radius: setUnit(5);
+            text-align: center;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .tabsContentClassName {
+        height: 100%;
+    }
+
+    .innerContentClassName {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        position: relative;
+    }
+
+    .listClassName {
+        flex: 1;
     }
 }

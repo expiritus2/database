@@ -1,0 +1,27 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.list {
+    ul {
+        list-style: none;
+    }
+
+    .item {
+        border-top: 1px solid $border-gray-color;
+        padding: setUnit(10) setUnit(10);
+        cursor: pointer;
+
+        &:last-child {
+            border-bottom: 1px solid $border-gray-color;
+        }
+
+        &:nth-child(odd) {
+            background: $background-ligh-gray;
+        }
+
+        &:hover {
+            @include box-shadow;
+        }
+    }
+}
