@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import styles from './styles.module.scss';
 
 const Item = (props) => {
@@ -11,10 +9,10 @@ const Item = (props) => {
 
     return (
         <div className={classNames(styles.item, className)}>
-            <Typography component="div" className={styles.label}>
-                <Box component="span" fontWeight="fontWeightBold">{`${label}:`}</Box>
-            </Typography>
-            <Typography component="div" className={styles.value}>{value}</Typography>
+            <div className={styles.label}>
+                <span>{`${label}:`}</span>
+            </div>
+            <div className={styles.value}>{value}</div>
         </div>
     );
 };

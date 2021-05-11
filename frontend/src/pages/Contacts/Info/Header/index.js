@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { getCurrentContactSelector } from 'store/selectors/contact';
 import { SubheaderWrapper } from 'components';
 
@@ -19,11 +17,11 @@ const Header = (props) => {
     return (
         <SubheaderWrapper className={classNames(className)}>
             <PaddingWrapper>
-                <Typography variant="h5">
-                    <Box fontWeight="fontWeightBold" className={styles.name}>
+                <h5>
+                    <span className={styles.name}>
                         {contact?.id ? `${contact?.name} (#${contact?.id})` : null}
-                    </Box>
-                </Typography>
+                    </span>
+                </h5>
             </PaddingWrapper>
         </SubheaderWrapper>
     );

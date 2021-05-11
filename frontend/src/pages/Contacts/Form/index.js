@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Company, Position, AddPhoto, DatePicker, Sex, Phones, Emails } from 'components';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Input, Company, Position, AddPhoto, DatePicker, Sex, Phones, Emails } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -39,11 +38,11 @@ const Form = (props) => {
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
-                <FormControlLabel
-                    className={classNames(styles.field, styles.active)}
-                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formik.values.active} />}
-                    label={translate.Actives}
-                />
+                {/* <FormControlLabel */}
+                {/*    className={classNames(styles.field, styles.active)} */}
+                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formik.values.active} />} */}
+                {/*    label={translate.Actives} */}
+                {/* /> */}
                 <Input
                     name="name"
                     className={classNames(className, styles.field)}

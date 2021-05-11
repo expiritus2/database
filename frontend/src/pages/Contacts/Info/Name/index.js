@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { capitalize } from 'lodash-es';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { Avatar } from 'components';
 
 import { useTranslate } from 'hooks';
@@ -18,17 +16,17 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <Avatar src={photos?.[0]} />
             <div className={styles.texts}>
-                <Typography variant="h5">{name}</Typography>
-                <Typography variant="body1">
-                    <Box component="span" fontWeight="fontWeightBold">
+                <h5>{name}</h5>
+                <p>
+                    <span>
                         {active ? translate.Actives : translate.NotActives}
-                    </Box>
-                </Typography>
-                <Typography variant="body1">
-                    <Box component="span" fontStyle="italic">
+                    </span>
+                </p>
+                <p>
+                    <span>
                         {translate[capitalize(sex)]}
-                    </Box>
-                </Typography>
+                    </span>
+                </p>
             </div>
         </div>
     );

@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Checkbox, Education, Position, Skills, Textarea, NumberInput, Place, Languages, Regions, SalaryInput } from 'components';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Input, Education, Position, Skills, Textarea, NumberInput, Place, Languages, Regions, SalaryInput } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -41,11 +40,11 @@ const ProfileForm = (props) => {
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
-                <FormControlLabel
-                    className={classNames(styles.field, styles.inActiveSearch)}
-                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'inActiveSearch')} checked={formik.values.inActiveSearch} />}
-                    label={translate.InActiveSearch}
-                />
+                {/* <FormControlLabel */}
+                {/*    className={classNames(styles.field, styles.inActiveSearch)} */}
+                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'inActiveSearch')} checked={formik.values.inActiveSearch} />} */}
+                {/*    label={translate.InActiveSearch} */}
+                {/* /> */}
                 <NumberInput
                     name="experienceYears"
                     className={styles.field}

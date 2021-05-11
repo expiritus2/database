@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { getUserRoleSelector } from 'store/selectors/auth';
 
 import AppRoute from './AppRoute';
+import VocabularyModal from '../VocabularyModal';
 
 const AppRouter = () => {
     const userRole = useSelector(getUserRoleSelector);
@@ -24,6 +25,7 @@ const AppRouter = () => {
                     />
                 ))}
             </Switch>
+            <VocabularyModal />
         </BrowserRouter>
     );
 };

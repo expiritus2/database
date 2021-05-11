@@ -1,0 +1,15 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.modalHeader {
+    padding: setUnit(16);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .close {
+        width: setUnit(30);
+        height: setUnit(30);
+        cursor: pointer;
+    }
+}

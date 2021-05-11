@@ -53,3 +53,6 @@ export { default as SalaryMinMax } from './Form/SalaryMinMax';
 export { default as WorkSchedule } from './Form/WorkSchedule';
 export { default as File } from './Form/File';
 export { default as VacancyName } from './Form/VacancyName';
+export { default as SimpleModal } from './SimpleModal';
+export { default as VerticalContentModal } from './VerticalContentModal';
+export { default as CustomTabs } from './CustomTabs';

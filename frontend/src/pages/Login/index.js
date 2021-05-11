@@ -4,8 +4,6 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
 import { loginEffect } from 'store/effects/auth';
 import { useTranslate } from 'hooks';
 import { Input, Button } from 'components';
@@ -36,10 +34,10 @@ const Login = () => {
 
     return (
         <div className={styles.formWrapper}>
-            <Card className={styles.card}>
-                <Typography className={styles.title} variant="h5">
+            <div className={styles.card}>
+                <h5 className={styles.title}>
                     {translate.Login}
-                </Typography>
+                </h5>
                 <form onSubmit={formik.handleSubmit}>
                     <Input
                         name="username"
@@ -73,7 +71,7 @@ const Login = () => {
                         {translate.Submit}
                     </Button>
                 </form>
-            </Card>
+            </div>
         </div>
     );
 };

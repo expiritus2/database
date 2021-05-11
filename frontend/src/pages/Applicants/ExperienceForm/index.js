@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { useTranslate } from 'hooks';
 import { cloneDeep } from 'lodash-es';
-import Paper from '@material-ui/core/Paper';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -57,7 +56,7 @@ const ExperienceForm = (props) => {
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
                 {experienceFormState?.map(({ period, company, positions, info }, index) => (
-                    <Paper key={index} className={styles.block} elevation={3}>
+                    <div key={index} className={styles.block}>
                         <div className={styles.fields}>
                             <Period
                                 name="period"
@@ -90,7 +89,7 @@ const ExperienceForm = (props) => {
                                 <IoIosRemoveCircle onClick={() => onRemove(index)} className={styles.removeIcon} />
                             )}
                         </div>
-                    </Paper>
+                    </div>
                 ))}
                 <Button
                     className={classNames(styles.field, styles.addButton)}

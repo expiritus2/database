@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Typography from '@material-ui/core/Typography';
 import { Item } from 'pages/Vacancies/Info/components';
 
 import styles from './styles.module.scss';
@@ -17,7 +16,7 @@ const Position = (props) => {
         <div className={classNames(styles.position, className)}>
             <Item
                 label=""
-                value={<Typography variant="h5">{position?.label}</Typography>}
+                value={<h5>{position?.label}</h5>}
             />
         </div>
     );

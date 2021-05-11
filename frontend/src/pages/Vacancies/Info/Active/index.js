@@ -5,9 +5,6 @@ import classNames from 'classnames';
 import { useTranslate } from 'hooks';
 import { Item } from 'pages/Vacancies/Info/components';
 
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-
 import styles from './styles.module.scss';
 
 const Active = (props) => {
@@ -27,9 +24,9 @@ const Active = (props) => {
             <Item
                 label=""
                 value={(
-                    <Typography component="div">
-                        <Box fontWeight="fontWeightBold">{getValue()}</Box>
-                    </Typography>
+                    <div>
+                        <span>{getValue()}</span>
+                    </div>
                 )}
             />
         </div>

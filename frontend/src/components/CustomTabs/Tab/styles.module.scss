@@ -1,0 +1,30 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.tab {
+    padding: setUnit(10);
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+        background-color: $border-gray-color;
+    }
+
+    &.horizontal {
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        margin-right: setUnit(15);
+        color: $border-gray-color;
+        font-weight: 600;
+
+        &.active {
+            border-bottom-color: $primary-color;
+        }
+    }
+
+    &.vertical {
+        &.active {
+            background-color: $border-gray-color;
+        }
+    }
+}

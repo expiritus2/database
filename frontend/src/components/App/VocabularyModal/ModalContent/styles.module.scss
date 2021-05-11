@@ -1,0 +1,21 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.modalContent {
+    height: calc(100% - #{setUnit(66)});
+
+    .root {
+        display: block;
+    }
+
+    .tabsWrapper {
+        height: 100%;
+    }
+
+    .tabs {
+        padding: setUnit(10);
+        height: 100%;
+        overflow: auto;
+        min-width: setUnit(200);
+    }
+}

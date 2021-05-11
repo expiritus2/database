@@ -37,7 +37,6 @@ const Recruiters = (props) => {
     return (
         <div className={classNames(styles.recruiters, className)}>
             <Autocomplete
-                multiple
                 label={translate.Recruiters}
                 options={createOptions(users)}
                 onChange={onChangeHandler}

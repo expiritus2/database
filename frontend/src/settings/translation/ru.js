@@ -1,3 +1,5 @@
+import { PhoneTypes } from '../../components/App/VocabularyModal/ModalContent/Tabs';
+
 export default {
     Login: 'Вход',
     Email: 'Почта',
@@ -130,4 +132,13 @@ export default {
     To: 'До',
     VacancyName: 'Название вакансии',
     Calling: 'Название',
+    Vocabularies: 'Словари',
+    VocabularySettings: 'Настройка словарей',
+    WorkTypes: 'Типы работы',
+    WorkPlaces: 'Места работы',
+    EventTypes: 'Типы событий',
+    LanguageLevels: 'Уровни владения',
+    LinkTypes: 'Типы ссылок',
+    MessengersTypes: 'Типы мессенджеров',
+    PhoneTypes: 'Типы телефонов',
 };

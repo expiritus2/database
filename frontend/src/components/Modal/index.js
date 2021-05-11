@@ -37,9 +37,11 @@ const ModalComponent = (props) => {
                 <CardContent className={classNames(styles.cardContent, cardContentClassName)}>
                     {children}
                 </CardContent>
-                <CardActions className={classNames(styles.actions, cardActionsClassName)}>
-                    {actionsChildren}
-                </CardActions>
+                {actionsChildren && (
+                    <CardActions className={classNames(styles.actions, cardActionsClassName)}>
+                        {actionsChildren}
+                    </CardActions>
+                )}
             </Card>
         </Modal>
     );

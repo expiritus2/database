@@ -1,0 +1,114 @@
+@import "styles/functions";
+
+$animation-offset: 40;
+
+.content {
+    &.horizontal {
+
+    }
+
+    &.vertical {
+
+    }
+
+    &.fadeIn {
+        opacity: 0;
+    }
+
+    &.slideInBottom {
+        position: relative;
+        top: setUnit($animation-offset);
+        opacity: 0;
+    }
+
+    &.slideInLeft {
+        position: relative;
+        left: setUnit(-$animation-offset);
+        opacity: 0;
+    }
+
+    &.slideInRight {
+        position: relative;
+        left: setUnit($animation-offset);
+        opacity: 0;
+    }
+
+    &.active {
+        &.fadeIn {
+            animation-name: fadeIn;
+            transition: all .3s;
+            animation-duration: .3s;
+            animation-fill-mode: forwards;
+        }
+
+        &.slideInBottom {
+            animation-name: slideInBottom;
+            transition: all .3s;
+            animation-duration: .3s;
+            animation-fill-mode: forwards;
+        }
+
+        &.slideInLeft {
+            animation-name: slideInLeft;
+            transition: all .3s;
+            animation-duration: .3s;
+            animation-fill-mode: forwards;
+        }
+
+        &.slideInRight {
+            animation-name: slideInRight;
+            transition: all .3s;
+            animation-duration: .3s;
+            animation-fill-mode: forwards;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+@keyframes slideInTop {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}

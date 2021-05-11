@@ -12,14 +12,13 @@ import {
     SalaryMinMax,
     NumberInput,
     Skills,
-    Place,
-    WorkSchedule,
+    // Place,
+    // WorkSchedule,
     Regions,
     File,
     Textarea,
     VacancyName,
 } from 'components';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -53,11 +52,11 @@ const ProfileForm = (props) => {
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
-                <FormControlLabel
-                    className={classNames(styles.field, styles.active)}
-                    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formFields.active} />}
-                    label={translate.Actives}
-                />
+                {/* <FormControlLabel */}
+                {/*    className={classNames(styles.field, styles.active)} */}
+                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formFields.active} />} */}
+                {/*    label={translate.Actives} */}
+                {/* /> */}
                 <VacancyName
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
@@ -104,16 +103,16 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
                     value={formFields.skills}
                 />
-                <Place
-                    className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
-                    value={formFields.place}
-                />
-                <WorkSchedule
-                    className={styles.field}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedule')}
-                    value={formFields.workSchedule}
-                />
+                {/* <Place */}
+                {/*    className={styles.field} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'place')} */}
+                {/*    value={formFields.place} */}
+                {/* /> */}
+                {/* <WorkSchedule */}
+                {/*    className={styles.field} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedule')} */}
+                {/*    value={formFields.workSchedule} */}
+                {/* /> */}
                 <Regions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}

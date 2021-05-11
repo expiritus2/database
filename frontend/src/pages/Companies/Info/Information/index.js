@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Typography from '@material-ui/core/Typography';
-
 import { useTranslate } from 'hooks';
 import PaddingWrapper from '../PaddingWrapper';
 
@@ -16,8 +14,8 @@ const Information = (props) => {
     return (
         <div className={classNames(styles.information, className)}>
             <PaddingWrapper>
-                <Typography className={styles.title}>{translate.Info}</Typography>
-                <Typography variant="body1">{value}</Typography>
+                <div className={styles.title}>{translate.Info}</div>
+                <p>{value}</p>
             </PaddingWrapper>
         </div>
     );

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Typography from '@material-ui/core/Typography';
 import Positions from '../Positions';
 import Skills from '../Skills';
 import Regions from '../Regions';
@@ -14,9 +13,9 @@ const Name = (props) => {
 
     return (
         <div className={classNames(styles.name, className)}>
-            <Typography variant="h5">{name}</Typography>
-            <Typography variant="subtitle1">{nameLat}</Typography>
-            <Positions className={styles.positions} positions={positions} />
+            <h5>{name}</h5>
+            <p>{nameLat}</p>
+            <Positions positions={positions} />
             <Skills skills={skills} />
             <Regions regions={regions} />
         </div>

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import styles from './styles.module.scss';
 
 const Skills = (props) => {
@@ -12,14 +10,14 @@ const Skills = (props) => {
     const { translate } = useTranslate();
 
     return (
-        <Typography component="div" className={classNames(styles.skills, className)}>
-            <Box fontWeight="fontWeightBold">
+        <div className={classNames(styles.skills, className)}>
+            <span>
                 {`${translate.Skills}: `}
-            </Box>
-            <Box className={styles.values}>
+            </span>
+            <span className={styles.values}>
                 {skills.join(', ')}
-            </Box>
-        </Typography>
+            </span>
+        </div>
     );
 };
 

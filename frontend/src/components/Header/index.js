@@ -2,10 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { openModalEffect } from 'store/effects/app';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import { NavLink, useLocation } from 'react-router-dom';
-import { generateDataEffect } from 'store/effects/fake';
+import { modalsIds } from 'settings/constants/modals';
 import { Button } from 'components';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
@@ -24,48 +22,46 @@ const Header = () => {
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: ADD }));
     };
 
-    const generateData = () => {
-        dispatch(generateDataEffect({ type: location.pathname.slice(1) }));
+    const onVocabulariesClick = () => {
+        dispatch(openModalEffect({ modalId: modalsIds.VOCABULARIES, open: true }));
     };
 
     return (
         <div className={styles.header}>
-            <AppBar position="static">
-                <Toolbar className={styles.toolbar}>
-                    <nav>
-                        {Header.getNavigation(translate).map(({ id, link, label }) => (
-                            <NavLink
-                                exact
-                                key={id}
-                                to={link}
-                                className={styles.link}
-                                activeClassName={styles.active}
-                            >
-                                {label}
-                            </NavLink>
-                        ))}
-                    </nav>
-                    <div>
-                        <Button
-                            onClick={onAddHandler}
-                            className={styles.navButton}
-                            variant="contained"
-                            color="default"
+            <div className={styles.toolbar}>
+                <nav>
+                    {Header.getNavigation(translate).map(({ id, link, label }) => (
+                        <NavLink
+                            exact
+                            key={id}
+                            to={link}
+                            className={styles.link}
+                            activeClassName={styles.active}
                         >
-                            {translate.Add}
-                        </Button>
-                        <Button className={styles.navButton} variant="contained" color="default">{userEmail}</Button>
-                        <Button
-                            onClick={generateData}
-                            className={styles.navButton}
-                            variant="contained"
-                            color="default"
-                        >
-                            Generate Data
-                        </Button>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                            {label}
+                        </NavLink>
+                    ))}
+                </nav>
+                <div>
+                    <Button
+                        onClick={onAddHandler}
+                        className={styles.navButton}
+                        variant="contained"
+                        color="default"
+                    >
+                        {translate.Add}
+                    </Button>
+                    <Button className={styles.navButton} variant="contained" color="default">{userEmail}</Button>
+                    <Button
+                        onClick={onVocabulariesClick}
+                        className={styles.navButton}
+                        variant="contained"
+                        color="default"
+                    >
+                        {translate.Vocabularies}
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 };
