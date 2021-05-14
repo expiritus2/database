@@ -12,6 +12,11 @@ router.get('/api/vocabulary/skills', middlewares, async (req, res) => {
     res.send(skills);
 });
 
+router.post('/api/vocabulary/skills', middlewares, async(req, res) => {
+    const skill = await Skill.create(req.body);
+    res.send(skill);
+})
+
 module.exports = {
     skillsVocabularyRouter: router,
 }

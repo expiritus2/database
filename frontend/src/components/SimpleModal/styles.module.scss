@@ -52,6 +52,7 @@
     width: setUnit(800);
     border-radius: setUnit(8);
     max-height: setUnit(615);
+    overflow: hidden;
 
     .innerHolder {
         height: 100%;

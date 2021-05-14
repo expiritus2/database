@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-// import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Logger } from 'services';
-// import { getVocabularySkillsSelector } from 'store/selectors/vocabulary';
-
-import ContentHeader from '../../../ContentHeader';
-import AddMode from '../../../AddMode';
-import List from '../../../List';
+import { getVocabularySkillsSelector } from 'store/selectors/vocabulary';
+import { getVocabularySkillsEffect } from 'store/effects/vocabulary';
+import ContentHeader from 'components/App/VocabularyModal/ContentHeader';
+import AddMode from 'components/App/VocabularyModal/AddMode';
+import List from 'components/App/VocabularyModal/List';
+import { vocabularyTabsIds } from 'settings/constants/vocabulary';
+import { PendingWrapper } from 'components';
+import { PENDING } from 'settings/constants/apiState';
+import ScrollWrapper from '../../ScrollWrapper';
 
 import styles from './styles.module.scss';
 
 const Skills = (props) => {
     const { className, innerContentClassName, listClassName, elementClassName } = props;
-    // const vocabularySkills = useSelector(getVocabularySkillsSelector);
+    const dispatch = useDispatch();
+    const vocabularySkills = useSelector(getVocabularySkillsSelector);
+    const scrollContainerRef = useRef();
+
+    useEffect(() => {
+        dispatch(getVocabularySkillsEffect());
+    }, []); // eslint-disable-line
 
     const onEditHandler = (item) => {
         Logger.log('onEdit', item);
@@ -23,20 +33,26 @@ const Skills = (props) => {
         Logger.log('onDelete', item);
     };
 
+    const isPending = vocabularySkills.state === PENDING;
+
     return (
         <div className={classNames(styles.skills, className, innerContentClassName)}>
             <ContentHeader className={elementClassName} />
-            <List
-                onEdit={onEditHandler}
-                onDelete={onDeleteHandler}
-                className={classNames(listClassName)}
-                list={[
-                    { id: 1, label: 'Test Skill', value: 'test_skill' },
-                    { id: 2, label: 'Test Skill2', value: 'test_skill2' },
-                    { id: 3, label: 'Test Skill3', value: 'test_skill3' },
-                ]}
+            <ScrollWrapper ref={scrollContainerRef}>
+                <PendingWrapper isPending={isPending}>
+                    <List
+                        onEdit={onEditHandler}
+                        onDelete={onDeleteHandler}
+                        className={classNames(listClassName)}
+                        list={vocabularySkills.data || []}
+                    />
+                </PendingWrapper>
+            </ScrollWrapper>
+            <AddMode
+                scrollContainerRef={scrollContainerRef}
+                className={elementClassName}
+                activeTab={vocabularyTabsIds.skills}
             />
-            <AddMode className={elementClassName} />
         </div>
     );
 };

@@ -7,42 +7,37 @@ export const getVocabularySelector = createSelector(
     (vocabulary) => vocabulary,
 );
 
-export const getVocabularyDataSelector = createSelector(
-    localState,
-    (vocabulary) => vocabulary?.data,
-);
-
 export const getResourcesUsersSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.users || [],
 );
 
 export const getVocabularyPositionsSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.positions || [],
 );
 
 export const getVocabularyRegionsSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.regions || [],
 );
 
 export const getVocabularySkillsSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.skills || [],
 );
 
 export const getVocabularyCompaniesSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.companies || [],
 );
 
 export const getVocabularyContactsSelector = createSelector(
-    getVocabularyDataSelector,
+    getVocabularySelector,
     (vocabularyData) => vocabularyData?.contacts || [],
 );
 
 export const getVocabularyModeSelector = createSelector(
-    localState,
+    getVocabularySelector,
     (vocabulary) => vocabulary?.mode,
 );

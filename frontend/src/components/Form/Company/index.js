@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
+// import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
 import { getVocabularyCompaniesSelector } from 'store/selectors/vocabulary';
 import { Autocomplete } from 'components';
 import { useTranslate } from 'hooks';
@@ -12,12 +12,13 @@ import styles from './styles.module.scss';
 
 const Company = (props) => {
     const { className, onChange, value, name } = props;
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const companies = useSelector(getVocabularyCompaniesSelector);
 
-    useEffect(() => {
-        dispatch(getVocabularyCompaniesEffect({}, { silent: true }));
-    }, []); // eslint-disable-line
+    // useEffect(() => {
+    //     dispatch(getVocabularyCompaniesEffect({}, { silent: true }));
+    // }, []); // eslint-disable-line
+
     const { translate } = useTranslate();
 
     return (

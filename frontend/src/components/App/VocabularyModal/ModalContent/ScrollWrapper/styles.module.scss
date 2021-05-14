@@ -1,0 +1,11 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.contentScrollWrapper {
+    height: calc(100% - #{setUnit(51)});
+    overflow: auto;
+
+    &.addMode {
+        height: calc(100% - #{setUnit(111)});
+    }
+}

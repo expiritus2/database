@@ -1,33 +1,27 @@
 import Api from 'store/effects/core/api';
 import {
-    getVocabularyResourcesAction,
     getVocabularyPositionsAction,
     getVocabularyRegionsAction,
     getVocabularySkillsAction,
+    setVocabularyModeAction,
     getVocabularyCompaniesAction,
     getVocabularyContactsAction,
-    getUsersAction, setVocabularyModeAction,
+    getUsersAction,
+    saveVocabularySkillAction,
+    saveVocabularyPositionAction,
+    saveVocabularyRegionAction,
 } from 'store/actions/vocabulary';
 import {
-    getVocabularyResources,
     getVocabularyPositions,
     getVocabularyRegions,
     getVocabularySkills,
     getVocabularyCompanies,
     getVocabularyContacts,
     getUsers,
+    saveVocabularySkill,
+    saveVocabularyPosition,
+    saveVocabularyRegion,
 } from 'api/vocabulary';
-
-export const getVocabularyResourcesEffect = (cfg, options = {}, cb) => {
-    const requestParams = { action: getVocabularyResourcesAction, method: getVocabularyResources };
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options?.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
-
-    return sendRequest({}, options, cb);
-};
 
 export const getVocabularyPositionsEffect = (cfg, options = {}, cb) => {
     const requestParams = { action: getVocabularyPositionsAction, method: getVocabularyPositions };
@@ -100,4 +94,37 @@ export const getUsersEffect = (cfg, options = {}, cb) => {
 
 export const setVocabularyModeEffect = (cfg) => (dispatch) => {
     dispatch(setVocabularyModeAction(cfg));
+};
+
+export const saveVocabularySkillEffect = (cfg, options, cb) => {
+    const requestParams = { action: saveVocabularySkillAction, method: saveVocabularySkill };
+    let sendRequest = Api.execBase(requestParams);
+
+    if (options?.silent) {
+        sendRequest = Api.execResult(requestParams);
+    }
+
+    return sendRequest(cfg, options, cb);
+};
+
+export const saveVocabularyPositionEffect = (cfg, options, cb) => {
+    const requestParams = { action: saveVocabularyPositionAction, method: saveVocabularyPosition };
+    let sendRequest = Api.execBase(requestParams);
+
+    if (options?.silent) {
+        sendRequest = Api.execResult(requestParams);
+    }
+
+    return sendRequest(cfg, options, cb);
+};
+
+export const saveVocabularyRegionEffect = (cfg, options, cb) => {
+    const requestParams = { action: saveVocabularyRegionAction, method: saveVocabularyRegion };
+    let sendRequest = Api.execBase(requestParams);
+
+    if (options?.silent) {
+        sendRequest = Api.execResult(requestParams);
+    }
+
+    return sendRequest(cfg, options, cb);
 };

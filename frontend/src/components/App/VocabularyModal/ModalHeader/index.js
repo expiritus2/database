@@ -13,9 +13,7 @@ const ModalHeader = (props) => {
 
     return (
         <div className={classNames(styles.modalHeader, className)}>
-            <h3>
-                {translate.VocabularySettings}
-            </h3>
+            <h3>{translate.VocabularySettings}</h3>
             <div>
                 <AiOutlineCloseCircle onClick={onClose} className={styles.close} />
             </div>

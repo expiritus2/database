@@ -19,7 +19,7 @@ const ContentHeader = (props) => {
 
     const onAdd = () => {
         const newMode = vocabularyMode === null ? ADD_MODE : null;
-        dispatch(setVocabularyModeEffect({ mode: newMode }));
+        dispatch(setVocabularyModeEffect(newMode));
     };
 
     return (
