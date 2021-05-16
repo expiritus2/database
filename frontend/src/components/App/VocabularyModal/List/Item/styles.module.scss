@@ -1,0 +1,40 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.item {
+    border-top: 1px solid $border-gray-color;
+    padding: setUnit(10) setUnit(10);
+    cursor: pointer;
+
+    &.editMode {
+        padding: 0;
+        border: 2px solid $secondary-color;
+        border-radius: setUnit(3);
+
+        &:last-child {
+            border-bottom: 2px solid $secondary-color;
+        }
+    }
+
+    .inputField {
+        margin: 0;
+
+        input {
+            height: setUnit(35);
+            border: none !important;
+        }
+    }
+
+    &:last-child {
+        border-bottom: 1px solid $border-gray-color;
+    }
+
+    &:nth-child(odd) {
+        background: $background-ligh-gray;
+    }
+
+    &:hover {
+        @include box-shadow;
+    }
+}

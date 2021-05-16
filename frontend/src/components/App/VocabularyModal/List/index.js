@@ -1,62 +1,80 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useOutsideClick, useTranslate } from 'hooks';
 import { ActionList } from 'components';
+import Item from './Item';
 
 import styles from './styles.module.scss';
 
 const List = (props) => {
-    const { className, list, onEdit, onDelete } = props;
+    const { className, list, onUpdate, onDelete } = props;
     const [actionsPosition, setActionsPosition] = useState(null);
     const [closeActions, setCloseActions] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
+    const [editMode, setEditMode] = useState(false);
     const { translate } = useTranslate();
+    const actionsRef = useRef();
     const listRef = useRef();
 
-    useOutsideClick([listRef], () => {
+    const resetStates = () => {
         setCloseActions(true);
         setCurrentItem(null);
+        setEditMode(false);
+        setActionsPosition(null);
+    };
+
+    useOutsideClick([actionsRef, listRef], () => {
+        resetStates();
     });
 
-    const onEditHandler = () => {
+    const onEditHandler = useCallback(() => {
+        setActionsPosition(null);
+        setEditMode(true);
+    }, []);
+
+    const onDeleteHandler = useCallback(() => {
         setCurrentItem(null);
         setActionsPosition(null);
-        onEdit(currentItem);
+        onDelete(currentItem?.item);
+    }, [currentItem, onDelete]);
+
+    const onClickHandler = (event, item, index) => {
+        setTimeout(() => {
+            setActionsPosition({ x: event?.clientX, y: event?.clientY });
+            setCloseActions(false);
+            setCurrentItem({ item, index });
+        }, 100);
     };
 
-    const onDeleteHandler = () => {
-        setCurrentItem(null);
-        setActionsPosition(null);
-        onDelete(currentItem);
-    };
-
-    const onClickHandler = (event, item) => {
-        setActionsPosition({ x: event?.clientX, y: event?.clientY });
-        setCloseActions(false);
-        setCurrentItem(item);
-    };
-
-    const getActions = () => [
+    const itemActions = useMemo(() => [
         { id: 'edit', title: translate.Edit, onClick: onEditHandler },
         { id: 'delete', title: translate.Delete, onClick: onDeleteHandler },
-    ];
+    ], [onDeleteHandler, onEditHandler, translate.Delete, translate.Edit]);
+
+    const onUpdateHandler = (val) => {
+        onUpdate(val, () => {
+            resetStates();
+        });
+    };
 
     return (
         <div className={classNames(styles.list, className)}>
-            <ul>
+            <ul ref={listRef}>
                 {list.map((item, index) => (
-                    <li
-                        className={styles.item}
-                        onClick={(event) => onClickHandler(event, item)}
+                    <Item
+                        label={item?.label}
+                        onClick={(event) => onClickHandler(event, item, index)}
                         key={item?.id || index}
-                    >
-                        {item?.label}
-                    </li>
+                        editMode={editMode}
+                        currentItem={currentItem}
+                        index={index}
+                        onUpdate={onUpdateHandler}
+                    />
                 ))}
             </ul>
-            <ActionList ref={listRef} actions={getActions()} position={actionsPosition} close={closeActions} />
+            <ActionList ref={actionsRef} actions={itemActions} position={actionsPosition} close={closeActions} />
         </div>
     );
 };
@@ -64,14 +82,14 @@ const List = (props) => {
 List.propTypes = {
     className: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape({})),
-    onEdit: PropTypes.func,
+    onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
 };
 
 List.defaultProps = {
     className: '',
     list: [],
-    onEdit: () => {},
+    onUpdate: () => {},
     onDelete: () => {},
 };
 

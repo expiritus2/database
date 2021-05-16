@@ -9,6 +9,9 @@ export const getVocabularyCompaniesAction = createAction('GET_VOCABULARY_COMPANI
 export const getVocabularyContactsAction = createAction('GET_VOCABULARY_CONTACTS');
 export const getUsersAction = createAction('GET_USERS');
 
-export const saveVocabularySkillAction = createAction('SAVE_VOCABULARY_SKILL_ACTION');
-export const saveVocabularyPositionAction = createAction('SAVE_VOCABULARY_POSITION_ACTION');
-export const saveVocabularyRegionAction = createAction('SAVE_VOCABULARY_REGION_ACTION');
+export const saveVocabularySkillAction = createAction('SAVE_VOCABULARY_SKILL');
+export const saveVocabularyPositionAction = createAction('SAVE_VOCABULARY_POSITION');
+export const saveVocabularyRegionAction = createAction('SAVE_VOCABULARY_REGION');
+
+export const deleteVocabularySkillAction = createAction('DELETE_VOCABULARY_SKILL');
+export const updateVocabularySkillAction = createAction('UPDATE_VOCABULARY_SKILL');

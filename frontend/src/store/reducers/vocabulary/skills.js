@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
-import { get } from 'lodash-es';
-import { getVocabularySkillsAction, saveVocabularySkillAction } from 'store/actions/vocabulary';
+import { cloneDeep, get } from 'lodash-es';
+import { getVocabularySkillsAction, saveVocabularySkillAction, deleteVocabularySkillAction, updateVocabularySkillAction } from 'store/actions/vocabulary';
 
 const initialData = {
     state: IDLE,
@@ -21,5 +21,23 @@ export default handleActions({
             ...state,
             data: [...(state.data || []), data],
         };
+    },
+    [deleteVocabularySkillAction]: (state, { payload }) => ({
+        state: get(payload, 'state', initialData.state),
+        data: get(payload, 'data', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
+    [updateVocabularySkillAction]: (state, { payload }) => {
+        const updatedSkill = get(payload, 'data', initialData.data);
+        const copyData = cloneDeep(state.data);
+        const skillIndex = (copyData || []).findIndex((skill) => skill?.id === updatedSkill?.id);
+
+        if (skillIndex !== -1) {
+            copyData[skillIndex] = updatedSkill;
+        }
+        return ({
+            ...state,
+            data: copyData,
+        });
     },
 }, initialData);
