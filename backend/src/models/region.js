@@ -16,8 +16,7 @@ Region.init({
     },
     value: {
         type: DataTypes.STRING,
-        unique: true,
     }
-}, { sequelize, modelName: 'region' });
+},{ sequelize, modelName: 'region' });
 
 module.exports = Region;

@@ -24,6 +24,13 @@
             border-radius: setUnit(5);
             text-align: center;
 
+            &.active,
+            &:hover {
+                background: $secondary-color;
+                color: #ffffff;
+                border-color: $secondary-color;
+            }
+
             &:last-child {
                 margin-bottom: 0;
             }

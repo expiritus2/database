@@ -24,6 +24,7 @@ const ModalContent = (props) => {
                 innerContentClassName={styles.innerContentClassName}
                 listClassName={styles.listClassName}
                 elementClassName={styles.elementClassName}
+                activeTabClassName={styles.active}
             />
         </div>
     );

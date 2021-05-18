@@ -1,9 +1,9 @@
 export { default as Skills } from './Skills';
-export { default as Position } from './Position';
+export { default as Positions } from './Positions';
 export { default as Regions } from './Regions';
 export { default as WorkTypes } from './WorkTypes';
-export { default as WorkPlace } from './WorkPlace';
-export { default as WorkSchedule } from './WorkSchedule';
+export { default as WorkPlaces } from './WorkPlaces';
+export { default as WorkSchedules } from './WorkSchedules';
 export { default as EventTypes } from './EventTypes';
 export { default as Languages } from './Languages';
 export { default as LanguageLevels } from './LanguageLevels';

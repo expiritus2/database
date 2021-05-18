@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { setVocabularyModeEffect, saveVocabularySkillEffect } from 'store/effects/vocabulary';
+import {
+    setVocabularyModeEffect,
+    saveVocabularySkillEffect,
+    saveVocabularyPositionEffect,
+    saveVocabularyRegionEffect,
+} from 'store/effects/vocabulary';
 import { Input, Button } from 'components/Form-NEW';
 import { getVocabularyModeSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
@@ -34,6 +39,10 @@ const AddMode = (props) => {
         switch (activeTab) {
             case vocabularyTabsIds.skills:
                 return saveVocabularySkillEffect;
+            case vocabularyTabsIds.positions:
+                return saveVocabularyPositionEffect;
+            case vocabularyTabsIds.regions:
+                return saveVocabularyRegionEffect;
             default: {
                 return () => {};
             }

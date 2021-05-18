@@ -13,7 +13,7 @@ import {
     NumberInput,
     Skills,
     // Place,
-    // WorkSchedule,
+    // WorkSchedules,
     Regions,
     File,
     Textarea,
@@ -105,13 +105,13 @@ const ProfileForm = (props) => {
                 />
                 {/* <Place */}
                 {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'place')} */}
-                {/*    value={formFields.place} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'places')} */}
+                {/*    value={formFields.places} */}
                 {/* /> */}
-                {/* <WorkSchedule */}
+                {/* <WorkSchedules */}
                 {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedule')} */}
-                {/*    value={formFields.workSchedule} */}
+                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedules')} */}
+                {/*    value={formFields.workSchedules} */}
                 {/* /> */}
                 <Regions
                     className={styles.field}

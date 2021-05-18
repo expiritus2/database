@@ -1,15 +1,15 @@
 import {
     EventTypes, LanguageLevels, Languages, LinkTypes, MessengersTypes, PhoneTypes,
-    Position, Regions, Skills, WorkPlace, WorkSchedule, WorkTypes,
+    Positions, Regions, Skills, WorkPlaces, WorkSchedules, WorkTypes,
 } from 'components/App/VocabularyModal/ModalContent/Tabs';
 
 export const vocabularyTabsIds = {
     skills: 'skills',
-    position: 'position',
+    positions: 'positions',
     regions: 'regions',
     workTypes: 'workTypes',
-    place: 'place',
-    workSchedule: 'workSchedule',
+    places: 'places',
+    workSchedules: 'workSchedules',
     eventTypes: 'eventTypes',
     languages: 'languages',
     languageLevels: 'languageLevels',
@@ -20,11 +20,11 @@ export const vocabularyTabsIds = {
 
 export const getVocabularyTabs = (translate) => [
     { id: vocabularyTabsIds.skills, label: translate.Skills, Component: Skills },
-    { id: vocabularyTabsIds.position, label: translate.Position, Component: Position },
+    { id: vocabularyTabsIds.positions, label: translate.Position, Component: Positions },
     { id: vocabularyTabsIds.regions, label: translate.Regions, Component: Regions },
     { id: vocabularyTabsIds.workTypes, label: translate.WorkTypes, Component: WorkTypes },
-    { id: vocabularyTabsIds.place, label: translate.WorkPlaces, Component: WorkPlace },
-    { id: vocabularyTabsIds.workSchedule, label: translate.WorkSchedule, Component: WorkSchedule },
+    { id: vocabularyTabsIds.places, label: translate.WorkPlaces, Component: WorkPlaces },
+    { id: vocabularyTabsIds.workSchedules, label: translate.WorkSchedule, Component: WorkSchedules },
     { id: vocabularyTabsIds.eventTypes, label: translate.EventTypes, Component: EventTypes },
     { id: vocabularyTabsIds.languages, label: translate.Languages, Component: Languages },
     { id: vocabularyTabsIds.languageLevels, label: translate.LanguageLevels, Component: LanguageLevels },

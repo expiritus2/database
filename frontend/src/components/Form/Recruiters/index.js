@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getUsersEffect } from 'store/effects/vocabulary';
-import { getResourcesUsersSelector } from 'store/selectors/vocabulary';
+import { getVocabularyUsersSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
 import { Autocomplete } from 'components/index';
 import styles from './styles.module.scss';
@@ -14,7 +14,7 @@ const Recruiters = (props) => {
 
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const users = useSelector(getResourcesUsersSelector);
+    const users = useSelector(getVocabularyUsersSelector);
     const [defaultValue] = useState(value);
 
     useEffect(() => {

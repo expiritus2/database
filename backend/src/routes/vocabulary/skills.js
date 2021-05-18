@@ -7,29 +7,29 @@ const router = express.Router();
 const middlewares = [requireAuth]
 
 router.get('/api/vocabulary/skills', middlewares, async (req, res) => {
-    const skills = await Skill.findAll({ attributes: ['id', 'label', 'value']});
+    const items = await Skill.findAll({ attributes: ['id', 'label', 'value']});
 
-    res.send(skills);
+    res.send(items);
 });
 
 router.post('/api/vocabulary/skills', middlewares, async(req, res) => {
-    const skill = await Skill.create(req.body);
-    res.send(skill);
+    const items = await Skill.create(req.body);
+    res.send(items);
 });
 
 router.delete('/api/vocabulary/skills/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await Skill.destroy({ where: { id }});
-    const skills = await Skill.findAll();
-    res.send(skills);
+    const items = await Skill.findAll();
+    res.send(items);
 });
 
 router.put('/api/vocabulary/skills/:id', middlewares, async (req, res) => {
     const { id } = req.params;
-    const skill = await Skill.findByPk(id);
-    skill.label = req.body.label;
-    skill.value = req.body.value;
-    const updatedSkill = await skill.save();
+    const item = await Skill.findByPk(id);
+    item.label = req.body.label;
+    item.value = req.body.value;
+    const updatedSkill = await item.save();
 
     res.send(updatedSkill);
 });

@@ -30,10 +30,10 @@ export default handleActions({
     [updateVocabularySkillAction]: (state, { payload }) => {
         const updatedSkill = get(payload, 'data', initialData.data);
         const copyData = cloneDeep(state.data);
-        const skillIndex = (copyData || []).findIndex((skill) => skill?.id === updatedSkill?.id);
+        const itemIndex = (copyData || []).findIndex((skill) => skill?.id === updatedSkill?.id);
 
-        if (skillIndex !== -1) {
-            copyData[skillIndex] = updatedSkill;
+        if (itemIndex !== -1) {
+            copyData[itemIndex] = updatedSkill;
         }
         return ({
             ...state,
