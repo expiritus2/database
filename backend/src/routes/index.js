@@ -12,6 +12,13 @@ const { regionsVocabularyRouter } = require('./vocabulary/regions');
 const { skillsVocabularyRouter } = require('./vocabulary/skills');
 const { contactsVocabularyRouter } = require('./vocabulary/contacts');
 const { companiesVocabularyRouter } = require('./vocabulary/companies');
+const { workTypesVocabularyRouter } = require('./vocabulary/workTypes');
+const { workPlacesVocabularyRouter } = require('./vocabulary/workPlaces');
+const { workSchedulesVocabularyRouter } = require('./vocabulary/workSchedules');
+const { eventTypesVocabularyRouter } = require('./vocabulary/eventTypes');
+const { languagesVocabularyRouter } = require('./vocabulary/languages');
+const { languageLevelsVocabularyRouter } = require('./vocabulary/languageLevels');
+const { linkTypesVocabularyRouter } = require('./vocabulary/linkTypes');
 
 const { fakeRouter } = require('./fake');
 
@@ -30,6 +37,13 @@ module.exports = (app) => {
     app.use(skillsVocabularyRouter);
     app.use(contactsVocabularyRouter);
     app.use(companiesVocabularyRouter);
+    app.use(workTypesVocabularyRouter);
+    app.use(workPlacesVocabularyRouter);
+    app.use(workSchedulesVocabularyRouter);
+    app.use(eventTypesVocabularyRouter);
+    app.use(languagesVocabularyRouter);
+    app.use(languageLevelsVocabularyRouter);
+    app.use(linkTypesVocabularyRouter);
 
     app.use(fakeRouter);
 }

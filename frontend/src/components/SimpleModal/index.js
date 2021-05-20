@@ -3,11 +3,17 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { useSelector } from 'react-redux';
+import { getUserSelector } from 'store/selectors/auth';
+
 import styles from './styles.module.scss';
 
 const SimpleModal = (props) => {
     const { isOpen, children, className, opacityLayerClassName, testid } = props;
     const { contentClassName, innerHolderClassName, onClose, scroll } = props;
+    const user = useSelector(getUserSelector);
+
+    if (!user.data) return null;
 
     return createPortal(
         <div testid={testid} className={classNames(styles.modal, { [styles.isOpen]: isOpen }, className)}>

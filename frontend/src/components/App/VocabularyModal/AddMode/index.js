@@ -7,6 +7,13 @@ import {
     saveVocabularySkillEffect,
     saveVocabularyPositionEffect,
     saveVocabularyRegionEffect,
+    saveVocabularyWorkTypeEffect,
+    saveVocabularyWorkPlaceEffect,
+    saveVocabularyWorkScheduleEffect,
+    saveVocabularyEventTypeEffect,
+    saveVocabularyLanguageEffect,
+    saveVocabularyLanguageLevelEffect,
+    saveVocabularyLinkTypeEffect,
 } from 'store/effects/vocabulary';
 import { Input, Button } from 'components/Form-NEW';
 import { getVocabularyModeSelector } from 'store/selectors/vocabulary';
@@ -37,15 +44,17 @@ const AddMode = (props) => {
 
     const getEffect = () => {
         switch (activeTab) {
-            case vocabularyTabsIds.skills:
-                return saveVocabularySkillEffect;
-            case vocabularyTabsIds.positions:
-                return saveVocabularyPositionEffect;
-            case vocabularyTabsIds.regions:
-                return saveVocabularyRegionEffect;
-            default: {
-                return () => {};
-            }
+            case vocabularyTabsIds.skills: return saveVocabularySkillEffect;
+            case vocabularyTabsIds.positions: return saveVocabularyPositionEffect;
+            case vocabularyTabsIds.regions: return saveVocabularyRegionEffect;
+            case vocabularyTabsIds.workTypes: return saveVocabularyWorkTypeEffect;
+            case vocabularyTabsIds.workPlaces: return saveVocabularyWorkPlaceEffect;
+            case vocabularyTabsIds.workSchedules: return saveVocabularyWorkScheduleEffect;
+            case vocabularyTabsIds.eventTypes: return saveVocabularyEventTypeEffect;
+            case vocabularyTabsIds.languages: return saveVocabularyLanguageEffect;
+            case vocabularyTabsIds.languageLevels: return saveVocabularyLanguageLevelEffect;
+            case vocabularyTabsIds.linkTypes: return saveVocabularyLinkTypeEffect;
+            default: return () => {};
         }
     };
 
