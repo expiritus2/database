@@ -3,9 +3,9 @@ const { body } = require('express-validator');
 const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Vacancy = require('../../models/vacancy');
-const Position = require('../../models/position');
-const Skill = require('../../models/skill');
-const Region = require('../../models/region');
+const Position = require('../../models/vocabulary/position');
+const Skill = require('../../models/vocabulary/skill');
+const Region = require('../../models/vocabulary/region');
 const User = require('../../models/user');
 const Company = require('../../models/company');
 

@@ -37,7 +37,7 @@ const Positions = (props) => {
     };
 
     return (
-        <div className={classNames(styles.skills, className, innerContentClassName)}>
+        <div className={classNames(styles.positions, className, innerContentClassName)}>
             <ContentHeader className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>

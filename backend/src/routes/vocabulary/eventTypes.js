@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const EventType = require('../../models/eventType');
+const EventType = require('../../models/vocabulary/eventType');
 
 const router = express.Router();
 

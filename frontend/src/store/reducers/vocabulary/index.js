@@ -11,6 +11,11 @@ import eventTypes from './eventTypes';
 import languages from './languages';
 import languageLevels from './languageLevels';
 import linkTypes from './linkTypes';
+import messengerTypes from './messengerTypes';
+import phoneTypes from './phoneTypes';
+import educations from './educations';
+import currencies from './currencies';
+import fileTypes from './fileTypes';
 
 export default combineReducers({
     mode,
@@ -24,4 +29,9 @@ export default combineReducers({
     languages,
     languageLevels,
     linkTypes,
+    messengerTypes,
+    phoneTypes,
+    educations,
+    currencies,
+    fileTypes,
 });

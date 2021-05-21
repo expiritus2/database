@@ -19,6 +19,11 @@ const { eventTypesVocabularyRouter } = require('./vocabulary/eventTypes');
 const { languagesVocabularyRouter } = require('./vocabulary/languages');
 const { languageLevelsVocabularyRouter } = require('./vocabulary/languageLevels');
 const { linkTypesVocabularyRouter } = require('./vocabulary/linkTypes');
+const { messengerTypesVocabularyRouter } = require('./vocabulary/messengerTypes');
+const { phoneTypesVocabularyRouter } = require('./vocabulary/phoneTypes');
+const { educationsVocabularyRouter } = require('./vocabulary/educations');
+const { currenciesVocabularyRouter } = require('./vocabulary/currencies');
+const { fileTypesVocabularyRouter } = require('./vocabulary/fileTypes');
 
 const { fakeRouter } = require('./fake');
 
@@ -44,6 +49,11 @@ module.exports = (app) => {
     app.use(languagesVocabularyRouter);
     app.use(languageLevelsVocabularyRouter);
     app.use(linkTypesVocabularyRouter);
+    app.use(messengerTypesVocabularyRouter);
+    app.use(phoneTypesVocabularyRouter);
+    app.use(educationsVocabularyRouter);
+    app.use(currenciesVocabularyRouter);
+    app.use(fileTypesVocabularyRouter);
 
     app.use(fakeRouter);
 }

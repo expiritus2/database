@@ -1,6 +1,6 @@
 const Company = require('../models/company');
 const User = require('../models/user');
-const Region = require('../models/region');
+const Region = require('../models/vocabulary/region');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 

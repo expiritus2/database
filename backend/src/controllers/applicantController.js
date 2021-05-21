@@ -1,8 +1,8 @@
 const Applicant = require('../models/applicant');
-const Position = require('../models/position');
-const Skill = require('../models/skill');
+const Position = require('../models/vocabulary/position');
+const Skill = require('../models/vocabulary/skill');
 const Experience = require('../models/experience');
-const Region = require('../models/region');
+const Region = require('../models/vocabulary/region');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 const { s3 } = require('../middlewares/file-upload');

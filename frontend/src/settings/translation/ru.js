@@ -139,4 +139,7 @@ export default {
     LinkTypes: 'Типы ссылок',
     MessengersTypes: 'Типы мессенджеров',
     PhoneTypes: 'Типы телефонов',
+    Educations: 'Образования',
+    Currencies: 'Валюты',
+    FileTypes: 'Типы файлов',
 };

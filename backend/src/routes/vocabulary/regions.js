@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const Region = require('../../models/region');
+const Region = require('../../models/vocabulary/region');
 
 const router = express.Router();
 

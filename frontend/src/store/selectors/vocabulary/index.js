@@ -12,3 +12,8 @@ export * from './eventTypes';
 export * from './languages';
 export * from './languageLevels';
 export * from './linkTypes';
+export * from './messengerTypes';
+export * from './phoneTypes';
+export * from './educations';
+export * from './currencies';
+export * from './fileTypes';

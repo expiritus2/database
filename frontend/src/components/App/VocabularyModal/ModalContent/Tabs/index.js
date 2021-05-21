@@ -10,3 +10,6 @@ export { default as LanguageLevels } from './LanguageLevels';
 export { default as LinkTypes } from './LinkTypes';
 export { default as MessengersTypes } from './MessengersTypes';
 export { default as PhoneTypes } from './PhoneTypes';
+export { default as Educations } from './Educations';
+export { default as Currencies } from './Currencies';
+export { default as FileTypes } from './FileTypes';

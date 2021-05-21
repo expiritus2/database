@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const WorkSchedule = require('../../models/workSchedule');
+const WorkSchedule = require('../../models/vocabulary/workSchedule');
 
 const router = express.Router();
 

@@ -14,6 +14,11 @@ import {
     saveVocabularyLanguageEffect,
     saveVocabularyLanguageLevelEffect,
     saveVocabularyLinkTypeEffect,
+    saveVocabularyMessengerTypeEffect,
+    saveVocabularyPhoneTypeEffect,
+    saveVocabularyEducationEffect,
+    saveVocabularyCurrencyEffect,
+    saveVocabularyFileTypeEffect,
 } from 'store/effects/vocabulary';
 import { Input, Button } from 'components/Form-NEW';
 import { getVocabularyModeSelector } from 'store/selectors/vocabulary';
@@ -54,6 +59,11 @@ const AddMode = (props) => {
             case vocabularyTabsIds.languages: return saveVocabularyLanguageEffect;
             case vocabularyTabsIds.languageLevels: return saveVocabularyLanguageLevelEffect;
             case vocabularyTabsIds.linkTypes: return saveVocabularyLinkTypeEffect;
+            case vocabularyTabsIds.messengerTypes: return saveVocabularyMessengerTypeEffect;
+            case vocabularyTabsIds.phoneTypes: return saveVocabularyPhoneTypeEffect;
+            case vocabularyTabsIds.educations: return saveVocabularyEducationEffect;
+            case vocabularyTabsIds.currencies: return saveVocabularyCurrencyEffect;
+            case vocabularyTabsIds.fileTypes: return saveVocabularyFileTypeEffect;
             default: return () => {};
         }
     };

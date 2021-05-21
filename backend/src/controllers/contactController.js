@@ -1,5 +1,5 @@
 const Contact = require('../models/contact');
-const Position = require('../models/position');
+const Position = require('../models/vocabulary/position');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 
