@@ -1,21 +1,20 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.import {
-    .files {
-        cursor: pointer;
-    }
+.files {
+    display: inline-block;
+    cursor: pointer;
+}
 
-    .file {
-        display: none;
-    }
+.file {
+    display: none;
+}
 
-    .actionButton {
-        pointer-events: none;
-        margin-left: setUnit(10);
-    }
+.actionButton {
+    pointer-events: none;
+    margin-left: setUnit(10);
+}
 
-    .nativeInput {
-        display: none;
-    }
+.nativeInput {
+    display: none;
 }

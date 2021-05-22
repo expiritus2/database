@@ -29,10 +29,10 @@ import { ADD_MODE } from 'settings/constants/modes';
 import { FiSettings } from 'react-icons/fi';
 import { readFiles } from 'helpers';
 import { CSVLink } from 'react-csv';
+import { vocabularyTabsIds } from 'settings/constants/vocabulary';
 import Import from './Import';
 
 import styles from './styles.module.scss';
-import { vocabularyTabsIds } from '../../../../settings/constants/vocabulary';
 
 const ContentHeader = (props) => {
     const { className, activeTab } = props;

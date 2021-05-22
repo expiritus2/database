@@ -12,12 +12,10 @@ const Import = (props) => {
     };
 
     return (
-        <div className={classNames(styles.import, className)}>
-            <label className={styles.files} htmlFor={elementId}>
-                <div>{label}</div>
-                <input className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} accept=".csv" />
-            </label>
-        </div>
+        <label className={classNames(styles.files, className)} htmlFor={elementId}>
+            <div>{label}</div>
+            <input className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} accept=".csv" />
+        </label>
     );
 };
 
