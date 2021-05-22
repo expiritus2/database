@@ -124,9 +124,9 @@
     input,
     textarea {
         padding: 0 setUnit(15);
-        border: 1px solid $background-ligh-gray;
+        border: 1px solid $background-light-gray;
         border-radius: setUnit(8);
-        background: $background-ligh-gray;
+        background: $background-light-gray;
         outline: none;
         margin: 0;
         width: 100%;
@@ -203,7 +203,7 @@
 }
 
 @mixin action-icon() {
-    background-color: $background-ligh-gray;
+    background-color: $background-light-gray;
 
     &:hover {
         background-color: $light-gray;

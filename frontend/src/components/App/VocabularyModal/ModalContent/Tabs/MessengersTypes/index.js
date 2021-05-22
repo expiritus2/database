@@ -36,9 +36,11 @@ const MessengerTypes = (props) => {
         dispatch(deleteVocabularyMessengerTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.messengerTypes;
+
     return (
         <div className={classNames(styles.messengerTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const MessengerTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.messengerTypes}
+                activeTab={tabId}
             />
         </div>
     );

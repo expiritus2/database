@@ -1,0 +1,43 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.settings {
+    position: absolute;
+    right: 0;
+
+    ul {
+        @include box-shadow;
+
+        width: setUnit(160);
+        list-style: none;
+        background: #ffffff;
+        border-radius: setUnit(8);
+        overflow: hidden;
+
+        .item {
+            cursor: pointer;
+
+            & > * {
+                padding: setUnit(8) setUnit(10);
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            &:hover {
+                background: $secondary-color;
+                color: #ffffff;
+
+                a {
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}

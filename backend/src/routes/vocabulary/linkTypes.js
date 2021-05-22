@@ -17,6 +17,12 @@ router.post('/api/vocabulary/linkTypes', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/linkTypes', middlewares, async(req, res) => {
+    await LinkType.destroy({ where: {}});
+    const items = await LinkType.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/linkTypes/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await LinkType.destroy({ where: { id }});

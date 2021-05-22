@@ -142,4 +142,6 @@ export default {
     Educations: 'Образования',
     Currencies: 'Валюты',
     FileTypes: 'Типы файлов',
+    Import: 'Импорт',
+    Export: 'Экспорт',
 };

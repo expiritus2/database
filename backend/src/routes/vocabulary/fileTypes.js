@@ -17,6 +17,12 @@ router.post('/api/vocabulary/fileTypes', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/fileTypes', middlewares, async(req, res) => {
+    await FileType.destroy({ where: {}});
+    const items = await FileType.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/fileTypes/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await FileType.destroy({ where: { id }});

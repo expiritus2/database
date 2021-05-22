@@ -4,4 +4,23 @@
 .contentHeader {
     padding: 0 setUnit(10) setUnit(10);
     border-bottom: 1px solid $grey-color;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .settingsHolder {
+        position: relative;
+
+        .settingsIcon {
+            width: setUnit(20);
+            height: setUnit(20);
+            cursor: pointer;
+            transition: all .3s ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
 }

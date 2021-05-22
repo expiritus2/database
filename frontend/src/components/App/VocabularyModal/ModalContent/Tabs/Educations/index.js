@@ -36,9 +36,11 @@ const Educations = (props) => {
         dispatch(deleteVocabularyEducationEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.educations;
+
     return (
         <div className={classNames(styles.educations, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const Educations = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.educations}
+                activeTab={tabId}
             />
         </div>
     );

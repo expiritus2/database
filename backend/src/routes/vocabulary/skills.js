@@ -17,6 +17,12 @@ router.post('/api/vocabulary/skills', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/skills', middlewares, async(req, res) => {
+    await Skill.destroy({ where: {}});
+    const items = await Skill.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/skills/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await Skill.destroy({ where: { id }});

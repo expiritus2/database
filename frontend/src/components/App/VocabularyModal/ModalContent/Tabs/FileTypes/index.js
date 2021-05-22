@@ -36,9 +36,11 @@ const FileTypes = (props) => {
         dispatch(deleteVocabularyFileTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.fileTypes;
+
     return (
         <div className={classNames(styles.fileTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const FileTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.fileTypes}
+                activeTab={tabId}
             />
         </div>
     );

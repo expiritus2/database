@@ -36,9 +36,11 @@ const PhoneTypes = (props) => {
         dispatch(deleteVocabularyPhoneTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.phoneTypes;
+
     return (
         <div className={classNames(styles.phoneTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const PhoneTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.phoneTypes}
+                activeTab={tabId}
             />
         </div>
     );

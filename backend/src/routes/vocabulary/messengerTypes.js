@@ -17,6 +17,12 @@ router.post('/api/vocabulary/messengerTypes', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/messengerTypes', middlewares, async(req, res) => {
+    await MessengerType.destroy({ where: {}});
+    const items = await MessengerType.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/messengerTypes/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await MessengerType.destroy({ where: { id }});

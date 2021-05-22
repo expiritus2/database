@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { vocabularyTabsIds } from 'settings/constants/vocabulary';
 
 import mode from './mode';
 import skills from './skills';
@@ -19,19 +20,19 @@ import fileTypes from './fileTypes';
 
 export default combineReducers({
     mode,
-    skills,
-    positions,
-    regions,
-    workTypes,
-    workPlaces,
-    workSchedules,
-    eventTypes,
-    languages,
-    languageLevels,
-    linkTypes,
-    messengerTypes,
-    phoneTypes,
-    educations,
-    currencies,
-    fileTypes,
+    [vocabularyTabsIds.skills]: skills,
+    [vocabularyTabsIds.positions]: positions,
+    [vocabularyTabsIds.regions]: regions,
+    [vocabularyTabsIds.workTypes]: workTypes,
+    [vocabularyTabsIds.workPlaces]: workPlaces,
+    [vocabularyTabsIds.workSchedules]: workSchedules,
+    [vocabularyTabsIds.eventTypes]: eventTypes,
+    [vocabularyTabsIds.languages]: languages,
+    [vocabularyTabsIds.languageLevels]: languageLevels,
+    [vocabularyTabsIds.linkTypes]: linkTypes,
+    [vocabularyTabsIds.messengerTypes]: messengerTypes,
+    [vocabularyTabsIds.phoneTypes]: phoneTypes,
+    [vocabularyTabsIds.educations]: educations,
+    [vocabularyTabsIds.currencies]: currencies,
+    [vocabularyTabsIds.fileTypes]: fileTypes,
 });

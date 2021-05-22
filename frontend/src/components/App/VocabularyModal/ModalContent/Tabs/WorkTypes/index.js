@@ -36,9 +36,11 @@ const WorkTypes = (props) => {
         dispatch(deleteVocabularyWorkTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.workTypes;
+
     return (
         <div className={classNames(styles.workTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const WorkTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.workTypes}
+                activeTab={tabId}
             />
         </div>
     );

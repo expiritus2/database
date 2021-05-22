@@ -17,6 +17,12 @@ router.post('/api/vocabulary/eventTypes', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/eventTypes', middlewares, async(req, res) => {
+    await EventType.destroy({ where: {}});
+    const items = await EventType.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/eventTypes/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await EventType.destroy({ where: { id }});

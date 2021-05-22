@@ -36,9 +36,11 @@ const EventTypes = (props) => {
         dispatch(deleteVocabularyEventTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.eventTypes;
+
     return (
         <div className={classNames(styles.eventTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const EventTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.eventTypes}
+                activeTab={tabId}
             />
         </div>
     );

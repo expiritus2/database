@@ -1,7 +1,13 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
 import { cloneDeep, get } from 'lodash-es';
-import { getVocabularyLinkTypesAction, saveVocabularyLinkTypeAction, deleteVocabularyLinkTypeAction, updateVocabularyLinkTypeAction } from 'store/actions/vocabulary';
+import {
+    getVocabularyLinkTypesAction,
+    saveVocabularyLinkTypeAction,
+    deleteVocabularyLinkTypeAction,
+    updateVocabularyLinkTypeAction,
+    saveVocabularyLinkTypesAction,
+} from 'store/actions/vocabulary';
 
 const initialData = {
     state: IDLE,
@@ -11,6 +17,11 @@ const initialData = {
 
 export default handleActions({
     [getVocabularyLinkTypesAction]: (state, { payload }) => ({
+        state: get(payload, 'state', initialData.state),
+        data: get(payload, 'data', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
+    [saveVocabularyLinkTypesAction]: (state, { payload }) => ({
         state: get(payload, 'state', initialData.state),
         data: get(payload, 'data', initialData.data),
         meta: get(payload, 'meta', initialData.meta),

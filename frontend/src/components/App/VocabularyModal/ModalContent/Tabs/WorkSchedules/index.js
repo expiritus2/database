@@ -36,9 +36,11 @@ const WorkSchedules = (props) => {
         dispatch(deleteVocabularyWorkScheduleEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.workSchedules;
+
     return (
         <div className={classNames(styles.workSchedules, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const WorkSchedules = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.workSchedules}
+                activeTab={tabId}
             />
         </div>
     );

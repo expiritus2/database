@@ -17,6 +17,12 @@ router.post('/api/vocabulary/workTypes', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/workTypes', middlewares, async(req, res) => {
+    await WorkType.destroy({ where: {}});
+    const items = await WorkType.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/workTypes/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await WorkType.destroy({ where: { id }});

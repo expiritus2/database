@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const Currency = require('../../models/vocabulary/position');
+const Currency = require('../../models/vocabulary/currency');
 
 const router = express.Router();
 
@@ -14,6 +14,12 @@ router.get('/api/vocabulary/currencies', middlewares, async (req, res) => {
 
 router.post('/api/vocabulary/currencies', middlewares, async(req, res) => {
     const items = await Currency.create(req.body);
+    res.send(items);
+});
+
+router.put('/api/vocabulary/currencies', middlewares, async(req, res) => {
+    await Currency.destroy({ where: {}});
+    const items = await Currency.bulkCreate(req.body);
     res.send(items);
 });
 

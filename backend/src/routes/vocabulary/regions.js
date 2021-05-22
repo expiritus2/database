@@ -13,8 +13,13 @@ router.get('/api/vocabulary/regions', middlewares, async (req, res) => {
 });
 
 router.post('/api/vocabulary/regions', middlewares, async(req, res) => {
-    console.log(req.body);
     const items = await Region.create(req.body);
+    res.send(items);
+});
+
+router.put('/api/vocabulary/regions', middlewares, async(req, res) => {
+    await Region.destroy({ where: {}});
+    const items = await Region.bulkCreate(req.body);
     res.send(items);
 });
 

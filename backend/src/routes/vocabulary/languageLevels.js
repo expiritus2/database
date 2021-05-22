@@ -17,6 +17,12 @@ router.post('/api/vocabulary/languageLevels', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/languageLevels', middlewares, async(req, res) => {
+    await LanguageLevel.destroy({ where: {}});
+    const items = await LanguageLevel.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/languageLevels/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await LanguageLevel.destroy({ where: { id }});

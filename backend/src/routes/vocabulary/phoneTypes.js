@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const PhoneType = require('../../models/vocabulary/eventType');
+const PhoneType = require('../../models/vocabulary/phoneType');
 
 const router = express.Router();
 
@@ -14,6 +14,12 @@ router.get('/api/vocabulary/phoneTypes', middlewares, async (req, res) => {
 
 router.post('/api/vocabulary/phoneTypes', middlewares, async(req, res) => {
     const items = await PhoneType.create(req.body);
+    res.send(items);
+});
+
+router.put('/api/vocabulary/phoneTypes', middlewares, async(req, res) => {
+    await PhoneType.destroy({ where: {}});
+    const items = await PhoneType.bulkCreate(req.body);
     res.send(items);
 });
 

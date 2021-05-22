@@ -39,6 +39,39 @@ export function getImagesPreview(files) {
     return Promise.all(promises);
 }
 
+export function readFiles(files, cb = (reader, file) => reader.readAsBinaryString(file)) {
+    if (!files) {
+        return Promise.reject();
+    }
+
+    const promises = [];
+    const filesArray = Array.from(files);
+
+    filesArray.forEach((file) => {
+        const promise = new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const { result } = e.target;
+                resolve({
+                    contentType: file.type,
+                    filename: file.name,
+                    data: result,
+                });
+            };
+
+            reader.onerror = () => {
+                reject();
+            };
+
+            cb(reader, file);
+        });
+        promises.push(promise);
+    });
+
+    return Promise.all(promises);
+}
+
 export function downloadFile(blank = false) {
     const createTemporaryLink = (url, filename) => {
         const element = document.createElement('a');

@@ -17,6 +17,12 @@ router.post('/api/vocabulary/workSchedules', middlewares, async(req, res) => {
     res.send(items);
 });
 
+router.put('/api/vocabulary/workSchedules', middlewares, async(req, res) => {
+    await WorkSchedule.destroy({ where: {}});
+    const items = await WorkSchedule.bulkCreate(req.body);
+    res.send(items);
+});
+
 router.delete('/api/vocabulary/workSchedules/:id', middlewares, async (req, res) => {
     const { id } = req.params;
     await WorkSchedule.destroy({ where: { id }});

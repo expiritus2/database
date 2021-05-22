@@ -36,9 +36,11 @@ const LanguageLevels = (props) => {
         dispatch(deleteVocabularyLanguageLevelEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.languageLevels;
+
     return (
         <div className={classNames(styles.languageLevels, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const LanguageLevels = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.languageLevels}
+                activeTab={tabId}
             />
         </div>
     );

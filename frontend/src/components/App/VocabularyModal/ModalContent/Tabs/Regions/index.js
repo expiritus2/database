@@ -36,9 +36,11 @@ const Regions = (props) => {
         dispatch(deleteVocabularyRegionEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.regions;
+
     return (
-        <div className={classNames(styles.skills, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+        <div className={classNames(styles.regions, className, innerContentClassName)}>
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const Regions = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.regions}
+                activeTab={tabId}
             />
         </div>
     );

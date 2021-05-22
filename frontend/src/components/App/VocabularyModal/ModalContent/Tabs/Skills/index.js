@@ -36,9 +36,11 @@ const Skills = (props) => {
         dispatch(deleteVocabularySkillEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.skills;
+
     return (
         <div className={classNames(styles.skills, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const Skills = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.skills}
+                activeTab={tabId}
             />
         </div>
     );

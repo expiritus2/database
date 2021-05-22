@@ -1,0 +1,21 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.import {
+    .files {
+        cursor: pointer;
+    }
+
+    .file {
+        display: none;
+    }
+
+    .actionButton {
+        pointer-events: none;
+        margin-left: setUnit(10);
+    }
+
+    .nativeInput {
+        display: none;
+    }
+}

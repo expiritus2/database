@@ -36,9 +36,11 @@ const LinkTypes = (props) => {
         dispatch(deleteVocabularyLinkTypeEffect({ id: item?.id }));
     };
 
+    const tabId = vocabularyTabsIds.linkTypes;
+
     return (
         <div className={classNames(styles.linkTypes, className, innerContentClassName)}>
-            <ContentHeader className={elementClassName} />
+            <ContentHeader activeTab={tabId} className={elementClassName} />
             <ScrollWrapper ref={scrollContainerRef}>
                 <PendingWrapper isPending={isPending}>
                     <List
@@ -52,7 +54,7 @@ const LinkTypes = (props) => {
             <AddMode
                 scrollContainerRef={scrollContainerRef}
                 className={elementClassName}
-                activeTab={vocabularyTabsIds.linkTypes}
+                activeTab={tabId}
             />
         </div>
     );
