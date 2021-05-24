@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { useTranslate } from 'hooks';
-import { Input } from 'components';
+// import { Input } from 'components';
+import { Input } from 'components/Form-NEW';
 import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import styles from './styles.module.scss';

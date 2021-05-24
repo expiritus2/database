@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import NumberFormat from 'react-number-format';
 
-import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMinus, AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import { BiTrash } from 'react-icons/bi';
 import { isFloatStr } from 'helpers';
 
@@ -15,6 +15,7 @@ const Input = (props) => {
     const { placeholder, disabled, error, variant, altLabel, icon, autofocus, classAltLabel } = props;
     const { isNumberFormat, prefix, thousandSeparator, numberFormatOptions, inputClassName } = props;
     const { inputHolderClassName, onKeyPress, onFocus, onBlur, maxNumber, minNumber } = props;
+    const { interval } = props;
     const [inputValue, setInputValue] = useState(value);
     const [typeValue, setTypeValue] = useState(type);
 
@@ -54,6 +55,22 @@ const Input = (props) => {
         return true;
     };
 
+    const onPlus = () => {
+        const newValue = Number(value) + interval;
+        const fakeEvent = { target: { value: newValue }, name };
+        onChange(fakeEvent, newValue, { value: newValue });
+    };
+
+    const onMinus = () => {
+        if (value <= minNumber) {
+            const fakeEvent = { target: { value: minNumber }, name };
+            return onChange(fakeEvent, minNumber, { value: minNumber });
+        }
+        const newValue = Number(value) - interval;
+        const fakeEvent = { target: { value: newValue }, name };
+        onChange(fakeEvent, newValue, { value: newValue });
+    };
+
     return (
         <div testid="wrapper" className={classNames(styles.inputWrapper, styles[variant], className)}>
             {label && (
@@ -64,22 +81,32 @@ const Input = (props) => {
             )}
             <div className={classNames(styles.inputHolder, inputHolderClassName)}>
                 {isNumberFormat ? (
-                    <NumberFormat
-                        value={inputValue}
-                        prefix={prefix}
-                        thousandSeparator={thousandSeparator}
-                        placeholder={placeholder}
-                        onValueChange={(val) => {
-                            onChangeHandler({ target: { value: val.value, name } }, val.value, val);
-                        }}
-                        disabled={disabled}
-                        testid={testid}
-                        onKeyPress={onKeyPress}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
-                        {...numberFormatOptions}
-                        isAllowed={isAllowed}
-                    />
+                    <div className={styles.numberWrapper}>
+                        <NumberFormat
+                            value={inputValue}
+                            prefix={prefix}
+                            thousandSeparator={thousandSeparator}
+                            placeholder={placeholder}
+                            onValueChange={(val) => {
+                                onChangeHandler(
+                                    { target: { value: val.value, name } },
+                                    val.value,
+                                    val,
+                                );
+                            }}
+                            disabled={disabled}
+                            testid={testid}
+                            onKeyPress={onKeyPress}
+                            onFocus={onFocus}
+                            onBlur={onBlur}
+                            {...numberFormatOptions}
+                            isAllowed={isAllowed}
+                        />
+                        <div className={styles.actions}>
+                            <AiOutlineMinus onClick={onMinus} className={styles.minus} />
+                            <AiOutlinePlus onClick={onPlus} className={styles.plus} />
+                        </div>
+                    </div>
                 ) : (
                     <input
                         testid={testid}
@@ -148,6 +175,7 @@ Input.propTypes = {
     onBlur: PropTypes.func,
     maxNumber: PropTypes.number,
     minNumber: PropTypes.number,
+    interval: PropTypes.number,
 };
 
 Input.defaultProps = {
@@ -164,7 +192,7 @@ Input.defaultProps = {
     value: '',
     disabled: false,
     error: undefined,
-    variant: Input.FULL,
+    variant: Input.LIGHT_FULL,
     altLabel: undefined,
     icon: undefined,
     autofocus: undefined,
@@ -179,6 +207,7 @@ Input.defaultProps = {
     onBlur: () => {},
     maxNumber: undefined,
     minNumber: undefined,
+    interval: 1,
 };
 
 export default Input;

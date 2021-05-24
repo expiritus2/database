@@ -1,34 +1,35 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useTranslate } from 'hooks';
-import { Autocomplete } from 'components/index';
+import { Select } from 'components/Form-NEW';
+import { getVocabularyWorkPlacesSelector } from 'store/selectors/vocabulary';
+import { getVocabularyWorkPlacesEffect } from 'store/effects/vocabulary';
+
 import styles from './styles.module.scss';
 
 const Place = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
+    const dispatch = useDispatch();
+    const { workPlaces } = useSelector(getVocabularyWorkPlacesSelector);
 
-    const getDefaultValue = useCallback(() => value.map((val) => {
-        if (val?.value) return val;
-        return Place.options(translate).find((option) => option?.value === val);
-    }), []); // eslint-disable-line
-
-    const onChangeHandler = (e, val) => {
-        onChange(e, val.map((v) => v?.value));
-    };
+    useEffect(() => {
+        dispatch(getVocabularyWorkPlacesEffect({}, { silent: true }));
+    }, []); // eslint-disable-line
 
     return (
         <div className={classNames(styles.placeWrapper, className)}>
-            <Autocomplete
+            <Select
                 multiple
+                search
                 label={translate.Place}
-                options={Place.options(translate)}
-                onChange={onChangeHandler}
-                defaultValue={getDefaultValue()}
-                getOptionSelected={(option, val) => option?.value === val?.value}
-                filterSelectedOptions
+                variant={Select.LIGHT_FULL}
+                onChange={onChange}
+                value={value}
+                options={workPlaces}
             />
         </div>
     );

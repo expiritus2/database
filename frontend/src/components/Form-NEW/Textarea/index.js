@@ -79,7 +79,7 @@ Textarea.defaultProps = {
     value: '',
     rows: 5,
     disabled: false,
-    variant: Textarea.FULL,
+    variant: Textarea.LIGHT_FULL,
     error: undefined,
     testid: undefined,
     onKeyDown: () => {},

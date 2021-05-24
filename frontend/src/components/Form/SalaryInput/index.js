@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Currency, NumberInput } from 'components';
-import FormControl from '@material-ui/core/FormControl';
+import { Currency } from 'components';
+import { Input } from 'components/Form-NEW';
+
 import styles from './styles.module.scss';
 
 const SalaryInput = (props) => {
@@ -13,8 +14,10 @@ const SalaryInput = (props) => {
 
     return (
         <div className={classNames(styles.salaryInput, className)}>
-            <FormControl className={classNames(styles.formControl)}>
-                <NumberInput
+            <div className={classNames(styles.formControl)}>
+                <Input
+                    minNumber={0}
+                    isNumberFormat
                     name="salary"
                     className={classNames(styles.salary)}
                     label={translate.Salary}
@@ -28,7 +31,7 @@ const SalaryInput = (props) => {
                     onChange={onCurrencyChange}
                     value={value?.currency}
                 />
-            </FormControl>
+            </div>
         </div>
     );
 };

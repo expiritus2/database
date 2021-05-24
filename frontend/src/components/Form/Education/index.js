@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { BASE_EDUCATION, HIGH_EDUCATION, MIDDLE_EDUCATION, MIDDLE_SPECIAL_EDUCATION, NOT_FINISH_HIGH_EDUCATION } from 'settings/constants/education';
-import { Select } from 'components/index';
+import { Select } from 'components/Form-NEW';
 import { useTranslate } from 'hooks';
 
 import styles from './styles.module.scss';
@@ -16,6 +16,7 @@ const Education = (props) => {
         <div className={classNames(styles.education, className)}>
             <Select
                 name={name}
+                variant={Select.LIGHT_FULL}
                 label={translate.Education}
                 options={Education.options(translate)}
                 value={value?.trim()}

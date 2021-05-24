@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { USD, EU, BYR, RUR } from 'settings/constants/currency';
 
 import { useTranslate } from 'hooks';
-import { Select } from 'components/index';
+import { Select } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -17,6 +17,7 @@ const Currency = (props) => {
         <div className={classNames(styles.currencyWrapper, className)}>
             <Select
                 name={name}
+                variant={Select.LIGHT_FULL}
                 label={translate.Currency}
                 options={Currency.options}
                 onChange={onChange}

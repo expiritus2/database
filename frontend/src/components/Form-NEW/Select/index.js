@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import SelectSearch from 'react-select-search';
 import { find, get } from 'lodash-es';
@@ -9,7 +9,7 @@ import { Checkbox } from 'components';
 import styles from './syles.module.scss';
 
 const SelectComponent = (props) => {
-    const { id, testid, defaultValue, onSelect, options, label, className, closeOnSelect } = props;
+    const { id, defaultValue, onSelect, options, label, className, closeOnSelect } = props;
     const { name, search, multiple, placeholder, value, disabled, error, variant } = props;
     const { printOptions, altLabel, altLabelClassName, emptyMessage, autoComplete } = props;
 
@@ -32,7 +32,6 @@ const SelectComponent = (props) => {
             className={classNames(styles.input, className.input)}
             name={name}
             autoComplete="off"
-            testid={testid}
         />
     );
 
@@ -70,8 +69,12 @@ const SelectComponent = (props) => {
         return get(value, 'value', defVal) || get(defaultValue, 'value', defaultValue);
     };
 
+    const convertedOptions = useMemo(() => (
+        options.map(({ label: optionLabel, value: optionValue }) => ({ name: optionLabel, value: optionValue }))
+    ), [options]);
+
     return (
-        <div testid="wrapper" className={classNames(styles.selectWrapper, styles[variant], className.wrapper)}>
+        <div className={classNames(styles.selectWrapper, styles[variant], className.wrapper)}>
             {label && (
                 <label htmlFor={id}>
                     <span>{label}</span>
@@ -84,7 +87,7 @@ const SelectComponent = (props) => {
                 closeOnSelect={closeOnSelect}
                 disabled={disabled}
                 search={search}
-                options={options}
+                options={convertedOptions}
                 renderValue={renderValue}
                 renderOption={renderOption}
                 multiple={multiple}
@@ -95,7 +98,7 @@ const SelectComponent = (props) => {
                 emptyMessage={emptyMessage}
                 autoComplete={autoComplete}
             />
-            {error && <div testid="validation" className={styles.error}>{error}</div>}
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
@@ -117,7 +120,7 @@ SelectComponent.propTypes = {
     ]),
     onSelect: PropTypes.func,
     options: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
+        label: PropTypes.string,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })).isRequired,
     name: PropTypes.string,
@@ -128,7 +131,7 @@ SelectComponent.propTypes = {
         PropTypes.string,
         PropTypes.number,
         PropTypes.shape({
-            name: PropTypes.string,
+            label: PropTypes.string,
             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         }),
         PropTypes.arrayOf(PropTypes.shape({})),
@@ -163,7 +166,7 @@ SelectComponent.defaultProps = {
     closeOnSelect: true,
     printOptions: 'on-focus',
     // printOptions: 'always',
-    variant: SelectComponent.FULL,
+    variant: SelectComponent.LIGHT_FULL,
     altLabel: undefined,
     altLabelClassName: '',
     emptyMessage: () => <div className={styles.emptyMessage}>No Results</div>,

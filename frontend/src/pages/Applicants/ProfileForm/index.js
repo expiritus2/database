@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Education, Position, Skills, Textarea, NumberInput, Place, Languages, Regions, SalaryInput } from 'components';
+import { Checkbox, Input, Textarea } from 'components/Form-NEW';
+import { Education, Position, Skills, Place, Languages, Regions, SalaryInput } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -40,23 +41,30 @@ const ProfileForm = (props) => {
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
                 <Name />
-                {/* <FormControlLabel */}
-                {/*    className={classNames(styles.field, styles.inActiveSearch)} */}
-                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'inActiveSearch')} checked={formik.values.inActiveSearch} />} */}
-                {/*    label={translate.InActiveSearch} */}
-                {/* /> */}
-                <NumberInput
+                <Checkbox
+                    direction={Checkbox.DIRECTION_RIGHT}
+                    className={classNames(styles.field, styles.inActiveSearch)}
+                    labelTextClassName={styles.inActiveSearchText}
+                    label={translate.InActiveSearch}
+                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'inActiveSearch')}
+                    checked={formik.values.inActiveSearch}
+                />
+                <Input
+                    minNumber={0}
+                    isNumberFormat
                     name="experienceYears"
                     className={styles.field}
                     label={translate.ExperienceYears}
-                    onChange={(numberValue) => onCustomFieldChange(null, numberValue, 'experienceYears')}
+                    onChange={(e, val) => {
+                        onCustomFieldChange(null, val, 'experienceYears');
+                    }}
                     value={formFields.experienceYears}
                     interval={0.5}
                 />
                 <SalaryInput
                     className={styles.field}
-                    onChange={(numberValue) => {
-                        onCustomFieldChange(null, { ...formFields.salary, amount: numberValue }, 'salary');
+                    onChange={(e, val) => {
+                        onCustomFieldChange(null, { ...formFields.salary, amount: val }, 'salary');
                     }}
                     onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
                     value={formFields?.salary}

@@ -3,6 +3,42 @@
 .inputWrapper {
     width: 100%;
 
+    .numberWrapper {
+        position: relative;
+    }
+
+    .actions {
+        position: absolute;
+        right: setUnit(10);
+        top: setUnit(9);
+        display: flex;
+        align-content: center;
+
+        .minus,
+        .plus {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+
+            fill: $border-gray-color;
+
+            &:hover {
+                transform: scale(1.1);
+                color: inherit;
+
+                fill: darken($border-gray-color, 20);
+            }
+        }
+
+        .minus {
+            margin-right: setUnit(10);
+        }
+
+        .plus {
+
+        }
+    }
+
     .inputHolder {
         position: relative;
     }

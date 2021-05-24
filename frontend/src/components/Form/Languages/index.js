@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Button, Select } from 'components/index';
+import { Button, Select } from 'components/Form-NEW';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
-import Paper from '@material-ui/core/Paper';
 
-import Typography from '@material-ui/core/Typography';
 import styles from './styles.module.scss';
 
 const Languages = (props) => {
@@ -45,20 +43,21 @@ const Languages = (props) => {
     };
 
     return (
-        <Paper elevation={3} className={classNames(styles.fieldsArray, className)}>
-            <Typography className={styles.label}>{translate.Languages}</Typography>
+        <div className={classNames(styles.fieldsArray, className)}>
+            <p className={styles.label}>{translate.Languages}</p>
             {(value || []).map((language, index) => (
                 <div className={styles.block} key={index}>
                     <Select
-                        className={styles.language}
+                        className={{ wrapper: styles.language }}
                         name={name}
                         label={translate.Language}
+                        variant={Select.LIGHT_FULL}
                         options={Languages.options(translate)}
                         onChange={(e) => onChangeLanguage(e, index)}
                         value={language?.name}
                     />
                     <Select
-                        className={styles.level}
+                        className={{ wrapper: styles.level }}
                         name={name}
                         label={translate.Level}
                         options={Languages.levelOptions(translate)}
@@ -70,8 +69,8 @@ const Languages = (props) => {
                     )}
                 </div>
             ))}
-            <Button className={styles.addLanguage} color="primary" onClick={onAddLanguage}>{translate.AddLanguage}</Button>
-        </Paper>
+            <Button className={styles.addLanguage} color="primary" onClick={onAddLanguage} title={translate.AddLanguage} />
+        </div>
     );
 };
 

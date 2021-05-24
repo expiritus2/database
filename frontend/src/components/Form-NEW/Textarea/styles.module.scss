@@ -1,13 +1,16 @@
 @import "../../../styles/mixins";
 
 .inputWrapper {
-    @include inputFull;
+    &.lightFull {
+        @include inputLightFull;
+    }
 
-    &.light {
+    &.full {
+        @include inputFull;
+
         margin: 0 !important;
         position: relative;
         width: 100%;
-        @include inputLight;
 
         .error {
             color: $error-color;
@@ -50,6 +53,7 @@
 
     .inputField {
         resize: none;
+        height: setUnit(160);
     }
 
     .error {
