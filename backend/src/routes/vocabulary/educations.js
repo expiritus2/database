@@ -1,6 +1,6 @@
 const express = require('express');
 const requireAuth = require('../../middlewares/require-auth');
-const Education = require('../../models/vocabulary/position');
+const Education = require('../../models/vocabulary/education');
 
 const router = express.Router();
 

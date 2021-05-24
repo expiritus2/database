@@ -1,19 +1,29 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslate } from 'hooks';
 import { Button, Select } from 'components/Form-NEW';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
+import { getVocabularyLanguagesEffect, getVocabularyLanguageLevelsEffect } from 'store/effects/vocabulary';
 
+import { getVocabularyLanguagesSelector, getVocabularyLanguageLevelsSelector } from 'store/selectors/vocabulary';
 import styles from './styles.module.scss';
 
 const Languages = (props) => {
     const { className, onChange, value, name } = props;
+    const dispatch = useDispatch();
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
+    const { languages } = useSelector(getVocabularyLanguagesSelector);
+    const { languageLevels } = useSelector(getVocabularyLanguageLevelsSelector);
+
+    useEffect(() => {
+        dispatch(getVocabularyLanguagesEffect({}, { silent: true }));
+        dispatch(getVocabularyLanguageLevelsEffect({}, { silent: true }));
+    }, []); // eslint-disable-line
 
     const onChangeLanguage = (event, index) => {
         const clonedValues = cloneDeep(values);
@@ -52,7 +62,7 @@ const Languages = (props) => {
                         name={name}
                         label={translate.Language}
                         variant={Select.LIGHT_FULL}
-                        options={Languages.options(translate)}
+                        options={languages}
                         onChange={(e) => onChangeLanguage(e, index)}
                         value={language?.name}
                     />
@@ -60,7 +70,7 @@ const Languages = (props) => {
                         className={{ wrapper: styles.level }}
                         name={name}
                         label={translate.Level}
-                        options={Languages.levelOptions(translate)}
+                        options={languageLevels}
                         onChange={(e) => onChangeLevel(e, index)}
                         value={language?.level}
                     />
@@ -73,26 +83,6 @@ const Languages = (props) => {
         </div>
     );
 };
-
-Languages.options = (translate) => [
-    { label: translate.English, value: 'english' },
-    { label: translate.Russian, value: 'russian' },
-    { label: translate.Spain, value: 'spain' },
-    { label: translate.Italian, value: 'italian' },
-    { label: translate.China, value: 'china' },
-    { label: translate.German, value: 'german' },
-    { label: translate.French, value: 'french' },
-    { label: translate.Japanese, value: 'japanese' },
-];
-
-Languages.levelOptions = (translate) => [
-    { label: translate.Elementary, value: 'elementary' },
-    { label: translate.PreIntermediate, value: 'preIntermediate' },
-    { label: translate.Intermediate, value: 'intermediate' },
-    { label: translate.UpperIntermediate, value: 'upperIntermediate' },
-    { label: translate.Advanced, value: 'advanced' },
-    { label: translate.Native, value: 'native' },
-];
 
 Languages.propTypes = {
     name: PropTypes.string,
