@@ -3,6 +3,8 @@
 @import "styles/mixins";
 
 .formControl {
+    @include inputLightFull;
+
     width: 100%;
 
     .label {
@@ -18,14 +20,20 @@
         }
     }
 
+    .container {
+        margin-left: setUnit(10);
+        width: 97.5%;
+    }
+
+    .dropdown {
+        display: none;
+    }
+
     .input {
-        @include outlinedInput;
-
+        padding-left: setUnit(10);
         width: 100%;
-
-        &.inputFocus {
-            border: 2px solid $primary-color;
-            padding: 9px 13px;
-        }
+        height: setUnit(40);
+        border-radius: setUnit(8);
+        font-size: setUnit(16);
     }
 }

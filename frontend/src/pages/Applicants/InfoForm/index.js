@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
-import { Input, DatePicker, Sex, AddPhoto, Phones, Emails, Messengers, Links } from 'components';
+import { AddPhoto, Sex, Phones, Emails, Messengers, Links } from 'components';
+import { Input, DatePicker } from 'components/Form-NEW';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { FormWrapper } from '../components';
 import Name from '../components/Name';

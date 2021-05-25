@@ -13,10 +13,12 @@ import styles from './styles.module.scss';
 const locationSrv = new LocationService();
 
 const Tabs = (props) => {
-    const { tabs, animation, enableQueryParams, activeTabIndex, wrapperClassName, direction, ...rest } = props;
     const {
-        queryParamName, tabsClassName, tabClassName, contentClassName, activeTabClassName, getActiveTab, ...passedProps
-    } = rest;
+        tabs, animation, enableQueryParams, activeTabIndex,
+        wrapperClassName, direction, contentWrapperClassName, ...rest } = props;
+    const {
+        queryParamName, tabsClassName, tabClassName, contentClassName,
+        activeTabClassName, getActiveTab, ...passedProps } = rest;
     const { location, history } = passedProps;
 
     locationSrv.setLocation(location);
@@ -54,7 +56,7 @@ const Tabs = (props) => {
         return activeTab === index;
     };
 
-    const renderTabs = () => (tabs || []).map(({ label, Icon, testid }, index) => (
+    const renderTabs = () => (tabs || []).map(({ label, Icon }, index) => (
         <Tab
             key={label}
             label={label}
@@ -64,18 +66,16 @@ const Tabs = (props) => {
             activeTabClassName={activeTabClassName}
             className={tabClassName}
             icon={Icon}
-            testid={testid}
         />
     ));
 
-    const renderContent = () => (tabs || []).map(({ label, Component, testid }, index) => (
+    const renderContent = () => (tabs || []).map(({ label, Component }, index) => (
         <Content
             className={contentClassName}
             key={label}
             animation={animation}
             isActive={getIsActiveTab(index)}
             direction={direction}
-            testid={testid && `${testid}_content`}
         >
             <Component tabLabel={label} {...passedProps} />
         </Content>
@@ -84,7 +84,7 @@ const Tabs = (props) => {
     return (
         <div className={classNames(styles.wrapper, styles[direction], wrapperClassName)}>
             <div className={classNames(styles.tabs, tabsClassName)}>{renderTabs()}</div>
-            <div className={styles.contentWrapper}>{renderContent()}</div>
+            <div className={classNames(styles.contentWrapper, contentWrapperClassName)}>{renderContent()}</div>
         </div>
     );
 };
@@ -100,6 +100,7 @@ Tabs.DIRECTION_VERTICAL = 'vertical';
 
 Tabs.propTypes = {
     wrapperClassName: PropTypes.string,
+    contentWrapperClassName: PropTypes.string,
     tabsClassName: PropTypes.string,
     tabClassName: PropTypes.string,
     contentClassName: PropTypes.string,
@@ -120,6 +121,7 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
     wrapperClassName: '',
+    contentWrapperClassName: '',
     tabsClassName: '',
     tabClassName: '',
     contentClassName: '',

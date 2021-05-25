@@ -10,7 +10,8 @@ import { IoIosRemoveCircle } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
-import { Period, Position, Textarea, Button, Input } from 'components';
+import { Textarea, Button, Input } from 'components/Form-NEW';
+import { Period, Position } from 'components';
 import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';
 
@@ -95,9 +96,8 @@ const ExperienceForm = (props) => {
                     className={classNames(styles.field, styles.addButton)}
                     color="primary"
                     onClick={onAdd}
-                >
-                    {translate.Add}
-                </Button>
+                    title={translate.Add}
+                />
             </form>
         </FormWrapper>
     );

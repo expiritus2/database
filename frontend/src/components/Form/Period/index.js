@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { DatePicker } from 'components/index';
+import { DatePicker } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 

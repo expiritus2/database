@@ -4,6 +4,7 @@
     @include button($secondary-color, #fff, $hover-blue);
 
     .loader {
+        margin: 0;
         font-size: setUnit(3);
         color: #ffffff;
     }

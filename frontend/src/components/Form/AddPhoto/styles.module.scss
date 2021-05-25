@@ -1,7 +1,11 @@
 @import "styles/functions";
 @import "styles/variables";
+@import "styles/mixins";
 
 .filesWrapper {
+    @include box-shadow;
+
+    border-radius: setUnit(8);
     padding: setUnit(10);
     overflow: auto;
     min-height: setUnit(76);

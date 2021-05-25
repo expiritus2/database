@@ -3,12 +3,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
-import Typography from '@material-ui/core/Typography';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Select, Button, PhoneInput } from 'components';
-
-import Paper from '@material-ui/core/Paper';
+import { PhoneInput } from 'components';
+import { Select, Button } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -47,8 +45,8 @@ const Phones = (props) => {
     };
 
     return (
-        <Paper elevation={3} className={classNames(styles.fieldsArray, className)}>
-            <Typography className={styles.label}>{translate.Phones}</Typography>
+        <div className={classNames(styles.fieldsArray, className)}>
+            <div className={styles.label}>{translate.Phones}</div>
             {!!values?.length && values.map((val, index) => (
                 <div key={index} className={styles.block}>
                     <Select
@@ -70,8 +68,8 @@ const Phones = (props) => {
                     )}
                 </div>
             ))}
-            <Button className={styles.addPhone} color="primary" onClick={onAddPhone}>{translate.AddPhone}</Button>
-        </Paper>
+            <Button className={styles.addPhone} onClick={onAddPhone} title={translate.AddPhone} />
+        </div>
     );
 };
 

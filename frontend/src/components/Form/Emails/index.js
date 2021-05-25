@@ -3,11 +3,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Button, Input } from 'components/index';
+import { Button, Input } from 'components/Form-NEW';
 
 import { cloneDeep } from 'lodash-es';
 import styles from './styles.module.scss';
@@ -36,8 +34,8 @@ const Emails = (props) => {
     };
 
     return (
-        <Paper className={classNames(styles.fieldsArray, className)}>
-            <Typography className={styles.label}>{translate.Emails}</Typography>
+        <div className={classNames(styles.fieldsArray, className)}>
+            <div className={styles.label}>{translate.Emails}</div>
             {!!values?.length && values.map((val, index) => (
                 <div className={styles.block} key={index}>
                     <Input
@@ -51,8 +49,8 @@ const Emails = (props) => {
                     )}
                 </div>
             ))}
-            <Button className={styles.add} color="primary" onClick={onAddPhone}>{translate.AddEmail}</Button>
-        </Paper>
+            <Button className={styles.add} color="primary" onClick={onAddPhone} title={translate.AddEmail} />
+        </div>
     );
 };
 

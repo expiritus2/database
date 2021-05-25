@@ -1,7 +1,11 @@
 @import "styles/functions";
 @import "styles/variables";
+@import "styles/mixins";
 
 .fieldsArray {
+    @include box-shadow;
+
+    border-radius: setUnit(8);
     padding: setUnit(10);
 
     .label {
@@ -23,6 +27,8 @@
             margin-left: setUnit(10);
             fill: $primary-color;
             cursor: pointer;
+            position: relative;
+            top: setUnit(10);
 
             &:hover {
                 transform: scale(1.1);

@@ -12,16 +12,42 @@
         width: 100%;
         margin: auto 0;
         max-width: setUnit(800);
-        max-height: 100%;
-        overflow: auto;
+        height: 100%;
         outline: none;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: setUnit(20);
+
+        .title {
+            font-size: setUnit(22);
+            font-weight: 500;
+        }
+
+        .closeIcon {
+            width: setUnit(25);
+            height: setUnit(25);
+            cursor: pointer;
+        }
     }
 
     .cardContent {
         padding: 0;
+        height: calc(100% - #{setUnit(126)});
+
+        &>div {
+            height: 100%;
+        }
     }
 
     .actions {
         padding: setUnit(10) setUnit(20);
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: #ffffff;
     }
 }

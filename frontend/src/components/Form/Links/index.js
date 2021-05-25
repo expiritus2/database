@@ -3,12 +3,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
-import Typography from '@material-ui/core/Typography';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Select, Button, Input } from 'components';
-
-import Paper from '@material-ui/core/Paper';
+import { Select, Button, Input } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -45,8 +42,8 @@ const Links = (props) => {
     };
 
     return (
-        <Paper elevation={3} className={classNames(styles.fieldsArray, className)}>
-            <Typography className={styles.label}>{translate.Links}</Typography>
+        <div className={classNames(styles.fieldsArray, className)}>
+            <div className={styles.label}>{translate.Links}</div>
             {!!values?.length && values.map((val, index) => (
                 <div key={index} className={styles.block}>
                     <Select
@@ -59,7 +56,7 @@ const Links = (props) => {
                     />
                     <Input
                         label={translate.Link}
-                        className={styles.number}
+                        className={styles.link}
                         value={val?.link}
                         onChange={(event) => onChangeLink(event, index)}
                     />
@@ -68,8 +65,8 @@ const Links = (props) => {
                     )}
                 </div>
             ))}
-            <Button className={styles.addPhone} color="primary" onClick={onAddLink}>{translate.AddLink}</Button>
-        </Paper>
+            <Button className={styles.addPhone} color="primary" onClick={onAddLink} title={translate.AddLink} />
+        </div>
     );
 };
 

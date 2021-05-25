@@ -1,8 +1,8 @@
-@import "../../../styles/mixins";
-@import "../../../styles/variables";
+@import "styles/mixins";
+@import "styles/variables";
 
 .dateInput {
-    @include inputLight;
+    @include inputLightFull;
 
     position: relative;
 
@@ -28,7 +28,6 @@
 
     .inputField {
         cursor: pointer;
-        padding-left: setUnit(30);
     }
 
     .error {

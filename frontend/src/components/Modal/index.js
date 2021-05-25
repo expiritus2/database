@@ -2,59 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import Modal from '@material-ui/core/Modal';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Card from '@material-ui/core/Card';
 import { getUserSelector } from 'store/selectors/auth';
+
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { SimpleModal } from 'components';
 
 import styles from './styles.module.scss';
 
 const ModalComponent = (props) => {
     const { className, children, open, onClose, closeAfterTransition, title } = props;
-    const { cardClassName, cardHeaderClassName, cardContentClassName, cardActionsClassName } = props;
+    const { cardClassName, cardContentClassName, cardActionsClassName } = props;
     const { actionsChildren } = props;
     const user = useSelector(getUserSelector);
 
     if (!user.data) return null;
 
     return (
-        <Modal
+        <SimpleModal
             className={classNames(styles.modal, className)}
-            open={open}
+            isOpen={open}
             onClose={onClose}
             closeAfterTransition={closeAfterTransition}
         >
-            <Card className={classNames(styles.card, cardClassName)}>
-                <CardHeader
-                    className={cardHeaderClassName}
-                    title={title}
-                    action={(
-                        <IconButton onClick={onClose} aria-label="settings">
-                            <Close />
-                        </IconButton>
-                    )}
-                />
-                <CardContent className={classNames(styles.cardContent, cardContentClassName)}>
+            <div className={classNames(styles.card, cardClassName)}>
+                <div className={styles.header}>
+                    <h3 className={styles.title}>{title}</h3>
+                    <AiOutlineCloseCircle onClick={onClose} className={styles.closeIcon} />
+                </div>
+                <div className={classNames(styles.cardContent, cardContentClassName)}>
                     {children}
-                </CardContent>
+                </div>
                 {actionsChildren && (
-                    <CardActions className={classNames(styles.actions, cardActionsClassName)}>
+                    <div className={classNames(styles.actions, cardActionsClassName)}>
                         {actionsChildren}
-                    </CardActions>
+                    </div>
                 )}
-            </Card>
-        </Modal>
+            </div>
+        </SimpleModal>
     );
 };
 
 ModalComponent.propTypes = {
     className: PropTypes.string,
     cardClassName: PropTypes.string,
-    cardHeaderClassName: PropTypes.string,
     cardContentClassName: PropTypes.string,
     cardActionsClassName: PropTypes.string,
     children: PropTypes.node.isRequired,
@@ -68,7 +58,6 @@ ModalComponent.propTypes = {
 ModalComponent.defaultProps = {
     className: '',
     cardClassName: '',
-    cardHeaderClassName: '',
     cardActionsClassName: '',
     cardContentClassName: '',
     onClose: PropTypes.func,

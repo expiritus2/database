@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const CheckboxComponent = (props) => {
-    const { checked, onChange, disabled, label, direction, type, checkboxDomClassName, labelClassName, testid } = props;
+    const { checked, onChange, disabled, label, direction, type, checkboxDomClassName, labelClassName } = props;
     const { id, name, className, labelTextClassName, value, isPending } = props;
     const { checkboxWrapperClassName, checkboxClassName } = props;
 
@@ -24,7 +24,7 @@ const CheckboxComponent = (props) => {
 
     return (
         <div className={classNames(className)}>
-            <label testid={testid} className={classNames(styles.wrapper, styles[direction], labelClassName)}>
+            <label className={classNames(styles.wrapper, styles[direction], labelClassName)}>
                 {label && <span className={classNames(labelTextClassName)}>{label}</span>}
                 <input
                     id={id}
@@ -69,7 +69,6 @@ CheckboxComponent.propTypes = {
     checkboxDomClassName: PropTypes.string,
     labelClassName: PropTypes.string,
     type: PropTypes.string,
-    testid: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
     isPending: PropTypes.bool,
 };
@@ -90,7 +89,6 @@ CheckboxComponent.defaultProps = {
     labelClassName: '',
     type: 'checkbox',
     value: '',
-    testid: undefined,
     isPending: false,
 };
 

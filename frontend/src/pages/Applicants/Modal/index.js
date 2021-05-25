@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { Button, Modal, Tabs } from 'components';
+import { Modal, CustomTabs } from 'components';
+import { Button } from 'components/Form-NEW';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
@@ -69,11 +70,10 @@ const ModalComponent = ({ className }) => {
                 color="primary"
                 isPending={isPending}
                 onClick={onSubmit}
-            >
-                {translate.Save}
-            </Button>
-            <Button onClick={handleClose} className={styles.btn}>{translate.Cancel}</Button>
-            <Button onClick={handleReset} className={styles.btn}>{translate.Reset}</Button>
+                title={translate.Save}
+            />
+            <Button title={translate.Cancel} onClick={handleClose} className={styles.btn} />
+            <Button title={translate.Reset} onClick={handleReset} className={styles.btn} />
         </div>
     );
 
@@ -86,10 +86,14 @@ const ModalComponent = ({ className }) => {
             cardActionsClassName={styles.cardActions}
             actionsChildren={getActions()}
         >
-            <Tabs
+            <CustomTabs
                 formId={modal.id}
                 tabsClassName={styles.tabs}
                 tabs={ModalComponent.tabs(translate)}
+                tabClassName={styles.tab}
+                activeTabClassName={styles.active}
+                wrapperClassName={styles.tabsWrapper}
+                contentWrapperClassName={styles.tabsContent}
             />
         </Modal>
     );

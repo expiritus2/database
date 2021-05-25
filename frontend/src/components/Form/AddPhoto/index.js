@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Paper from '@material-ui/core/Paper';
 import { IoIosClose } from 'react-icons/io';
 import { GrAddCircle } from 'react-icons/gr';
 import { getImagesPreview } from 'helpers';
@@ -47,7 +46,7 @@ const AddPhoto = (props) => {
     );
 
     return (
-        <Paper elevation={3} className={classNames(styles.filesWrapper, className)}>
+        <div className={classNames(styles.filesWrapper, className)}>
             <label className={styles.files} htmlFor="photo">
                 {getPreview()}
                 <div className={styles.file}>
@@ -55,7 +54,7 @@ const AddPhoto = (props) => {
                 </div>
                 <input multiple className={styles.nativeInput} id="photo" type="file" onChange={onChangeHandler} />
             </label>
-        </Paper>
+        </div>
     );
 };
 
