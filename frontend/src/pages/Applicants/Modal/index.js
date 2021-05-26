@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { Modal, CustomTabs } from 'components';
+import { Modal, ModalTabs } from 'components';
 import { Button } from 'components/Form-NEW';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';
@@ -86,15 +86,7 @@ const ModalComponent = ({ className }) => {
             cardActionsClassName={styles.cardActions}
             actionsChildren={getActions()}
         >
-            <CustomTabs
-                formId={modal.id}
-                tabsClassName={styles.tabs}
-                tabs={ModalComponent.tabs(translate)}
-                tabClassName={styles.tab}
-                activeTabClassName={styles.active}
-                wrapperClassName={styles.tabsWrapper}
-                contentWrapperClassName={styles.tabsContent}
-            />
+            <ModalTabs formId={modal.id} tabs={ModalComponent.tabs(translate)} />
         </Modal>
     );
 };

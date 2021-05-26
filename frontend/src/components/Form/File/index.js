@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Button, Input } from 'components';
+import { Button, Input, InputLabel } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -33,7 +33,10 @@ const File = (props) => {
                         value={fileValue?.name || fileValue}
                         onClick={onClickInputField}
                     />
-                    <Button className={styles.actionButton} color="primary">{translate.Browse}</Button>
+                    <div>
+                        <InputLabel label="&nbsp;" />
+                        <Button className={styles.actionButton} color="primary" title={translate.Browse} />
+                    </div>
                 </div>
                 <input multiple className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} />
             </label>

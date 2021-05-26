@@ -1,34 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-// import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
+import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
 import { getVocabularyCompaniesSelector } from 'store/selectors/vocabulary';
-import { Autocomplete } from 'components';
 import { useTranslate } from 'hooks';
 
 import styles from './styles.module.scss';
+import { Select } from '../../Form-NEW';
 
 const Company = (props) => {
     const { className, onChange, value, name } = props;
-    // const dispatch = useDispatch();
-    const companies = useSelector(getVocabularyCompaniesSelector);
-
-    // useEffect(() => {
-    //     dispatch(getVocabularyCompaniesEffect({}, { silent: true }));
-    // }, []); // eslint-disable-line
-
+    const dispatch = useDispatch();
     const { translate } = useTranslate();
+    const { companies } = useSelector(getVocabularyCompaniesSelector);
+
+    useEffect(() => {
+        dispatch(getVocabularyCompaniesEffect({}, { silent: true }));
+    }, []); // eslint-disable-line
+
+    const createOptions = () => (
+        companies.map((company) => ({ id: company?.id, label: company?.name, value: company?.name }))
+    );
 
     return (
         <div className={classNames(styles.education, className)}>
-            <Autocomplete
+            <Select
                 name={name}
+                multiple={false}
+                search
                 label={translate.Company}
-                options={companies}
-                defaultValue={value?.value || ''}
+                variant={Select.LIGHT_FULL}
                 onChange={onChange}
+                value={value}
+                options={createOptions()}
             />
         </div>
     );

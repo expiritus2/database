@@ -21,7 +21,7 @@ const initialData = {
     },
     experienceYears: 0,
     skills: [],
-    place: [],
+    workPlaces: [],
     workSchedule: [],
     regions: [],
     test: '',

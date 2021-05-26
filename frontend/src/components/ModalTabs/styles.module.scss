@@ -1,0 +1,40 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.modalTabs {
+    .tabsWrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .tabsContent {
+            flex: 1;
+            overflow: auto;
+        }
+
+        .content {
+            height: 100%;
+        }
+
+        .tabs {
+            margin-left: setUnit(20);
+            margin-right: setUnit(20);
+            border-bottom: 1px solid $border-gray-color;
+
+            .tab {
+                color: $dark-color;
+                min-width: setUnit(122);
+                text-align: center;
+                margin-right: setUnit(2);
+                border-bottom: none;
+
+                &:hover,
+                &.active {
+                    background: $secondary-color;
+                    color: #ffffff;
+                    border-radius: setUnit(8) setUnit(8) setUnit(2) setUnit(2);
+                }
+            }
+        }
+    }
+}

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Currency, NumberInput } from 'components';
+import { Input } from 'components/Form-NEW';
+import { Currency } from 'components';
 import FormControl from '@material-ui/core/FormControl';
 import styles from './styles.module.scss';
 
@@ -14,7 +15,8 @@ const SalaryInput = (props) => {
     return (
         <div className={classNames(styles.salaryInput, className)}>
             <FormControl className={classNames(styles.formControl)}>
-                <NumberInput
+                <Input
+                    isNumberFormat
                     name="salaryMin"
                     className={classNames(styles.salary)}
                     label={translate.Salary}
@@ -22,7 +24,8 @@ const SalaryInput = (props) => {
                     value={value?.min}
                     interval={interval}
                 />
-                <NumberInput
+                <Input
+                    isNumberFormat
                     name="salaryMax"
                     className={classNames(styles.salary)}
                     label={translate.Salary}

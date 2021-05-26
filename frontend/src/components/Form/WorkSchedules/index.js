@@ -1,54 +1,49 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { getUsersEffect } from 'store/effects/vocabulary';
-import { getVocabularyUsersSelector } from 'store/selectors/vocabulary';
+import { useDispatch, useSelector } from 'react-redux';
+import { getVocabularyWorkSchedulesEffect } from 'store/effects/vocabulary';
+import { getVocabularyWorkSchedulesSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
+
 import styles from './styles.module.scss';
 import { Select } from '../../Form-NEW';
 
-const Recruiters = (props) => {
+const WorkSchedule = (props) => {
     const { className, onChange, value } = props;
-
     const dispatch = useDispatch();
     const { translate } = useTranslate();
-    const { users } = useSelector(getVocabularyUsersSelector);
+    const { workSchedules } = useSelector(getVocabularyWorkSchedulesSelector);
 
     useEffect(() => {
-        dispatch(getUsersEffect());
+        dispatch(getVocabularyWorkSchedulesEffect());
     }, []); // eslint-disable-line
 
-    const createOptions = () => (
-        users.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
-    );
-
     return (
-        <div className={classNames(styles.recruiters, className)}>
+        <div className={classNames(styles.workSchedule, className)}>
             <Select
-                multiple={false}
+                multiple
                 search
-                label={translate.Recruiters}
+                label={translate.WorkSchedule}
                 variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
-                options={createOptions()}
+                options={workSchedules}
             />
         </div>
     );
 };
 
-Recruiters.propTypes = {
+WorkSchedule.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.arrayOf(PropTypes.string)]),
 };
 
-Recruiters.defaultProps = {
+WorkSchedule.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
 };
 
-export default Recruiters;
+export default WorkSchedule;

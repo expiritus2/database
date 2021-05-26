@@ -14,13 +14,9 @@
     border-top: 1px solid $border-gray-color;
 }
 
-.tabs {
-    margin-left: setUnit(20);
-    margin-right: setUnit(20);
-    border-bottom: 1px solid $border-gray-color;
-}
-
 .actionButtons {
+    display: flex;
+    align-items: center;
 
     .btn {
         margin-right: setUnit(10);

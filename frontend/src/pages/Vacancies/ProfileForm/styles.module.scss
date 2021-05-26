@@ -8,6 +8,14 @@
     .field {
         @include field;
 
+        &.activeSearch {
+            width: fit-content;
+
+            .activeSearchText {
+                margin-left: setUnit(10);
+            }
+        }
+
         &.birthDate {
             margin-top: setUnit(15);
             margin-right: setUnit(10);

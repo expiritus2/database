@@ -5,37 +5,28 @@ import { useSelector } from 'react-redux';
 
 import { getVocabularyContactsSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
-import { Autocomplete } from 'components/index';
 import styles from './styles.module.scss';
+import { Select } from '../../Form-NEW';
 
 const Contacts = (props) => {
     const { className, onChange, value } = props;
     const { translate } = useTranslate();
-    const contacts = useSelector(getVocabularyContactsSelector);
+    const { contacts } = useSelector(getVocabularyContactsSelector);
 
-    const onChangeHandler = (e, val) => {
-        onChange(e, val);
-    };
-
-    const createOptions = (usersVal) => (
-        usersVal.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
+    const createOptions = () => (
+        contacts.map((contact) => ({ id: contact?.id, label: contact?.email, value: contact?.id }))
     );
-
-    const getValue = () => {
-        const selectedUsers = contacts.filter((contact) => value?.includes(contact?.id));
-        return createOptions(selectedUsers);
-    };
 
     return (
         <div className={classNames(styles.recruiters, className)}>
-            <Autocomplete
-                multiple
+            <Select
+                multiple={false}
+                search
                 label={translate.Contacts}
-                options={createOptions(contacts)}
-                onChange={onChangeHandler}
-                defaultValue={getValue()}
-                getOptionSelected={(option, val) => option?.value === val?.value}
-                filterSelectedOptions
+                variant={Select.LIGHT_FULL}
+                onChange={onChange}
+                value={value}
+                options={createOptions()}
             />
         </div>
     );

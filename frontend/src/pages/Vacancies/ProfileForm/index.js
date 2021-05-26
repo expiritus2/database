@@ -4,19 +4,17 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
+import { Checkbox, Input, Textarea } from 'components/Form-NEW';
 import {
-    // Checkbox,
     Company,
     Recruiters,
     Contacts,
     SalaryMinMax,
-    NumberInput,
     Skills,
-    // Place,
-    // WorkSchedules,
+    Place,
+    WorkSchedules,
     Regions,
     File,
-    Textarea,
     VacancyName,
 } from 'components';
 
@@ -52,11 +50,14 @@ const ProfileForm = (props) => {
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
-                {/* <FormControlLabel */}
-                {/*    className={classNames(styles.field, styles.active)} */}
-                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formFields.active} />} */}
-                {/*    label={translate.Actives} */}
-                {/* /> */}
+                <Checkbox
+                    direction={Checkbox.DIRECTION_RIGHT}
+                    className={classNames(styles.field, styles.activeSearch)}
+                    labelTextClassName={styles.activeSearchText}
+                    label={translate.Actives}
+                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'active')}
+                    checked={formik.values.active}
+                />
                 <VacancyName
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
@@ -81,20 +82,22 @@ const ProfileForm = (props) => {
                 />
                 <SalaryMinMax
                     className={styles.field}
-                    onChangeMin={(value) => {
+                    onChangeMin={(e, value) => {
                         onCustomFieldChange(null, { ...formFields.salary, min: value }, 'salary');
                     }}
-                    onChangeMax={(value) => {
+                    onChangeMax={(e, value) => {
                         onCustomFieldChange(null, { ...formFields.salary, max: value }, 'salary');
                     }}
                     onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
                     value={formFields?.salary}
                 />
-                <NumberInput
+                <Input
+                    isNumberFormat
+                    minNumber={0}
                     name="experienceYears"
                     className={styles.field}
                     label={translate.ExperienceYears}
-                    onChange={(numberValue) => onCustomFieldChange(null, numberValue, 'experienceYears')}
+                    onChange={(e, numberValue) => onCustomFieldChange(null, numberValue, 'experienceYears')}
                     value={formFields.experienceYears}
                     interval={0.5}
                 />
@@ -103,16 +106,16 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
                     value={formFields.skills}
                 />
-                {/* <Place */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'places')} */}
-                {/*    value={formFields.places} */}
-                {/* /> */}
-                {/* <WorkSchedules */}
-                {/*    className={styles.field} */}
-                {/*    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedules')} */}
-                {/*    value={formFields.workSchedules} */}
-                {/* /> */}
+                <Place
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'workPlaces')}
+                    value={formFields.workPlaces}
+                />
+                <WorkSchedules
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedules')}
+                    value={formFields.workSchedules}
+                />
                 <Regions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}

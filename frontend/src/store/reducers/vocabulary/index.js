@@ -17,9 +17,15 @@ import phoneTypes from './phoneTypes';
 import educations from './educations';
 import currencies from './currencies';
 import fileTypes from './fileTypes';
+import users from './users';
+import companies from './companies';
+import contacts from './contacts';
 
 export default combineReducers({
     mode,
+    users,
+    companies,
+    contacts,
     [vocabularyTabsIds.skills]: skills,
     [vocabularyTabsIds.positions]: positions,
     [vocabularyTabsIds.regions]: regions,

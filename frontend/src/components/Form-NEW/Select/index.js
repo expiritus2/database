@@ -4,27 +4,27 @@ import SelectSearch from 'react-select-search';
 import { find, get } from 'lodash-es';
 import classNames from 'classnames';
 
-import { Checkbox } from 'components';
+import { Checkbox } from 'components/Form-NEW';
 
 import styles from './syles.module.scss';
 
 const SelectComponent = (props) => {
-    const { id, defaultValue, onSelect, options, label, className, closeOnSelect } = props;
+    const { id, defaultValue, onChange, options, label, className, closeOnSelect } = props;
     const { name, search, multiple, placeholder, value, disabled, error, variant } = props;
     const { printOptions, altLabel, altLabelClassName, emptyMessage, autoComplete } = props;
 
-    const onChange = useCallback((val) => {
+    const onChangeHandler = useCallback((val) => {
         const valueObj = find(options, { value: val });
         const fakeEvent = { target: { value: valueObj, name } };
 
         if (Array.isArray(val)) {
             const values = val.map((v) => find(options, { value: v }));
             fakeEvent.target.value = values;
-            return onSelect(fakeEvent, values);
+            return onChange(fakeEvent, values);
         }
 
-        onSelect(fakeEvent, valueObj);
-    }, [name, onSelect, options]);
+        onChange(fakeEvent, valueObj);
+    }, [name, onChange, options]);
 
     const renderValue = (valueProps) => (
         <input
@@ -91,7 +91,7 @@ const SelectComponent = (props) => {
                 renderValue={renderValue}
                 renderOption={renderOption}
                 multiple={multiple}
-                onChange={onChange}
+                onChange={onChangeHandler}
                 placeholder={placeholder}
                 className={(key) => classNames(styles[key], styles[variant], className[key])}
                 value={getValue()}
@@ -118,7 +118,7 @@ SelectComponent.propTypes = {
         PropTypes.shape({ name: PropTypes.string, value: PropTypes.string }),
         PropTypes.string,
     ]),
-    onSelect: PropTypes.func,
+    onChange: PropTypes.func,
     options: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -154,7 +154,7 @@ SelectComponent.defaultProps = {
         wrapper: '',
     },
     defaultValue: undefined,
-    onSelect: () => {},
+    onChange: () => {},
     name: null,
     search: false,
     multiple: false,
