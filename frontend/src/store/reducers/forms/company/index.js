@@ -12,10 +12,10 @@ const initialData = {
     active: false,
     name: '',
     users: [],
-    logo: null,
+    logo: '',
     regions: [],
     links: [{ type: '', link: '' }],
-    addresses: [],
+    addresses: [''],
     info: '',
 };
 

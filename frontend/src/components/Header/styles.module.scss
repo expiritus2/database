@@ -13,6 +13,8 @@
 
     .navButton {
         margin-right: setUnit(20);
+        background: #ffffff;
+        color: $text-color;
 
         &:last-child {
             margin-right: 0;

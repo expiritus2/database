@@ -144,4 +144,5 @@ export default {
     FileTypes: 'Типы файлов',
     Import: 'Импорт',
     Export: 'Экспорт',
+    AddAddress: 'Адрес',
 };

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Checkbox } from 'components';
+import { Checkbox } from 'components/Form-NEW';
 
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import styles from './styles.module.scss';
 
 const Active = (props) => {
@@ -14,9 +13,14 @@ const Active = (props) => {
 
     return (
         <div className={classNames(styles.actives, className)}>
-            <FormControlLabel
-                control={<Checkbox onChange={onChange} checked={search?.active} />}
+            <Checkbox
+                direction={Checkbox.DIRECTION_RIGHT}
+                className={classNames(styles.actives)}
+                labelTextClassName={styles.activesText}
                 label={translate.Active}
+                labelClassName={styles.activesLabel}
+                onChange={(e, val, checked) => onChange(e, checked)}
+                checked={search?.active}
             />
         </div>
     );

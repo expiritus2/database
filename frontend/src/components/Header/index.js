@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openModalEffect } from 'store/effects/app';
 import { NavLink, useLocation } from 'react-router-dom';
 import { modalsIds } from 'settings/constants/modals';
-import { Button } from 'components';
+import { Button } from 'components/Form-NEW';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';
@@ -48,18 +48,21 @@ const Header = () => {
                         className={styles.navButton}
                         variant="contained"
                         color="default"
-                    >
-                        {translate.Add}
-                    </Button>
-                    <Button className={styles.navButton} variant="contained" color="default">{userEmail}</Button>
+                        title={translate.Add}
+                    />
+                    <Button
+                        className={styles.navButton}
+                        variant="contained"
+                        color="default"
+                        title={userEmail}
+                    />
                     <Button
                         onClick={onVocabulariesClick}
                         className={styles.navButton}
                         variant="contained"
                         color="default"
-                    >
-                        {translate.Vocabularies}
-                    </Button>
+                        title={translate.Vocabularies}
+                    />
                 </div>
             </div>
         </div>

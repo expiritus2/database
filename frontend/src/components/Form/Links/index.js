@@ -22,7 +22,7 @@ const Links = (props) => {
     };
 
     const onAddLink = () => {
-        const newValue = [...values, Links.defaultProps.value];
+        const newValue = [...values, ...Links.defaultProps.value];
         setValues(newValue);
         onChange(newValue);
     };
@@ -49,7 +49,7 @@ const Links = (props) => {
                     <Select
                         name="type"
                         label={translate.Type}
-                        className={styles.type}
+                        className={{ wrapper: styles.type }}
                         options={Links.linksOptions(translate)}
                         onChange={(event) => onChangeLinkType(event, index)}
                         value={val?.type || ''}

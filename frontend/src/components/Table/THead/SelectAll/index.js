@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Checkbox } from 'components';
+import { Checkbox } from 'components/Form-NEW';
 
 import styles from '../../styles.module.scss';
 

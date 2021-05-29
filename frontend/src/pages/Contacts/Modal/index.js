@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { Button, Modal } from 'components';
+import { Modal } from 'components';
+import { Button } from 'components/Form-NEW';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
@@ -67,11 +68,10 @@ const ModalComponent = ({ className }) => {
                 color="primary"
                 isPending={isPending}
                 onClick={onSubmit}
-            >
-                {translate.Save}
-            </Button>
-            <Button onClick={handleClose} className={styles.btn}>{translate.Cancel}</Button>
-            <Button onClick={handleReset} className={styles.btn}>{translate.Reset}</Button>
+                title={translate.Save}
+            />
+            <Button onClick={handleClose} className={styles.btn} title={translate.Cancel} />
+            <Button onClick={handleReset} className={styles.btn} title={translate.Reset} />
         </div>
     );
 

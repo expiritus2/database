@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getVocabularyCompaniesEffect } from 'store/effects/vocabulary';
 import { getVocabularyCompaniesSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
+import { Select } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
-import { Select } from '../../Form-NEW';
 
 const Company = (props) => {
     const { className, onChange, value, name } = props;

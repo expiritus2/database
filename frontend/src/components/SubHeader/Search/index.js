@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { FcSearch } from 'react-icons/fc';
 import { useTranslate } from 'hooks';
-import { Input } from 'components';
+import { Input } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -30,8 +30,8 @@ const Search = (props) => {
     return (
         <div className={classNames(styles.searchWrapper, className)}>
             <Input
-                label={translate.Search}
-                type="search"
+                placeholder={translate.Search}
+                type="text"
                 onChange={onSearchHandler}
                 value={searchString}
                 onKeyPress={onKeyPress}

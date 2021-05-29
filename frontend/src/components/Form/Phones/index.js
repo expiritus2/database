@@ -52,7 +52,7 @@ const Phones = (props) => {
                     <Select
                         name="phoneType"
                         label={translate.Type}
-                        className={styles.type}
+                        className={{ wrapper: styles.type }}
                         options={Phones.typeOptions(translate)}
                         onChange={(event) => onChangeType(event, index)}
                         value={val?.type || ''}

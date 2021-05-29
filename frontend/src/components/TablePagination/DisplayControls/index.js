@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Select } from 'components';
-
-import { Typography } from '@material-ui/core';
+import { Select } from 'components/Form-NEW';
 
 import styles from './styles.module.scss';
 
@@ -32,11 +30,10 @@ const DisplayControls = (props) => {
                 <span>{count}</span>
             </div>
             <div className={styles.rowsPerPage}>
-                <Typography className={styles.text}>{translate.RowsPerPage}</Typography>
+                <div className={styles.text}>{translate.RowsPerPage}</div>
                 <Select
                     value={rowsPerPage}
                     options={DisplayControls.rowsPerPageOptions}
-                    isEmptyValue={false}
                     onChange={onChangeCountPerPage}
                 />
             </div>
@@ -45,9 +42,9 @@ const DisplayControls = (props) => {
 };
 
 DisplayControls.rowsPerPageOptions = [
-    { label: 10, value: 10 },
-    { label: 25, value: 25 },
-    { label: 100, value: 100 },
+    { label: '10', value: 10 },
+    { label: '25', value: 25 },
+    { label: '100', value: 100 },
 ];
 
 DisplayControls.propTypes = {

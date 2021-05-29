@@ -15,7 +15,9 @@
 }
 
 .actionButtons {
-
+    display: flex;
+    align-items: center;
+    
     .btn {
         margin-right: setUnit(10);
         min-width: setUnit(117.21);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Button } from 'components';
+import { Button } from 'components/Form-NEW';
 import { uniqueId } from 'lodash-es';
 import Table from './Table';
 
@@ -47,11 +47,16 @@ const AddFile = (props) => {
             <div className={styles.actionsWrapper}>
                 <label className={styles.files} htmlFor={elementId}>
                     <div className={styles.actions}>
-                        <Button className={styles.actionButton} color="primary">{translate.AddFile}</Button>
+                        <Button className={styles.actionButton} color="primary" title={translate.AddFile} />
                     </div>
                     <input multiple className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} />
                 </label>
-                <Button onClick={onRemove} className={styles.actionButton} color="primary">{translate.Delete}</Button>
+                <Button
+                    onClick={onRemove}
+                    className={styles.actionButton}
+                    color="primary"
+                    title={translate.Delete}
+                />
             </div>
             <Table
                 className={styles.table}

@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { MdFirstPage, MdLastPage, MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 import styles from './styles.module.scss';
 
@@ -16,31 +12,39 @@ const PaginationControls = (props) => {
 
     return (
         <div className={classNames(styles.paginationControls, className)}>
-            <div>
-                <IconButton
+            <div className={styles.holder}>
+                <button
+                    className={styles.btn}
                     onClick={handleFirstPageButtonClick}
                     disabled={page === 0}
                     aria-label="first page"
                 >
-                    <FirstPageIcon />
-                </IconButton>
-                <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                    <KeyboardArrowLeft />
-                </IconButton>
-                <IconButton
+                    <MdFirstPage />
+                </button>
+                <button
+                    className={styles.btn}
+                    onClick={handleBackButtonClick}
+                    disabled={page === 0}
+                    aria-label="previous page"
+                >
+                    <MdKeyboardArrowLeft />
+                </button>
+                <button
+                    className={styles.btn}
                     onClick={handleNextButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="next page"
                 >
-                    <KeyboardArrowRight />
-                </IconButton>
-                <IconButton
+                    <MdKeyboardArrowRight />
+                </button>
+                <button
+                    className={styles.btn}
                     onClick={handleLastPageButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="last page"
                 >
-                    <LastPageIcon />
-                </IconButton>
+                    <MdLastPage />
+                </button>
             </div>
         </div>
     );

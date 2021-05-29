@@ -11,10 +11,10 @@ import { get } from 'lodash-es';
 const initialData = {
     active: false,
     name: '',
-    company: '',
+    company: {},
     positions: [],
     photos: [],
-    birthDate: '',
+    birthDate: new Date(),
     sex: '',
     phones: [{ type: '', number: '' }],
     emails: [''],

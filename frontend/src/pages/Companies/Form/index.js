@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Input, Regions, Links, Addresses, Recruiters, File, Textarea } from 'components';
+import { Regions, Links, Addresses, Recruiters, File } from 'components';
+import { Checkbox, Input, Textarea } from 'components/Form-NEW';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -38,11 +39,14 @@ const Form = (props) => {
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
             <form id={modal.id} onSubmit={formik.handleSubmit}>
-                {/* <FormControlLabel */}
-                {/*    className={classNames(styles.field, styles.active)} */}
-                {/*    control={<Checkbox onChange={(e, val) => onCustomFieldChange(e, val, 'active')} checked={formik.values.active} />} */}
-                {/*    label={translate.Actives} */}
-                {/* /> */}
+                <Checkbox
+                    direction={Checkbox.DIRECTION_RIGHT}
+                    className={classNames(styles.field, styles.active)}
+                    labelTextClassName={styles.activeText}
+                    label={translate.InActiveSearch}
+                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'inActiveSearch')}
+                    checked={formik.values.inActiveSearch}
+                />
                 <Input
                     name="name"
                     className={classNames(className, styles.field)}

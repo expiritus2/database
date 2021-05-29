@@ -120,7 +120,7 @@ SelectComponent.propTypes = {
     ]),
     onChange: PropTypes.func,
     options: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string,
+        label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })).isRequired,
     name: PropTypes.string,

@@ -3,4 +3,16 @@
 
 .actives {
     margin-left: setUnit(10);
+
+    .actives {
+        width: fit-content;
+
+        .activesText {
+            margin-left: setUnit(10);
+        }
+    }
+
+    .activesLabel {
+        margin-bottom: 0;
+    }
 }

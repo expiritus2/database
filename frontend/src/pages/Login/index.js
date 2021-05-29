@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { loginEffect } from 'store/effects/auth';
 import { useTranslate } from 'hooks';
-import { Input, Button } from 'components';
+import { Input, Button } from 'components/Form-NEW';
 import { ValidationSchema } from './validation';
 
 import styles from './styles.module.scss';
@@ -67,9 +67,8 @@ const Login = () => {
                         variant="contained"
                         color="primary"
                         isPending={isPending}
-                    >
-                        {translate.Submit}
-                    </Button>
+                        title={translate.Submit}
+                    />
                 </form>
             </div>
         </div>

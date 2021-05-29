@@ -2,5 +2,18 @@
 @import "styles/variables";
 
 .paginationControls {
+    .holder {
+        display: flex;
+        align-items: center;
+    }
 
+    .btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: setUnit(20);
+        width: setUnit(30);
+        height: setUnit(30);
+    }
 }
