@@ -21,6 +21,7 @@
         align-items: center;
         justify-content: space-between;
         padding: setUnit(20);
+        border-bottom: 1px solid $border-middle-gray;
 
         .title {
             font-size: setUnit(22);

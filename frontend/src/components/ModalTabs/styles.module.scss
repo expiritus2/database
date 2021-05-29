@@ -2,6 +2,7 @@
 @import "styles/variables";
 
 .modalTabs {
+    margin-top: setUnit(15);
     .tabsWrapper {
         display: flex;
         flex-direction: column;
