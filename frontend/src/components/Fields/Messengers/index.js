@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Select, Button, Input } from 'components/Form';
+import { Button, Input, Select } from 'components/Form';
 
 import { messengersOptions } from 'settings/constants/messengers';
 
@@ -51,7 +51,7 @@ const Messengers = (props) => {
                     <Select
                         name="messenger"
                         label={translate.Messenger}
-                        className={{ wrapper: styles.type }}
+                        className={styles.type}
                         options={messengersOptions(translate)}
                         onChange={(event) => onChangeMessenger(event, index)}
                         value={val?.messenger || ''}

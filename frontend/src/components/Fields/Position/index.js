@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MultipleSelect } from 'components/Form';
+import { Select } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { getVocabularyPositionsSelector } from 'store/selectors/vocabulary';
 import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
@@ -20,11 +20,11 @@ const Position = (props) => {
 
     return (
         <div className={classNames(className)}>
-            <MultipleSelect
+            <Select
                 multiple
                 search
                 label={translate.Position}
-                variant={MultipleSelect.LIGHT_FULL}
+                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={positions}

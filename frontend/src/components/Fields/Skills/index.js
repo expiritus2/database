@@ -24,7 +24,6 @@ const Skills = (props) => {
                 multiple
                 search
                 label={translate.Skills}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={skills}

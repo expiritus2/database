@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
-import { Select, Button, Input } from 'components/Form';
+import { Button, Input, Select } from 'components/Form';
 
 import styles from './styles.module.scss';
 
@@ -49,7 +49,7 @@ const Links = (props) => {
                     <Select
                         name="type"
                         label={translate.Type}
-                        className={{ wrapper: styles.type }}
+                        className={styles.type}
                         options={Links.linksOptions(translate)}
                         onChange={(event) => onChangeLinkType(event, index)}
                         value={val?.type || ''}

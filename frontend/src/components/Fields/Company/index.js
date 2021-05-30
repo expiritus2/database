@@ -31,7 +31,6 @@ const Company = (props) => {
                 multiple={false}
                 search
                 label={translate.Company}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={createOptions()}

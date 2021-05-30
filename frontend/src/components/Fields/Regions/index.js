@@ -24,7 +24,6 @@ const Regions = (props) => {
                 multiple
                 search
                 label={translate.Regions}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={regions}

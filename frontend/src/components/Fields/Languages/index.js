@@ -58,16 +58,15 @@ const Languages = (props) => {
             {(value || []).map((language, index) => (
                 <div className={styles.block} key={index}>
                     <Select
-                        className={{ wrapper: styles.language }}
+                        className={styles.language}
                         name={name}
                         label={translate.Language}
-                        variant={Select.LIGHT_FULL}
                         options={languages}
                         onChange={(e) => onChangeLanguage(e, index)}
                         value={language?.name}
                     />
                     <Select
-                        className={{ wrapper: styles.level }}
+                        className={styles.level}
                         name={name}
                         label={translate.Level}
                         options={languageLevels}

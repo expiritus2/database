@@ -24,7 +24,6 @@ const Education = (props) => {
         <div className={classNames(styles.education, className)}>
             <Select
                 name={name}
-                variant={Select.LIGHT_FULL}
                 label={translate.Education}
                 options={educations}
                 value={value}

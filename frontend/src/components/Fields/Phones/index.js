@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
 import { PhoneInput } from 'components';
-import { Select, Button } from 'components/Form';
+import { Button, Select } from 'components/Form';
 
 import styles from './styles.module.scss';
 
@@ -52,7 +52,7 @@ const Phones = (props) => {
                     <Select
                         name="phoneType"
                         label={translate.Type}
-                        className={{ wrapper: styles.type }}
+                        className={styles.type}
                         options={Phones.typeOptions(translate)}
                         onChange={(event) => onChangeType(event, index)}
                         value={val?.type || ''}

@@ -26,7 +26,6 @@ const Place = (props) => {
                 multiple
                 search
                 label={translate.Place}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={workPlaces}

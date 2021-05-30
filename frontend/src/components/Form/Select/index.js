@@ -1,123 +1,67 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import SelectSearch from 'react-select-search';
-import { find, get } from 'lodash-es';
 import classNames from 'classnames';
+import ReactSelect from 'react-select';
 
-import { Checkbox } from 'components/Form';
-
+import { InputLabel } from 'components/Form';
 import styles from './syles.module.scss';
 
-const SelectComponent = (props) => {
-    const { id, defaultValue, onChange, options, label, className, closeOnSelect } = props;
-    const { name, search, multiple, placeholder, value, disabled, error, variant } = props;
-    const { printOptions, altLabel, altLabelClassName, emptyMessage, autoComplete } = props;
+import selectStyles from './selectStyles';
 
-    const onChangeHandler = useCallback((val) => {
-        const valueObj = find(options, { value: val });
-        const fakeEvent = { target: { value: valueObj, name } };
+const Select = (props) => {
+    const { onChange, options, label, className } = props;
+    const { name, search, multiple, placeholder, value, disabled, error } = props;
+    const { settings, menuTop } = props;
 
-        if (Array.isArray(val)) {
-            const values = val.map((v) => find(options, { value: v }));
-            fakeEvent.target.value = values;
-            return onChange(fakeEvent, values);
-        }
-
-        onChange(fakeEvent, valueObj);
-    }, [name, onChange, options]);
-
-    const renderValue = (valueProps) => (
-        <input
-            {...valueProps}
-            className={classNames(styles.input, className.input)}
-            name={name}
-            autoComplete="off"
-        />
-    );
-
-    const renderOption = (optionProps, optionData, optionSnapshot) => {
-        const optProps = { ...optionProps, value: optionData.value, disabled: optionData.disabled };
-        return (
-            <button
-                type="button"
-                className={classNames(
-                    styles.option,
-                    styles[variant],
-                    { [styles['is-highlighted']]: optionSnapshot.highlighted },
-                    { [styles['is-selected']]: !multiple && optionSnapshot.selected },
-                )}
-                {...optProps}
-            >
-                <span>{optionData.name}</span>
-                {multiple && (
-                    <Checkbox
-                        labelClassName={styles.checkbox}
-                        checked={optionSnapshot.selected}
-                    />
-                )}
-            </button>
-        );
+    const onSelect = (val) => {
+        const fakeEvent = { target: { value: val, name } };
+        onChange(fakeEvent, val);
     };
 
     const getValue = () => {
         if (Array.isArray(value)) {
-            const defVal = typeof value === 'object' ? '' : value;
-            return value.map((val) => get(val, 'value', defVal));
+            return value.map((val) => {
+                if (!val?.label && !val?.value) {
+                    return options.find((option) => option?.value === val);
+                }
+
+                return val;
+            });
         }
 
-        const defVal = typeof value === 'object' ? '' : value;
-        return get(value, 'value', defVal) || get(defaultValue, 'value', defaultValue);
+        if (!value?.label && !value?.value) {
+            return options.find((option) => option?.value === value);
+        }
+
+        return value;
     };
 
-    const convertedOptions = useMemo(() => (
-        options.map(({ label: optionLabel, value: optionValue }) => ({ name: optionLabel, value: optionValue }))
-    ), [options]);
-
     return (
-        <div className={classNames(styles.selectWrapper, styles[variant], className.wrapper)}>
-            {label && (
-                <label htmlFor={id}>
-                    <span>{label}</span>
-                    {altLabel && <span className={classNames(styles.altLabel, altLabelClassName)}>{altLabel}</span>}
-                </label>
-            )}
-            <SelectSearch
-                id={id}
-                printOptions={printOptions}
-                closeOnSelect={closeOnSelect}
-                disabled={disabled}
-                search={search}
-                options={convertedOptions}
-                renderValue={renderValue}
-                renderOption={renderOption}
-                multiple={multiple}
-                onChange={onChangeHandler}
+        <div className={classNames(styles.selectWrapper, className)}>
+            {label && <InputLabel label={label} />}
+            <ReactSelect
+                isDisabled={disabled}
+                isSearchable={search}
+                options={options}
+                isMulti={multiple}
+                onChange={onSelect}
                 placeholder={placeholder}
-                className={(key) => classNames(styles[key], styles[variant], className[key])}
                 value={getValue()}
-                emptyMessage={emptyMessage}
-                autoComplete={autoComplete}
+                styles={selectStyles({ menuTop })}
+                {...settings}
             />
             {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
 
-SelectComponent.LIGHT = 'light';
-SelectComponent.LIGHT_FULL = 'lightFull';
-SelectComponent.FULL = 'full';
+Select.LIGHT = 'light';
+Select.LIGHT_FULL = 'lightFull';
+Select.FULL = 'full';
 
-SelectComponent.propTypes = {
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+Select.propTypes = {
     disabled: PropTypes.bool,
-    className: PropTypes.shape({
-        wrapper: PropTypes.string,
-        input: PropTypes.string,
-    }),
-    defaultValue: PropTypes.oneOfType([
-        PropTypes.shape({ name: PropTypes.string, value: PropTypes.string }),
-        PropTypes.string,
-    ]),
+    className: PropTypes.string,
     onChange: PropTypes.func,
     options: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -138,22 +82,12 @@ SelectComponent.propTypes = {
     ]),
     label: PropTypes.string,
     error: PropTypes.string,
-    closeOnSelect: PropTypes.bool,
-    printOptions: PropTypes.string,
-    variant: PropTypes.string,
-    altLabel: PropTypes.string,
-    altLabelClassName: PropTypes.string,
-    emptyMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    testid: PropTypes.string,
-    autoComplete: PropTypes.string,
+    settings: PropTypes.shape({}),
+    menuTop: PropTypes.bool,
 };
 
-SelectComponent.defaultProps = {
-    id: undefined,
-    className: {
-        wrapper: '',
-    },
-    defaultValue: undefined,
+Select.defaultProps = {
+    className: '',
     onChange: () => {},
     name: null,
     search: false,
@@ -163,15 +97,8 @@ SelectComponent.defaultProps = {
     label: undefined,
     disabled: undefined,
     error: undefined,
-    closeOnSelect: true,
-    printOptions: 'on-focus',
-    // printOptions: 'always',
-    variant: SelectComponent.LIGHT_FULL,
-    altLabel: undefined,
-    altLabelClassName: '',
-    emptyMessage: () => <div className={styles.emptyMessage}>No Results</div>,
-    testid: undefined,
-    autoComplete: 'on',
+    settings: {},
+    menuTop: false,
 };
 
-export default SelectComponent;
+export default Select;

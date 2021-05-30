@@ -25,7 +25,6 @@ const VacancyName = (props) => {
                 multiple={false}
                 search
                 label={translate.Position}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={positions}

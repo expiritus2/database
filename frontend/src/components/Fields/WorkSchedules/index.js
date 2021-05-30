@@ -24,7 +24,6 @@ const WorkSchedule = (props) => {
                 multiple
                 search
                 label={translate.WorkSchedule}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={workSchedules}

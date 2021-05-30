@@ -42,7 +42,10 @@ SalaryInput.propTypes = {
     onCurrencyChange: PropTypes.func,
     value: PropTypes.shape({
         amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        currency: PropTypes.string,
+        currency: PropTypes.shape({
+            label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        }),
     }),
     interval: PropTypes.number,
 };

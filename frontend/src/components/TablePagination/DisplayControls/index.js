@@ -35,6 +35,8 @@ const DisplayControls = (props) => {
                     value={rowsPerPage}
                     options={DisplayControls.rowsPerPageOptions}
                     onChange={onChangeCountPerPage}
+                    className={styles.rowsPerPageSelectWrapper}
+                    menuTop
                 />
             </div>
         </div>

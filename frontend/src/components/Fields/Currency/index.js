@@ -17,7 +17,6 @@ const Currency = (props) => {
         <div className={classNames(styles.currencyWrapper, className)}>
             <Select
                 name={name}
-                variant={Select.LIGHT_FULL}
                 label={translate.Currency}
                 options={Currency.options}
                 onChange={onChange}
@@ -37,14 +36,19 @@ Currency.options = [
 Currency.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
-    value: PropTypes.string,
+    value: PropTypes.shape({
+        currency: PropTypes.shape({
+            label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        }),
+    }),
     name: PropTypes.string,
 };
 
 Currency.defaultProps = {
     className: '',
     onChange: () => {},
-    value: '',
+    value: {},
     name: undefined,
 };
 

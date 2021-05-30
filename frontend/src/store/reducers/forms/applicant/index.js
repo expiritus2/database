@@ -19,7 +19,7 @@ export const experienceInitialData = {
 const initialData = {
     name: '',
     inActiveSearch: false,
-    salary: { amount: '', currency: '' },
+    salary: { amount: '', currency: {} },
     education: '',
     positions: [],
     skills: [],

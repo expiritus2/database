@@ -23,7 +23,6 @@ const Contacts = (props) => {
                 multiple={false}
                 search
                 label={translate.Contacts}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={createOptions()}

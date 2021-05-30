@@ -30,7 +30,6 @@ const Recruiters = (props) => {
                 multiple={false}
                 search
                 label={translate.Recruiters}
-                variant={Select.LIGHT_FULL}
                 onChange={onChange}
                 value={value}
                 options={createOptions()}
