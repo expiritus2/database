@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { Company, Position, AddPhoto, Sex, Phones, Emails } from 'components';
-import { Input, DatePicker } from 'components/Form-NEW';
+import { Input, DatePicker } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';

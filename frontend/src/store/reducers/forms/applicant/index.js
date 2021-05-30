@@ -30,7 +30,7 @@ const initialData = {
     info: '',
     nameLat: '',
     photos: [],
-    birthDate: '',
+    birthDate: new Date(),
     sex: '',
     phones: [{ type: '', number: '' }],
     messengers: [{ messenger: '', accountName: '' }],

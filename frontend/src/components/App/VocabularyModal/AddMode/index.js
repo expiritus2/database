@@ -20,7 +20,7 @@ import {
     saveVocabularyCurrencyEffect,
     saveVocabularyFileTypeEffect,
 } from 'store/effects/vocabulary';
-import { Input, Button } from 'components/Form-NEW';
+import { Input, Button } from 'components/Form';
 import { getVocabularyModeSelector } from 'store/selectors/vocabulary';
 import { useTranslate } from 'hooks';
 import { ADD_MODE } from 'settings/constants/modes';

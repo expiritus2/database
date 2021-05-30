@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { loginEffect } from 'store/effects/auth';
 import { useTranslate } from 'hooks';
-import { Input, Button } from 'components/Form-NEW';
+import { Input, Button } from 'components/Form';
 import { ValidationSchema } from './validation';
 
 import styles from './styles.module.scss';

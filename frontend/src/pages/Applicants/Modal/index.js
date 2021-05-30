@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
 import { Modal, ModalTabs } from 'components';
-import { Button } from 'components/Form-NEW';
+import { Button } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';

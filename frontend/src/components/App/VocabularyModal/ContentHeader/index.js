@@ -22,7 +22,7 @@ import {
     saveVocabularyCurrenciesEffect,
     saveVocabularyFileTypesEffect,
 } from 'store/effects/vocabulary';
-import { Button } from 'components/Form-NEW';
+import { Button } from 'components/Form';
 import { useTranslate, useOutsideClick } from 'hooks';
 import { getVocabularyModeSelector, getVocabularyTabDataSelector } from 'store/selectors/vocabulary';
 import { ADD_MODE } from 'settings/constants/modes';

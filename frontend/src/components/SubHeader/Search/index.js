@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { FcSearch } from 'react-icons/fc';
 import { useTranslate } from 'hooks';
-import { Input } from 'components/Form-NEW';
+import { Input } from 'components/Form';
 
 import styles from './styles.module.scss';
 

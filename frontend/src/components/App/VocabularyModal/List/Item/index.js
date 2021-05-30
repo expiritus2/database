@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Input } from 'components/Form-NEW';
+import { Input } from 'components/Form';
 
 import styles from './styles.module.scss';
 

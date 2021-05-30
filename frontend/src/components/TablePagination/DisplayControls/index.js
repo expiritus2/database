@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Select } from 'components/Form-NEW';
+import { Select } from 'components/Form';
 
 import styles from './styles.module.scss';
 

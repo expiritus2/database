@@ -10,7 +10,7 @@ import { IoIosRemoveCircle } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
-import { Textarea, Button, Input } from 'components/Form-NEW';
+import { Textarea, Button, Input } from 'components/Form';
 import { Period, Position } from 'components';
 import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';

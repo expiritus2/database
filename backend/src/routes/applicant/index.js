@@ -2,7 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
-const Index = require('../../models/applicant');
+const Applicant = require('../../models/applicant');
 const Position = require('../../models/vocabulary/position');
 const Skill = require('../../models/vocabulary/skill');
 const Region = require('../../models/vocabulary/region');
@@ -27,7 +27,7 @@ const middlewares = [
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
-    const populatedApplicant = await Index.findByPk(newApplicant.id, {
+    const populatedApplicant = await Applicant.findByPk(newApplicant.id, {
         include: [
             { model: Position },
             { model: Skill },
@@ -40,7 +40,7 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
         ],
     });
 
-    res.send(populatedApplicant);
+    res.send({ result: populatedApplicant });
 });
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
@@ -54,7 +54,7 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
         }
     }
 
-    const allApplicants = await Index.findAndCountAll({
+    const allApplicants = await Applicant.findAndCountAll({
         ...searchCriteria,
         limit: countPerPage || 25,
         offset: (page * countPerPage) || 0,
@@ -80,8 +80,14 @@ router.put('/api/applicants/:id', async (req, res) => {
     const savedApplicant = new ApplicantController(req.body);
     const updatedApplicant = await savedApplicant.update(req.params.id);
 
-    res.send(updatedApplicant);
-})
+    res.send({ result: updatedApplicant });
+});
+
+router.delete('/api/applicants/:id', async (req, res) => {
+    const deletedApplicant = await Applicant.destroy({ where: { id: req.params.id }})
+
+    res.send({ result: deletedApplicant });
+});
 
 module.exports = {
     applicantRouter: router,

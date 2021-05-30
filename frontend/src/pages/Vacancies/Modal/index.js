@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { Button } from 'components/Form-NEW';
+import { Button } from 'components/Form';
 import { Modal, ModalTabs } from 'components';
 import { useTranslate } from 'hooks';
 import { ADD, EDIT } from 'settings/constants/mode';

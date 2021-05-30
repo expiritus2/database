@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { Checkbox } from 'components/Form-NEW';
+import { Checkbox } from 'components/Form';
 
 import styles from '../../styles.module.scss';
 

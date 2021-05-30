@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { Regions, Links, Addresses, Recruiters, File } from 'components';
-import { Checkbox, Input, Textarea } from 'components/Form-NEW';
+import { Checkbox, Input, Textarea } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';

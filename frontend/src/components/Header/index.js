@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openModalEffect } from 'store/effects/app';
 import { NavLink, useLocation } from 'react-router-dom';
 import { modalsIds } from 'settings/constants/modals';
-import { Button } from 'components/Form-NEW';
+import { Button } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';

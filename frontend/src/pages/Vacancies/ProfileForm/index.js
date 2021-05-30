@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Checkbox, Input, Textarea } from 'components/Form-NEW';
+import { Checkbox, Input, Textarea } from 'components/Form';
 import {
     Company,
     Recruiters,
