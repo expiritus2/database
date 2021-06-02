@@ -32,13 +32,18 @@ const TableComponent = (props) => {
     const getRows = () => files.map((file) => ({
         id: file.id,
         type: file?.data?.type || '',
-        name: file?.data?.name || getFileLink(file) || '',
+        name: file.filename,
         url: file?.url,
+        data: file?.data,
     }));
 
     const onClickRow = (e, rowValue) => {
         if (rowValue?.url) {
             downloadFile(true).byLink(rowValue?.url);
+        }
+
+        if (rowValue?.data) {
+            downloadFile().asBlob(rowValue?.data, rowValue?.name);
         }
     };
 
@@ -50,6 +55,7 @@ const TableComponent = (props) => {
                 columns={getColumns()}
                 data={getRows()}
                 onClickRow={onClickRow}
+                selectable={false}
             />
         </div>
     );

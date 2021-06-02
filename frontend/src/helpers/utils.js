@@ -56,6 +56,7 @@ export function readFiles(files, cb = (reader, file) => reader.readAsBinaryStrin
                 resolve({
                     contentType: file.type,
                     filename: file.name,
+                    size: file.size,
                     data: result,
                 });
             };

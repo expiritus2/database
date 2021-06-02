@@ -57,6 +57,7 @@ const ModalComponent = ({ className }) => {
         dispatch(effect({}, {}, (err) => {
             if (!err) {
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                dispatch(resetApplicantFormEffect());
                 dispatch(getApplicantsEffect());
             }
             setIsPending(false);

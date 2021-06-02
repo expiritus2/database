@@ -26,36 +26,13 @@ export const resetApplicantFormEffect = () => (dispatch) => {
     dispatch(resetApplicantFormAction());
 };
 
-export const submitApplicantFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadFilesAction, method: uploadFiles });
+export const submitApplicantFormEffect = (cfg, options, cb) => {
     const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
     const { forms: { applicant } } = getState();
 
-    const formData = new FormData();
-    applicant?.files?.forEach((file) => {
-        if (file?.data) {
-            formData.append('files', file?.data);
-        }
-    });
+    const clonedApplicant = prepareData(applicant);
 
-    applicant?.photos?.forEach((photo) => {
-        if (photo?.data) {
-            formData.append('photos', photo?.data);
-        }
-    });
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedApplicant = prepareData(applicant, uploadedFiles);
-
-        dispatch(sendRequest(clonedApplicant, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetApplicantFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedApplicant, options, cb);
 };
 
 export const updateApplicantFormEffect = (cfg, options, cb) => (dispatch) => {

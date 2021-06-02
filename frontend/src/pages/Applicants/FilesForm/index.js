@@ -36,7 +36,7 @@ const FilesForm = (props) => {
                 <AddFiles
                     id="applicantFiles"
                     className={styles.field}
-                    onChange={(values) => {
+                    onChange={(files, values) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
                     value={formik.values.files}
