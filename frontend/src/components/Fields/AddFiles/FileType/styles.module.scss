@@ -6,6 +6,17 @@
     align-items: center;
     justify-content: space-between;
 
+    .info {
+        width: 100%;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: setUnit(50);
+    }
+
     .icon {
         cursor: pointer;
         transition: transform .1s ease;
@@ -13,5 +24,20 @@
         &:hover {
             transform: scale(1.1);
         }
+    }
+
+    .editInput {
+        width: 100%;
+        input {
+            height: setUnit(20);
+        }
+    }
+
+    .cancel {
+        fill: $primary-color;
+    }
+
+    .save {
+        fill: $secondary-color;
     }
 }
