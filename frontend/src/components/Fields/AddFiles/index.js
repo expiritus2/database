@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { readFiles } from 'helpers';
 import { useTranslate } from 'hooks';
 import { Button } from 'components/Form';
+import { cloneDeep } from 'lodash-es';
 import Table from './Table';
 
 import styles from './styles.module.scss';
@@ -24,6 +25,20 @@ const AddFile = (props) => {
             });
     };
 
+    const onChangeFileType = (event, val, index) => {
+        const copyFilesValue = cloneDeep(filesValue);
+        copyFilesValue[index].fileType = val;
+        setFilesValue(copyFilesValue);
+        onChange(null, copyFilesValue);
+    };
+
+    const onDeleteFile = (event, index) => {
+        const copyFilesValue = cloneDeep(filesValue);
+        copyFilesValue.splice(index, 1);
+        setFilesValue(copyFilesValue);
+        onChange(null, copyFilesValue);
+    };
+
     return (
         <div className={classNames(styles.filesWrapper, className)}>
             <div className={styles.actionsWrapper}>
@@ -34,7 +49,12 @@ const AddFile = (props) => {
                     <input multiple className={styles.nativeInput} id={elementId} type="file" onChange={onChangeHandler} />
                 </label>
             </div>
-            <Table className={styles.table} files={filesValue} />
+            <Table
+                className={styles.table}
+                files={filesValue}
+                onChangeFileType={onChangeFileType}
+                onDeleteFile={onDeleteFile}
+            />
         </div>
     );
 };

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { setUnit } from 'helpers';
 
-import { Select } from 'components/Form';
 import { GrEdit } from 'react-icons/gr';
 import { GiSave } from 'react-icons/gi';
 import { TiCancel } from 'react-icons/ti';
 
+import { FileType } from 'components';
+
 import styles from './styles.module.scss';
 
-const FileType = (props) => {
-    const { type, className } = props;
+const FileTypeComponent = (props) => {
+    const { value, className, onChangeFileType } = props;
     const [editMode, setEditMode] = useState(false);
 
     const onEdit = () => {
@@ -25,35 +27,62 @@ const FileType = (props) => {
         setEditMode(false);
     };
 
+    const getCustomStyles = (defaultStyles) => ({
+        ...defaultStyles,
+        container: (base) => ({
+            ...base,
+            margin: `${setUnit(-6)} 0`,
+        }),
+        control: (base) => ({
+            ...(defaultStyles?.control(base) || {}),
+            minHeight: setUnit(30),
+            height: setUnit(30),
+        }),
+        valueContainer: (base) => ({
+            ...base,
+            height: setUnit(30),
+        }),
+        indicatorsContainer: (base) => ({
+            ...base,
+            height: setUnit(30),
+        }),
+    });
+
     return (
         <div className={classNames(styles.fileType, className)}>
             <div className={styles.info}>
                 {editMode
-                    ? <Select options={[]} className={styles.editInput} value={type} />
-                    : <div>{type}</div>}
+                    ? (
+                        <FileType
+                            onChange={onChangeFileType}
+                            value={value}
+                            getCustomStyles={getCustomStyles}
+                        />
+                    )
+                    : <div>{value?.label}</div>}
             </div>
-            <div className={styles.actions}>
-                {!editMode
-                    ? <GrEdit onClick={onEdit} className={classNames(styles.icon)} />
-                    : (
-                        <div>
-                            <TiCancel onClick={onCancel} className={classNames(styles.icon, styles.cancel)} />
-                            <GiSave onClick={onSave} className={classNames(styles.icon, styles.save)} />
-                        </div>
-                    )}
-            </div>
+            {!editMode
+                ? <GrEdit onClick={onEdit} className={classNames(styles.icon)} />
+                : (
+                    <div className={styles.actions}>
+                        <TiCancel onClick={onCancel} className={classNames(styles.icon, styles.cancel)} />
+                        <GiSave onClick={onSave} className={classNames(styles.icon, styles.save)} />
+                    </div>
+                )}
         </div>
     );
 };
 
-FileType.propTypes = {
+FileTypeComponent.propTypes = {
     className: PropTypes.string,
-    type: PropTypes.string,
+    value: PropTypes.string,
+    onChangeFileType: PropTypes.func,
 };
 
-FileType.defaultProps = {
+FileTypeComponent.defaultProps = {
     className: '',
-    type: '',
+    value: '',
+    onChangeFileType: () => {},
 };
 
-export default FileType;
+export default FileTypeComponent;

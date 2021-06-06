@@ -1,4 +1,5 @@
-const setUnit = (px) => `${px / 16}rem`;
+import { setUnit } from 'helpers';
+
 const borderColor = '#dee2e6';
 
 export default ({ menuTop }) => ({

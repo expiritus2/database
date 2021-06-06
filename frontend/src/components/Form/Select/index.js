@@ -9,7 +9,7 @@ import styles from './syles.module.scss';
 import selectStyles from './selectStyles';
 
 const Select = (props) => {
-    const { onChange, options, label, className } = props;
+    const { onChange, options, label, className, getCustomStyles } = props;
     const { name, search, multiple, placeholder, value, disabled, error } = props;
     const { settings, menuTop } = props;
 
@@ -36,6 +36,13 @@ const Select = (props) => {
         return value;
     };
 
+    const getStyles = () => {
+        if (typeof getCustomStyles === 'function') {
+            return getCustomStyles({ ...selectStyles({ menuTop }) });
+        }
+        return selectStyles({ menuTop });
+    };
+
     return (
         <div className={classNames(styles.selectWrapper, className)}>
             {label && <InputLabel label={label} />}
@@ -47,7 +54,7 @@ const Select = (props) => {
                 onChange={onSelect}
                 placeholder={placeholder}
                 value={getValue()}
-                styles={selectStyles({ menuTop })}
+                styles={getStyles()}
                 {...settings}
             />
             {error && <div className={styles.error}>{error}</div>}
@@ -84,6 +91,7 @@ Select.propTypes = {
     error: PropTypes.string,
     settings: PropTypes.shape({}),
     menuTop: PropTypes.bool,
+    getCustomStyles: PropTypes.func,
 };
 
 Select.defaultProps = {
@@ -99,6 +107,7 @@ Select.defaultProps = {
     error: undefined,
     settings: {},
     menuTop: false,
+    getCustomStyles: null,
 };
 
 export default Select;

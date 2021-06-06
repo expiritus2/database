@@ -46,3 +46,4 @@ export { default as CustomTabs } from './CustomTabs';
 export { default as ActionList } from './ActionsList';
 export { default as Settings } from './Settings';
 export { default as ModalTabs } from './ModalTabs';
+export { default as FileType } from './Fields/FileType';

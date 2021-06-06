@@ -1,3 +1,5 @@
+export const setUnit = (px) => `${px / 16}rem`;
+
 export const formatNumber = (value, params = {}, locale = 'en-US') => new Intl.NumberFormat(locale, params).format(value);
 
 export function titleCase(str) {

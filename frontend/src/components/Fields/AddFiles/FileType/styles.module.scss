@@ -8,12 +8,13 @@
 
     .info {
         width: 100%;
+        padding-right: setUnit(10);
     }
 
     .actions {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         min-width: setUnit(50);
     }
 
@@ -34,7 +35,10 @@
     }
 
     .cancel {
+        width: setUnit(20);
+        height: setUnit(20);
         fill: $primary-color;
+        margin-right: setUnit(5);
     }
 
     .save {

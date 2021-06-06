@@ -2,13 +2,21 @@
 @import "styles/variables";
 
 .filesTable {
+    .filesTableHolder {
+        overflow: visible !important;
+    }
 
     .fileRow {
         cursor: auto !important;
         background: none !important;
+        height: setUnit(41);
 
         & > div {
             width: 100%;
         }
+    }
+
+    .fileCell {
+        padding: setUnit(10) 0;
     }
 }
