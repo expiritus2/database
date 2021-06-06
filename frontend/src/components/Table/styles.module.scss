@@ -40,9 +40,6 @@
                 border-bottom: 1px solid #dee2e6;
 
                 &:hover {
-                    background-color: $primary-color;
-                    color: #ffffff;
-
                     .link {
                         color: #ffffff;
                     }
@@ -72,10 +69,6 @@
                 width: 100%;
                 text-align: center;
             }
-        }
-
-        .row {
-            cursor: pointer;
         }
 
         .cell {

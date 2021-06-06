@@ -4,7 +4,10 @@ import classNames from 'classnames';
 import { Table as CommonTable } from 'components';
 import { useTranslate } from 'hooks';
 
-import { downloadFile } from 'helpers';
+import FileName from '../FileName';
+import FileType from '../FileType';
+
+// import { downloadFile } from 'helpers';
 
 import styles from './styles.module.scss';
 
@@ -31,21 +34,19 @@ const TableComponent = (props) => {
 
     const getRows = () => files.map((file) => ({
         id: file.id,
-        type: file?.data?.type || '',
-        name: file.filename,
-        url: file?.url,
-        data: file?.data,
+        type: <FileType type={file?.contentType} />,
+        name: <FileName name={file?.filename} />,
     }));
 
-    const onClickRow = (e, rowValue) => {
-        if (rowValue?.url) {
-            downloadFile(true).byLink(rowValue?.url);
-        }
-
-        if (rowValue?.data) {
-            downloadFile().asBlob(rowValue?.data, rowValue?.name);
-        }
-    };
+    // const onClickRow = (e, rowValue) => {
+    //     if (rowValue?.url) {
+    //         downloadFile(true).byLink(rowValue?.url);
+    //     }
+    //
+    //     if (rowValue?.data) {
+    //         downloadFile().asBlob(rowValue?.data, rowValue?.name);
+    //     }
+    // };
 
     return (
         <div className={classNames(styles.filesTable, className)}>
@@ -54,8 +55,9 @@ const TableComponent = (props) => {
                 onSelectChange={onSelectChange}
                 columns={getColumns()}
                 data={getRows()}
-                onClickRow={onClickRow}
+                // onClickRow={onClickRow}
                 selectable={false}
+                rowClassName={styles.fileRow}
             />
         </div>
     );

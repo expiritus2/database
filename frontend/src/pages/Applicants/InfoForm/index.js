@@ -50,10 +50,11 @@ const InfoForm = (props) => {
                 />
                 <AddPhoto
                     className={styles.field}
-                    onChange={(values) => {
-                        onCustomFieldChange(null, values, 'photos');
+                    onChange={(files, values) => {
+                        onCustomFieldChange(files, values, 'photos');
                     }}
                     value={formik.values.photos}
+                    id="applicantPhotos"
                 />
                 <div className={styles.block}>
                     <DatePicker

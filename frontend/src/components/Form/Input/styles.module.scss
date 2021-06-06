@@ -99,6 +99,36 @@
             top: setUnit(15);
             left: setUnit(15);
         }
+
+        .passwordIcon {
+            position: absolute;
+            cursor: pointer;
+            width: setUnit(20);
+            height: setUnit(20);
+            top: setUnit(10);
+            right: setUnit(10);
+
+            &.text {
+                right: setUnit(16);
+                top: setUnit(12);
+
+                svg {
+                    vertical-align: middle;
+                }
+            }
+
+            &.password {
+                right: setUnit(16);
+                top: setUnit(12);
+                svg {
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        input[type='password'] {
+            padding-right: setUnit(50);
+        }
     }
 
     &.full {

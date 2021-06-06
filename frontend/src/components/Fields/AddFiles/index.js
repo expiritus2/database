@@ -17,9 +17,9 @@ const AddFile = (props) => {
     const onChangeHandler = (event) => {
         readFiles(event.target.files)
             .then((values) => {
-                const newFilesValue = [...filesValue, ...values]
+                const newFilesValue = values
                     .map((file) => ({ ...file, data: file?.data ? btoa(file?.data) : undefined }));
-                setFilesValue(newFilesValue);
+                setFilesValue([...filesValue, ...newFilesValue]);
                 onChange(event.target.files, newFilesValue);
             });
     };

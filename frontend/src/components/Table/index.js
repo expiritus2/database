@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 
 const TableComponent = (props) => {
     const { selectable, columns, data, onClickRow, filter } = props;
-    const { initSelections, onSelectChange, link, className } = props;
+    const { initSelections, onSelectChange, link, className, rowClassName } = props;
 
     const [selectionsValue, setSelectionsValue] = useState(initSelections);
 
@@ -59,6 +59,7 @@ const TableComponent = (props) => {
                     selectable={selectable}
                     selections={selectionsValue}
                     onClickRow={onClickRow}
+                    rowClassName={rowClassName}
                 />
             </table>
         </div>
@@ -66,6 +67,7 @@ const TableComponent = (props) => {
 };
 
 TableComponent.propTypes = {
+    rowClassName: PropTypes.string,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectable: PropTypes.bool,
@@ -78,6 +80,7 @@ TableComponent.propTypes = {
 };
 
 TableComponent.defaultProps = {
+    rowClassName: '',
     className: '',
     selectable: true,
     onClickRow: undefined,

@@ -50,6 +50,7 @@ const ApplicantTable = (props) => {
                 data={getRows()}
                 selectable={false}
                 onClickRow={onClickRow}
+                rowClassName={styles.applicantRow}
             />
         </div>
     );

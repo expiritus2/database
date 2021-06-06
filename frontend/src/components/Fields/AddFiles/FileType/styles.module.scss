@@ -1,0 +1,17 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.fileType {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .icon {
+        cursor: pointer;
+        transition: transform .1s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

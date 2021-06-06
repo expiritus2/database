@@ -1,0 +1,42 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.fileName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .name {
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: setUnit(200);
+    }
+
+    .icon {
+        cursor: pointer;
+        transition: transform .1s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        width: setUnit(16);
+        height: setUnit(16);
+    }
+
+    .removeIcon {
+        margin-left: setUnit(15);
+        fill: $primary-color;
+    }
+
+    .downloadIcon {
+        fill: $secondary-color
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+}

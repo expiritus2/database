@@ -126,8 +126,8 @@ const Input = (props) => {
                 )}
                 {type === 'password' && (
                     typeValue === 'text'
-                        ? <AiOutlineEye onClick={onChangePasswordMode} />
-                        : <AiOutlineEyeInvisible onClick={onChangePasswordMode} />
+                        ? <AiOutlineEye className={styles.passwordIcon} onClick={onChangePasswordMode} />
+                        : <AiOutlineEyeInvisible className={styles.passwordIcon} onClick={onChangePasswordMode} />
                 )}
                 {type === 'search' && <AiOutlineSearch className={styles.searchIcon} />}
                 {icon && icon}

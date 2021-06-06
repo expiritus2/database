@@ -3,4 +3,12 @@
 
 .filesTable {
 
+    .fileRow {
+        cursor: auto !important;
+        background: none !important;
+
+        & > div {
+            width: 100%;
+        }
+    }
 }
