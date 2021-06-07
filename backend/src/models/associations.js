@@ -7,6 +7,8 @@ const Region = require('./vocabulary/region');
 const Contact = require('./contact');
 const Vacancy = require('./vacancy');
 const Company = require('./company');
+const File = require('./file');
+const FileType = require('./vocabulary/fileType')
 
 function createAssociations() {
     Applicant.belongsToMany(Position, { through: 'applicant_position' });
@@ -47,6 +49,11 @@ function createAssociations() {
 
     Region.belongsToMany(Company, { through: 'region_company' });
     Company.belongsToMany(Region, { through: 'region_company' });
+
+    Applicant.hasMany(File, { as: 'file' });
+
+    File.belongsTo(FileType);
+    FileType.hasMany(File);
 }
 
 module.exports = {

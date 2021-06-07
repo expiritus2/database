@@ -15,7 +15,7 @@ class ApplicantController {
         this.positions = this.body.positions;
         this.experiences = this.body.experiences;
 
-        this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions', 'experiences']);
+        this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions', 'experiences', 'files', 'photos']);
     }
 
     create(options = {}) {

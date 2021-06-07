@@ -8,6 +8,7 @@ const Skill = require('../../models/vocabulary/skill');
 const Region = require('../../models/vocabulary/region');
 const Experience = require('../../models/experience');
 const { s3, upload } = require('../../middlewares/file-upload');
+const awsS3 = require('../../services/AwsS3');
 
 const { ApplicantController } = require('../../controllers/applicantController');
 const Sequelize = require('sequelize');
@@ -26,42 +27,8 @@ const middlewares = [
 ]
 
 router.post('/api/applicants/create', middlewares, async (req, res) => {
-    // const files = req.body.files;
-    // const photos = req.body.photos;
-
-    // if (files.length) {
-    //     files.forEach((file) => {
-    //         const buffer = Buffer.from(file.data, 'base64');
-    //         const uploadPromise = s3.upload({
-    //             Bucket: process.env.AWS_S3_BUCKET_NAME,
-    //             Key: `${new Date().getMilliseconds()}-${file.filename}`,
-    //             Body: buffer,
-    //             ACL: 'public-read',
-    //             ContentType: file.contentType,
-    //             ContentEncoding: 'base64'
-    //         }).promise();
-    //         uploadPromise.then((data) => {
-    //             console.log("Successfully uploaded data to " + JSON.stringify(data, undefined, 2));
-    //         });
-    //     })
-    // }
-    //
-    // if (photos.length) {
-    //     photos.forEach((file) => {
-    //         const buffer = Buffer.from(file.data, 'base64');
-    //         const uploadPromise = s3.upload({
-    //             Bucket: process.env.AWS_S3_BUCKET_NAME,
-    //             Key: `${new Date().getMilliseconds()}-${file.filename}`,
-    //             Body: buffer,
-    //             ACL: 'public-read',
-    //             ContentType: file.contentType,
-    //             ContentEncoding: 'base64'
-    //         }).promise();
-    //         uploadPromise.then((data) => {
-    //             console.log("Successfully uploaded data to " + JSON.stringify(data, undefined, 2));
-    //         });
-    //     })
-    // }
+    const files = await awsS3.setFiles(req.body.files).upload();
+    const photos = await awsS3.setFiles(req.body.photos).upload();
 
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
