@@ -7,7 +7,6 @@ const Position = require('../../models/vocabulary/position');
 const Skill = require('../../models/vocabulary/skill');
 const Region = require('../../models/vocabulary/region');
 const Experience = require('../../models/experience');
-const { s3, upload } = require('../../middlewares/file-upload');
 const awsS3 = require('../../services/AwsS3');
 
 const { ApplicantController } = require('../../controllers/applicantController');
@@ -30,7 +29,7 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
     const files = await awsS3.setFiles(req.body.files).upload();
     const photos = await awsS3.setFiles(req.body.photos).upload();
 
-    const applicantController = new ApplicantController(req.body);
+    const applicantController = new ApplicantController(req.body, files, photos);
     const newApplicant = await applicantController.create();
     const populatedApplicant = await Applicant.findByPk(newApplicant.id, {
         include: [

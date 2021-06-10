@@ -3,17 +3,22 @@ const Position = require('../models/vocabulary/position');
 const Skill = require('../models/vocabulary/skill');
 const Experience = require('../models/experience');
 const Region = require('../models/vocabulary/region');
+const File = require('../models/file');
+const FileType = require('../models/vocabulary/fileType');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 const { s3 } = require('../middlewares/file-upload');
+const awsS3 = require('../services/AwsS3');
 
 class ApplicantController {
-    constructor(body) {
+    constructor(body, files, photos) {
         this.body = body;
         this.regions = this.body.regions;
         this.skills = this.body.skills;
         this.positions = this.body.positions;
         this.experiences = this.body.experiences;
+        this.files = files;
+        this.photos = photos;
 
         this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions', 'experiences', 'files', 'photos']);
     }
@@ -26,6 +31,8 @@ class ApplicantController {
                 await this.handleSkills();
                 await this.handleRegions();
                 await this.handleExperiences();
+                await this.handleFiles();
+                await this.handlePhotos();
 
                 resolve(this.newApplicant);
             } catch (e) {
@@ -48,7 +55,7 @@ class ApplicantController {
                     await this.handleExperiences(true);
                 }
 
-                await this.deleteFiles();
+                // await this.deleteFiles();
 
                 resolve(this.newApplicant);
             } catch (e) {
@@ -95,7 +102,7 @@ class ApplicantController {
             }
 
             for await (const pos of positions) {
-                await this._findOrCreatePosition(pos);
+                this.savedPosition = await Position.findOne({ where: { value: pos.value } });
 
                 if (isUpdate) {
                     await this._deleteRemovedPositions(positions, parentModel);
@@ -111,7 +118,7 @@ class ApplicantController {
     handleSkills(isUpdate) {
         return new Promise(async (resolve) => {
             for await (const skill of this.skills) {
-                await this._findOrCreateSkill(skill);
+                this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
 
                 if (isUpdate) {
                     await this._deleteRemovedApplicantSkills();
@@ -127,7 +134,7 @@ class ApplicantController {
     async handleRegions(isUpdate) {
         return new Promise(async (resolve) => {
             for await (const region of this.regions) {
-                await this._findOrCreateRegion(region);
+                this.savedRegion = await Region.findOne({ where: { value: region.value } });
 
                 if (isUpdate) {
                     await this._deleteRemovedApplicantRegion();
@@ -137,6 +144,54 @@ class ApplicantController {
                 }
             }
             resolve(this.savedRegion);
+        });
+    }
+
+    async handleFiles(isUpdate) {
+        return new Promise(async (resolve) => {
+            for await (const file of this.files) {
+                if (file.fileType && file.fileType.id) {
+                    this.savedFileType = await FileType.findByPk(file.fileType.id);
+                }
+
+                if (isUpdate) {
+                    await this._deleteRemovedFiles();
+                    const prevFile = await File.findByPk(file.id);
+
+                    if (!prevFile) {
+                        this.newFile = await File.create(file);
+                        await this.newFile.setFileType(this.savedFileType);
+                        await this.newFile.setApplicant(this.newApplicant);
+                    } else {
+                        prevFile.setFileType(this.savedFileType);
+                    }
+                } else {
+                    this.newFile = await File.create(file);
+                    await this.newFile.setFileType(this.savedFileType);
+                    await this.newFile.setApplicant(this.newApplicant);
+                }
+            }
+            resolve(this.newFile);
+        });
+    }
+
+    async handlePhotos(isUpdate) {
+        return new Promise(async (resolve) => {
+            for await (const photo of this.photos) {
+                if (isUpdate) {
+                    await this._deleteRemovedPhotos();
+                    const prevPhoto = await File.findByPk(photo.id);
+
+                    if (!prevPhoto) {
+                        this.newPhoto = await File.create(photo);
+                        await this.newPhoto.setApplicant(this.newApplicant);
+                    }
+                } else {
+                    this.newPhoto = await File.create(photo);
+                    await this.newPhoto.setApplicant(this.newApplicant);
+                }
+            }
+            resolve(this.newPhoto);
         });
     }
 
@@ -164,14 +219,6 @@ class ApplicantController {
         })
     }
 
-    async _findOrCreateRegion(region) {
-        this.savedRegion = await Region.findOne({ where: { value: region.value } });
-
-        if (!this.savedRegion) {
-            this.savedRegion = await Region.create(region);
-        }
-    }
-
     async _deleteRemovedApplicantRegion() {
         const newRegionsIds = this.regions.map((region) => region.id);
         for await (const prevRegion of this.newApplicant.regions) {
@@ -181,10 +228,25 @@ class ApplicantController {
         }
     }
 
-    async _findOrCreateSkill(skill) {
-        this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
-        if (!this.savedSkill) {
-            this.savedSkill = await Skill.create(skill);
+    async _deleteRemovedFiles() {
+        const newFilesIds = this.files.map((file) => file.id);
+        const prevFiles = await File.findAll({ where: { applicantId: this.newApplicant.id }})
+        for await (const prevFile of prevFiles) {
+            if (!newFilesIds.includes(prevFile.id)) {
+                await File.destroy({ where: { id: prevFile.id }});
+                await awsS3.deleteObject(prevFile.url);
+            }
+        }
+    }
+
+    async _deleteRemovedPhotos() {
+        const newPhotosIds = this.photos.map((photo) => photo.id);
+        const prevPhotos = await File.findAll({ where: { applicantId: this.newApplicant.id }})
+        for await (const prevPhoto of prevPhotos) {
+            if (!newPhotosIds.includes(prevPhoto.id)) {
+                await File.destroy({ where: { id: prevPhoto.id }});
+                await awsS3.deleteObject(prevPhoto.url);
+            }
         }
     }
 
@@ -194,13 +256,6 @@ class ApplicantController {
             if (!newSkillsIds.includes(prevSkill.id)) {
                 await this.newApplicant.removeSkill(prevSkill);
             }
-        }
-    }
-
-    async _findOrCreatePosition(position) {
-        this.savedPosition = await Position.findOne({ where: { value: position.value } });
-        if (!this.savedPosition) {
-            this.savedPosition = await Position.create(position);
         }
     }
 

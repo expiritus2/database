@@ -12,6 +12,9 @@
     }
 
     .card {
+        @include box-shadow;
+
+        border-radius: setUnit(8);
         width: setUnit(400);
         margin: auto 0;
         padding: setUnit(32) setUnit(40) setUnit(52);
