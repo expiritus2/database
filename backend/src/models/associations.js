@@ -39,8 +39,9 @@ function createAssociations() {
     Applicant.belongsToMany(WorkPlace, { through: 'applicant_workPlace' });
     WorkPlace.belongsToMany(Applicant, { through: 'applicant_workPlace'});
 
-    Salary.belongsTo(Applicant);
-    Applicant.hasOne(Salary);
+    Applicant.belongsTo(Salary);
+    // Salary.belongsTo(Applicant);
+    Salary.hasOne(Applicant)
     Salary.belongsTo(Currency);
 
     File.belongsTo(Applicant);

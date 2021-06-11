@@ -80,7 +80,8 @@ class ApplicantController {
 
             if (salary && salary.currency && salary.currency.id) {
                 await this.storedSalary.setCurrency(salary.currency.id);
-                await this.storedSalary.setApplicant(this.newApplicant);
+                await this.newApplicant.setSalary(this.storedSalary);
+                // await this.storedSalary.setApplicant(this.newApplicant);
             }
 
             resolve();
