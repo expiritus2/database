@@ -7,7 +7,7 @@ import NumberFormat from 'react-number-format';
 import styles from './styles.module.scss';
 
 const SalaryValue = (props) => {
-    const { value, currency, className } = props;
+    const { value, /* currency , */ className } = props;
 
     return (
         <div className={classNames(styles.salary, className)}>
@@ -25,12 +25,12 @@ const SalaryValue = (props) => {
 SalaryValue.propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    currency: PropTypes.string,
+    // currency: PropTypes.string,
 };
 
 SalaryValue.defaultProps = {
     className: '',
-    currency: undefined,
+    // currency: undefined,
     value: undefined,
 };
 
