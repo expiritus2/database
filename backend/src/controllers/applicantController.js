@@ -5,6 +5,12 @@ const Experience = require('../models/experience');
 const Region = require('../models/vocabulary/region');
 const File = require('../models/file');
 const FileType = require('../models/vocabulary/fileType');
+const Salary = require('../models/salary');
+const Currency = require('../models/vocabulary/currency');
+const Education = require('../models/vocabulary/education');
+const ApplicantLanguage = require('../models/applicantLanguage');
+const Language = require('../models/vocabulary/language');
+const LanguageLevel = require('../models/vocabulary/languageLevel');
 const DatabaseCreationError = require('../errors/database-creation-error');
 const { omit } = require('lodash');
 const { s3 } = require('../middlewares/file-upload');
@@ -13,26 +19,25 @@ const awsS3 = require('../services/AwsS3');
 class ApplicantController {
     constructor(body, files, photos) {
         this.body = body;
-        this.regions = this.body.regions;
-        this.skills = this.body.skills;
-        this.positions = this.body.positions;
-        this.experiences = this.body.experiences;
         this.files = files;
         this.photos = photos;
-
-        this.joinedInfo = omit(this.body, ['regions', 'skills', 'positions', 'experiences', 'files', 'photos']);
     }
 
     create(options = {}) {
         return new Promise(async (resolve) => {
             try {
-                this.newApplicant = await Applicant.create(this.joinedInfo, options);
-                await this.handlePositions(this.positions, this.newApplicant);
+                const { name, inActiveSearch, experienceYears, info } = this.body;
+                this.newApplicant = await Applicant.create({ name, inActiveSearch, experienceYears, info }, options);
+                await this.handleSalary();
+                await this.handleEducation();
+                await this.handlePositions();
                 await this.handleSkills();
+                await this.handleWorkPlaces();
                 await this.handleRegions();
-                await this.handleExperiences();
-                await this.handleFiles();
-                await this.handlePhotos();
+                await this.handleLanguages();
+                // await this.handleExperiences();
+                // await this.handleFiles();
+                // await this.handlePhotos();
 
                 resolve(this.newApplicant);
             } catch (e) {
@@ -43,25 +48,53 @@ class ApplicantController {
 
     update(id) {
         return new Promise(async (resolve) => {
-            try {
-                this.prevApplicant = await Applicant.findByPk(id);
-                await Applicant.update(this.joinedInfo, { where: { id } });
-                this.newApplicant = await Applicant.findByPk(id, { include: { all: true } });
+            // try {
+            //     this.prevApplicant = await Applicant.findByPk(id);
+            //     await Applicant.update(this.body, { where: { id } });
+            //     this.newApplicant = await Applicant.findByPk(id, { include: { all: true } });
+            //
+            //     if (this.newApplicant) {
+            //         await this.handlePositions(this.positions, this.newApplicant, true);
+            //         await this.handleSkills(true);
+            //         await this.handleRegions(true);
+            //         await this.handleExperiences(true);
+            //     }
+            //
+            //     // await this.deleteFiles();
+            //
+            //     resolve(this.newApplicant);
+            // } catch (e) {
+            //     console.error(e);
+            //     throw new DatabaseCreationError();
+            // }
+        });
+    }
 
-                if (this.newApplicant) {
-                    await this.handlePositions(this.positions, this.newApplicant, true);
-                    await this.handleSkills(true);
-                    await this.handleRegions(true);
-                    await this.handleExperiences(true);
-                }
+    handleSalary() {
+        return new Promise(async (resolve) => {
+            const { salary } = this.body;
 
-                // await this.deleteFiles();
-
-                resolve(this.newApplicant);
-            } catch (e) {
-                console.error(e);
-                throw new DatabaseCreationError();
+            if (salary && salary.amount) {
+                this.storedSalary = await Salary.create({ amount: salary.amount });
             }
+
+            if (salary && salary.currency && salary.currency.id) {
+                await this.storedSalary.setCurrency(salary.currency.id);
+                await this.storedSalary.setApplicant(this.newApplicant);
+            }
+
+            resolve();
+        })
+    }
+
+    handleEducation() {
+        return new Promise(async (resolve) => {
+            const { education } = this.body;
+
+            if (education && education.id) {
+                await this.newApplicant.setEducation(education.id);
+            }
+            resolve();
         });
     }
 
@@ -95,55 +128,81 @@ class ApplicantController {
         })
     }
 
-    handlePositions(positions, parentModel, isUpdate) {
+    handlePositions() {
         return new Promise(async (resolve) => {
-            if (positions && !positions.length) {
-                await this._deleteRemovedPositions(positions, parentModel);
-            }
+            const { positions = [] } = this.body;
 
-            for await (const pos of positions) {
-                this.savedPosition = await Position.findOne({ where: { value: pos.value } });
-
-                if (isUpdate) {
-                    await this._deleteRemovedPositions(positions, parentModel);
-                    await parentModel.addPosition(this.savedPosition);
-                } else {
-                    await parentModel.addPosition(this.savedPosition);
+            for await (const position of positions) {
+                if (position && position.id) {
+                    await this.newApplicant.addPosition(position.id)
                 }
             }
-            resolve(this.savedPosition);
+
+            resolve();
         });
     }
 
-    handleSkills(isUpdate) {
+    handleSkills() {
         return new Promise(async (resolve) => {
-            for await (const skill of this.skills) {
-                this.savedSkill = await Skill.findOne({ where: { value: skill.value } });
+            const { skills = [] } = this.body;
 
-                if (isUpdate) {
-                    await this._deleteRemovedApplicantSkills();
-                    await this.newApplicant.addSkill(this.savedSkill);
-                } else {
-                    await this.newApplicant.addSkill(this.savedSkill);
+            for await (const skill of skills) {
+                if (skill && skill.id) {
+                    await this.newApplicant.addSkill(skill.id);
                 }
             }
-            resolve(this.savedSkill);
+
+            resolve();
         });
     }
 
-    async handleRegions(isUpdate) {
+    handleWorkPlaces() {
         return new Promise(async (resolve) => {
-            for await (const region of this.regions) {
-                this.savedRegion = await Region.findOne({ where: { value: region.value } });
+            const { workPlaces } = this.body;
 
-                if (isUpdate) {
-                    await this._deleteRemovedApplicantRegion();
-                    await this.newApplicant.addRegion(this.savedRegion);
-                } else {
-                    await this.newApplicant.addRegion(this.savedRegion);
+            for await (const workPlace of workPlaces) {
+                if (workPlace && workPlace.id) {
+                    await this.newApplicant.addWorkPlace(workPlace.id);
                 }
             }
-            resolve(this.savedRegion);
+
+            resolve();
+        });
+    }
+
+    async handleRegions() {
+        return new Promise(async (resolve) => {
+            const { regions = [] } = this.body;
+
+            for await (const region of regions) {
+                if (region && region.id) {
+                    await this.newApplicant.addRegion(region.id);
+                }
+            }
+
+            resolve();
+        });
+    }
+
+    async handleLanguages() {
+        return new Promise(async (resolve) => {
+            const { languages = [] } = this.body;
+
+            for await (const language of languages) {
+                const storedApplicantLanguage = await ApplicantLanguage.create({});
+
+                if (language.name && language.name.id) {
+                    await storedApplicantLanguage.setLanguage(language.name.id);
+                }
+
+                if (language.level && language.level.id) {
+                    await storedApplicantLanguage.setLanguageLevel(language.level.id);
+                }
+
+                await this.newApplicant.addApplicantLanguage(storedApplicantLanguage);
+            }
+
+            resolve();
         });
     }
 

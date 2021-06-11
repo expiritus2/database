@@ -10,7 +10,7 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { submitApplicantFormEffect, updateApplicantFormEffect, resetApplicantFormEffect } from 'store/effects/forms/applicant';
+import { createApplicantFormEffect, updateApplicantFormEffect, resetApplicantFormEffect } from 'store/effects/forms/applicant';
 import { getApplicantsEffect } from 'store/effects/applicants';
 import InfoForm from '../InfoForm';
 import FilesForm from '../FilesForm';
@@ -49,15 +49,15 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        let effect = submitApplicantFormEffect;
+        let effect = createApplicantFormEffect;
         if (modal.mode === EDIT) {
             effect = updateApplicantFormEffect;
         }
         setIsPending(true);
         dispatch(effect({}, {}, (err) => {
             if (!err) {
-                dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(resetApplicantFormEffect());
+                // dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                // dispatch(resetApplicantFormEffect());
                 dispatch(getApplicantsEffect());
             }
             setIsPending(false);

@@ -4,11 +4,22 @@ const Position = require('./vocabulary/position');
 const Skill = require('./vocabulary/skill');
 const Experience = require('./experience');
 const Region = require('./vocabulary/region');
+const Education = require('./vocabulary/education');
+const Language = require('./vocabulary/language');
+const LanguageLevel = require('./vocabulary/languageLevel');
+const Salary = require('./salary');
+const Currency = require('./vocabulary/currency');
+const WorkPlace = require('./vocabulary/workPlace');
 const Contact = require('./contact');
 const Vacancy = require('./vacancy');
 const Company = require('./company');
 const File = require('./file');
 const FileType = require('./vocabulary/fileType')
+const Phone = require('./phone');
+const PhoneType = require('./vocabulary/phoneType');
+const Messenger = require('./messenger');
+const MessengerType = require('./vocabulary/messengerType');
+const ApplicantLanguage = require('./applicantLanguage');
 
 function createAssociations() {
     Applicant.belongsToMany(Position, { through: 'applicant_position' });
@@ -22,6 +33,34 @@ function createAssociations() {
 
     Applicant.hasMany(Experience);
     Experience.belongsTo(Applicant);
+
+    Applicant.belongsTo(Education);
+
+    Applicant.belongsToMany(WorkPlace, { through: 'applicant_workPlace' });
+    WorkPlace.belongsToMany(Applicant, { through: 'applicant_workPlace'});
+
+    Salary.belongsTo(Applicant);
+    Applicant.hasOne(Salary);
+    Salary.belongsTo(Currency);
+
+    File.belongsTo(Applicant);
+    File.belongsTo(FileType);
+    Applicant.hasMany(File);
+
+    Applicant.hasMany(Phone);
+    Phone.belongsTo(Applicant);
+    Phone.belongsTo(PhoneType);
+
+    Applicant.hasMany(Messenger);
+    Messenger.belongsTo(Applicant);
+    Messenger.belongsTo(MessengerType);
+
+    ApplicantLanguage.belongsTo(Language);
+    ApplicantLanguage.belongsTo(LanguageLevel);
+    Applicant.belongsToMany(ApplicantLanguage, { through: 'applicant_language' });
+    ApplicantLanguage.belongsToMany(Applicant, { through: 'applicant_language' });
+
+
 
     Experience.belongsToMany(Position, { through: 'experience_position' });
     Position.belongsToMany(Experience, { through: 'experience_position' });

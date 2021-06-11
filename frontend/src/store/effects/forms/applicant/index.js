@@ -23,7 +23,7 @@ export const resetApplicantFormEffect = () => (dispatch) => {
     dispatch(resetApplicantFormAction());
 };
 
-export const submitApplicantFormEffect = (cfg, options, cb) => {
+export const createApplicantFormEffect = (cfg, options, cb) => {
     const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
     const { forms: { applicant } } = getState();
 

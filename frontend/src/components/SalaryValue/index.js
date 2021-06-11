@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import NumberFormat from 'react-number-format';
 
-import { EU } from 'settings/constants/currency';
 import styles from './styles.module.scss';
 
 const SalaryValue = (props) => {
@@ -16,7 +15,8 @@ const SalaryValue = (props) => {
                 thousandSeparator
                 value={value}
                 displayType="text"
-                suffix={currency === EU ? ' €' : ' $'}
+                // suffix={currency === EU ? ' €' : ' $'}
+                suffix=" $"
             />
         </div>
     );

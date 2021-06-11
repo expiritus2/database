@@ -23,28 +23,11 @@ Applicant.init({
     experienceYears: {
         type: DataTypes.FLOAT,
     },
-    salary: {
-        type: DataTypes.JSONB
-    },
-    education: {
-        type: DataTypes.STRING,
-    },
-    place: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
     address: {
         type: DataTypes.STRING,
     },
-    languages: {
-        type: DataTypes.JSONB,
-    },
     info: {
         type: DataTypes.TEXT,
-    },
-    photos: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
     },
     birthDate: {
         type: DataTypes.DATE,
@@ -55,16 +38,6 @@ Applicant.init({
     emails: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: [],
-    },
-    files: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    phones: {
-        type: DataTypes.JSONB,
-    },
-    messengers: {
-        type: DataTypes.JSONB,
     },
     links: {
         type: DataTypes.JSONB,

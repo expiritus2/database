@@ -19,8 +19,8 @@ const Op = Sequelize.Op;
 const middlewares = [
     requireAuth,
     [
-        body('name').not().isEmpty().withMessage('Name is required'),
-        body('positions').isArray().not().isEmpty().withMessage('Positions is required'),
+        // body('name').not().isEmpty().withMessage('Name is required'),
+        // body('positions').isArray().not().isEmpty().withMessage('Positions is required'),
     ],
     validateRequest,
 ]

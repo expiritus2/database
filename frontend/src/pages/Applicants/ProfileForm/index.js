@@ -88,8 +88,8 @@ const ProfileForm = (props) => {
                 <Place
                     className={styles.field}
                     label={translate.Place}
-                    onChange={(e, val) => onCustomFieldChange(e, val, 'place')}
-                    value={formFields.place}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'workPlaces')}
+                    value={formFields.workPlaces}
                 />
                 <Regions
                     className={styles.field}

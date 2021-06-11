@@ -23,7 +23,7 @@ const initialData = {
     education: '',
     positions: [],
     skills: [],
-    place: [],
+    workPlaces: [],
     regions: [],
     address: '',
     languages: [{ name: '', level: '' }],
