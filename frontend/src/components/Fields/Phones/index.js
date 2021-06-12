@@ -8,12 +8,23 @@ import { useTranslate } from 'hooks';
 import { PhoneInput } from 'components';
 import { Button, Select } from 'components/Form';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getVocabularyPhoneTypesSelector } from 'store/selectors/vocabulary';
+import { getVocabularyPhoneTypesEffect } from 'store/effects/vocabulary';
 import styles from './styles.module.scss';
 
 const Phones = (props) => {
     const { className, value, onChange } = props;
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
+    const dispatch = useDispatch();
+    const { phoneTypes, isIdle } = useSelector(getVocabularyPhoneTypesSelector);
+
+    useEffect(() => {
+        if (isIdle) {
+            dispatch(getVocabularyPhoneTypesEffect({}, { silent: true }));
+        }
+    });
 
     useEffect(() => setValues(value), [value]);
 
@@ -53,7 +64,7 @@ const Phones = (props) => {
                         name="phoneType"
                         label={translate.Type}
                         className={styles.type}
-                        options={Phones.typeOptions(translate)}
+                        options={phoneTypes}
                         onChange={(event) => onChangeType(event, index)}
                         value={val?.type || ''}
                     />
@@ -72,13 +83,6 @@ const Phones = (props) => {
         </div>
     );
 };
-
-Phones.typeOptions = (translate) => [
-    { value: 'private', label: translate.Private },
-    { value: 'mobile', label: translate.Mobile },
-    { value: 'work', label: translate.Work },
-    { value: 'faks', label: translate.Faks },
-];
 
 Phones.propTypes = {
     className: PropTypes.string,

@@ -2,15 +2,18 @@ const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-class ApplicantLanguage extends Model {}
+class Email extends Model {}
 
-ApplicantLanguage.init({
+Email.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-}, { sequelize, modelName: 'applicantLanguage' });
+    email: {
+        type: DataTypes.STRING,
+    },
+}, { sequelize, modelName: 'email' });
 
-module.exports = ApplicantLanguage;
+module.exports = Email;

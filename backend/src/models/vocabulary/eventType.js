@@ -17,6 +17,6 @@ EventType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'eventType' });
+},{ sequelize, modelName: 'vocabularyEventType' });
 
 module.exports = EventType;

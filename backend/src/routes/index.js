@@ -24,6 +24,7 @@ const { phoneTypesVocabularyRouter } = require('./vocabulary/phoneTypes');
 const { educationsVocabularyRouter } = require('./vocabulary/educations');
 const { currenciesVocabularyRouter } = require('./vocabulary/currencies');
 const { fileTypesVocabularyRouter } = require('./vocabulary/fileTypes');
+const { sexsVocabularyRouter } = require('./vocabulary/sexs');
 
 const { fakeRouter } = require('./fake');
 
@@ -54,6 +55,7 @@ module.exports = (app) => {
     app.use(educationsVocabularyRouter);
     app.use(currenciesVocabularyRouter);
     app.use(fileTypesVocabularyRouter);
+    app.use(sexsVocabularyRouter);
 
     app.use(fakeRouter);
 }

@@ -1,13 +1,17 @@
 const express = require('express');
 const { body } = require('express-validator');
+
 const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
-const Position = require('../../models/vocabulary/position');
-const Skill = require('../../models/vocabulary/skill');
-const Region = require('../../models/vocabulary/region');
+
+const VocabularyPosition = require('../../models/vocabulary/position');
+const VocabularySkill = require('../../models/vocabulary/skill');
+const VocabularyRegion = require('../../models/vocabulary/region');
+
+const File = require('../../models/file');
+const Photo = require('../../models/photo');
 const Experience = require('../../models/experience');
-const awsS3 = require('../../services/AwsS3');
 
 const { ApplicantController } = require('../../controllers/applicantController');
 const Sequelize = require('sequelize');
@@ -26,19 +30,18 @@ const middlewares = [
 ]
 
 router.post('/api/applicants/create', middlewares, async (req, res) => {
-    const files = await awsS3.setFiles(req.body.files).upload();
-    const photos = await awsS3.setFiles(req.body.photos).upload();
-
-    const applicantController = new ApplicantController(req.body, files, photos);
+    const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
     const populatedApplicant = await Applicant.findByPk(newApplicant.id, {
         include: [
-            { model: Position },
-            { model: Skill },
-            { model: Region },
+            { model: VocabularyPosition },
+            { model: VocabularySkill },
+            { model: VocabularyRegion },
+            { model: Photo },
+            { model: File },
             {
                 model: Experience, include: [
-                    { model: Position }
+                    { model: VocabularyPosition }
                 ]
             },
         ],
@@ -66,12 +69,12 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
             ['updatedAt', 'DESC']
         ],
         include: [
-            { model: Position },
-            { model: Skill },
-            { model: Region },
+            { model: VocabularyPosition },
+            { model: VocabularySkill },
+            { model: VocabularyRegion },
             {
                 model: Experience, include: [
-                    { model: Position }
+                    { model: VocabularyPosition }
                 ]
             },
         ],

@@ -17,6 +17,6 @@ WorkPlace.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'workPlaces' });
+},{ sequelize, modelName: 'vocabularyWorkPlaces' });
 
 module.exports = WorkPlace;

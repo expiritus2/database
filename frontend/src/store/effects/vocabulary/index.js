@@ -17,3 +17,4 @@ export * from './currencies';
 export * from './fileTypes';
 export * from './companies';
 export * from './contacts';
+export * from './sexs';

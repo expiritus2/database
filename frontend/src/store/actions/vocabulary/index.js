@@ -17,3 +17,4 @@ export * from './phoneTypes';
 export * from './educations';
 export * from './currencies';
 export * from './fileTypes';
+export * from './sexs';

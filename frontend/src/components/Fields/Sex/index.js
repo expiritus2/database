@@ -1,33 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { useTranslate } from 'hooks';
 import { Select } from 'components/Form';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getVocabularySexsSelector } from 'store/selectors/vocabulary';
+import { getVocabularySexsEffect } from 'store/effects/vocabulary';
 import styles from './styles.module.scss';
 
 const Sex = (props) => {
     const { className, name, onChange, label, value } = props;
-    const { translate } = useTranslate();
+    const dispatch = useDispatch();
+    const { sexs, isIdle } = useSelector(getVocabularySexsSelector);
+
+    useEffect(() => {
+        if (isIdle) {
+            dispatch(getVocabularySexsEffect({}, { silent: true }));
+        }
+    });
 
     return (
-        <div className={classNames(styles.wrapper, className)}>
+        <div className={classNames(styles.sexs, className)}>
             <Select
                 name={name}
                 label={label}
                 onChange={onChange}
-                options={Sex.options(translate)}
+                options={sexs}
                 value={value}
             />
         </div>
     );
 };
-
-Sex.options = (translate) => [
-    { label: translate.Male, value: 'male' },
-    { label: translate.Female, value: 'female' },
-];
 
 Sex.propTypes = {
     className: PropTypes.string,

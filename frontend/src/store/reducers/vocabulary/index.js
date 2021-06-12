@@ -20,6 +20,7 @@ import fileTypes from './fileTypes';
 import users from './users';
 import companies from './companies';
 import contacts from './contacts';
+import sexs from './sexs';
 
 export default combineReducers({
     mode,
@@ -41,4 +42,5 @@ export default combineReducers({
     [vocabularyTabsIds.educations]: educations,
     [vocabularyTabsIds.currencies]: currencies,
     [vocabularyTabsIds.fileTypes]: fileTypes,
+    [vocabularyTabsIds.sexs]: sexs,
 });

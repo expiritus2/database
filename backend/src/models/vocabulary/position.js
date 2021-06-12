@@ -17,6 +17,6 @@ Position.init({
     value: {
         type: DataTypes.STRING,
     }
-}, { sequelize, modelName: 'position' });
+}, { sequelize, modelName: 'vocabularyPosition' });
 
 module.exports = Position;

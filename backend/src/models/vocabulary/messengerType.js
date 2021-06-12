@@ -17,6 +17,6 @@ MessengerType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'messengerType' });
+},{ sequelize, modelName: 'vocabularyMessengerType' });
 
 module.exports = MessengerType;

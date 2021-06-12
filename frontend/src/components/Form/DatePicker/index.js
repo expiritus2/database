@@ -43,6 +43,7 @@ DatePicker.propTypes = {
     label: PropTypes.string,
     className: PropTypes.string,
     value: PropTypes.oneOfType([
+        PropTypes.string,
         PropTypes.number,
         PropTypes.instanceOf(Date),
         PropTypes.arrayOf(PropTypes.number),

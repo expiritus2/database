@@ -29,6 +29,7 @@ class AwsS3 {
                     ContentEncoding: 'base64',
                     ...options,
                 }).promise();
+
                 results.push({
                     contentType: file.contentType,
                     filename: file.filename,

@@ -17,6 +17,6 @@ Education.init({
     value: {
         type: DataTypes.STRING,
     }
-}, { sequelize, modelName: 'education' });
+}, { sequelize, modelName: 'vocabularyEducation' });
 
 module.exports = Education;

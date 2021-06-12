@@ -34,7 +34,7 @@ app.all('*', async () => {
 app.use(errorHandler);
 createAssociations();
 
-sequelize.sync({ force: false, alter: false })
+sequelize.sync({ force: true, alter: false, drop: false })
     .then(() => {
         app.listen(3000, () => {
             console.log('Listening on port 3000!');

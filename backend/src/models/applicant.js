@@ -32,16 +32,6 @@ Applicant.init({
     birthDate: {
         type: DataTypes.DATE,
     },
-    sex: {
-        type: DataTypes.STRING,
-    },
-    emails: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    links: {
-        type: DataTypes.JSONB,
-    }
 }, { sequelize, modelName: 'applicant' });
 
 module.exports = Applicant;

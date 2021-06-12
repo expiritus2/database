@@ -17,6 +17,6 @@ WorkType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'workType' });
+},{ sequelize, modelName: 'vocabularyWorkType' });
 
 module.exports = WorkType;
