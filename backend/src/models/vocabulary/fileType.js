@@ -17,6 +17,6 @@ FileType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyFileType' });
+},{ sequelize, modelName: 'fileType' });
 
 module.exports = FileType;

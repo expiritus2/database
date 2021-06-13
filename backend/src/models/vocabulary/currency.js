@@ -17,6 +17,6 @@ Currency.init({
     value: {
         type: DataTypes.STRING,
     }
-}, { sequelize, modelName: 'vocabularyCurrency' });
+}, { sequelize, modelName: 'currency' });
 
 module.exports = Currency;

@@ -2,8 +2,29 @@
 @import "styles/variables";
 
 .name {
+    display: flex;
 
-    .skills {
-        margin-top: setUnit(10);
+    .main,
+    .meta {
+        line-height: setUnit(21);
+    }
+
+    .activeIcon {
+        width: setUnit(20);
+        height: setUnit(20);
+        margin-right: setUnit(10);
+        visibility: hidden;
+
+        &.active {
+            visibility: visible;
+        }
+    }
+
+    .nameText {
+        margin-bottom: setUnit(5);
+    }
+
+    .main {
+        margin-bottom: setUnit(14);
     }
 }

@@ -10,13 +10,9 @@ const Regions = (props) => {
     const { translate } = useTranslate();
 
     return (
-        <div className={classNames(styles.skills, className)}>
-            <span>
-                {`${translate.Regions}: `}
-            </span>
-            <span className={styles.values}>
-                {regions.join(', ')}
-            </span>
+        <div className={classNames(styles.regions, className)}>
+            <span className={styles.label}>{`${translate.Regions}: `}</span>
+            <span className={styles.values}>{regions.join(', ')}</span>
         </div>
     );
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Item } from 'pages/Applicants/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -16,7 +16,7 @@ const Regions = (props) => {
 
     return (
         <div className={classNames(styles.regions, className)}>
-            <Item
+            <InfoItem
                 label={translate.Regions}
                 value={regions.map(({ label }) => label).join(', ')}
             />

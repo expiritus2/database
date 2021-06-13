@@ -9,17 +9,15 @@ const Link = require('../models/link');
 
 const Salary = require('../models/salary');
 
-const Language = require('../models/language');
+const LanguageSkill = require('../models/languageSkill');
 const Phone = require('../models/phone');
 
 const DatabaseCreationError = require('../errors/database-creation-error');
 const awsS3 = require('../services/AwsS3');
 
 class ApplicantController {
-    constructor(body, files, photos) {
+    constructor(body) {
         this.body = body;
-        this.files = files;
-        this.photos = photos;
     }
 
     create(options = {}) {
@@ -42,8 +40,8 @@ class ApplicantController {
                 await this.handleEmails();
                 await this.handleMessengers();
                 await this.handleLinks();
-                // await this.handleFiles();
-                // await this.handleExperiences();
+                await this.handleFiles();
+                await this.handleExperiences();
 
                 resolve(this.newApplicant);
             } catch (e) {
@@ -85,7 +83,7 @@ class ApplicantController {
             }
 
             if (salary && salary.currency && salary.currency.id) {
-                await this.storedSalary.setVocabularyCurrency(salary.currency.id);
+                await this.storedSalary.setCurrency(salary.currency.id);
                 await this.newApplicant.setSalary(this.storedSalary);
             }
 
@@ -98,7 +96,7 @@ class ApplicantController {
             const { education } = this.body;
 
             if (education && education.id) {
-                await this.newApplicant.setVocabularyEducation(education.id);
+                await this.newApplicant.setEducation(education.id);
             }
             resolve();
         });
@@ -110,7 +108,7 @@ class ApplicantController {
 
             for await (const position of positions) {
                 if (position && position.id) {
-                    await this.newApplicant.addVocabularyPosition(position.id)
+                    await this.newApplicant.addPosition(position.id)
                 }
             }
 
@@ -124,7 +122,7 @@ class ApplicantController {
 
             for await (const skill of skills) {
                 if (skill && skill.id) {
-                    await this.newApplicant.addVocabularySkill(skill.id);
+                    await this.newApplicant.addSkill(skill.id);
                 }
             }
 
@@ -138,7 +136,7 @@ class ApplicantController {
 
             for await (const workPlace of workPlaces) {
                 if (workPlace && workPlace.id) {
-                    await this.newApplicant.addVocabularyWorkPlace(workPlace.id);
+                    await this.newApplicant.addWorkPlace(workPlace.id);
                 }
             }
 
@@ -152,7 +150,7 @@ class ApplicantController {
 
             for await (const region of regions) {
                 if (region && region.id) {
-                    await this.newApplicant.addVocabularyRegion(region.id);
+                    await this.newApplicant.addRegion(region.id);
                 }
             }
 
@@ -165,17 +163,17 @@ class ApplicantController {
             const { languages = [] } = this.body;
 
             for await (const language of languages) {
-                const storedLanguage = await Language.create({});
+                const storedLanguageSkill = await LanguageSkill.create({});
 
                 if (language.name && language.name.id) {
-                    await storedLanguage.setVocabularyLanguage(language.name.id);
+                    await storedLanguageSkill.setLanguage(language.name.id);
                 }
 
                 if (language.level && language.level.id) {
-                    await storedLanguage.setVocabularyLanguageLevel(language.level.id);
+                    await storedLanguageSkill.setLanguageLevel(language.level.id);
                 }
 
-                await this.newApplicant.addLanguage(storedLanguage);
+                await this.newApplicant.addLanguageSkill(storedLanguageSkill);
             }
 
             resolve();
@@ -214,11 +212,47 @@ class ApplicantController {
         });
     }
 
+    async handleFiles(isUpdate) {
+        return new Promise(async (resolve) => {
+            const { files = [] } = this.body;
+            const uploadedFiles = await awsS3.setFiles(files).upload();
+
+            for await (const file of uploadedFiles) {
+                if (isUpdate) {
+                    // await this._deleteRemovedFiles();
+                    // const prevFile = await File.findByPk(file.id);
+                    //
+                    // if (!prevFile) {
+                    //     this.newFile = await File.create(file);
+                    //     await this.newFile.setFileType(this.savedFileType);
+                    //     await this.newFile.setApplicant(this.newApplicant);
+                    // } else {
+                    //     prevFile.setFileType(this.savedFileType);
+                    // }
+                } else {
+                    const newFile = await File.create({
+                        contentType: file.contentType,
+                        filename: file.filename,
+                        size: file.size,
+                        url: file.url,
+                    });
+
+                    if (file.fileType && file.fileType.id) {
+                        await newFile.setFileType(file.fileType.id);
+                    }
+
+                    await newFile.setApplicant(this.newApplicant);
+                }
+            }
+            resolve();
+        });
+    }
+
     async handleSex() {
         return new Promise(async (resolve) => {
             const { sex = {} } = this.body;
 
-            await this.newApplicant.setVocabularySex(sex.id);
+            await this.newApplicant.setSex(sex.id);
 
             resolve();
         });
@@ -232,7 +266,7 @@ class ApplicantController {
                 const newPhone = await Phone.create({ number: phone.number });
 
                 if (phone.type && phone.type.id) {
-                    newPhone.setVocabularyPhoneType(phone.type.id);
+                    newPhone.setPhoneType(phone.type.id);
                     newPhone.setApplicant(this.newApplicant);
                 }
             }
@@ -260,7 +294,7 @@ class ApplicantController {
 
             for await (const messenger of messengers) {
                 const newMessenger = await Messenger.create({ accountName: messenger.accountName });
-                newMessenger.setVocabularyMessengerType(messenger.type.id);
+                newMessenger.setMessengerType(messenger.type.id);
                 newMessenger.setApplicant(this.newApplicant);
             }
 
@@ -274,12 +308,46 @@ class ApplicantController {
 
             for await (const link of links) {
                 const newLink = await Link.create({ link: link.link });
-                newLink.setVocabularyLinkType(link.type.id);
+                newLink.setLinkType(link.type.id);
                 newLink.setApplicant(this.newApplicant);
             }
 
             resolve();
         });
+    }
+
+    handleExperiences(isUpdate) {
+        return new Promise(async (resolve) => {
+            const { experiences = [] } = this.body;
+            if (isUpdate) {
+                // await this._deleteRemovedApplicantExperience();
+            }
+
+            for await (const experience of experiences) {
+                if (isUpdate) {
+                    // if (experience.id) {
+                    //     await this._updateExperience(experience);
+                    // } else {
+                    //     await this._findOrCreateApplicantExperience(experience);
+                    //     await this.savedExperience.setApplicant(this.newApplicant);
+                    //     await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
+                    // }
+                } else {
+                    const storedExperience = await Experience.create({
+                        period: experience.period,
+                        company: experience.company,
+                        info: experience.info,
+                    });
+
+                    for await (const position of (experience.positions || [])) {
+                        await storedExperience.addPosition(position.id);
+                    }
+
+                    this.newApplicant.addExperience(storedExperience);
+                }
+            }
+            resolve(this.savedExperience);
+        })
     }
 
 
@@ -334,29 +402,6 @@ class ApplicantController {
     //     });
     // }
     //
-    // handleExperiences(isUpdate) {
-    //     return new Promise(async (resolve) => {
-    //         if (isUpdate) {
-    //             await this._deleteRemovedApplicantExperience();
-    //         }
-    //
-    //         for await (const experience of this.experiences) {
-    //             if (isUpdate) {
-    //                 if (experience.id) {
-    //                     await this._updateExperience(experience);
-    //                 } else {
-    //                     await this._findOrCreateApplicantExperience(experience);
-    //                     await this.savedExperience.setApplicant(this.newApplicant);
-    //                     await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
-    //                 }
-    //             } else {
-    //                 await this._findOrCreateApplicantExperience(experience);
-    //                 await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
-    //             }
-    //         }
-    //         resolve(this.savedExperience);
-    //     })
-    // }
     //
     // async _deleteRemovedApplicantRegion() {
     //     const newRegionsIds = this.regions.map((region) => region.id);
@@ -432,7 +477,7 @@ class ApplicantController {
     //
     //     if (this.savedExperience) {
     //         await Experience.update(expInfo, { where: { id: expInfo.id } });
-    //         this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: VocabularyPosition } });
+    //         this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position } });
     //         await this.handlePositions(experience.positions, this.savedExperience, true);
     //     }
     // }

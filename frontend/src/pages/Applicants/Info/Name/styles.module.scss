@@ -7,7 +7,27 @@
     display: flex;
     align-items: center;
 
+    .nameText {
+        font-size: setUnit(32);
+        font-weight: 700;
+        margin-bottom: setUnit(5);
+    }
+
+    .nameLat {
+        font-size: setUnit(22);
+    }
+
+    .inActiveSearch {
+        font-size: setUnit(17);
+        font-weight: 700;
+    }
+
     .texts {
         margin-left: setUnit(16);
+        line-height: setUnit(32);
+    }
+
+    .sex {
+        font-weight: 300;
     }
 }

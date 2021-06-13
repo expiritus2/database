@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { capitalize } from 'lodash-es';
 import { Avatar } from 'components';
 
 import { useTranslate } from 'hooks';
@@ -14,20 +13,14 @@ const Name = (props) => {
 
     return (
         <div className={classNames(styles.name, className)}>
-            <Avatar src={photos?.[0]} />
+            <Avatar src={photos?.[0]?.url} />
             <div className={styles.texts}>
-                <h5>{name}</h5>
-                <p>{nameLat}</p>
-                <p>
-                    <span>
-                        {inActiveSearch ? translate.InActiveSearch : translate.InNotActiveSearch}
-                    </span>
+                <h2 className={styles.nameText}>{name}</h2>
+                <p className={styles.nameLat}>{nameLat}</p>
+                <p className={styles.inActiveSearch}>
+                    {inActiveSearch ? translate.InActiveSearch : translate.InNotActiveSearch}
                 </p>
-                <p>
-                    <span>
-                        {translate[capitalize(sex)]}
-                    </span>
-                </p>
+                <p className={styles.sex}>{sex?.label}</p>
             </div>
         </div>
     );
@@ -37,8 +30,12 @@ Name.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string,
     nameLat: PropTypes.string,
-    sex: PropTypes.string,
-    photos: PropTypes.arrayOf(PropTypes.string),
+    sex: PropTypes.shape({
+        label: PropTypes.string,
+    }),
+    photos: PropTypes.arrayOf(PropTypes.shape({
+        url: PropTypes.string,
+    })),
     inActiveSearch: PropTypes.bool,
 };
 

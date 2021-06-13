@@ -17,11 +17,11 @@ const Header = (props) => {
     return (
         <SubheaderWrapper className={classNames(className)}>
             <PaddingWrapper>
-                <h5>
+                <h2>
                     <span className={styles.name}>
                         {applicant?.id ? `${applicant?.name} (#${applicant?.id})` : null}
                     </span>
-                </h5>
+                </h2>
             </PaddingWrapper>
         </SubheaderWrapper>
     );

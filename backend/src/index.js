@@ -34,12 +34,20 @@ app.all('*', async () => {
 app.use(errorHandler);
 createAssociations();
 
-sequelize.sync({ force: true, alter: false, drop: false })
-    .then(() => {
-        app.listen(3000, () => {
-            console.log('Listening on port 3000!');
-        });
-    })
-    .catch((err) => {
-        console.log(err);
+const listen = () => {
+    app.listen(3000, () => {
+        console.log('Listening on port 3000!');
     });
+}
+
+const connectDb = (sync) => {
+    if (!sync) {
+        return listen();
+    }
+
+    return sequelize.sync({ force: false })
+        .then(() => listen())
+        .catch((err) => console.log(err));
+}
+
+connectDb(false);

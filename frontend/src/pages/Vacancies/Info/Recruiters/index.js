@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Item } from 'pages/Applicants/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -17,7 +17,7 @@ const Recruiters = (props) => {
     return (
         <div className={classNames(styles.value, className)}>
             {value.map(({ id, email }) => (
-                <Item
+                <InfoItem
                     key={id}
                     label={translate.Recruiters}
                     value={email}

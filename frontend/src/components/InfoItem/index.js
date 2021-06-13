@@ -4,20 +4,18 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const Item = (props) => {
+const InfoItem = (props) => {
     const { label, value, className } = props;
 
     return (
         <div className={classNames(styles.item, className)}>
-            <div className={styles.label}>
-                <span>{`${label}:`}</span>
-            </div>
+            <div className={styles.label}>{`${label}:`}</div>
             <div className={styles.value}>{value}</div>
         </div>
     );
 };
 
-Item.propTypes = {
+InfoItem.propTypes = {
     className: PropTypes.string,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.oneOfType([
@@ -28,10 +26,10 @@ Item.propTypes = {
     ]),
 };
 
-Item.defaultProps = {
+InfoItem.defaultProps = {
     className: '',
     label: '',
     value: '',
 };
 
-export default Item;
+export default InfoItem;

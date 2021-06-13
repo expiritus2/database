@@ -3,14 +3,18 @@
 
 .item {
     display: flex;
+    align-items: center;
     padding-left: setUnit(16);
+    margin: setUnit(5) 0;
 
     .label {
         width: setUnit(120);
         text-align: right;
+        font-weight: 700;
     }
 
     .value {
         margin-left: setUnit(20);
+        flex: 1;
     }
 }

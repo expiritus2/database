@@ -2,13 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper } from 'components';
+import { ScrollWrapper, InfoItem } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
 import { useTranslate } from 'hooks';
 
-import { Item } from 'pages/Applicants/Info/components';
 import { capitalize } from 'lodash-es';
 import { workScheduleMap } from 'settings/constants/workSchedule';
 import Actions from './Actions';
@@ -43,20 +42,20 @@ const Info = (props) => {
                                 <Active value={vacancy?.active} />
                             </div>
                             <Recruiters value={vacancy?.users} />
-                            <Item
+                            <InfoItem
                                 label={translate.Salary}
                                 value={(
                                     <SalaryValue value={vacancy?.salary} currency={vacancy?.currency} />
                                 )}
                             />
-                            <Item label={translate.ExperienceYears} value={vacancy?.experienceYears} />
+                            <InfoItem label={translate.ExperienceYears} value={vacancy?.experienceYears} />
                             <Skills skills={vacancy?.skills} />
                             <Regions regions={vacancy?.regions} />
-                            <Item
+                            <InfoItem
                                 label={translate.Place}
                                 value={vacancy?.place?.map((place) => translate[capitalize(place)]).join(', ')}
                             />
-                            <Item
+                            <InfoItem
                                 label={translate.WorkSchedule}
                                 value={vacancy?.workSchedule?.map((item) => translate[workScheduleMap[item]]).join(', ')}
                             />

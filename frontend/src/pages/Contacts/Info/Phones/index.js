@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { capitalize } from 'lodash-es';
 
-import { FormattedPhone } from 'components';
+import { FormattedPhone, InfoItem } from 'components';
 import { useTranslate } from 'hooks';
-import { Item } from 'pages/Contacts/Info/components';
 
 import styles from './styles.module.scss';
 
@@ -19,7 +18,7 @@ const Phones = (props) => {
     return (
         <div className={classNames(styles.phones, className)}>
             {phones.map((phone, index) => (
-                <Item
+                <InfoItem
                     key={index}
                     label={translate[capitalize(phone?.type)] || translate.Phone}
                     value={phone?.number && <FormattedPhone>{phone?.number}</FormattedPhone>}

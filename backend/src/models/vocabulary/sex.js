@@ -17,6 +17,6 @@ Sex.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularySex' });
+},{ sequelize, modelName: 'sex' });
 
 module.exports = Sex;

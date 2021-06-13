@@ -11,12 +11,8 @@ const Skills = (props) => {
 
     return (
         <div className={classNames(styles.skills, className)}>
-            <span>
-                {`${translate.Skills}: `}
-            </span>
-            <span className={styles.values}>
-                {skills.join(', ')}
-            </span>
+            <span className={styles.label}>{`${translate.Skills}: `}</span>
+            <span className={styles.values}>{skills.join(', ')}</span>
         </div>
     );
 };

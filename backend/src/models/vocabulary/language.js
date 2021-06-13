@@ -17,6 +17,6 @@ Language.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyLanguage' });
+},{ sequelize, modelName: 'language' });
 
 module.exports = Language;

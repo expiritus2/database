@@ -3,29 +3,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { messengersOptions } from 'settings/constants/messengers';
-import { useTranslate } from 'hooks';
-import { Item } from 'pages/Applicants/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
 const Messengers = (props) => {
     const { className, list } = props;
-    const { translate } = useTranslate();
 
     if (!list || !list.length) return null;
 
-    const getItem = (val) => messengersOptions(translate).find((option) => option?.value === val);
-
     return (
         <div className={classNames(styles.list, className)}>
-            {list.map((item, index) => (
-                <Item
-                    key={index}
-                    label={getItem(item?.messenger)?.label}
-                    value={item?.accountName}
-                />
-            ))}
+            {list.map((messenger, index) => {
+                if (!messenger?.messengerType) return null;
+
+                return (
+                    <InfoItem
+                        key={messenger?.id || index}
+                        label={messenger?.messengerType?.label}
+                        value={messenger?.accountName}
+                    />
+                );
+            })}
         </div>
     );
 };
@@ -33,7 +32,9 @@ const Messengers = (props) => {
 Messengers.propTypes = {
     className: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape({
-        messenger: PropTypes.string,
+        messengerType: PropTypes.shape({
+            label: PropTypes.string,
+        }),
         accountName: PropTypes.string,
     })),
 };

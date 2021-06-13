@@ -2,15 +2,15 @@ const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../util/database');
 
-class Language extends Model {}
+class LanguageSkill extends Model {}
 
-Language.init({
+LanguageSkill.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-}, { sequelize, modelName: 'language' });
+}, { sequelize, modelName: 'languageSkill' });
 
-module.exports = Language;
+module.exports = LanguageSkill;

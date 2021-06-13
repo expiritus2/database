@@ -8,10 +8,22 @@ const Applicant = require('../../models/applicant');
 const VocabularyPosition = require('../../models/vocabulary/position');
 const VocabularySkill = require('../../models/vocabulary/skill');
 const VocabularyRegion = require('../../models/vocabulary/region');
+const VocabularyEducation = require('../../models/vocabulary/education');
+const VocabularySex = require('../../models/vocabulary/sex');
+const VocabularyMessengerType = require('../../models/vocabulary/messengerType');
+const VocabularyCurrency = require('../../models/vocabulary/currency');
+const VocabularyWorkPlace = require('../../models/vocabulary/workPlace');
+const VocabularyLanguage = require('../../models/vocabulary/language');
+const VocabularyLanguageLevel = require('../../models/vocabulary/languageLevel');
 
 const File = require('../../models/file');
 const Photo = require('../../models/photo');
+const Phone = require('../../models/phone');
+const Email = require('../../models/email');
 const Experience = require('../../models/experience');
+const Messenger = require('../../models/messenger');
+const Salary = require('../../models/salary');
+const LanguageSkill = require('../../models/languageSkill');
 
 const { ApplicantController } = require('../../controllers/applicantController');
 const Sequelize = require('sequelize');
@@ -29,23 +41,27 @@ const middlewares = [
     validateRequest,
 ]
 
+const includeModels = [
+    { model: VocabularyPosition },
+    { model: VocabularySkill },
+    { model: VocabularyRegion },
+    { model: VocabularyEducation },
+    { model: VocabularySex },
+    { model: VocabularyWorkPlace },
+    { model: Photo },
+    { model: Phone },
+    { model: File },
+    { model: Email },
+    { model: Salary, include: [{ model: VocabularyCurrency }] },
+    { model: Messenger, include: [{ model: VocabularyMessengerType }] },
+    { model: Experience, include: [{ model: VocabularyPosition } ] },
+    { model: LanguageSkill, include: [{ model: VocabularyLanguage }, { model: VocabularyLanguageLevel }] }
+]
+
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
-    const populatedApplicant = await Applicant.findByPk(newApplicant.id, {
-        include: [
-            { model: VocabularyPosition },
-            { model: VocabularySkill },
-            { model: VocabularyRegion },
-            { model: Photo },
-            { model: File },
-            {
-                model: Experience, include: [
-                    { model: VocabularyPosition }
-                ]
-            },
-        ],
-    });
+    const populatedApplicant = await Applicant.findByPk(newApplicant.id, { include: includeModels });
 
     res.send({ result: populatedApplicant });
 });
@@ -68,16 +84,7 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [
-            { model: VocabularyPosition },
-            { model: VocabularySkill },
-            { model: VocabularyRegion },
-            {
-                model: Experience, include: [
-                    { model: VocabularyPosition }
-                ]
-            },
-        ],
+        include: includeModels,
     });
 
     res.send({ result: allApplicants });

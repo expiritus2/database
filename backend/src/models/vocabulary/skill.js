@@ -17,6 +17,6 @@ Skill.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularySkill' });
+},{ sequelize, modelName: 'skill' });
 
 module.exports = Skill;

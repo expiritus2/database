@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Item } from 'pages/Contacts/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -16,7 +16,7 @@ const Positions = (props) => {
 
     return (
         <div className={classNames(styles.positions, className)}>
-            <Item
+            <InfoItem
                 label={translate.Position}
                 value={positions.map(({ label }) => label).join(', ')}
             />

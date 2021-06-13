@@ -17,6 +17,6 @@ PhoneType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyPhoneType' });
+},{ sequelize, modelName: 'phoneType' });
 
 module.exports = PhoneType;

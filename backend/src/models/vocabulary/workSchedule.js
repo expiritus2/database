@@ -17,6 +17,6 @@ WorkSchedule.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyWorkSchedule' });
+},{ sequelize, modelName: 'workSchedule' });
 
 module.exports = WorkSchedule;

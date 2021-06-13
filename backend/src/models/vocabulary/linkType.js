@@ -17,6 +17,6 @@ LinkType.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyLinkType' });
+},{ sequelize, modelName: 'linkType' });
 
 module.exports = LinkType;

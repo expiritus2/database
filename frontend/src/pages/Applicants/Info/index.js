@@ -2,20 +2,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, SalaryValue } from 'components';
+import { ScrollWrapper, SalaryValue, InfoItem } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
-import { educationMap } from 'settings/constants/education';
-import { Item } from 'pages/Applicants/Info/components';
 import { useTranslate } from 'hooks';
-import { capitalize } from 'lodash-es';
 import Name from './Name';
 import Actions from './Actions';
 import Header from './Header';
 import Empty from './Empty';
 import Phones from './Phones';
 import Emails from './Emails';
+import Languages from './Languages';
 import Positions from './Positions';
 import Skills from './Skills';
 import Regions from './Regions';
@@ -29,20 +27,6 @@ const Info = (props) => {
     const { translate } = useTranslate();
     const applicant = useSelector(getCurrentApplicantSelector);
 
-    const getLanguageValue = () => {
-        const applicantLanguages = applicant?.languages;
-        if (!applicant || !applicantLanguages) return [];
-        return applicant.languages.map((language, index) => {
-            if (!language?.name) return null;
-            const name = capitalize(language?.name);
-            return (
-                <div key={index}>
-                    {`${translate[name]}${language?.level ? ` - ${language?.level}` : ''}`}
-                </div>
-            );
-        }).filter((language) => language);
-    };
-
     return (
         <>
             <Header />
@@ -55,16 +39,16 @@ const Info = (props) => {
                             <Phones phones={applicant?.phones} />
                             <Emails emails={applicant?.emails} />
                             <Messengers list={applicant?.messengers} />
-                            <Item
+                            <InfoItem
                                 label={translate.Salary}
                                 value={(
                                     <SalaryValue
-                                        currency={applicant?.salary?.currency}
+                                        currency={applicant?.salary?.currency?.label}
                                         value={applicant?.salary?.amount}
                                     />
                                 )}
                             />
-                            <Item
+                            <InfoItem
                                 label={translate.Experience}
                                 value={
                                     applicant?.experienceYears
@@ -74,19 +58,16 @@ const Info = (props) => {
                             />
                             <Positions positions={applicant?.positions} />
                             <Skills skills={applicant?.skills} />
-                            <Item
+                            <InfoItem
                                 label={translate.Place}
-                                value={applicant?.place?.map((place) => translate[capitalize(place)]).join(', ')}
+                                value={applicant?.workPlaces?.map((place) => place?.label).join(', ')}
                             />
                             <Regions regions={applicant?.regions} />
-                            <Item
+                            <InfoItem
                                 label={translate.Education}
-                                value={translate[educationMap[applicant?.education?.trim()]]}
+                                value={applicant?.education?.label}
                             />
-                            <Item
-                                label={translate.Languages}
-                                value={getLanguageValue()}
-                            />
+                            <Languages list={applicant?.languageSkills} />
                             <Information value={applicant?.info} />
                         </div>
                     </ScrollWrapper>

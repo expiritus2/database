@@ -8,7 +8,7 @@ const THead = ({ columns, filter, ...props }) => (
     <thead>
         <TR {...props}>
             {columns.map((column) => (
-                <TH key={column.key} column={column} filter={filter} />
+                <TH key={column.key} column={column} filter={filter} className={column?.className} />
             ))}
         </TR>
     </thead>

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Item } from 'pages/Vacancies/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -14,7 +14,7 @@ const Position = (props) => {
 
     return (
         <div className={classNames(styles.position, className)}>
-            <Item
+            <InfoItem
                 label=""
                 value={<h5>{position?.label}</h5>}
             />

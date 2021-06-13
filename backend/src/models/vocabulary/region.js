@@ -17,6 +17,6 @@ Region.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyRegion' });
+},{ sequelize, modelName: 'region' });
 
 module.exports = Region;

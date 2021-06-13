@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import styles from '../../styles.module.scss';
 
-const TH = ({ column, filter }) => (
-    <th style={{ width: column.width }}>
+const TH = ({ column, filter, className }) => (
+    <th style={{ width: column.width }} className={className}>
         <div>{column.title}</div>
         {filter && typeof filter === 'function' && (
             <div className={styles.filter}>
@@ -15,6 +15,7 @@ const TH = ({ column, filter }) => (
 );
 
 TH.propTypes = {
+    className: PropTypes.string,
     column: PropTypes.shape({
         title: PropTypes.string,
         width: PropTypes.string,
@@ -23,6 +24,7 @@ TH.propTypes = {
 };
 
 TH.defaultProps = {
+    className: undefined,
     filter: null,
 };
 

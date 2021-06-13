@@ -24,7 +24,7 @@ const ApplicantTable = (props) => {
         return [
             { key: 'id', title: 'ID', width: '7%' },
             { key: 'salary', title: translate.Salary, width: '15%' },
-            { key: 'name', title: translate.Name, width: '78%' },
+            { key: 'name', title: translate.Name, width: '78%', className: styles.colName },
         ];
     };
 
@@ -32,7 +32,7 @@ const ApplicantTable = (props) => {
         if (!data) return [];
         return data?.map((row) => ({
             id: row?.id,
-            salary: <SalaryValue value={row?.salary?.amount} currency={row?.salary?.currency} />,
+            salary: <SalaryValue value={row?.salary?.amount} currency={row?.salary?.currency?.label} />,
             name: <Name {...row} />,
         }));
     };

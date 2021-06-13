@@ -17,6 +17,6 @@ LanguageLevel.init({
     value: {
         type: DataTypes.STRING,
     }
-},{ sequelize, modelName: 'vocabularyLanguageLevel' });
+},{ sequelize, modelName: 'languageLevel' });
 
 module.exports = LanguageLevel;

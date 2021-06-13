@@ -11,15 +11,15 @@ Experience.init({
         allowNull: false,
         primaryKey: true,
     },
+    period: {
+        type: DataTypes.ARRAY(DataTypes.DATE),
+    },
     company: {
         type: DataTypes.STRING,
     },
     info: {
         type: DataTypes.TEXT,
     },
-    period: {
-        type: DataTypes.ARRAY(DataTypes.DATE),
-    }
 }, { sequelize, modelName: 'experience' });
 
 module.exports = Experience;

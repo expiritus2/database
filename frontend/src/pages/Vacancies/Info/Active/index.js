@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Item } from 'pages/Vacancies/Info/components';
+import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -21,7 +21,7 @@ const Active = (props) => {
 
     return (
         <div className={classNames(styles.active, className)}>
-            <Item
+            <InfoItem
                 label=""
                 value={(
                     <div>

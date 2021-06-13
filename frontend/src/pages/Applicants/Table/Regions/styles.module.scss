@@ -1,9 +1,13 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.skills {
+.regions {
     display: flex;
     align-items: center;
+
+    .label {
+        font-weight: 700;
+    }
 
     .values {
         margin-left: setUnit(10);
