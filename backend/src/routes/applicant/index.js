@@ -15,6 +15,7 @@ const VocabularyCurrency = require('../../models/vocabulary/currency');
 const VocabularyWorkPlace = require('../../models/vocabulary/workPlace');
 const VocabularyLanguage = require('../../models/vocabulary/language');
 const VocabularyLanguageLevel = require('../../models/vocabulary/languageLevel');
+const VocabularyPhoneType = require('../../models/vocabulary/phoneType');
 
 const File = require('../../models/file');
 const Photo = require('../../models/photo');
@@ -49,7 +50,7 @@ const includeModels = [
     { model: VocabularySex },
     { model: VocabularyWorkPlace },
     { model: Photo },
-    { model: Phone },
+    { model: Phone, include: [{ model: VocabularyPhoneType }] },
     { model: File },
     { model: Email },
     { model: Salary, include: [{ model: VocabularyCurrency }] },

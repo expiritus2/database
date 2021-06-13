@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { capitalize } from 'lodash-es';
 
 import { FormattedPhone, InfoItem } from 'components';
 import { useTranslate } from 'hooks';
@@ -20,7 +19,7 @@ const Phones = (props) => {
             {phones.map((phone, index) => (
                 <InfoItem
                     key={index}
-                    label={translate[capitalize(phone?.type)] || translate.Phone}
+                    label={phone?.phoneType?.label || translate.Phone}
                     value={phone?.number && <FormattedPhone>{phone?.number}</FormattedPhone>}
                 />
             ))}
@@ -31,7 +30,9 @@ const Phones = (props) => {
 Phones.propTypes = {
     className: PropTypes.string,
     phones: PropTypes.arrayOf(PropTypes.shape({
-        type: PropTypes.string,
+        phoneType: PropTypes.shape({
+            label: PropTypes.string,
+        }),
         number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     })),
 };
