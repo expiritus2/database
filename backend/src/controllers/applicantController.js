@@ -1,19 +1,19 @@
 const Applicant = require('../models/applicant');
-const Experience = require('../models/experience');
 
 const File = require('../models/file');
 const Photo = require('../models/photo');
-const Email = require('../models/email');
-const Messenger = require('../models/messenger');
-const Link = require('../models/link');
-
-const Salary = require('../models/salary');
-
-const LanguageSkill = require('../models/languageSkill');
 const Phone = require('../models/phone');
+const Email = require('../models/email');
+const Link = require('../models/link');
+const Experience = require('../models/experience');
+const Messenger = require('../models/messenger');
+const Salary = require('../models/salary');
+const LanguageSkill = require('../models/languageSkill');
 
 const DatabaseCreationError = require('../errors/database-creation-error');
 const awsS3 = require('../services/AwsS3');
+
+const { includeModels } = require('../settings/applicant');
 
 class ApplicantController {
     constructor(body) {
@@ -52,25 +52,41 @@ class ApplicantController {
 
     update(id) {
         return new Promise(async (resolve) => {
-            // try {
-            //     this.prevApplicant = await Applicant.findByPk(id);
-            //     await Applicant.update(this.body, { where: { id } });
-            //     this.newApplicant = await Applicant.findByPk(id, { include: { all: true } });
-            //
-            //     if (this.newApplicant) {
-            //         await this.handlePositions(this.positions, this.newApplicant, true);
-            //         await this.handleSkills(true);
-            //         await this.handleRegions(true);
-            //         await this.handleExperiences(true);
-            //     }
-            //
-            //     // await this.deleteFiles();
-            //
-            //     resolve(this.newApplicant);
-            // } catch (e) {
-            //     console.error(e);
-            //     throw new DatabaseCreationError();
-            // }
+            try {
+                const { name, nameLat, inActiveSearch, experienceYears, info, birthDate } = this.body;
+                const storedApplicant = await Applicant.findOne({ where: { id }, include: includeModels });
+
+                if (storedApplicant) {
+                    storedApplicant.name = name;
+                    storedApplicant.nameLat = nameLat;
+                    storedApplicant.inActiveSearch = inActiveSearch;
+                    storedApplicant.experienceYears = experienceYears;
+                    storedApplicant.info = info;
+                    storedApplicant.birthDate = birthDate;
+                    this.updatedApplicant = await storedApplicant.save();
+                    //     await this.handleSalary(true);
+                    //     await this.handleEducation(true);
+                    //     await this.handlePositions(true);
+                    //     await this.handleSkills(true);
+                    //     await this.handleWorkPlaces(true);
+                    //     await this.handleRegions(true);
+                    //     await this.handleLanguages(true);
+                    //     await this.handlePhotos(true);
+                    //     await this.handleSex(true);
+                    //     await this.handlePhones(true);
+                    //     await this.handleEmails(true);
+                    //     await this.handleMessengers(true);
+                    //     await this.handleLinks(true);
+                    //     await this.handleFiles(true);
+                    //     await this.handleExperiences(true);
+                }
+
+
+                resolve(this.updatedApplicant);
+            } catch (e) {
+                console.error(e);
+                throw new DatabaseCreationError();
+            }
         });
     }
 

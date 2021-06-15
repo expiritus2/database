@@ -2,24 +2,12 @@ import { saveVocabularyWorkScheduleAction, saveVocabularyWorkSchedulesAction } f
 import { saveVocabularyWorkSchedule, saveVocabularyWorkSchedules } from 'api/vocabulary';
 import Api from 'store/effects/core/api';
 
-export const saveVocabularyWorkScheduleEffect = (cfg, options, cb) => {
-    const requestParams = { action: saveVocabularyWorkScheduleAction, method: saveVocabularyWorkSchedule };
-    let sendRequest = Api.execBase(requestParams);
+export const saveVocabularyWorkScheduleEffect = Api.execResult({
+    action: saveVocabularyWorkScheduleAction,
+    method: saveVocabularyWorkSchedule,
+});
 
-    if (options?.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
-
-    return sendRequest(cfg, options, cb);
-};
-
-export const saveVocabularyWorkSchedulesEffect = (cfg, options, cb) => {
-    const requestParams = { action: saveVocabularyWorkSchedulesAction, method: saveVocabularyWorkSchedules };
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options?.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
-
-    return sendRequest(cfg, options, cb);
-};
+export const saveVocabularyWorkSchedulesEffect = Api.execResult({
+    action: saveVocabularyWorkSchedulesAction,
+    method: saveVocabularyWorkSchedules,
+});

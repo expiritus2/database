@@ -24,20 +24,22 @@ const ModalComponent = (props) => {
             onClose={onClose}
             closeAfterTransition={closeAfterTransition}
         >
-            <div className={classNames(styles.card, cardClassName)}>
-                <div className={styles.header}>
-                    <h3 className={styles.title}>{title}</h3>
-                    <AiOutlineCloseCircle onClick={onClose} className={styles.closeIcon} />
-                </div>
-                <div className={classNames(styles.cardContent, cardContentClassName)}>
-                    {children}
-                </div>
-                {actionsChildren && (
-                    <div className={classNames(styles.actions, cardActionsClassName)}>
-                        {actionsChildren}
+            {open && (
+                <div className={classNames(styles.card, cardClassName)}>
+                    <div className={styles.header}>
+                        <h3 className={styles.title}>{title}</h3>
+                        <AiOutlineCloseCircle onClick={onClose} className={styles.closeIcon} />
                     </div>
-                )}
-            </div>
+                    <div className={classNames(styles.cardContent, cardContentClassName)}>
+                        {children}
+                    </div>
+                    {actionsChildren && (
+                        <div className={classNames(styles.actions, cardActionsClassName)}>
+                            {actionsChildren}
+                        </div>
+                    )}
+                </div>
+            )}
         </SimpleModal>
     );
 };

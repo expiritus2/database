@@ -1,11 +1,11 @@
 import Api from 'store/effects/core/api';
 import {
     setApplicantExperienceFormStateAction,
-    submitApplicantFormAction,
+    createApplicantAction,
     setApplicantFormStateAction,
     resetApplicantFormAction,
     setApplicantFormDataAction,
-    updateApplicantFormAction,
+    updateApplicantAction,
 } from 'store/actions/forms/applicant';
 import { createApplicant, updateApplicant } from 'api/applicants';
 import { getState } from 'store/index';
@@ -24,7 +24,7 @@ export const resetApplicantFormEffect = () => (dispatch) => {
 };
 
 export const createApplicantFormEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execBase({ action: submitApplicantFormAction, method: createApplicant });
+    const sendRequest = Api.execResult({ action: createApplicantAction, method: createApplicant });
     const { forms: { applicant } } = getState();
 
     const clonedApplicant = prepareData(applicant);
@@ -32,8 +32,8 @@ export const createApplicantFormEffect = (cfg, options, cb) => {
     return sendRequest(clonedApplicant, options, cb);
 };
 
-export const updateApplicantFormEffect = (cfg, options, cb) => () => {
-    const sendRequest = Api.execBase({ action: updateApplicantFormAction, method: updateApplicant });
+export const updateApplicantFormEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: updateApplicantAction, method: updateApplicant });
     const { forms: { applicant } } = getState();
 
     const clonedApplicant = prepareData(applicant);

@@ -11,14 +11,8 @@ import { getState } from 'store';
 import { get } from 'lodash-es';
 
 export const getApplicantsEffect = (cfg, options = {}, cb) => {
+    const sendRequest = Api.execResult({ action: getApplicantsAction, method: getApplicants });
     const { applicants } = getState();
-    const requestParams = { action: getApplicantsAction, method: getApplicants };
-
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
 
     const config = {
         search: applicants?.search?.string || undefined,
@@ -49,8 +43,7 @@ export const setApplicantsSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setApplicantsSearchAction({ ...(applicants?.search || {}), ...cfg }));
 };
 
-export const requestRefreshApplicantsEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execResult({ action: requestRefreshApplicantsAction, method: getApplicants });
-
-    return sendRequest(cfg, options, cb);
-};
+export const requestRefreshApplicantsEffect = Api.execResult({
+    action: requestRefreshApplicantsAction,
+    method: getApplicants,
+});

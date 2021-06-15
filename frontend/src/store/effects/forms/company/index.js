@@ -21,8 +21,8 @@ export const resetCompanyFormEffect = () => (dispatch) => {
 };
 
 export const submitCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadCompanyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: submitCompanyFormAction, method: createCompany });
+    const sendUploadFiles = Api.execResult({ action: uploadCompanyFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: submitCompanyFormAction, method: createCompany });
     const { forms: { company } } = getState();
 
     const formData = new FormData();
@@ -46,8 +46,8 @@ export const submitCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
 };
 
 export const updateCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadCompanyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: updateCompanyFormAction, method: updateCompany });
+    const sendUploadFiles = Api.execResult({ action: uploadCompanyFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: updateCompanyFormAction, method: updateCompany });
     const { forms: { company } } = getState();
 
     const formData = new FormData();

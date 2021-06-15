@@ -21,7 +21,7 @@ const SimpleModal = (props) => {
             <div className={classNames(styles.contentWrapper)}>
                 <div className={classNames(styles.content, contentClassName)}>
                     <div className={classNames(styles.innerHolder, { [styles.scroll]: scroll }, innerHolderClassName)}>
-                        {children}
+                        {isOpen && children}
                     </div>
                 </div>
             </div>

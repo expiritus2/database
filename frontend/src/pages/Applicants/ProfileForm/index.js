@@ -101,7 +101,7 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     label={translate.Address}
                     onChange={onChangeField}
-                    value={formFields.address}
+                    value={formFields.address || ''}
                 />
                 <Languages
                     name="languages"

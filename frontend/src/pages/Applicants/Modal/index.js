@@ -49,16 +49,21 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        let effect = createApplicantFormEffect;
-        if (modal.mode === EDIT) {
-            effect = updateApplicantFormEffect;
-        }
         setIsPending(true);
-        dispatch(effect({}, {}, (err) => {
+
+        const effect = modal.mode === EDIT ? updateApplicantFormEffect : createApplicantFormEffect;
+        dispatch(effect({}, { silent: true }, (err) => {
             if (!err) {
-                dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                if (modal.mode === ADD) {
+                    return dispatch(getApplicantsEffect({}, { silent: true }, () => {
+                        dispatch(resetApplicantFormEffect());
+                        dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                        setIsPending(false);
+                    }));
+                }
+
                 dispatch(resetApplicantFormEffect());
-                dispatch(getApplicantsEffect());
+                dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
             }
             setIsPending(false);
         }));

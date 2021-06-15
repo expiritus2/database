@@ -12,13 +12,8 @@ import { get } from 'lodash-es';
 
 export const getContactsEffect = (cfg, options = {}, cb) => {
     const { contacts } = getState();
-    const requestParams = { action: getContactsAction, method: getContacts };
 
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
+    const sendRequest = Api.execResult({ action: getContactsAction, method: getContacts });
 
     const config = {
         search: contacts?.search?.string || undefined,
@@ -49,8 +44,7 @@ export const setContactsSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setContactsSearchAction({ ...(contacts?.search || {}), ...cfg }));
 };
 
-export const requestRefreshContactsEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execResult({ action: requestRefreshContactsAction, method: getContacts });
-
-    return sendRequest(cfg, options, cb);
-};
+export const requestRefreshContactsEffect = Api.execResult({
+    action: requestRefreshContactsAction,
+    method: getContacts,
+});

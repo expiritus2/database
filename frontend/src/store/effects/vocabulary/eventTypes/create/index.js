@@ -2,24 +2,12 @@ import { saveVocabularyEventTypeAction, saveVocabularyEventTypesAction } from 's
 import { saveVocabularyEventType, saveVocabularyEventTypes } from 'api/vocabulary';
 import Api from 'store/effects/core/api';
 
-export const saveVocabularyEventTypeEffect = (cfg, options, cb) => {
-    const requestParams = { action: saveVocabularyEventTypeAction, method: saveVocabularyEventType };
-    let sendRequest = Api.execBase(requestParams);
+export const saveVocabularyEventTypeEffect = Api.execResult({
+    action: saveVocabularyEventTypeAction,
+    method: saveVocabularyEventType,
+});
 
-    if (options?.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
-
-    return sendRequest(cfg, options, cb);
-};
-
-export const saveVocabularyEventTypesEffect = (cfg, options, cb) => {
-    const requestParams = { action: saveVocabularyEventTypesAction, method: saveVocabularyEventTypes };
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options?.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
-
-    return sendRequest(cfg, options, cb);
-};
+export const saveVocabularyEventTypesEffect = Api.execResult({
+    action: saveVocabularyEventTypesAction,
+    method: saveVocabularyEventTypes,
+});

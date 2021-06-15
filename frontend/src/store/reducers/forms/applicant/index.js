@@ -3,7 +3,7 @@ import {
     resetApplicantFormAction,
     setApplicantExperienceFormStateAction,
     setApplicantFormStateAction,
-    submitApplicantFormAction,
+    createApplicantAction,
     uploadFilesAction,
     setApplicantFormDataAction,
 } from 'store/actions/forms/applicant';
@@ -53,7 +53,7 @@ export default handleActions({
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [submitApplicantFormAction]: (state, { payload }) => ({
+    [createApplicantAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),

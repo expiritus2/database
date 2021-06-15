@@ -12,13 +12,8 @@ import { get } from 'lodash-es';
 
 export const getVacanciesEffect = (cfg, options = {}, cb) => {
     const { vacancies } = getState();
-    const requestParams = { action: getVacanciesAction, method: getVacancies };
 
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
+    const sendRequest = Api.execResult({ action: getVacanciesAction, method: getVacancies });
 
     const config = {
         search: vacancies?.search?.string || undefined,
@@ -49,8 +44,7 @@ export const setVacanciesSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setVacanciesSearchAction({ ...(vacancies?.search || {}), ...cfg }));
 };
 
-export const requestRefreshVacanciesEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execResult({ action: requestRefreshVacanciesAction, method: getVacancies });
-
-    return sendRequest(cfg, options, cb);
-};
+export const requestRefreshVacanciesEffect = Api.execResult({
+    action: requestRefreshVacanciesAction,
+    method: getVacancies,
+});

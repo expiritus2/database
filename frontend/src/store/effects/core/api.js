@@ -7,26 +7,11 @@ export default class Api {
      * @param  method - request function returning Promise }
      * @returns function passing cfg = {}, options = {} for the method and cb(error, result) function
      */
-    static execBase({ action, method }) {
-        return (cfg = {}, options = {}, cb) => {
-            const opts = { showError: true, ...options };
-            return (
-                Api.execFunc({ cfg, options: opts, action, method, cb })
-            );
-        };
-    }
-
-    /**
-     *
-     * @param action - redux action
-     * @param method - function for sending request
-     * @returns {function(*=, *=, *): function(*): Promise<void>}
-     */
     static execResult({ action, method }) {
         return (cfg = {}, options = {}, cb) => {
             const opts = { showError: true, ...options };
             return (
-                Api.execFunc({ cfg, options: opts, action, method, pending: false, cb })
+                Api.execFunc({ cfg, options: opts, action, method, cb })
             );
         };
     }
@@ -41,11 +26,11 @@ export default class Api {
      * @param cb - callback by success or failure request
      * @returns {function(*): Promise<void>}
      */
-    static execFunc({ cfg, options, action, method, pending = true, cb }) {
+    static execFunc({ cfg, options, action, method, cb }) {
         const { showError, ...opts } = options;
 
         return async (dispatch) => {
-            if (pending) {
+            if (!options.silent) {
                 Api.setPending({ dispatch, action });
             }
 

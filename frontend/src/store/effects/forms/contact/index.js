@@ -21,8 +21,8 @@ export const resetContactFormEffect = () => (dispatch) => {
 };
 
 export const submitContactFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadContactFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: submitContactFormAction, method: createContact });
+    const sendUploadFiles = Api.execResult({ action: uploadContactFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: submitContactFormAction, method: createContact });
     const { forms: { contact } } = getState();
 
     const formData = new FormData();
@@ -46,8 +46,8 @@ export const submitContactFormEffect = (cfg, options, cb) => (dispatch) => {
 };
 
 export const updateContactFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadContactFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: updateContactFormAction, method: updateContact });
+    const sendUploadFiles = Api.execResult({ action: uploadContactFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: updateContactFormAction, method: updateContact });
     const { forms: { contact } } = getState();
 
     const formData = new FormData();

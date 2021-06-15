@@ -12,13 +12,8 @@ import { get } from 'lodash-es';
 
 export const getCompaniesEffect = (cfg, options = {}, cb) => {
     const { companies } = getState();
-    const requestParams = { action: getCompaniesAction, method: getCompanies };
 
-    let sendRequest = Api.execBase(requestParams);
-
-    if (options.silent) {
-        sendRequest = Api.execResult(requestParams);
-    }
+    const sendRequest = Api.execResult({ action: getCompaniesAction, method: getCompanies });
 
     const config = {
         search: companies?.search?.string || undefined,
@@ -49,8 +44,7 @@ export const setCompaniesSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setCompaniesSearchAction({ ...(companies?.search || {}), ...cfg }));
 };
 
-export const requestRefreshCompaniesEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execResult({ action: requestRefreshCompaniesAction, method: getCompanies });
-
-    return sendRequest(cfg, options, cb);
-};
+export const requestRefreshCompaniesEffect = Api.execResult({
+    action: requestRefreshCompaniesAction,
+    method: getCompanies,
+});

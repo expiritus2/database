@@ -22,8 +22,8 @@ export const resetVacancyFormEffect = () => (dispatch) => {
 };
 
 export const submitVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadVacancyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: submitVacancyFormAction, method: createVacancy });
+    const sendUploadFiles = Api.execResult({ action: uploadVacancyFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: submitVacancyFormAction, method: createVacancy });
     const { forms: { vacancy } } = getState();
 
     const formData = new FormData();
@@ -53,8 +53,8 @@ export const submitVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
 };
 
 export const updateVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execBase({ action: uploadVacancyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execBase({ action: updateVacancyFormAction, method: updateVacancy });
+    const sendUploadFiles = Api.execResult({ action: uploadVacancyFilesAction, method: uploadFiles });
+    const sendRequest = Api.execResult({ action: updateVacancyFormAction, method: updateVacancy });
     const { forms: { vacancy } } = getState();
 
     const formData = new FormData();
