@@ -30,6 +30,14 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
     res.send({ result: populatedApplicant });
 });
 
+router.put('/api/applicants/:id', async (req, res) => {
+    const savedApplicant = new ApplicantController(req.body);
+    const updatedApplicant = await savedApplicant.update(req.params.id);
+    const populatedApplicant = await Applicant.findByPk(updatedApplicant.id, { include: includeModels, attributes });
+
+    res.send({ result: populatedApplicant });
+});
+
 router.get('/api/applicants', requireAuth, async (req, res) => {
     const { page, countPerPage, search, active } = req.query || {};
     const searchCriteria = {
@@ -53,13 +61,6 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
     });
 
     res.send({ result: allApplicants });
-});
-
-router.put('/api/applicants/:id', async (req, res) => {
-    const savedApplicant = new ApplicantController(req.body);
-    const updatedApplicant = await savedApplicant.update(req.params.id);
-
-    res.send({ result: updatedApplicant });
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {

@@ -35,7 +35,7 @@ const initialData = {
     phones: [{ type: '', number: '' }],
     messengers: [{ type: '', accountName: '' }],
     links: [{ type: '', link: '' }],
-    emails: [''],
+    emails: [{ email: '' }],
     files: [],
     experienceYears: 0,
     experiences: [

@@ -15,13 +15,13 @@ const Emails = (props) => {
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
 
-    const onAddPhone = () => {
-        setValues([...values, '']);
+    const onAddEmail = () => {
+        setValues([...values, { email: '' }]);
     };
 
     const onChangeField = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, event.target.value);
+        clonedValues.splice(index, 1, { email: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
@@ -41,7 +41,7 @@ const Emails = (props) => {
                     <Input
                         className={styles.inputField}
                         label={translate.Email}
-                        value={val}
+                        value={val?.email || ''}
                         onChange={(event) => onChangeField(event, index)}
                     />
                     {values?.length > 1 && (
@@ -49,20 +49,22 @@ const Emails = (props) => {
                     )}
                 </div>
             ))}
-            <Button className={styles.add} color="primary" onClick={onAddPhone} title={translate.AddEmail} />
+            <Button className={styles.add} color="primary" onClick={onAddEmail} title={translate.AddEmail} />
         </div>
     );
 };
 
 Emails.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.arrayOf(PropTypes.string),
+    value: PropTypes.arrayOf(PropTypes.shape({
+        email: '',
+    })),
     onChange: PropTypes.func,
 };
 
 Emails.defaultProps = {
     className: '',
-    value: [''],
+    value: [{ email: '' }],
     onChange: () => {},
 };
 

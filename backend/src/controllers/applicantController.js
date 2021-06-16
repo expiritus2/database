@@ -10,6 +10,8 @@ const Messenger = require('../models/messenger');
 const Salary = require('../models/salary');
 const LanguageSkill = require('../models/languageSkill');
 
+const VocabularyPosition = require('../models/vocabulary/position');
+
 const DatabaseCreationError = require('../errors/database-creation-error');
 const awsS3 = require('../services/AwsS3');
 
@@ -54,7 +56,7 @@ class ApplicantController {
         return new Promise(async (resolve) => {
             try {
                 const { name, nameLat, inActiveSearch, experienceYears, info, birthDate } = this.body;
-                const storedApplicant = await Applicant.findOne({ where: { id }, include: includeModels });
+                const storedApplicant = await Applicant.findByPk(id);
 
                 if (storedApplicant) {
                     storedApplicant.name = name;
@@ -64,9 +66,9 @@ class ApplicantController {
                     storedApplicant.info = info;
                     storedApplicant.birthDate = birthDate;
                     this.updatedApplicant = await storedApplicant.save();
-                    //     await this.handleSalary(true);
-                    //     await this.handleEducation(true);
-                    //     await this.handlePositions(true);
+                    await this.handleSalary(true);
+                    await this.handleEducation(true);
+                    await this.handlePositions(true);
                     //     await this.handleSkills(true);
                     //     await this.handleWorkPlaces(true);
                     //     await this.handleRegions(true);
@@ -90,41 +92,57 @@ class ApplicantController {
         });
     }
 
-    handleSalary() {
+    handleSalary(isUpdate) {
         return new Promise(async (resolve) => {
             const { salary } = this.body;
 
-            if (salary && salary.amount) {
-                this.storedSalary = await Salary.create({ amount: salary.amount });
-            }
+            if (isUpdate) {
+                await Salary.update({ amount: salary.amount }, { where: { applicantId: this.updatedApplicant.id } });
+            } else {
+                if (salary && salary.amount) {
+                    this.storedSalary = await Salary.create({ amount: salary.amount });
+                }
 
-            if (salary && salary.currency && salary.currency.id) {
-                await this.storedSalary.setCurrency(salary.currency.id);
-                await this.newApplicant.setSalary(this.storedSalary);
+                if (salary && salary.currency && salary.currency.id) {
+                    await this.storedSalary.setCurrency(salary.currency.id);
+                    await this.storedSalary.setApplicant(this.newApplicant);
+                }
             }
 
             resolve();
         })
     }
 
-    handleEducation() {
+    handleEducation(isUpdate) {
         return new Promise(async (resolve) => {
             const { education } = this.body;
 
             if (education && education.id) {
-                await this.newApplicant.setEducation(education.id);
+                if (isUpdate) {
+                    await this.updatedApplicant.update({ educationId: education.id });
+                } else {
+                    await this.updatedApplicant.setEducation(education.id);
+                }
             }
             resolve();
         });
     }
 
-    handlePositions() {
+    handlePositions(isUpdate) {
         return new Promise(async (resolve) => {
             const { positions = [] } = this.body;
 
-            for await (const position of positions) {
-                if (position && position.id) {
-                    await this.newApplicant.addPosition(position.id)
+            if (isUpdate) {
+                const newestPositionsIds = await this.#deleteRemovedPositions(this.updatedApplicant.id);
+
+                for await (const newPosId of newestPositionsIds) {
+                    await this.updatedApplicant.addPosition(newPosId);
+                }
+            } else {
+                for await (const position of positions) {
+                    if (position && position.id) {
+                        await this.newApplicant.addPosition(position.id)
+                    }
                 }
             }
 
@@ -295,7 +313,7 @@ class ApplicantController {
         return new Promise(async (resolve) => {
             const { emails = [] } = this.body;
 
-            for await (const email of emails) {
+            for await (const { email } of emails) {
                 const newEmail = await Email.create({ email });
                 newEmail.setApplicant(this.newApplicant);
             }
@@ -364,6 +382,25 @@ class ApplicantController {
             }
             resolve(this.savedExperience);
         })
+    }
+
+    #deleteRemovedPositions(applicantId) {
+        const { positions = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularyPosition }})
+            const prevPositionsIds = storedApplicant.positions || [];
+            const newPositionsIds = positions.map((position) => position.id);
+
+            for await (const prevPosId of prevPositionsIds) {
+                if (!newPositionsIds.includes(prevPosId)) {
+                    await storedApplicant.removePosition(prevPosId);
+                }
+            }
+
+            const newestPositionsIds = newPositionsIds.filter((newPosId) => !prevPositionsIds.includes(newPosId));
+
+            resolve(newestPositionsIds);
+        });
     }
 
 
@@ -459,14 +496,6 @@ class ApplicantController {
     //     }
     // }
     //
-    // async _deleteRemovedPositions(positions, parentModel) {
-    //     for await (const prevPos of parentModel.positions || []) {
-    //         const newPositionsIds = positions.map((position) => position.id);
-    //         if (!newPositionsIds.includes(prevPos.id)) {
-    //             await parentModel.removePosition(prevPos);
-    //         }
-    //     }
-    // }
     //
     // async _deleteRemovedApplicantExperience() {
     //     const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id } });

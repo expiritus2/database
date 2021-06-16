@@ -27,20 +27,33 @@ const VocabularyMessengerType = require('./vocabulary/messengerType');
 const VocabularySex = require('./vocabulary/sex');
 const VocabularyLinkType = require('./vocabulary/linkType');
 
+const ThroughApplicantPosition = require('./through/applicantPosition');
+const ThroughApplicantSkill = require('./through/applicantSkill');
+const ThroughApplicantRegion = require('./through/applicantRegion');
+const ThroughApplicantWorkPlace = require('./through/applicantWorkPlace');
+const ThroughApplicantLanguage = require('./through/applicantLanguage');
+const ThroughExperiencePosition = require('./through/experiencePosition');
+const ThroughContactPosition = require('./through/contactPosition');
+const ThroughUserVacancy = require('./through/userVacancy');
+const ThroughVacancyPosition = require('./through/vacancyPosition');
+const ThroughVacancyRegion = require('./through/vacancyRegion');
+const ThroughUserCompany = require('./through/userCompany');
+const ThroughRegionCompany = require('./through/regionCompany');
+
 function createAssociations() {
-    Applicant.belongsToMany(VocabularyPosition, { through: 'through_applicant_position' });
+    Applicant.belongsToMany(VocabularyPosition, { through: ThroughApplicantPosition });
 
-    Applicant.belongsToMany(VocabularySkill, { through: 'through_applicant_skills' });
+    Applicant.belongsToMany(VocabularySkill, { through: ThroughApplicantSkill });
 
-    Applicant.belongsToMany(VocabularyRegion, { through: 'through_applicant_region' });
+    Applicant.belongsToMany(VocabularyRegion, { through: ThroughApplicantRegion });
 
-    Applicant.belongsToMany(VocabularyWorkPlace, { through: 'through_applicant_workPlace' });
+    Applicant.belongsToMany(VocabularyWorkPlace, { through: ThroughApplicantWorkPlace });
 
     Applicant.belongsTo(VocabularyEducation);
     Applicant.belongsTo(VocabularySex);
 
-    Applicant.belongsTo(Salary);
-    Salary.hasOne(Applicant)
+    Salary.belongsTo(Applicant);
+    Applicant.hasOne(Salary);
     Salary.belongsTo(VocabularyCurrency);
 
     File.belongsTo(Applicant);
@@ -67,30 +80,30 @@ function createAssociations() {
 
     ApplicantLanguage.belongsTo(VocabularyLanguage);
     ApplicantLanguage.belongsTo(VocabularyLanguageLevel);
-    Applicant.belongsToMany(ApplicantLanguage, { through: 'through_applicant_language' });
+    Applicant.belongsToMany(ApplicantLanguage, { through: ThroughApplicantLanguage });
 
 
     Applicant.hasMany(Experience);
     Experience.belongsTo(Applicant);
 
-    Experience.belongsToMany(VocabularyPosition, { through: 'through_experience_position' });
+    Experience.belongsToMany(VocabularyPosition, { through: ThroughExperiencePosition });
 
-    Contact.belongsToMany(VocabularyPosition, { through: 'through_contact_position' });
+    Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
 
-    User.belongsToMany(Vacancy, { through: 'through_user_vacancy' });
+    User.belongsToMany(Vacancy, { through: ThroughUserVacancy });
 
     Vacancy.belongsTo(VocabularyPosition);
-    VocabularyPosition.belongsToMany(Vacancy, { through: 'through_vacancy_position' });
+    VocabularyPosition.belongsToMany(Vacancy, { through: ThroughVacancyPosition });
 
 
-    Vacancy.belongsToMany(VocabularyRegion, { through: 'through_vacancy_region' });
+    Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
 
     Vacancy.belongsTo(Company);
     Company.hasMany(Vacancy);
 
-    User.belongsToMany(Company, { through: 'through_user_company' });
+    User.belongsToMany(Company, { through: ThroughUserCompany });
 
-    VocabularyRegion.belongsToMany(Company, { through: 'through_region_company' });
+    VocabularyRegion.belongsToMany(Company, { through: ThroughRegionCompany });
 }
 
 module.exports = {
