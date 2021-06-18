@@ -26,7 +26,7 @@ const initialData = {
     workPlaces: [],
     regions: [],
     address: '',
-    languages: [{ name: '', level: '' }],
+    languageSkills: [{ language: '', languageLevel: '' }],
     info: '',
     nameLat: '',
     photos: [],

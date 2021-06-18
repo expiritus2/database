@@ -11,6 +11,9 @@ const Salary = require('../models/salary');
 const LanguageSkill = require('../models/languageSkill');
 
 const VocabularyPosition = require('../models/vocabulary/position');
+const VocabularySkill = require('../models/vocabulary/skill');
+const VocabularyWorkPlace = require('../models/vocabulary/workPlace');
+const VocabularyRegions = require('../models/vocabulary/region');
 
 const DatabaseCreationError = require('../errors/database-creation-error');
 const awsS3 = require('../services/AwsS3');
@@ -69,10 +72,10 @@ class ApplicantController {
                     await this.handleSalary(true);
                     await this.handleEducation(true);
                     await this.handlePositions(true);
-                    //     await this.handleSkills(true);
-                    //     await this.handleWorkPlaces(true);
-                    //     await this.handleRegions(true);
-                    //     await this.handleLanguages(true);
+                    await this.handleSkills(true);
+                    await this.handleWorkPlaces(true);
+                    await this.handleRegions(true);
+                    await this.handleLanguages(true);
                     //     await this.handlePhotos(true);
                     //     await this.handleSex(true);
                     //     await this.handlePhones(true);
@@ -93,24 +96,52 @@ class ApplicantController {
     }
 
     handleSalary(isUpdate) {
+        const { salary } = this.body;
+
         return new Promise(async (resolve) => {
-            const { salary } = this.body;
-
             if (isUpdate) {
-                await Salary.update({ amount: salary.amount }, { where: { applicantId: this.updatedApplicant.id } });
-            } else {
-                if (salary && salary.amount) {
-                    this.storedSalary = await Salary.create({ amount: salary.amount });
-                }
+                const storedApplicantSalary = await Salary.findOne({ where: { applicantId: this.updatedApplicant.id } });
 
-                if (salary && salary.currency && salary.currency.id) {
-                    await this.storedSalary.setCurrency(salary.currency.id);
-                    await this.storedSalary.setApplicant(this.newApplicant);
+                if (!storedApplicantSalary) {
+                    const storedSalary = await this.#createSalary();
+
+                    if (storedSalary) {
+                        storedSalary.setApplicant(this.updatedApplicant);
+                    }
+                } else {
+                    await Salary.update({
+                            amount: (salary || {}).amount,
+                            currencyId: (salary || {}).currency.id
+                        },
+                        { where: { applicantId: this.updatedApplicant.id } }
+                    );
+                }
+            } else {
+                const storedSalary = await this.#createSalary();
+
+                if (storedSalary) {
+                    storedSalary.setApplicant(this.newApplicant)
                 }
             }
 
             resolve();
         })
+    }
+
+    #createSalary() {
+        const { salary } = this.body;
+
+        return new Promise(async (resolve) => {
+            if (salary && salary.amount) {
+                this.storedSalary = await Salary.create({ amount: salary.amount });
+            }
+
+            if (salary && salary.currency && salary.currency.id) {
+                await this.storedSalary.setCurrency(salary.currency.id);
+            }
+
+            resolve(this.storedSalary);
+        });
     }
 
     handleEducation(isUpdate) {
@@ -150,13 +181,21 @@ class ApplicantController {
         });
     }
 
-    handleSkills() {
+    handleSkills(isUpdate) {
         return new Promise(async (resolve) => {
             const { skills = [] } = this.body;
 
-            for await (const skill of skills) {
-                if (skill && skill.id) {
-                    await this.newApplicant.addSkill(skill.id);
+            if (isUpdate) {
+                const newestSkillsIds = await this.#deleteRemovedSkills(this.updatedApplicant.id);
+
+                for await (const newSkillId of newestSkillsIds) {
+                    await this.updatedApplicant.addSkill(newSkillId);
+                }
+            } else {
+                for await (const skill of skills) {
+                    if (skill && skill.id) {
+                        await this.newApplicant.addSkill(skill.id);
+                    }
                 }
             }
 
@@ -164,13 +203,21 @@ class ApplicantController {
         });
     }
 
-    handleWorkPlaces() {
-        return new Promise(async (resolve) => {
-            const { workPlaces } = this.body;
+    handleWorkPlaces(isUpdate) {
+        const { workPlaces } = this.body;
 
-            for await (const workPlace of workPlaces) {
-                if (workPlace && workPlace.id) {
-                    await this.newApplicant.addWorkPlace(workPlace.id);
+        return new Promise(async (resolve) => {
+            if (isUpdate) {
+                const newestWorkPlacesIds = await this.#deleteRemovedWorkPlaces(this.updatedApplicant.id);
+
+                for await (const newWorkPlaceId of newestWorkPlacesIds) {
+                    await this.updatedApplicant.addWorkPlace(newWorkPlaceId);
+                }
+            } else {
+                for await (const workPlace of workPlaces) {
+                    if (workPlace && workPlace.id) {
+                        await this.newApplicant.addWorkPlace(workPlace.id);
+                    }
                 }
             }
 
@@ -178,13 +225,21 @@ class ApplicantController {
         });
     }
 
-    async handleRegions() {
-        return new Promise(async (resolve) => {
-            const { regions = [] } = this.body;
+    async handleRegions(isUpdate) {
+        const { regions = [] } = this.body;
 
-            for await (const region of regions) {
-                if (region && region.id) {
-                    await this.newApplicant.addRegion(region.id);
+        return new Promise(async (resolve) => {
+            if (isUpdate) {
+                const newestRegionsIds = await this.#deleteRemovedRegions(this.updatedApplicant.id);
+
+                for await (const regionId of newestRegionsIds) {
+                    await this.updatedApplicant.addRegion(regionId);
+                }
+            } else {
+                for await (const region of regions) {
+                    if (region && region.id) {
+                        await this.newApplicant.addRegion(region.id);
+                    }
                 }
             }
 
@@ -192,25 +247,56 @@ class ApplicantController {
         });
     }
 
-    async handleLanguages() {
+    async handleLanguages(isUpdate) {
         return new Promise(async (resolve) => {
-            const { languages = [] } = this.body;
+            const { languageSkills = [] } = this.body;
 
-            for await (const language of languages) {
-                const storedLanguageSkill = await LanguageSkill.create({});
+            if (isUpdate) {
+                const newestLanguageSkills = await this.#deleteRemovedLanguageSkills(this.updatedApplicant.id);
+                const notChangedLanguageSkills = languageSkills.filter((languageSkill) => !!languageSkill.id);
 
-                if (language.name && language.name.id) {
-                    await storedLanguageSkill.setLanguage(language.name.id);
+                for await (const languageSkill of newestLanguageSkills) {
+                    const storedLanguageSkill = await this.#createLanguageSkill(languageSkill);
+
+                    if (storedLanguageSkill) {
+                        await this.updatedApplicant.addLanguageSkill(storedLanguageSkill);
+                    }
                 }
 
-                if (language.level && language.level.id) {
-                    await storedLanguageSkill.setLanguageLevel(language.level.id);
+                for await (const notChangedSkill of notChangedLanguageSkills) {
+                    await LanguageSkill.update({
+                            languageId: notChangedSkill.language.id,
+                            languageLevelId: notChangedSkill.languageLevel.id,
+                        },
+                        {
+                            where: { id: notChangedSkill.id }
+                        });
                 }
+            } else {
+                for await (const languageSkill of languageSkills) {
+                    const storedLanguageSkill = await this.#createLanguageSkill(languageSkill);
 
-                await this.newApplicant.addLanguageSkill(storedLanguageSkill);
+                    await this.newApplicant.addLanguageSkill(storedLanguageSkill);
+                }
             }
 
             resolve();
+        });
+    }
+
+    #createLanguageSkill(languageSkill) {
+        return new Promise(async (resolve) => {
+            const storedLanguageSkill = await LanguageSkill.create({});
+
+            if (languageSkill.language && languageSkill.language.id) {
+                await storedLanguageSkill.setLanguage(languageSkill.language.id);
+            }
+
+            if (languageSkill.languageLevel && languageSkill.languageLevel.id) {
+                await storedLanguageSkill.setLanguageLevel(languageSkill.languageLevel.id);
+            }
+
+            resolve(storedLanguageSkill);
         });
     }
 
@@ -387,7 +473,7 @@ class ApplicantController {
     #deleteRemovedPositions(applicantId) {
         const { positions = [] } = this.body;
         return new Promise(async (resolve) => {
-            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularyPosition }})
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularyPosition } })
             const prevPositionsIds = storedApplicant.positions || [];
             const newPositionsIds = positions.map((position) => position.id);
 
@@ -403,129 +489,82 @@ class ApplicantController {
         });
     }
 
+    #deleteRemovedSkills(applicantId) {
+        const { skills = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularySkill } })
+            const prevSkillsIds = storedApplicant.skills || [];
+            const newSkillsIds = skills.map((skill) => skill.id);
 
-    // deleteFiles() {
-    //     return new Promise(async (resolve) => {
-    //         for await (const fileUrl of this.prevApplicant.files) {
-    //             if (!this.newApplicant.files.includes(fileUrl)) {
-    //                 await this.deleteFile(fileUrl);
-    //             }
-    //         }
-    //
-    //         for await (const imageUrl of this.prevApplicant.photos) {
-    //             if (!this.newApplicant.photos.includes(imageUrl)) {
-    //                 await this.deleteFile(imageUrl);
-    //             }
-    //         }
-    //         resolve();
-    //     });
-    // }
-    //
-    // deleteFile(fileUrl){
-    //     return new Promise((resolve) => {
-    //         const key = fileUrl.split('/').pop();
-    //         s3.deleteObject({
-    //             Bucket: process.env.AWS_S3_BUCKET_NAME,
-    //             Key: key,
-    //         }, (err, data) => {
-    //             if (err) throw new Error();
-    //             resolve();
-    //         });
-    //     })
-    // }
-    //
-    //
-    // async handlePhotos(isUpdate) {
-    //     return new Promise(async (resolve) => {
-    //         for await (const photo of this.photos) {
-    //             if (isUpdate) {
-    //                 await this._deleteRemovedPhotos();
-    //                 const prevPhoto = await File.findByPk(photo.id);
-    //
-    //                 if (!prevPhoto) {
-    //                     this.newPhoto = await File.create(photo);
-    //                     await this.newPhoto.setApplicant(this.newApplicant);
-    //                 }
-    //             } else {
-    //                 this.newPhoto = await File.create(photo);
-    //                 await this.newPhoto.setApplicant(this.newApplicant);
-    //             }
-    //         }
-    //         resolve(this.newPhoto);
-    //     });
-    // }
-    //
-    //
-    // async _deleteRemovedApplicantRegion() {
-    //     const newRegionsIds = this.regions.map((region) => region.id);
-    //     for await (const prevRegion of this.newApplicant.regions) {
-    //         if (!newRegionsIds.includes(prevRegion.id)) {
-    //             await this.newApplicant.removeRegion(prevRegion);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedFiles() {
-    //     const newFilesIds = this.files.map((file) => file.id);
-    //     const prevFiles = await File.findAll({ where: { applicantId: this.newApplicant.id }})
-    //     for await (const prevFile of prevFiles) {
-    //         if (!newFilesIds.includes(prevFile.id)) {
-    //             await File.destroy({ where: { id: prevFile.id }});
-    //             await awsS3.deleteObject(prevFile.url);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedPhotos() {
-    //     const newPhotosIds = this.photos.map((photo) => photo.id);
-    //     const prevPhotos = await File.findAll({ where: { applicantId: this.newApplicant.id }})
-    //     for await (const prevPhoto of prevPhotos) {
-    //         if (!newPhotosIds.includes(prevPhoto.id)) {
-    //             await File.destroy({ where: { id: prevPhoto.id }});
-    //             await awsS3.deleteObject(prevPhoto.url);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedApplicantSkills() {
-    //     for await (const prevSkill of this.newApplicant.skills) {
-    //         const newSkillsIds = this.skills.map((skills) => skills.id);
-    //         if (!newSkillsIds.includes(prevSkill.id)) {
-    //             await this.newApplicant.removeSkill(prevSkill);
-    //         }
-    //     }
-    // }
-    //
-    //
-    // async _deleteRemovedApplicantExperience() {
-    //     const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id } });
-    //     const newExperiencesIds = this.experiences.map((experience) => experience.id);
-    //     for await (const prevExperience of savedExperiences) {
-    //         if (!newExperiencesIds.includes(prevExperience.id)) {
-    //             await Experience.destroy({ where: { id: prevExperience.id } });
-    //         }
-    //     }
-    // }
-    //
-    // async _findOrCreateApplicantExperience(experience) {
-    //     this.savedExperience = await Experience.findByPk(experience.id);
-    //
-    //     if (!this.savedExperience) {
-    //         this.savedExperience = await Experience.create(experience);
-    //         await this.savedExperience.setApplicant(this.newApplicant);
-    //     }
-    // }
-    //
-    // async _updateExperience(experience) {
-    //     const expInfo = omit(experience, 'positions');
-    //     this.savedExperience = await Experience.findByPk(expInfo.id);
-    //
-    //     if (this.savedExperience) {
-    //         await Experience.update(expInfo, { where: { id: expInfo.id } });
-    //         this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position } });
-    //         await this.handlePositions(experience.positions, this.savedExperience, true);
-    //     }
-    // }
+            for await (const prevSkillId of prevSkillsIds) {
+                if (!newSkillsIds.includes(prevSkillId)) {
+                    await storedApplicant.removeSkill(prevSkillId);
+                }
+            }
+
+            const newestPositionsIds = newSkillsIds.filter((newPosId) => !prevSkillsIds.includes(newPosId));
+
+            resolve(newestPositionsIds);
+        });
+    }
+
+    #deleteRemovedWorkPlaces(applicantId) {
+        const { workPlaces = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularyWorkPlace } })
+            const prevWorkPlacesIds = storedApplicant.workPlaces || [];
+            const newWorkPlacesIds = workPlaces.map((workPlace) => workPlace.id);
+
+            for await (const prevWorkPlaceId of prevWorkPlacesIds) {
+                if (!newWorkPlacesIds.includes(prevWorkPlaceId)) {
+                    await storedApplicant.removeWorkPlace(prevWorkPlaceId);
+                }
+            }
+
+            const newestWorkPlacesIds = newWorkPlacesIds.filter((newWorkPlaceId) => !prevWorkPlacesIds.includes(newWorkPlaceId));
+
+            resolve(newestWorkPlacesIds);
+        });
+    }
+
+    #deleteRemovedRegions(applicantId) {
+        const { regions = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: VocabularyRegions } })
+            const prevRegionsIds = storedApplicant.regions || [];
+            const newRegionsIds = regions.map((region) => region.id);
+
+            for await (const prevRegionId of prevRegionsIds) {
+                if (!newRegionsIds.includes(prevRegionId)) {
+                    await storedApplicant.removeRegion(prevRegionId);
+                }
+            }
+
+            const newestRegionsIds = newRegionsIds.filter((newRegionId) => !prevRegionsIds.includes(newRegionId));
+
+            resolve(newestRegionsIds);
+        });
+    }
+
+    #deleteRemovedLanguageSkills(applicantId) {
+        const { languageSkills = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const storedApplicant = await Applicant.findByPk(applicantId, { include: { model: LanguageSkill } })
+            const prevLanguageSkillsIds = (storedApplicant.languageSkills || []).map((languageSkill) => languageSkill.id);
+            const newLanguageSkillsIds = languageSkills.map((languageSkill) => languageSkill.id).filter((ls) => !!ls);
+
+            for await (const prevLanguageSkillId of prevLanguageSkillsIds) {
+                if (!newLanguageSkillsIds.includes(prevLanguageSkillId)) {
+                    await storedApplicant.removeLanguageSkill(prevLanguageSkillId);
+                    await LanguageSkill.destroy({ where: { id: prevLanguageSkillId } })
+                }
+            }
+
+            const newestLanguageSkills = languageSkills.filter((languageSkill) => !languageSkill.id);
+
+            resolve(newestLanguageSkills);
+        });
+    }
 }
 
 

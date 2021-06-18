@@ -27,20 +27,20 @@ const Languages = (props) => {
 
     const onChangeLanguage = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], name: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], language: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
 
     const onChangeLevel = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], level: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], languageLevel: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
 
     const onAddLanguage = () => {
-        const newValue = [...values, { name: '', level: '' }];
+        const newValue = [...values, { language: '', languageLevel: '' }];
         setValues(newValue);
         onChange(newValue);
     };
@@ -55,7 +55,7 @@ const Languages = (props) => {
     return (
         <div className={classNames(styles.fieldsArray, className)}>
             <p className={styles.label}>{translate.Languages}</p>
-            {(value || []).map((language, index) => (
+            {(values || []).map((language, index) => (
                 <div className={styles.block} key={index}>
                     <Select
                         className={styles.language}
@@ -63,7 +63,7 @@ const Languages = (props) => {
                         label={translate.Language}
                         options={languages}
                         onChange={(e) => onChangeLanguage(e, index)}
-                        value={language?.name}
+                        value={language?.language}
                     />
                     <Select
                         className={styles.level}
@@ -71,7 +71,7 @@ const Languages = (props) => {
                         label={translate.Level}
                         options={languageLevels}
                         onChange={(e) => onChangeLevel(e, index)}
-                        value={language?.level}
+                        value={language?.languageLevel}
                     />
                     {values?.length > 1 && (
                         <IoIosRemoveCircle onClick={() => onRemove(index)} className={styles.removeIcon} />

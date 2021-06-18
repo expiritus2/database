@@ -104,11 +104,11 @@ const ProfileForm = (props) => {
                     value={formFields.address || ''}
                 />
                 <Languages
-                    name="languages"
+                    name="languageSkills"
                     className={styles.field}
                     label={translate.Languages}
-                    onChange={(val) => onCustomFieldChange(null, val, 'languages')}
-                    value={formFields.languages}
+                    onChange={(val) => onCustomFieldChange(null, val, 'languageSkills')}
+                    value={formFields.languageSkills}
                 />
                 <Textarea
                     name="info"
