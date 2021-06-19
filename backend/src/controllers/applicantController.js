@@ -565,6 +565,130 @@ class ApplicantController {
             resolve(newestLanguageSkills);
         });
     }
+
+
+    // deleteFiles() {
+    //     return new Promise(async (resolve) => {
+    //         for await (const fileUrl of this.prevApplicant.files) {
+    //             if (!this.newApplicant.files.includes(fileUrl)) {
+    //                 await this.deleteFile(fileUrl);
+    //             }
+    //         }
+    //
+    //         for await (const imageUrl of this.prevApplicant.photos) {
+    //             if (!this.newApplicant.photos.includes(imageUrl)) {
+    //                 await this.deleteFile(imageUrl);
+    //             }
+    //         }
+    //         resolve();
+    //     });
+    // }
+    //
+    // deleteFile(fileUrl){
+    //     return new Promise((resolve) => {
+    //         const key = fileUrl.split('/').pop();
+    //         s3.deleteObject({
+    //             Bucket: process.env.AWS_S3_BUCKET_NAME,
+    //             Key: key,
+    //         }, (err, data) => {
+    //             if (err) throw new Error();
+    //             resolve();
+    //         });
+    //     })
+    // }
+    //
+    //
+    // async handlePhotos(isUpdate) {
+    //     return new Promise(async (resolve) => {
+    //         for await (const photo of this.photos) {
+    //             if (isUpdate) {
+    //                 await this._deleteRemovedPhotos();
+    //                 const prevPhoto = await File.findByPk(photo.id);
+    //
+    //                 if (!prevPhoto) {
+    //                     this.newPhoto = await File.create(photo);
+    //                     await this.newPhoto.setApplicant(this.newApplicant);
+    //                 }
+    //             } else {
+    //                 this.newPhoto = await File.create(photo);
+    //                 await this.newPhoto.setApplicant(this.newApplicant);
+    //             }
+    //         }
+    //         resolve(this.newPhoto);
+    //     });
+    // }
+    //
+    //
+    // async _deleteRemovedApplicantRegion() {
+    //     const newRegionsIds = this.regions.map((region) => region.id);
+    //     for await (const prevRegion of this.newApplicant.regions) {
+    //         if (!newRegionsIds.includes(prevRegion.id)) {
+    //             await this.newApplicant.removeRegion(prevRegion);
+    //         }
+    //     }
+    // }
+    //
+    // async _deleteRemovedFiles() {
+    //     const newFilesIds = this.files.map((file) => file.id);
+    //     const prevFiles = await File.findAll({ where: { applicantId: this.newApplicant.id }})
+    //     for await (const prevFile of prevFiles) {
+    //         if (!newFilesIds.includes(prevFile.id)) {
+    //             await File.destroy({ where: { id: prevFile.id }});
+    //             await awsS3.deleteObject(prevFile.url);
+    //         }
+    //     }
+    // }
+    //
+    // async _deleteRemovedPhotos() {
+    //     const newPhotosIds = this.photos.map((photo) => photo.id);
+    //     const prevPhotos = await File.findAll({ where: { applicantId: this.newApplicant.id }})
+    //     for await (const prevPhoto of prevPhotos) {
+    //         if (!newPhotosIds.includes(prevPhoto.id)) {
+    //             await File.destroy({ where: { id: prevPhoto.id }});
+    //             await awsS3.deleteObject(prevPhoto.url);
+    //         }
+    //     }
+    // }
+    //
+    // async _deleteRemovedApplicantSkills() {
+    //     for await (const prevSkill of this.newApplicant.skills) {
+    //         const newSkillsIds = this.skills.map((skills) => skills.id);
+    //         if (!newSkillsIds.includes(prevSkill.id)) {
+    //             await this.newApplicant.removeSkill(prevSkill);
+    //         }
+    //     }
+    // }
+    //
+    //
+    // async _deleteRemovedApplicantExperience() {
+    //     const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id } });
+    //     const newExperiencesIds = this.experiences.map((experience) => experience.id);
+    //     for await (const prevExperience of savedExperiences) {
+    //         if (!newExperiencesIds.includes(prevExperience.id)) {
+    //             await Experience.destroy({ where: { id: prevExperience.id } });
+    //         }
+    //     }
+    // }
+    //
+    // async _findOrCreateApplicantExperience(experience) {
+    //     this.savedExperience = await Experience.findByPk(experience.id);
+    //
+    //     if (!this.savedExperience) {
+    //         this.savedExperience = await Experience.create(experience);
+    //         await this.savedExperience.setApplicant(this.newApplicant);
+    //     }
+    // }
+    //
+    // async _updateExperience(experience) {
+    //     const expInfo = omit(experience, 'positions');
+    //     this.savedExperience = await Experience.findByPk(expInfo.id);
+    //
+    //     if (this.savedExperience) {
+    //         await Experience.update(expInfo, { where: { id: expInfo.id } });
+    //         this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position } });
+    //         await this.handlePositions(experience.positions, this.savedExperience, true);
+    //     }
+    // }
 }
 
 
