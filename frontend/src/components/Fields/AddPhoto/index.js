@@ -20,8 +20,9 @@ const AddPhoto = (props) => {
             .then((values) => {
                 const newFilesValue = values
                     .map((file) => ({ ...file, data: file?.data ? btoa(file?.data) : undefined }));
-                setFilesValue([...filesValue, ...newFilesValue]);
-                onChange(event.target.files, newFilesValue);
+                const combinedFiles = [...filesValue, ...newFilesValue];
+                setFilesValue(combinedFiles);
+                onChange(event.target.files, combinedFiles);
             });
     };
 
@@ -33,7 +34,7 @@ const AddPhoto = (props) => {
         clonedPreviewValue.splice(index, 1);
         setFilesValue(clonedPreviewValue);
 
-        onChange(clonedPreviewValue, []);
+        onChange([], clonedPreviewValue);
     };
 
     const getPreview = () => (filesValue?.length ? filesValue.map(({ url, data }, index) => {

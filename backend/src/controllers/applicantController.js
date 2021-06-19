@@ -76,7 +76,7 @@ class ApplicantController {
                     await this.handleWorkPlaces(true);
                     await this.handleRegions(true);
                     await this.handleLanguages(true);
-                    //     await this.handlePhotos(true);
+                    await this.handlePhotos(true);
                     //     await this.handleSex(true);
                     //     await this.handlePhones(true);
                     //     await this.handleEmails(true);
@@ -265,8 +265,8 @@ class ApplicantController {
 
                 for await (const notChangedSkill of notChangedLanguageSkills) {
                     await LanguageSkill.update({
-                            languageId: notChangedSkill.language.id,
-                            languageLevelId: notChangedSkill.languageLevel.id,
+                            languageId: notChangedSkill && notChangedSkill.language && notChangedSkill.language.id ? notChangedSkill.language.id : null,
+                            languageLevelId: notChangedSkill.language && notChangedSkill.languageLevel.id ? notChangedSkill.languageLevel.id : null,
                         },
                         {
                             where: { id: notChangedSkill.id }
@@ -303,33 +303,33 @@ class ApplicantController {
     async handlePhotos(isUpdate) {
         return new Promise(async (resolve) => {
             const { photos = [] } = this.body;
-            const uploadedPhotos = await awsS3.setFiles(photos).upload();
 
-            for await (const photo of uploadedPhotos) {
-                if (isUpdate) {
-                    // await this._deleteRemovedFiles();
-                    // const prevFile = await File.findByPk(file.id);
-                    //
-                    // if (!prevFile) {
-                    //     this.newFile = await File.create(file);
-                    //     await this.newFile.setFileType(this.savedFileType);
-                    //     await this.newFile.setApplicant(this.newApplicant);
-                    // } else {
-                    //     prevFile.setFileType(this.savedFileType);
-                    // }
-                } else {
-                    const newPhoto = await Photo.create({
-                        contentType: photo.contentType,
-                        filename: photo.filename,
-                        size: photo.size,
-                        url: photo.url,
-                    });
-
-                    await newPhoto.setApplicant(this.newApplicant);
-                }
+            if (isUpdate) {
+                const newestPhotos = await this.#deleteRemovedPhotos(this.updatedApplicant.id);
+                await this.#createPhotos(newestPhotos, this.updatedApplicant);
+            } else {
+                await this.#createPhotos(photos, this.newApplicant);
             }
             resolve();
         });
+    }
+
+    #createPhotos(photos, applicant) {
+        return new Promise(async (resolve) => {
+            const uploadedPhotos = await awsS3.setFiles(photos).upload();
+            for await (const photo of uploadedPhotos) {
+                const newPhoto = await Photo.create({
+                    contentType: photo.contentType,
+                    filename: photo.filename,
+                    size: photo.size,
+                    url: photo.url,
+                });
+
+                await newPhoto.setApplicant(applicant);
+            }
+
+            resolve();
+        })
     }
 
     async handleFiles(isUpdate) {
@@ -563,6 +563,25 @@ class ApplicantController {
             const newestLanguageSkills = languageSkills.filter((languageSkill) => !languageSkill.id);
 
             resolve(newestLanguageSkills);
+        });
+    }
+
+    #deleteRemovedPhotos(applicantId) {
+        const { photos = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredPhotos = await Photo.findAll({ where: { applicantId: applicantId } });
+            const newPhotosIds = photos.filter((photo) => !!photo.id).map((ls) => ls.id);
+
+            for await (const prevStoredPhoto of prevStoredPhotos) {
+                if (!newPhotosIds.includes(prevStoredPhoto.id)) {
+                    await awsS3.deleteObject(prevStoredPhoto.url);
+                    await Photo.destroy({ where: { id: prevStoredPhoto.id } });
+                }
+            }
+
+            const newestPhotos = photos.filter((photo) => !photo.id);
+
+            resolve(newestPhotos);
         });
     }
 
