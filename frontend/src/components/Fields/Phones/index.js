@@ -30,13 +30,13 @@ const Phones = (props) => {
 
     const onChangeType = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], type: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], phoneType: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
 
     const onAddPhone = () => {
-        const newValue = [...values, { type: '', number: '' }];
+        const newValue = [...values, { phoneType: {}, number: '' }];
         setValues(newValue);
         onChange(newValue);
     };
@@ -66,7 +66,7 @@ const Phones = (props) => {
                         className={styles.type}
                         options={phoneTypes}
                         onChange={(event) => onChangeType(event, index)}
-                        value={val?.type || ''}
+                        value={val?.phoneType || ''}
                     />
                     <PhoneInput
                         label={translate.Phone}
@@ -92,7 +92,7 @@ Phones.propTypes = {
 
 Phones.defaultProps = {
     className: '',
-    value: [{ type: '', number: '' }],
+    value: [{ phoneType: {}, number: '' }],
     onChange: () => {},
 };
 

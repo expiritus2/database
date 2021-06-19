@@ -77,10 +77,10 @@ class ApplicantController {
                     await this.handleRegions(true);
                     await this.handleLanguages(true);
                     await this.handlePhotos(true);
-                    //     await this.handleSex(true);
-                    //     await this.handlePhones(true);
-                    //     await this.handleEmails(true);
-                    //     await this.handleMessengers(true);
+                    await this.handleSex(true);
+                    await this.handlePhones(true);
+                    await this.handleEmails(true);
+                    await this.handleMessengers(true);
                     //     await this.handleLinks(true);
                     //     await this.handleFiles(true);
                     //     await this.handleExperiences(true);
@@ -368,26 +368,15 @@ class ApplicantController {
         });
     }
 
-    async handleSex() {
+    async handleSex(isUpdate) {
         return new Promise(async (resolve) => {
             const { sex = {} } = this.body;
 
-            await this.newApplicant.setSex(sex.id);
-
-            resolve();
-        });
-    }
-
-    async handlePhones() {
-        return new Promise(async (resolve) => {
-            const { phones = [] } = this.body;
-
-            for await (const phone of phones) {
-                const newPhone = await Phone.create({ number: phone.number });
-
-                if (phone.type && phone.type.id) {
-                    newPhone.setPhoneType(phone.type.id);
-                    newPhone.setApplicant(this.newApplicant);
+            if (sex && sex.id) {
+                if (isUpdate) {
+                    await this.updatedApplicant.setSex(sex.id);
+                } else {
+                    await this.newApplicant.setSex(sex.id);
                 }
             }
 
@@ -395,27 +384,150 @@ class ApplicantController {
         });
     }
 
-    async handleEmails() {
-        return new Promise(async (resolve) => {
-            const { emails = [] } = this.body;
+    async handlePhones(isUpdate) {
+        const { phones = [] } = this.body;
 
-            for await (const { email } of emails) {
-                const newEmail = await Email.create({ email });
-                newEmail.setApplicant(this.newApplicant);
+        return new Promise(async (resolve) => {
+            if (isUpdate) {
+                const newestPhones = await this.#deleteRemovedPhones(this.updatedApplicant.id);
+                for await (const phone of newestPhones) {
+                    await this.#createPhone(phone, this.updatedApplicant);
+                }
+
+                const notChangedPhones = phones.filter((phone) => !!phone.id);
+                for await (const phone of notChangedPhones) {
+                    await Phone.update({
+                        phoneTypeId: phone && phone.phoneType && phone.phoneType.id ? phone.phoneType.id : null,
+                        number: phone && phone.number ? phone.number : null,
+                    }, { where: { id: phone.id } })
+                }
+            } else {
+                for await (const phone of phones) {
+                    await this.#createPhone(phone, this.newApplicant)
+                }
             }
 
             resolve();
         });
     }
 
-    async handleMessengers() {
+    #createPhone(phone, applicant) {
+        return new Promise(async (resolve) => {
+            const newPhone = await Phone.create({ number: phone.number });
+
+            if (phone.phoneType && phone.phoneType.id) {
+                newPhone.setPhoneType(phone.phoneType.id);
+            }
+
+            newPhone.setApplicant(applicant);
+            resolve(newPhone);
+        });
+    }
+
+    async handleEmails(isUpdate) {
+        const { emails = [] } = this.body;
+
+        return new Promise(async (resolve) => {
+            if (isUpdate) {
+                const newestEmails = await this.#deleteRemovedEmails(this.updatedApplicant.id);
+                for await (const { email } of newestEmails) {
+                    await this.#createEmail(email, this.updatedApplicant);
+                }
+
+                const notChangedEmails = emails.filter((phone) => !!phone.id);
+                for await (const { email } of notChangedEmails) {
+                    await Phone.update({ email }, { where: { id: email.id } })
+                }
+            } else {
+                for await (const { email } of emails) {
+                    await this.#createEmail(email, this.newApplicant);
+                }
+
+            }
+            resolve();
+        });
+    }
+
+    #deleteRemovedEmails(applicantId) {
+        const { emails = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredEmails = await Email.findAll({ where: { applicantId: applicantId } });
+            const newEmailsIds = emails.filter((email) => !!email.id).map((em) => em.id);
+
+            for await (const prevStoredEmail of prevStoredEmails) {
+                if (!newEmailsIds.includes(prevStoredEmail.id)) {
+                    await Email.destroy({ where: { id: prevStoredEmail.id } });
+                }
+            }
+
+            const newestEmails = emails.filter((email) => !email.id);
+
+            resolve(newestEmails);
+        });
+    }
+
+    #createEmail(email, applicant) {
+        return new Promise(async (resolve) => {
+            const newEmail = await Email.create({ email });
+            newEmail.setApplicant(applicant);
+            resolve();
+        });
+    }
+
+    async handleMessengers(isUpdate) {
         return new Promise(async (resolve) => {
             const { messengers = [] } = this.body;
 
-            for await (const messenger of messengers) {
+            if (isUpdate) {
+                const newestMessengers = await this.#deleteRemovedMessengers(this.updatedApplicant.id);
+                for await (const messenger of newestMessengers) {
+                    await this.#createMessenger(messenger, this.updatedApplicant);
+                }
+
+                const notChangedMessengers = messengers.filter((messenger) => !!messenger.id);
+                for await (const messenger of notChangedMessengers) {
+                    await Messenger.update({
+                        accountName: messenger && messenger.accountName ? messenger.accountName : '',
+                        messengerTypeId: messenger && messenger.messengerType && messenger.messengerType.id ? messenger.messengerType.id : null,
+                    }, { where: { id: messenger.id } })
+                }
+            } else {
+                for await (const messenger of messengers) {
+                    await this.#createMessenger(messenger, this.newApplicant);
+                }
+            }
+
+            resolve();
+        });
+    }
+
+    #deleteRemovedMessengers(applicantId) {
+        const { messengers = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredMessengers = await Messenger.findAll({ where: { applicantId: applicantId } });
+            const newMessengersIds = messengers.filter((messenger) => !!messenger.id).map((d) => d.id);
+
+            for await (const prevStoredMessenger of prevStoredMessengers) {
+                if (!newMessengersIds.includes(prevStoredMessenger.id)) {
+                    await Email.destroy({ where: { id: prevStoredMessenger.id } });
+                }
+            }
+
+            const newestMessengers = messengers.filter((messenger) => !messenger.id);
+
+            resolve(newestMessengers);
+        });
+    }
+
+    #createMessenger(messenger, applicant) {
+        return new Promise(async (resolve) => {
+            if (messenger && messenger.accountName) {
                 const newMessenger = await Messenger.create({ accountName: messenger.accountName });
-                newMessenger.setMessengerType(messenger.type.id);
-                newMessenger.setApplicant(this.newApplicant);
+
+                if (messenger && messenger.messengerType && messenger.messengerType.id) {
+                    newMessenger.setMessengerType(messenger.messengerType.id);
+                }
+                newMessenger.setApplicant(applicant);
             }
 
             resolve();
@@ -563,6 +675,24 @@ class ApplicantController {
             const newestLanguageSkills = languageSkills.filter((languageSkill) => !languageSkill.id);
 
             resolve(newestLanguageSkills);
+        });
+    }
+
+    #deleteRemovedPhones(applicantId) {
+        const { phones = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredPhones = await Phone.findAll({ where: { applicantId: applicantId } });
+            const newPhonesIds = phones.filter((phone) => !!phone.id).map((ph) => ph.id);
+
+            for await (const prevStoredPhone of prevStoredPhones) {
+                if (!newPhonesIds.includes(prevStoredPhone.id)) {
+                    await Phone.destroy({ where: { id: prevStoredPhone.id } });
+                }
+            }
+
+            const newestPhones = phones.filter((phone) => !phone.id);
+
+            resolve(newestPhones);
         });
     }
 

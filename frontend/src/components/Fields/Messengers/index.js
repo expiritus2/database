@@ -27,7 +27,7 @@ const Messengers = (props) => {
 
     const onChangeMessenger = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], type: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], messengerType: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
@@ -89,7 +89,7 @@ Messengers.propTypes = {
 
 Messengers.defaultProps = {
     className: '',
-    value: [{ type: '', accountName: '' }],
+    value: [{ messengerType: '', accountName: '' }],
     onChange: () => {},
 };
 

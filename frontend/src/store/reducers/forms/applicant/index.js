@@ -32,7 +32,7 @@ const initialData = {
     photos: [],
     birthDate: '',
     sex: '',
-    phones: [{ type: '', number: '' }],
+    phones: [{ phoneType: {}, number: '' }],
     messengers: [{ type: '', accountName: '' }],
     links: [{ type: '', link: '' }],
     emails: [{ email: '' }],
