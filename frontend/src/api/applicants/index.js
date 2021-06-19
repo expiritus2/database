@@ -6,7 +6,6 @@ export function createApplicant(cfg) {
 
 export function updateApplicant(cfg) {
     const { id, ...config } = cfg;
-    console.log('this');
     return apiServer.put(`/api/applicants/${id}`, config);
 }
 
