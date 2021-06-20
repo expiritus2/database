@@ -75,7 +75,9 @@ const FileTypeComponent = (props) => {
 
 FileTypeComponent.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.shape({}),
+    value: PropTypes.shape({
+        label: PropTypes.string,
+    }),
     onChangeFileType: PropTypes.func,
 };
 
