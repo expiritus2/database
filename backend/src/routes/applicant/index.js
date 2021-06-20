@@ -5,7 +5,7 @@ const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
 
-const { ApplicantController } = require('../../controllers/applicantController');
+const { ApplicantController } = require('../../controllers/applicant/applicant');
 const Sequelize = require('sequelize');
 const { includeModels, attributes } = require('../../settings/applicant');
 

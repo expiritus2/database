@@ -46,10 +46,7 @@ class AwsS3 {
     async deleteObject(url) {
         return new Promise((resolve) => {
             const key = url.split('/').pop();
-            this.s3.deleteObject({
-                Bucket: process.env.AWS_S3_BUCKET_NAME,
-                Key: key,
-            }, (err, data) => {
+            this.s3.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: key }, (err, data) => {
                 if (err) throw new Error();
                 resolve(data);
             });

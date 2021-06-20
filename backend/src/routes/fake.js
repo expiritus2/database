@@ -1,7 +1,7 @@
 const express = require('express');
 const faker = require('faker');
 
-const { ApplicantController } = require('../controllers/applicantController');
+const { ApplicantController } = require('../controllers/applicant/applicant');
 
 const router = express.Router();
 
