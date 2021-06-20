@@ -6,12 +6,13 @@ const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
 
 const { ApplicantController } = require('../../controllers/applicant/applicant');
-const Sequelize = require('sequelize');
+// const Sequelize = require('sequelize');
 const { includeModels, attributes } = require('../../settings/applicant');
+const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
 
-const Op = Sequelize.Op;
+// const Op = Sequelize.Op;
 
 const middlewares = [
     requireAuth,
@@ -39,34 +40,18 @@ router.put('/api/applicants/:id', async (req, res) => {
 });
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
-    const { page, countPerPage, search, active } = req.query || {};
-    const searchCriteria = {
-        where: {
-            [Op.and]: [
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
-                ...(active ? [{ inActiveSearch: active }] : []),
-            ]
-        }
-    }
-
-    const allApplicants = await Applicant.findAndCountAll({
-        ...searchCriteria,
-        limit: countPerPage || 25,
-        offset: (page * countPerPage) || 0,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: includeModels,
-        attributes,
-    });
+    const options = getExecOptions(req.query);
+    const allApplicants = await Applicant.findAndCountAll(options);
 
     res.send({ result: allApplicants });
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {
-    const deletedApplicant = await Applicant.destroy({ where: { id: req.params.id }})
+    await Applicant.destroy({ where: { id: req.params.id }});
+    const options = getExecOptions(req.query);
+    const allApplicants = await Applicant.findAndCountAll(options);
 
-    res.send({ result: deletedApplicant });
+    res.send({ result: allApplicants });
 });
 
 module.exports = {

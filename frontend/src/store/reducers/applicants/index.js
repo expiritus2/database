@@ -2,8 +2,8 @@ import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
 import {
     getApplicantsAction,
-    requestRefreshApplicantsAction,
     setApplicantsSearchAction,
+    deleteApplicantAction,
 } from 'store/actions/applicants';
 
 import { updateApplicantAction } from 'store/actions/forms/applicant';
@@ -26,7 +26,7 @@ export default handleActions({
         data: get(payload, 'data.result', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [requestRefreshApplicantsAction]: (state, { payload }) => ({
+    [deleteApplicantAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         data: get(payload, 'data.result', initialData.data),

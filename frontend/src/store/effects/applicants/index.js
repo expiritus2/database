@@ -4,22 +4,18 @@ import {
     setCurrentApplicantAction,
     resetCurrentApplicantAction,
     setApplicantsSearchAction,
-    requestRefreshApplicantsAction,
+    deleteApplicantAction,
 } from 'store/actions/applicants';
-import { getApplicants } from 'api/applicants';
+import { getApplicants, deleteApplicant } from 'api/applicants';
 import { getState } from 'store';
 import { get } from 'lodash-es';
+import { getSearchConfig } from './helpers';
 
 export const getApplicantsEffect = (cfg, options = {}, cb) => {
     const sendRequest = Api.execResult({ action: getApplicantsAction, method: getApplicants });
     const { applicants } = getState();
 
-    const config = {
-        search: applicants?.search?.string || undefined,
-        active: applicants?.search?.active || undefined,
-        page: cfg?.page ?? applicants?.meta?.page,
-        countPerPage: cfg?.countPerPage ?? applicants?.meta?.countPerPage,
-    };
+    const config = getSearchConfig(cfg, applicants);
 
     return sendRequest(config, options, cb);
 };
@@ -43,7 +39,15 @@ export const setApplicantsSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setApplicantsSearchAction({ ...(applicants?.search || {}), ...cfg }));
 };
 
-export const requestRefreshApplicantsEffect = Api.execResult({
-    action: requestRefreshApplicantsAction,
-    method: getApplicants,
-});
+export const deleteApplicantEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: deleteApplicantAction, method: deleteApplicant });
+
+    const { applicants } = getState();
+
+    const config = {
+        id: cfg?.id,
+        ...getSearchConfig(cfg, applicants),
+    };
+
+    return sendRequest(config, options, cb);
+};

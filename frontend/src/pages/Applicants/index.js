@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
-import { getApplicantsEffect, setApplicantsSearchEffect, requestRefreshApplicantsEffect } from 'store/effects/applicants';
+import { getApplicantsEffect, setApplicantsSearchEffect } from 'store/effects/applicants';
 import { getApplicantsSearchSelector, getApplicantsSelector } from 'store/selectors/applicants';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
 import AddModal from './Modal';
@@ -46,7 +46,7 @@ const Applicants = () => {
                         onSearch={onSearchHandler}
                         onActive={onActiveHandler}
                         searchSelector={getApplicantsSearchSelector}
-                        refreshEffect={requestRefreshApplicantsEffect}
+                        refreshEffect={(cfg, options, cb) => getApplicantsEffect(cfg, { ...options, silent: true }, cb)}
                     />
                     <ScrollWrapper>
                         <PendingWrapper

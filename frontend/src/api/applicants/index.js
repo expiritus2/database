@@ -12,3 +12,7 @@ export function updateApplicant(cfg) {
 export function getApplicants(cfg) {
     return apiServer.get('/api/applicants', { params: cfg });
 }
+
+export function deleteApplicant(cfg) {
+    return apiServer.delete(`/api/applicants/${cfg.id}`);
+}
