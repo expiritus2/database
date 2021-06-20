@@ -10,6 +10,7 @@ const VocabularyLanguage = require('../models/vocabulary/language');
 const VocabularyLanguageLevel = require('../models/vocabulary/languageLevel');
 const VocabularyPhoneType = require('../models/vocabulary/phoneType');
 const VocabularyLinkType = require('../models/vocabulary/linkType');
+const VocabularyFileType = require('../models/vocabulary/fileType');
 
 const File = require('../models/file');
 const Photo = require('../models/photo');
@@ -61,6 +62,11 @@ const includeModels = [
         model: File,
         separate: true,
         attributes: ['id', 'contentType', 'filename', 'size', 'url'],
+        include: [
+            {
+                model: VocabularyFileType,
+            }
+        ]
     },
     {
         model: Link,
@@ -89,6 +95,7 @@ const includeModels = [
     },
     {
         model: Salary,
+        attributes: ['id', 'amount'],
         include: [
             { model: VocabularyCurrency }
         ]
@@ -107,7 +114,7 @@ const includeModels = [
     {
         model: Experience,
         separate: true,
-        attributes: ['company', 'period', 'info'],
+        attributes: ['id', 'company', 'period', 'info'],
         include: [
             {
                 model: VocabularyPosition,

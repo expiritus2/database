@@ -8,6 +8,14 @@ import {
     setApplicantFormDataAction,
 } from 'store/actions/forms/applicant';
 import { get } from 'lodash-es';
+import {
+    emptyMessenger,
+    emptyLink,
+    emptyLanguageSkill,
+    emptyPhone,
+    emptyEmail,
+    emptySalary,
+} from 'settings/constants/templates';
 
 export const experienceInitialData = {
     period: [],
@@ -19,23 +27,23 @@ export const experienceInitialData = {
 const initialData = {
     name: '',
     inActiveSearch: false,
-    salary: { amount: '', currency: {} },
+    salary: emptySalary,
     education: '',
     positions: [],
     skills: [],
     workPlaces: [],
     regions: [],
     address: '',
-    languageSkills: [{ language: '', languageLevel: '' }],
+    languageSkills: [emptyLanguageSkill],
     info: '',
     nameLat: '',
     photos: [],
     birthDate: '',
-    sex: '',
-    phones: [{ phoneType: {}, number: '' }],
-    messengers: [{ type: '', accountName: '' }],
-    links: [{ type: '', link: '' }],
-    emails: [{ email: '' }],
+    sex: {},
+    phones: [emptyPhone],
+    messengers: [emptyMessenger],
+    links: [emptyLink],
+    emails: [emptyEmail],
     files: [],
     experienceYears: 0,
     experiences: [

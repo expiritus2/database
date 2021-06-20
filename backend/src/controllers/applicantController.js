@@ -10,6 +10,8 @@ const Messenger = require('../models/messenger');
 const Salary = require('../models/salary');
 const LanguageSkill = require('../models/languageSkill');
 
+const ThroughExperiencePosition = require('../models/through/experiencePosition');
+
 const VocabularyPosition = require('../models/vocabulary/position');
 const VocabularySkill = require('../models/vocabulary/skill');
 const VocabularyWorkPlace = require('../models/vocabulary/workPlace');
@@ -81,9 +83,9 @@ class ApplicantController {
                     await this.handlePhones(true);
                     await this.handleEmails(true);
                     await this.handleMessengers(true);
-                    //     await this.handleLinks(true);
-                    //     await this.handleFiles(true);
-                    //     await this.handleExperiences(true);
+                    await this.handleLinks(true);
+                    await this.handleFiles(true);
+                    await this.handleExperiences(true);
                 }
 
 
@@ -110,8 +112,8 @@ class ApplicantController {
                     }
                 } else {
                     await Salary.update({
-                            amount: (salary || {}).amount,
-                            currencyId: (salary || {}).currency.id
+                            amount: salary && salary.amount ? salary.amount : '',
+                            currencyId: salary && salary.currency && salary.currency.id ? salary.currency.id : null,
                         },
                         { where: { applicantId: this.updatedApplicant.id } }
                     );
@@ -152,7 +154,7 @@ class ApplicantController {
                 if (isUpdate) {
                     await this.updatedApplicant.update({ educationId: education.id });
                 } else {
-                    await this.updatedApplicant.setEducation(education.id);
+                    await this.newApplicant.setEducation(education.id);
                 }
             }
             resolve();
@@ -306,7 +308,10 @@ class ApplicantController {
 
             if (isUpdate) {
                 const newestPhotos = await this.#deleteRemovedPhotos(this.updatedApplicant.id);
-                await this.#createPhotos(newestPhotos, this.updatedApplicant);
+
+                if (newestPhotos && newestPhotos.length) {
+                    await this.#createPhotos(newestPhotos, this.updatedApplicant);
+                }
             } else {
                 await this.#createPhotos(photos, this.newApplicant);
             }
@@ -332,39 +337,84 @@ class ApplicantController {
         })
     }
 
+    #deleteRemovedPhotos(applicantId) {
+        const { photos = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredPhotos = await Photo.findAll({ where: { applicantId: applicantId } });
+            const newPhotosIds = photos.filter((photo) => !!photo.id).map((ls) => ls.id);
+
+            for await (const prevStoredPhoto of prevStoredPhotos) {
+                if (!newPhotosIds.includes(prevStoredPhoto.id)) {
+                    await awsS3.deleteObject(prevStoredPhoto.url);
+                    await Photo.destroy({ where: { id: prevStoredPhoto.id } });
+                }
+            }
+
+            const newestPhotos = photos.filter((photo) => !photo.id);
+
+            resolve(newestPhotos);
+        });
+    }
+
     async handleFiles(isUpdate) {
         return new Promise(async (resolve) => {
             const { files = [] } = this.body;
-            const uploadedFiles = await awsS3.setFiles(files).upload();
 
-            for await (const file of uploadedFiles) {
-                if (isUpdate) {
-                    // await this._deleteRemovedFiles();
-                    // const prevFile = await File.findByPk(file.id);
-                    //
-                    // if (!prevFile) {
-                    //     this.newFile = await File.create(file);
-                    //     await this.newFile.setFileType(this.savedFileType);
-                    //     await this.newFile.setApplicant(this.newApplicant);
-                    // } else {
-                    //     prevFile.setFileType(this.savedFileType);
-                    // }
-                } else {
-                    const newFile = await File.create({
-                        contentType: file.contentType,
-                        filename: file.filename,
-                        size: file.size,
-                        url: file.url,
-                    });
+            if (isUpdate) {
+                const newestFiles = await this.#deleteRemovedFiles(this.updatedApplicant.id);
 
-                    if (file.fileType && file.fileType.id) {
-                        await newFile.setFileType(file.fileType.id);
-                    }
-
-                    await newFile.setApplicant(this.newApplicant);
+                if (newestFiles && newestFiles.length) {
+                    await this.#createFiles(newestFiles, this.updatedApplicant);
                 }
+
+                const notChangedFiles = files.filter((file) => !!file.id);
+                for await (const file of notChangedFiles) {
+                    await File.update({
+                        fileTypeId: file && file.fileType && file.fileType.id ? file.fileType.id : null,
+                    }, { where: { id: file.id } });
+                }
+            } else {
+                await this.#createFiles(files, this.newApplicant);
             }
             resolve();
+        });
+    }
+
+    #createFiles(files, applicant) {
+        return new Promise(async (resolve) => {
+            const uploadedFiles = await awsS3.setFiles(files).upload();
+            for await (const file of uploadedFiles) {
+                const newFile = await File.create({
+                    contentType: file.contentType,
+                    filename: file.filename,
+                    size: file.size,
+                    url: file.url,
+                    fileTypeId: file.fileType && file.fileType.id ? file.fileType.id : null,
+                });
+
+                await newFile.setApplicant(applicant);
+            }
+
+            resolve();
+        })
+    }
+
+    #deleteRemovedFiles(applicantId) {
+        const { files = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredFiles = await File.findAll({ where: { applicantId: applicantId } });
+            const newFilesIds = files.filter((file) => !!file.id).map((d) => d.id);
+
+            for await (const prevStoredFile of prevStoredFiles) {
+                if (!newFilesIds.includes(prevStoredFile.id)) {
+                    await awsS3.deleteObject(prevStoredFile.url);
+                    await File.destroy({ where: { id: prevStoredFile.id } });
+                }
+            }
+
+            const newestFiles = files.filter((file) => !file.id);
+
+            resolve(newestFiles);
         });
     }
 
@@ -534,52 +584,150 @@ class ApplicantController {
         });
     }
 
-    async handleLinks() {
+    async handleLinks(isUpdate) {
         return new Promise(async (resolve) => {
             const { links = [] } = this.body;
 
-            for await (const link of links) {
-                const newLink = await Link.create({ link: link.link });
-                newLink.setLinkType(link.type.id);
-                newLink.setApplicant(this.newApplicant);
+            if (isUpdate) {
+                const newestLinks = await this.#deleteRemovedLinks(this.updatedApplicant.id);
+                for await (const link of newestLinks) {
+                    await this.#createLink(link, this.updatedApplicant);
+                }
+
+                const notChangedLinks = links.filter((link) => !!link.id);
+                for await (const link of notChangedLinks) {
+                    await Link.update({
+                        link: link && link.link ? link.link : '',
+                        linkType: link && link.linkType && link.linkType.id ? link.linkType.id : null,
+                    }, { where: { id: link.id } })
+                }
+            } else {
+                for await (const link of links) {
+                    await this.#createLink(link, this.newApplicant);
+                }
             }
 
             resolve();
         });
     }
 
+    #createLink(link, applicant) {
+        if (!link || !link.link) return Promise.resolve();
+
+        return new Promise(async (resolve) => {
+            const newLink = await Link.create({ link: link.link });
+
+            if (link && link.linkType && link.linkType.id) {
+                newLink.setLinkType(link.linkType.id);
+            }
+            newLink.setApplicant(applicant);
+            resolve(newLink);
+        });
+    }
+
+    #deleteRemovedLinks(applicantId) {
+        const { links = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevStoredLinks = await Link.findAll({ where: { applicantId: applicantId } });
+            const newLinksIds = links.filter((link) => !!link.id).map((d) => d.id);
+
+            for await (const prevStoredLink of prevStoredLinks) {
+                if (!newLinksIds.includes(prevStoredLink.id)) {
+                    await Link.destroy({ where: { id: prevStoredLink.id } });
+                }
+            }
+
+            const newestLinks = links.filter((link) => !link.id);
+
+            resolve(newestLinks);
+        });
+    }
+
     handleExperiences(isUpdate) {
         return new Promise(async (resolve) => {
             const { experiences = [] } = this.body;
+
             if (isUpdate) {
-                // await this._deleteRemovedApplicantExperience();
-            }
+                const newestExperiences = await this.#deleteRemovedExperiences(this.updatedApplicant.id);
+                await this.#createExperiences(newestExperiences, this.updatedApplicant);
 
-            for await (const experience of experiences) {
-                if (isUpdate) {
-                    // if (experience.id) {
-                    //     await this._updateExperience(experience);
-                    // } else {
-                    //     await this._findOrCreateApplicantExperience(experience);
-                    //     await this.savedExperience.setApplicant(this.newApplicant);
-                    //     await this.handlePositions(experience.positions, this.savedExperience, isUpdate);
-                    // }
-                } else {
-                    const storedExperience = await Experience.create({
-                        period: experience.period,
-                        company: experience.company,
-                        info: experience.info,
-                    });
+                const notChangedExperiences = experiences.filter((experience) => !!experience.id);
 
-                    for await (const position of (experience.positions || [])) {
-                        await storedExperience.addPosition(position.id);
+                for await (const experience of notChangedExperiences) {
+                    await Experience.update({
+                        period: experience && experience.period ? experience.period : [],
+                        company: experience && experience.company ? experience.company : '',
+                        info: experience && experience.info ? experience.info : '',
+                    }, { where: { id: experience.id }});
+
+
+                    const prevThroughExperiences = await ThroughExperiencePosition.findAll({ where: { experienceId: experience.id } });
+                    const newPositionsIds = (experience.positions || []).map((position) => position.id);
+
+                    for await (const prevThroughExperience of prevThroughExperiences) {
+                        if (!newPositionsIds.includes(prevThroughExperience.positionId)) {
+                            await ThroughExperiencePosition.destroy({ where: { positionId: prevThroughExperience.positionId } });
+                        }
                     }
 
-                    this.newApplicant.addExperience(storedExperience);
+                    for await (const newPosId of newPositionsIds) {
+                        const alreadyExistRecord = await ThroughExperiencePosition.findOne({ where: { experienceId: experience.id, positionId: newPosId } });
+
+                        if (!alreadyExistRecord) {
+                            await ThroughExperiencePosition.create({
+                                experienceId: experience.id,
+                                positionId: newPosId,
+                            });
+                        }
+                    }
+                }
+            } else {
+                await this.#createExperiences(experiences, this.newApplicant);
+            }
+
+            resolve();
+        })
+    }
+
+    #createExperiences(experiences, applicant) {
+        return new Promise(async (resolve) => {
+            for await (const experience of experiences) {
+                const storedExperience = await Experience.create({
+                    period: experience.period,
+                    company: experience.company,
+                    info: experience.info,
+                });
+
+                for await (const position of (experience.positions || [])) {
+                    await storedExperience.addPosition(position.id);
+                }
+
+                storedExperience.setApplicant(applicant);
+            }
+            resolve();
+        });
+    }
+
+    #deleteRemovedExperiences(applicantId) {
+        const { experiences = [] } = this.body;
+        return new Promise(async (resolve) => {
+            const prevExperiences = await Experience.findAll({ where: { applicantId }, include: [{ model: VocabularyPosition }]});
+            const newExperiencesIds = experiences.map((experience) => experience.id);
+
+            for await (const prevExperience of prevExperiences) {
+                if (!newExperiencesIds.includes(prevExperience.id)) {
+                    for await (const position of prevExperience.positions) {
+                        await ThroughExperiencePosition.destroy({ where: { experienceId: prevExperience.id }});
+                    }
+
+                    await Experience.destroy({ where: { id: prevExperience.id }});
                 }
             }
-            resolve(this.savedExperience);
-        })
+
+            const newestExperiences = experiences.filter((experience) => !experience.id);
+
+            resolve(newestExperiences);
+        });
     }
 
     #deleteRemovedPositions(applicantId) {
@@ -695,149 +843,6 @@ class ApplicantController {
             resolve(newestPhones);
         });
     }
-
-    #deleteRemovedPhotos(applicantId) {
-        const { photos = [] } = this.body;
-        return new Promise(async (resolve) => {
-            const prevStoredPhotos = await Photo.findAll({ where: { applicantId: applicantId } });
-            const newPhotosIds = photos.filter((photo) => !!photo.id).map((ls) => ls.id);
-
-            for await (const prevStoredPhoto of prevStoredPhotos) {
-                if (!newPhotosIds.includes(prevStoredPhoto.id)) {
-                    await awsS3.deleteObject(prevStoredPhoto.url);
-                    await Photo.destroy({ where: { id: prevStoredPhoto.id } });
-                }
-            }
-
-            const newestPhotos = photos.filter((photo) => !photo.id);
-
-            resolve(newestPhotos);
-        });
-    }
-
-
-    // deleteFiles() {
-    //     return new Promise(async (resolve) => {
-    //         for await (const fileUrl of this.prevApplicant.files) {
-    //             if (!this.newApplicant.files.includes(fileUrl)) {
-    //                 await this.deleteFile(fileUrl);
-    //             }
-    //         }
-    //
-    //         for await (const imageUrl of this.prevApplicant.photos) {
-    //             if (!this.newApplicant.photos.includes(imageUrl)) {
-    //                 await this.deleteFile(imageUrl);
-    //             }
-    //         }
-    //         resolve();
-    //     });
-    // }
-    //
-    // deleteFile(fileUrl){
-    //     return new Promise((resolve) => {
-    //         const key = fileUrl.split('/').pop();
-    //         s3.deleteObject({
-    //             Bucket: process.env.AWS_S3_BUCKET_NAME,
-    //             Key: key,
-    //         }, (err, data) => {
-    //             if (err) throw new Error();
-    //             resolve();
-    //         });
-    //     })
-    // }
-    //
-    //
-    // async handlePhotos(isUpdate) {
-    //     return new Promise(async (resolve) => {
-    //         for await (const photo of this.photos) {
-    //             if (isUpdate) {
-    //                 await this._deleteRemovedPhotos();
-    //                 const prevPhoto = await File.findByPk(photo.id);
-    //
-    //                 if (!prevPhoto) {
-    //                     this.newPhoto = await File.create(photo);
-    //                     await this.newPhoto.setApplicant(this.newApplicant);
-    //                 }
-    //             } else {
-    //                 this.newPhoto = await File.create(photo);
-    //                 await this.newPhoto.setApplicant(this.newApplicant);
-    //             }
-    //         }
-    //         resolve(this.newPhoto);
-    //     });
-    // }
-    //
-    //
-    // async _deleteRemovedApplicantRegion() {
-    //     const newRegionsIds = this.regions.map((region) => region.id);
-    //     for await (const prevRegion of this.newApplicant.regions) {
-    //         if (!newRegionsIds.includes(prevRegion.id)) {
-    //             await this.newApplicant.removeRegion(prevRegion);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedFiles() {
-    //     const newFilesIds = this.files.map((file) => file.id);
-    //     const prevFiles = await File.findAll({ where: { applicantId: this.newApplicant.id }})
-    //     for await (const prevFile of prevFiles) {
-    //         if (!newFilesIds.includes(prevFile.id)) {
-    //             await File.destroy({ where: { id: prevFile.id }});
-    //             await awsS3.deleteObject(prevFile.url);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedPhotos() {
-    //     const newPhotosIds = this.photos.map((photo) => photo.id);
-    //     const prevPhotos = await File.findAll({ where: { applicantId: this.newApplicant.id }})
-    //     for await (const prevPhoto of prevPhotos) {
-    //         if (!newPhotosIds.includes(prevPhoto.id)) {
-    //             await File.destroy({ where: { id: prevPhoto.id }});
-    //             await awsS3.deleteObject(prevPhoto.url);
-    //         }
-    //     }
-    // }
-    //
-    // async _deleteRemovedApplicantSkills() {
-    //     for await (const prevSkill of this.newApplicant.skills) {
-    //         const newSkillsIds = this.skills.map((skills) => skills.id);
-    //         if (!newSkillsIds.includes(prevSkill.id)) {
-    //             await this.newApplicant.removeSkill(prevSkill);
-    //         }
-    //     }
-    // }
-    //
-    //
-    // async _deleteRemovedApplicantExperience() {
-    //     const savedExperiences = await Experience.findAll({ where: { applicantId: this.newApplicant.id } });
-    //     const newExperiencesIds = this.experiences.map((experience) => experience.id);
-    //     for await (const prevExperience of savedExperiences) {
-    //         if (!newExperiencesIds.includes(prevExperience.id)) {
-    //             await Experience.destroy({ where: { id: prevExperience.id } });
-    //         }
-    //     }
-    // }
-    //
-    // async _findOrCreateApplicantExperience(experience) {
-    //     this.savedExperience = await Experience.findByPk(experience.id);
-    //
-    //     if (!this.savedExperience) {
-    //         this.savedExperience = await Experience.create(experience);
-    //         await this.savedExperience.setApplicant(this.newApplicant);
-    //     }
-    // }
-    //
-    // async _updateExperience(experience) {
-    //     const expInfo = omit(experience, 'positions');
-    //     this.savedExperience = await Experience.findByPk(expInfo.id);
-    //
-    //     if (this.savedExperience) {
-    //         await Experience.update(expInfo, { where: { id: expInfo.id } });
-    //         this.savedExperience = await Experience.findByPk(expInfo.id, { include: { model: Position } });
-    //         await this.handlePositions(experience.positions, this.savedExperience, true);
-    //     }
-    // }
 }
 
 

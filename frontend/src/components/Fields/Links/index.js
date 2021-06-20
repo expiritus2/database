@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getVocabularyLinkTypesSelector } from 'store/selectors/vocabulary';
 import { getVocabularyLinkTypesEffect } from 'store/effects/vocabulary';
 
+import { emptyLink } from 'settings/constants/templates';
 import styles from './styles.module.scss';
 
 const Links = (props) => {
@@ -21,15 +22,17 @@ const Links = (props) => {
     const dispatch = useDispatch();
     const { linkTypes, isIdle } = useSelector(getVocabularyLinkTypesSelector);
 
+    useEffect(() => setValues(value), [value]);
+
     useEffect(() => {
         if (isIdle) {
             dispatch(getVocabularyLinkTypesEffect({}, { silent: true }));
         }
-    });
+    }, []); // eslint-disable-line
 
     const onChangeLinkType = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, { ...clonedValues?.[index], type: event.target.value });
+        clonedValues.splice(index, 1, { ...clonedValues?.[index], linkType: event.target.value });
         setValues(clonedValues);
         onChange(clonedValues);
     };
@@ -60,12 +63,12 @@ const Links = (props) => {
             {!!values?.length && values.map((val, index) => (
                 <div key={index} className={styles.block}>
                     <Select
-                        name="type"
+                        name="linkType"
                         label={translate.Type}
                         className={styles.type}
                         options={linkTypes}
                         onChange={(event) => onChangeLinkType(event, index)}
-                        value={val?.type || ''}
+                        value={val?.linkType || ''}
                     />
                     <Input
                         label={translate.Link}
@@ -83,11 +86,6 @@ const Links = (props) => {
     );
 };
 
-Links.linksOptions = (translate) => [
-    { value: 'linkedin', label: translate.Linkedin },
-    { value: 'site', label: translate.Site },
-];
-
 Links.propTypes = {
     className: PropTypes.string,
     value: PropTypes.arrayOf(PropTypes.shape({})),
@@ -96,7 +94,7 @@ Links.propTypes = {
 
 Links.defaultProps = {
     className: '',
-    value: [{ type: '', link: '' }],
+    value: [emptyLink],
     onChange: () => {},
 };
 

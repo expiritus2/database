@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
@@ -11,6 +11,7 @@ import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 import { AddPhoto, Sex, Phones, Emails, Messengers, Links } from 'components';
 import { Input, DatePicker } from 'components/Form';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
+import { emptyLink, emptyMessenger } from 'settings/constants/templates';
 import { FormWrapper } from '../components';
 import Name from '../components/Name';
 
@@ -36,6 +37,16 @@ const InfoForm = (props) => {
         const { name, value } = e.target;
         dispatch(setApplicantFormStateEffect({ [name]: value }));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!formik?.values?.messengers?.length) {
+            onCustomFieldChange(null, [emptyMessenger], 'messengers');
+        }
+
+        if (!formik?.values?.links?.length) {
+            onCustomFieldChange(null, [emptyLink], 'links');
+        }
+    }, []); // eslint-disable-line
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>

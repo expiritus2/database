@@ -87,6 +87,7 @@ function createAssociations() {
     Experience.belongsTo(Applicant);
 
     Experience.belongsToMany(VocabularyPosition, { through: ThroughExperiencePosition });
+    VocabularyPosition.belongsToMany(Experience, { through: ThroughExperiencePosition });
 
     Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
 

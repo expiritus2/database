@@ -15,25 +15,13 @@ const TableComponent = (props) => {
     const { className, files, onSelectChange, selections, onChangeFileType, onDeleteFile } = props;
     const { translate } = useTranslate();
 
-    // const getFileLink = (file) => {
-    //     const url = file?.url || '';
-    //     const parts = url.split('/');
-    //     const filename = parts.pop();
-    //     const firstHyphenIndex = filename.split('').findIndex((char) => char === '-');
-    //     const trimmedFilename = filename.substring(firstHyphenIndex + 1);
-    //
-    //     return <span>{trimmedFilename}</span>;
-    // };
-    //
-    // getFileLink();
-
     const getColumns = () => [
         { key: 'type', title: 'Type', width: '50%' },
         { key: 'name', title: translate.Name, width: '50%' },
     ];
 
     const getRows = () => files.map((file, index) => ({
-        id: file.id || index,
+        id: file.id || `${file.id}-${index}`,
         type: (
             <FileType
                 onChangeFileType={(event, val) => onChangeFileType(event, val, index)}
@@ -41,7 +29,7 @@ const TableComponent = (props) => {
                 index={index}
             />
         ),
-        name: <FileName value={file?.filename} onDelete={() => onDeleteFile(index)} index={index} />,
+        name: <FileName value={file?.filename} onDelete={(event) => onDeleteFile(event, index)} index={index} />,
     }));
 
     // const onClickRow = (e, rowValue) => {

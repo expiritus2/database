@@ -37,7 +37,7 @@ Sex.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string,
     label: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.shape({}),
     onChange: PropTypes.func,
 };
 
@@ -45,7 +45,7 @@ Sex.defaultProps = {
     className: '',
     name: '',
     label: '',
-    value: '',
+    value: {},
     onChange: () => {},
 };
 

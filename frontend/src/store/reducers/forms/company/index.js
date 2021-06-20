@@ -7,6 +7,7 @@ import {
     setCompanyFormDataAction,
 } from 'store/actions/forms/company';
 import { get } from 'lodash-es';
+import { emptyLink } from 'settings/constants/templates';
 
 const initialData = {
     active: false,
@@ -14,7 +15,7 @@ const initialData = {
     users: [],
     logo: '',
     regions: [],
-    links: [{ type: '', link: '' }],
+    links: [emptyLink],
     addresses: [''],
     info: '',
 };

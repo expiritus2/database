@@ -10,6 +10,8 @@ import { Button, Input, Select } from 'components/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getVocabularyMessengerTypesSelector } from 'store/selectors/vocabulary';
 import { getVocabularyMessengerTypesEffect } from 'store/effects/vocabulary';
+import { emptyMessenger } from 'settings/constants/templates';
+
 import styles from './styles.module.scss';
 
 const Messengers = (props) => {
@@ -19,11 +21,13 @@ const Messengers = (props) => {
     const dispatch = useDispatch();
     const { messengerTypes, isIdle } = useSelector(getVocabularyMessengerTypesSelector);
 
+    useEffect(() => setValues(value), [value]);
+
     useEffect(() => {
         if (isIdle) {
             dispatch(getVocabularyMessengerTypesEffect({}, { silent: true }));
         }
-    });
+    }, []); // eslint-disable-line
 
     const onChangeMessenger = (event, index) => {
         const clonedValues = cloneDeep(values);
@@ -89,7 +93,7 @@ Messengers.propTypes = {
 
 Messengers.defaultProps = {
     className: '',
-    value: [{ messengerType: '', accountName: '' }],
+    value: [emptyMessenger],
     onChange: () => {},
 };
 

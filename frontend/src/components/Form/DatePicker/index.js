@@ -47,6 +47,7 @@ DatePicker.propTypes = {
         PropTypes.number,
         PropTypes.instanceOf(Date),
         PropTypes.arrayOf(PropTypes.number),
+        PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     ]),
     onChange: PropTypes.func,

@@ -75,13 +75,13 @@ const FileTypeComponent = (props) => {
 
 FileTypeComponent.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.shape({}),
     onChangeFileType: PropTypes.func,
 };
 
 FileTypeComponent.defaultProps = {
     className: '',
-    value: '',
+    value: {},
     onChangeFileType: () => {},
 };
 
