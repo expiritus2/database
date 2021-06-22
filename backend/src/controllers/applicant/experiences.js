@@ -57,6 +57,18 @@ class Experiences {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            const experiences = await Experience.findAll({ where: { applicantId }});
+
+            for await (const experience of experiences) {
+                await ThroughExperiencePosition.destroy({ where: { experienceId: experience.id }});
+                await experience.destroy();
+            }
+            resolve();
+        });
+    }
+
     #createExperiences(experiences) {
         return new Promise(async (resolve) => {
             for await (const experience of experiences) {

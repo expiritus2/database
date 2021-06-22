@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { setUnit } from 'helpers';
 
 import { GrEdit } from 'react-icons/gr';
-import { GiSave } from 'react-icons/gi';
-import { TiCancel } from 'react-icons/ti';
+import { TiCancel, TiLockClosed } from 'react-icons/ti';
 
 import { FileType } from 'components';
 
@@ -19,11 +18,13 @@ const FileTypeComponent = (props) => {
         setEditMode(true);
     };
 
-    const onSave = () => {
+    const onCancel = () => {
         setEditMode(false);
+        onChangeFileType(null, null);
     };
 
-    const onCancel = () => {
+    const onChangeFileTypeHandler = (event, val) => {
+        onChangeFileType(event, val);
         setEditMode(false);
     };
 
@@ -54,7 +55,7 @@ const FileTypeComponent = (props) => {
                 {editMode
                     ? (
                         <FileType
-                            onChange={onChangeFileType}
+                            onChange={onChangeFileTypeHandler}
                             value={value}
                             getCustomStyles={getCustomStyles}
                         />
@@ -66,7 +67,6 @@ const FileTypeComponent = (props) => {
                 : (
                     <div className={styles.actions}>
                         <TiCancel onClick={onCancel} className={classNames(styles.icon, styles.cancel)} />
-                        <GiSave onClick={onSave} className={classNames(styles.icon, styles.save)} />
                     </div>
                 )}
         </div>

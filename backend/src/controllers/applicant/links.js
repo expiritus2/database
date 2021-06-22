@@ -37,6 +37,13 @@ class Links {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await Link.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
+
     #createLink(link) {
         if (!link || !link.link) return Promise.resolve();
 

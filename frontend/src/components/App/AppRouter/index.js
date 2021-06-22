@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { HashRouter as Router, Switch } from 'react-router-dom';
 import routesConfig from 'settings/navigation/config';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ const AppRouter = () => {
     const userRole = useSelector(getUserRoleSelector);
 
     return (
-        <BrowserRouter>
+        <Router>
             <Switch>
                 {routesConfig.map(({ path, component, exact, roles }) => (
                     <AppRoute
@@ -26,7 +26,7 @@ const AppRouter = () => {
                 ))}
             </Switch>
             <VocabularyModal />
-        </BrowserRouter>
+        </Router>
     );
 };
 

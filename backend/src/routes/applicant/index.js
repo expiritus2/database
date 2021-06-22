@@ -47,7 +47,7 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {
-    await Applicant.destroy({ where: { id: req.params.id }});
+    await new ApplicantController().delete(req.params.id);
     const options = getExecOptions(req.query);
     const allApplicants = await Applicant.findAndCountAll(options);
 

@@ -26,8 +26,9 @@ const Login = () => {
             dispatch(loginEffect(values, {}, (err) => {
                 if (!err) {
                     history.push(routes.index);
+                } else {
+                    setIsPending(false);
                 }
-                setIsPending(false);
             }));
         },
     });
@@ -45,7 +46,7 @@ const Login = () => {
                         label={translate.Email}
                         onChange={formik.handleChange}
                         value={formik.values.username}
-                        error={formik.touched.username && !!formik.errors.username}
+                        error={formik.touched.username && formik.errors.username}
                         helperText={formik.touched.username ? formik.errors.username : ''}
                     />
                     <Input
@@ -55,7 +56,7 @@ const Login = () => {
                         label={translate.Password}
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        error={formik.touched.password && !!formik.errors.password}
+                        error={formik.touched.password && formik.errors.password}
                         helperText={formik.touched.password ? formik.errors.password : ''}
                     />
                     <Button

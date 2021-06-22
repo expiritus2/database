@@ -10,8 +10,14 @@ export const prepareData = (cfg) => {
         clonedCfg.salary.amount = Number(clonedCfg?.salary?.amount);
     }
 
-    // clonedCfg.languageSkills = (clonedCfg?.languageSkills || [])
-    //     .map((languageSkill) => ({ language: languageSkill.name, languageLevel: languageSkill.level }));
+    clonedCfg.languageSkills = (clonedCfg?.languageSkills || [])
+        .filter((languageSkill) => !!languageSkill?.language);
+
+    clonedCfg.phones = (clonedCfg?.phones || [])
+        .filter((phone) => !!phone?.number);
+
+    clonedCfg.experiences = (clonedCfg?.experiences || [])
+        .filter((experience) => !!experience?.period && !!experience?.company);
 
     return clonedCfg;
 };

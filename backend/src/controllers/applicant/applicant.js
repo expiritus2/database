@@ -8,7 +8,7 @@ const Positions = require('./positions');
 const Skills = require('./skills');
 const WorkPlaces = require('./workPlaces');
 const Regions = require('./regions');
-const Languages = require('./languages');
+const LanguageSkills = require('./languages');
 const Photos = require('./photos');
 const Sex = require('./sex');
 const Phones = require('./phones');
@@ -39,7 +39,7 @@ class ApplicantController {
                 await new Skills(this.body.skills, this.newApplicant).create();
                 await new WorkPlaces(this.body.workPlaces, this.newApplicant).create();
                 await new Regions(this.body.regions, this.newApplicant).create();
-                await new Languages(this.body.languageSkills, this.newApplicant).create();
+                await new LanguageSkills(this.body.languageSkills, this.newApplicant).create();
                 await new Photos(this.body.photos, this.newApplicant).create();
                 await new Sex(this.body.sex, this.newApplicant).create();
                 await new Phones(this.body.phones, this.newApplicant).create();
@@ -77,7 +77,7 @@ class ApplicantController {
                     await new Skills(this.body.skills, this.updatedApplicant).update();
                     await new WorkPlaces(this.body.workPlaces, this.updatedApplicant).update();
                     await new Regions(this.body.regions, this.updatedApplicant).update();
-                    await new Languages(this.body.languageSkills, this.updatedApplicant).update();
+                    await new LanguageSkills(this.body.languageSkills, this.updatedApplicant).update();
                     await new Photos(this.body.photos, this.updatedApplicant).update();
                     await new Sex(this.body.sex, this.updatedApplicant).update();
                     await new Phones(this.body.phones, this.updatedApplicant).update();
@@ -94,6 +94,28 @@ class ApplicantController {
                 console.error(e);
                 throw new DatabaseCreationError();
             }
+        });
+    }
+
+    delete(id) {
+        return new Promise(async (resolve) => {
+            await new Salary().delete(id);
+            await new Positions().delete(id);
+            await new Skills().delete(id);
+            await new WorkPlaces().delete(id);
+            await new Regions().delete(id);
+            await new LanguageSkills().delete(id);
+            await new Photos().delete(id);
+            await new Phones().delete(id);
+            await new Emails().delete(id);
+            await new Messengers().delete(id);
+            await new Links().delete(id);
+            await new Files().delete(id);
+            await new Experiences().delete(id);
+
+            await Applicant.destroy({ where: { id }});
+
+            resolve();
         });
     }
 }

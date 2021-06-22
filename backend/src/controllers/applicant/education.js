@@ -25,6 +25,13 @@ class Education {
             resolve();
         });
     }
+
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+
+            resolve();
+        });
+    }
 }
 
 module.exports = Education;

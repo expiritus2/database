@@ -32,16 +32,6 @@ const TableComponent = (props) => {
         name: <FileName value={file?.filename} onDelete={(event) => onDeleteFile(event, index)} index={index} />,
     }));
 
-    // const onClickRow = (e, rowValue) => {
-    //     if (rowValue?.url) {
-    //         downloadFile(true).byLink(rowValue?.url);
-    //     }
-    //
-    //     if (rowValue?.data) {
-    //         downloadFile().asBlob(rowValue?.data, rowValue?.name);
-    //     }
-    // };
-
     return (
         <div className={classNames(styles.filesTable, className)}>
             <CommonTable
@@ -49,7 +39,6 @@ const TableComponent = (props) => {
                 onSelectChange={onSelectChange}
                 columns={getColumns()}
                 data={getRows()}
-                // onClickRow={onClickRow}
                 selectable={false}
                 rowClassName={styles.fileRow}
                 cellClassName={styles.fileCell}

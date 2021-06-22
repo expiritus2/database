@@ -38,6 +38,13 @@ class Salary {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await SalaryModel.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
+
     #createSalaryModel() {
         return new Promise(async (resolve) => {
             if (this.salary && this.salary.amount) {

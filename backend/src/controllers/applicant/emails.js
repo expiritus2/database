@@ -40,6 +40,13 @@ class Emails {
         })
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await Email.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
+
     #deleteRemovedEmails() {
         return new Promise(async (resolve) => {
             const prevStoredEmails = this.applicant.emails || [];

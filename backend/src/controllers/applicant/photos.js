@@ -29,6 +29,17 @@ class Photos {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            const photos = await Photo.findAll({ where: { applicantId }});
+            for await (const photo of photos) {
+                await awsS3.deleteObject(photo.url);
+                await photo.destroy();
+            }
+            resolve();
+        });
+    }
+
     #createPhotos(photos) {
         return new Promise(async (resolve) => {
             const uploadedPhotos = await awsS3.setFiles(photos).upload();

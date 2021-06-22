@@ -1,3 +1,5 @@
+const ThroughApplicantSkill = require('../../models/through/applicantSkill');
+
 class Skills {
     constructor(skills, applicant) {
         this.skills = skills;
@@ -26,6 +28,13 @@ class Skills {
             for await (const newSkillId of newestSkillsIds) {
                 await this.applicant.addSkill(newSkillId);
             }
+            resolve();
+        });
+    }
+
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await ThroughApplicantSkill.destroy({ where: { applicantId }})
             resolve();
         });
     }

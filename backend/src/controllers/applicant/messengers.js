@@ -37,6 +37,13 @@ class Messengers {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await Messenger.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
+
     #deleteRemovedMessengers() {
         return new Promise(async (resolve) => {
             const prevStoredMessengers = this.applicant.messengers || []

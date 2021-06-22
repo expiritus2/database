@@ -9,7 +9,7 @@ const File = require('./file');
 const Photo = require('./photo');
 const Phone = require('./phone');
 const Messenger = require('./messenger');
-const ApplicantLanguage = require('./languageSkill');
+const LanguageSkill = require('./languageSkill');
 const Email = require('./email');
 const Link = require('./link');
 
@@ -78,9 +78,9 @@ function createAssociations() {
     Link.belongsTo(Applicant);
     Link.belongsTo(VocabularyLinkType);
 
-    ApplicantLanguage.belongsTo(VocabularyLanguage);
-    ApplicantLanguage.belongsTo(VocabularyLanguageLevel);
-    Applicant.belongsToMany(ApplicantLanguage, { through: ThroughApplicantLanguage });
+    LanguageSkill.belongsTo(VocabularyLanguage);
+    LanguageSkill.belongsTo(VocabularyLanguageLevel);
+    Applicant.belongsToMany(LanguageSkill, { through: ThroughApplicantLanguage });
 
 
     Applicant.hasMany(Experience);

@@ -25,6 +25,13 @@ class Sex {
             resolve();
         });
     }
+
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+
+            resolve();
+        });
+    }
 }
 
 module.exports = Sex;

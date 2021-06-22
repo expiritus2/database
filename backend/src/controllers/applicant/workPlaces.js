@@ -1,3 +1,5 @@
+const ThroughApplicantWorkPlaces = require('../../models/through/applicantWorkPlace');
+
 class WorkPlaces {
     constructor(workPlaces, applicant) {
         this.workPlaces = workPlaces;
@@ -30,7 +32,14 @@ class WorkPlaces {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await ThroughApplicantWorkPlaces.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
     #deleteRemovedWorkPlaces(applicantId) {
+
         return new Promise(async (resolve) => {
             const prevWorkPlacesIds = this.applicant.workPlaces.map((workPlace) => workPlace.id);
             const newWorkPlacesIds = this.workPlaces.map((workPlace) => workPlace.id);

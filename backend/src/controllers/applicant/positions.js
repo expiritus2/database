@@ -1,3 +1,5 @@
+const ThroughApplicantPosition = require('../../models/through/applicantPosition');
+
 class Positions {
     constructor(positions, applicant) {
         this.positions = positions;
@@ -26,6 +28,13 @@ class Positions {
             for await (const newPosId of newestPositionsIds) {
                 await this.applicant.addPosition(newPosId);
             }
+            resolve();
+        });
+    }
+
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await ThroughApplicantPosition.destroy({ where: { applicantId }});
             resolve();
         });
     }

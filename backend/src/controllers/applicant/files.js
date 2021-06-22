@@ -36,6 +36,17 @@ class Files {
         });
     }
 
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            const files = await File.findAll({ where: { applicantId }});
+            for await (const file of files) {
+                await awsS3.deleteObject(file.url);
+                await file.destroy();
+            }
+            resolve();
+        });
+    }
+
     #createFiles(files) {
         return new Promise(async (resolve) => {
             const uploadedFiles = await awsS3.setFiles(files).upload();

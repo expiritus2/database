@@ -1,3 +1,5 @@
+const ThroughApplicantRegion = require('../../models/through/applicantRegion');
+
 class Regions {
     constructor(regions, applicant) {
         this.regions = regions;
@@ -26,6 +28,13 @@ class Regions {
             for await (const regionId of newestRegionsIds) {
                 await this.applicant.addRegion(regionId);
             }
+            resolve();
+        });
+    }
+
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await ThroughApplicantRegion.destroy({ where: { applicantId }});
             resolve();
         });
     }

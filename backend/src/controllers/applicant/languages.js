@@ -1,6 +1,7 @@
-const LanguageSkill = require('../../models/languageSkill');
+const LanguageSkillModel = require('../../models/languageSkill');
+const ThroughApplicantLanguage = require('../../models/through/applicantLanguage');
 
-class Languages {
+class LanguageSkill {
     constructor(languageSkills, applicant) {
         this.languageSkills = languageSkills;
         this.applicant = applicant;
@@ -35,7 +36,7 @@ class Languages {
             }
 
             for await (const notChangedSkill of notChangedLanguageSkills) {
-                await LanguageSkill.update({
+                await LanguageSkillModel.update({
                         languageId: notChangedSkill && notChangedSkill.language && notChangedSkill.language.id ? notChangedSkill.language.id : null,
                         languageLevelId: notChangedSkill.language && notChangedSkill.languageLevel.id ? notChangedSkill.languageLevel.id : null,
                     },
@@ -47,42 +48,12 @@ class Languages {
         });
     }
 
-    // async handleLanguages(isUpdate) {
-    //     return new Promise(async (resolve) => {
-    //         const { languageSkills = [] } = this.body;
-    //
-    //         if (isUpdate) {
-    //             const newestLanguageSkills = await this.#deleteRemovedLanguageSkills(this.updatedApplicant.id);
-    //             const notChangedLanguageSkills = languageSkills.filter((languageSkill) => !!languageSkill.id);
-    //
-    //             for await (const languageSkill of newestLanguageSkills) {
-    //                 const storedLanguageSkill = await this.#createLanguageSkill(languageSkill);
-    //
-    //                 if (storedLanguageSkill) {
-    //                     await this.updatedApplicant.addLanguageSkill(storedLanguageSkill);
-    //                 }
-    //             }
-    //
-    //             for await (const notChangedSkill of notChangedLanguageSkills) {
-    //                 await LanguageSkill.update({
-    //                         languageId: notChangedSkill && notChangedSkill.language && notChangedSkill.language.id ? notChangedSkill.language.id : null,
-    //                         languageLevelId: notChangedSkill.language && notChangedSkill.languageLevel.id ? notChangedSkill.languageLevel.id : null,
-    //                     },
-    //                     {
-    //                         where: { id: notChangedSkill.id }
-    //                     });
-    //             }
-    //         } else {
-    //             for await (const languageSkill of languageSkills) {
-    //                 const storedLanguageSkill = await this.#createLanguageSkill(languageSkill);
-    //
-    //                 await this.newApplicant.addLanguageSkill(storedLanguageSkill);
-    //             }
-    //         }
-    //
-    //         resolve();
-    //     });
-    // }
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await ThroughApplicantLanguage.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
 
     #deleteRemovedLanguageSkills() {
         return new Promise(async (resolve) => {
@@ -92,7 +63,7 @@ class Languages {
             for await (const prevLanguageSkillId of prevLanguageSkillsIds) {
                 if (!newLanguageSkillsIds.includes(prevLanguageSkillId)) {
                     await this.applicant.removeLanguageSkill(prevLanguageSkillId);
-                    await LanguageSkill.destroy({ where: { id: prevLanguageSkillId } })
+                    await LanguageSkillModel.destroy({ where: { id: prevLanguageSkillId } })
                 }
             }
 
@@ -104,7 +75,7 @@ class Languages {
 
     #createLanguageSkill(languageSkill) {
         return new Promise(async (resolve) => {
-            const languageSkillModel = await LanguageSkill.create({});
+            const languageSkillModel = await LanguageSkillModel.create({});
 
             if (languageSkill.language && languageSkill.language.id) {
                 await languageSkillModel.setLanguage(languageSkill.language.id);
@@ -119,4 +90,4 @@ class Languages {
     }
 }
 
-module.exports = Languages;
+module.exports = LanguageSkill;

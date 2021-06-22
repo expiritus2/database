@@ -37,32 +37,12 @@ class Phones {
         });
     }
 
-    // async handlePhones(isUpdate) {
-    //     const { phones = [] } = this.body;
-    //
-    //     return new Promise(async (resolve) => {
-    //         if (isUpdate) {
-    //             const newestPhones = await this.#deleteRemovedPhones(this.updatedApplicant.id);
-    //             for await (const phone of newestPhones) {
-    //                 await this.#createPhone(phone, this.updatedApplicant);
-    //             }
-    //
-    //             const notChangedPhones = phones.filter((phone) => !!phone.id);
-    //             for await (const phone of notChangedPhones) {
-    //                 await Phone.update({
-    //                     phoneTypeId: phone && phone.phoneType && phone.phoneType.id ? phone.phoneType.id : null,
-    //                     number: phone && phone.number ? phone.number : null,
-    //                 }, { where: { id: phone.id } })
-    //             }
-    //         } else {
-    //             for await (const phone of phones) {
-    //                 await this.#createPhone(phone, this.newApplicant)
-    //             }
-    //         }
-    //
-    //         resolve();
-    //     });
-    // }
+    delete(applicantId) {
+        return new Promise(async (resolve) => {
+            await Phone.destroy({ where: { applicantId }});
+            resolve();
+        });
+    }
 
     #createPhone(phone) {
         return new Promise(async (resolve) => {
