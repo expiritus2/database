@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { setUnit } from 'helpers';
 
 import { GrEdit } from 'react-icons/gr';
-import { TiCancel, TiLockClosed } from 'react-icons/ti';
+import { TiCancel } from 'react-icons/ti';
 
 import { FileType } from 'components';
 
