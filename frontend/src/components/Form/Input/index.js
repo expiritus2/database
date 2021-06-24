@@ -132,12 +132,12 @@ const Input = (props) => {
                 {type === 'search' && <AiOutlineSearch className={styles.searchIcon} />}
                 {icon && icon}
                 {!!removeHandler && (
-                    <button testid="input_remove" className={styles.removeBtn} onClick={removeHandler} type="button">
+                    <button className={styles.removeBtn} onClick={removeHandler} type="button">
                         <BiTrash />
                     </button>
                 )}
             </div>
-            {error && <div testid="validation" className={styles.error}>{error}</div>}
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };

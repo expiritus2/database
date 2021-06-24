@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { useFormik } from 'formik';
 import { useTranslate } from 'hooks';
 import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
@@ -12,8 +11,8 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
 import { Textarea, Button, Input } from 'components/Form';
 import { Period, Position } from 'components';
-import { setApplicantExperienceFormStateEffect } from 'store/effects/forms/applicant';
-import { getApplicantExperienceFormStateSelector } from 'store/selectors/applicantForm';
+import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
+import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import { FormWrapper } from '../components';
 
@@ -27,36 +26,31 @@ const ExperienceForm = (props) => {
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const modal = useSelector(getModalStateSelector);
-    const experienceFormState = useSelector(getApplicantExperienceFormStateSelector);
-
-    const formik = useFormik({
-        initialValues: { ...experienceFormState },
-        enableReinitialize: true,
-    });
+    const { formFields } = useSelector(getApplicantFormSelector);
 
     const onCustomFieldChange = (val, propName, index) => {
-        const clonedValue = cloneDeep(experienceFormState);
+        const clonedValue = cloneDeep(formFields?.experiences);
         clonedValue[index][propName] = val;
-        dispatch(setApplicantExperienceFormStateEffect(clonedValue));
+        dispatch(setApplicantFormStateEffect({ experiences: clonedValue }));
     };
 
     const onAdd = () => {
-        const clonedValues = cloneDeep(experienceFormState);
+        const clonedValues = cloneDeep(formFields?.experiences);
         clonedValues.push(cloneDeep(experienceInitialData));
-        dispatch(setApplicantExperienceFormStateEffect(clonedValues));
+        dispatch(setApplicantFormStateEffect({ experiences: clonedValues }));
     };
 
     const onRemove = (index) => {
-        const clonedValues = cloneDeep(experienceFormState);
+        const clonedValues = cloneDeep(formFields?.experiences);
         clonedValues.splice(index, 1);
-        dispatch(setApplicantExperienceFormStateEffect(clonedValues));
+        dispatch(setApplicantFormStateEffect({ experiences: clonedValues }));
     };
 
     return (
         <FormWrapper className={classNames(styles.experienceForm, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Name />
-                {experienceFormState?.map(({ period, company, positions, info }, index) => (
+                {(formFields?.experiences || []).map(({ period, company, positions, info }, index) => (
                     <div key={index} className={styles.block}>
                         <div className={styles.fields}>
                             <Period
@@ -86,7 +80,7 @@ const ExperienceForm = (props) => {
                             />
                         </div>
                         <div>
-                            {experienceFormState?.length > 1 && (
+                            {formFields?.experiences?.length > 1 && (
                                 <IoIosRemoveCircle onClick={() => onRemove(index)} className={styles.removeIcon} />
                             )}
                         </div>

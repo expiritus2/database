@@ -24,7 +24,7 @@ const ModalComponent = ({ className }) => {
     const location = useLocation();
     const modal = useSelector(getModalStateSelector);
     const { translate } = useTranslate();
-    const [isPending, setIsPending] = useState();
+    const [isPending, setIsPending] = useState(false);
 
     const handleClose = () => {
         dispatch(openModalEffect({ modalId: modal.id, open: false }));

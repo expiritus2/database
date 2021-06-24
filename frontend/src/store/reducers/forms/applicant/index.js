@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions';
+import { clearErrors } from 'store/helpers';
 import {
     resetApplicantFormAction,
-    setApplicantExperienceFormStateAction,
     setApplicantFormStateAction,
     createApplicantAction,
-    uploadFilesAction,
-    setApplicantFormDataAction,
+    setInitApplicantFormDataAction,
+    updateApplicantAction,
 } from 'store/actions/forms/applicant';
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 import {
     emptyMessenger,
     emptyLink,
@@ -16,6 +16,7 @@ import {
     emptyEmail,
     emptySalary,
 } from 'settings/constants/templates';
+import { IDLE } from 'settings/constants/apiState';
 
 export const experienceInitialData = {
     period: [],
@@ -25,54 +26,64 @@ export const experienceInitialData = {
 };
 
 const initialData = {
-    name: '',
-    inActiveSearch: false,
-    salary: emptySalary,
-    education: '',
-    positions: [],
-    skills: [],
-    workPlaces: [],
-    regions: [],
-    address: '',
-    languageSkills: [emptyLanguageSkill],
-    info: '',
-    nameLat: '',
-    photos: [],
-    birthDate: '',
-    sex: {},
-    phones: [emptyPhone],
-    messengers: [emptyMessenger],
-    links: [emptyLink],
-    emails: [emptyEmail],
-    files: [],
-    experienceYears: 0,
-    experiences: [
-        experienceInitialData,
-    ],
+    state: IDLE,
+    data: {
+        name: '',
+        inActiveSearch: false,
+        salary: emptySalary,
+        education: '',
+        positions: [],
+        skills: [],
+        workPlaces: [],
+        regions: [],
+        address: '',
+        languageSkills: [emptyLanguageSkill],
+        info: '',
+        nameLat: '',
+        photos: [],
+        birthDate: '',
+        sex: {},
+        phones: [emptyPhone],
+        messengers: [emptyMessenger],
+        links: [emptyLink],
+        emails: [emptyEmail],
+        files: [],
+        experienceYears: 0,
+        experiences: [
+            experienceInitialData,
+        ],
+    },
+    meta: {},
+    errors: {},
 };
 
 export default handleActions({
     [setApplicantFormStateAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
-    }),
-    [uploadFilesAction]: (state, { payload }) => ({
-        ...state,
-        state: payload.state,
-        meta: get(payload, 'meta', initialData.meta),
+        data: {
+            ...state.data,
+            ...payload,
+        },
+        errors: clearErrors(state.errors, payload),
     }),
     [createApplicantAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [setApplicantExperienceFormStateAction]: (state, { payload }) => ({
+    [updateApplicantAction]: (state, { payload }) => ({
         ...state,
-        experiences: [...payload],
+        state: payload.state,
+        meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [setApplicantFormDataAction]: (state, { payload }) => ({
+    [setInitApplicantFormDataAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...payload,
+        },
+        errors: cloneDeep(initialData.errors),
     }),
     [resetApplicantFormAction]: () => initialData,
 }, initialData);

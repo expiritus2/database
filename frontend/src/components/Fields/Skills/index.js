@@ -7,9 +7,10 @@ import { getVocabularySkillsEffect } from 'store/effects/vocabulary';
 import { useTranslate } from 'hooks';
 import { Select } from 'components/Form';
 import { getVocabularySkillsSelector } from 'store/selectors/vocabulary';
+import styles from './styles.module.scss';
 
 const Skills = (props) => {
-    const { className, onChange, value } = props;
+    const { className, onChange, value, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const { skills } = useSelector(getVocabularySkillsSelector);
@@ -28,6 +29,7 @@ const Skills = (props) => {
                 value={value}
                 options={skills}
             />
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
@@ -36,12 +38,14 @@ Skills.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
+    error: PropTypes.string,
 };
 
 Skills.defaultProps = {
     className: '',
     onChange: () => {},
     value: undefined,
+    error: undefined,
 };
 
 export default Skills;

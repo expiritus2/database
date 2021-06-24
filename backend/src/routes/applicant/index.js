@@ -6,19 +6,18 @@ const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
 
 const { ApplicantController } = require('../../controllers/applicant/applicant');
-// const Sequelize = require('sequelize');
 const { includeModels, attributes } = require('../../settings/applicant');
 const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
 
-// const Op = Sequelize.Op;
-
 const middlewares = [
     requireAuth,
     [
-        // body('name').not().isEmpty().withMessage('Name is required'),
-        // body('positions').isArray().not().isEmpty().withMessage('Positions is required'),
+        body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
+        body('skills').isArray().not().isEmpty().withMessage('Skills is required'),
+        body('positions').isArray().not().isEmpty().withMessage('Positions is required'),
+        body('name').not().isEmpty().withMessage('Name is required'),
     ],
     validateRequest,
 ]
@@ -31,7 +30,7 @@ router.post('/api/applicants/create', middlewares, async (req, res) => {
     res.send({ result: populatedApplicant });
 });
 
-router.put('/api/applicants/:id', async (req, res) => {
+router.put('/api/applicants/:id', middlewares, async (req, res) => {
     const savedApplicant = new ApplicantController(req.body);
     const updatedApplicant = await savedApplicant.update(req.params.id);
     const populatedApplicant = await Applicant.findByPk(updatedApplicant.id, { include: includeModels, attributes });

@@ -1,5 +1,5 @@
 import { PENDING, READY, ERROR } from 'settings/constants/apiState';
-import { showErrorMessage } from 'helpers/errors';
+import { showErrorMessage, convertErrors } from 'helpers/errors';
 
 export default class Api {
     /**
@@ -50,7 +50,7 @@ export default class Api {
                     message: err.message,
                 };
 
-                Api.setError({ dispatch, action, cfg: config, response: err });
+                Api.setError({ dispatch, action, cfg: config, response: err, errors: err?.response?.data?.errors });
 
                 if (typeof cb === 'function') {
                     cb(err, null, dispatch);
@@ -90,8 +90,9 @@ export default class Api {
      * @param dispatch - redux dispatch
      * @param action - redux action
      * @param cfg - request params
+     * @param errors
      */
-    static setError({ dispatch, action, cfg }) {
-        dispatch(action({ state: ERROR, data: undefined, meta: cfg }));
+    static setError({ dispatch, action, cfg, errors }) {
+        dispatch(action({ state: ERROR, data: undefined, meta: cfg, errors: convertErrors(errors) }));
     }
 }

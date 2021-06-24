@@ -50,9 +50,7 @@
         width: 100%;
 
         .error {
-            color: $error-color;
-            font-size: setUnit(12);
-            padding-top: setUnit(8);
+            @include inputError;
 
             &::before {
                 content: '\0021';

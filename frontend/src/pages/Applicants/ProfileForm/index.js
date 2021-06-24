@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { Checkbox, Input, Textarea } from 'components/Form';
@@ -21,12 +20,7 @@ const ProfileForm = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getApplicantFormSelector);
-
-    const formik = useFormik({
-        initialValues: { ...formFields },
-        enableReinitialize: true,
-    });
+    const { formFields, errors } = useSelector(getApplicantFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setApplicantFormStateEffect({ [propName]: val }));
@@ -39,7 +33,7 @@ const ProfileForm = (props) => {
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Name />
                 <Checkbox
                     direction={Checkbox.DIRECTION_RIGHT}
@@ -47,7 +41,7 @@ const ProfileForm = (props) => {
                     labelTextClassName={styles.inActiveSearchText}
                     label={translate.InActiveSearch}
                     onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'inActiveSearch')}
-                    checked={formik.values.inActiveSearch}
+                    checked={formFields.inActiveSearch}
                 />
                 <Input
                     minNumber={0}
@@ -79,11 +73,13 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
                     value={formFields.positions}
+                    error={errors.positions}
                 />
                 <Skills
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
                     value={formFields.skills}
+                    error={errors.skills}
                 />
                 <Place
                     className={styles.field}
@@ -95,6 +91,7 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={formFields.regions}
+                    error={errors.regions}
                 />
                 <Input
                     name="address"

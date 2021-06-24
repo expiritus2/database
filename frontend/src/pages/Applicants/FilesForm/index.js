@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { AddFiles } from 'components';
-import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
-import { getApplicantFilesFormStateSelector } from 'store/selectors/applicantForm';
+import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
 import Name from '../components/Name';
 import { FormWrapper } from '../components';
@@ -18,12 +17,7 @@ const FilesForm = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const filesFormState = useSelector(getApplicantFilesFormStateSelector);
-
-    const formik = useFormik({
-        initialValues: { files: filesFormState },
-        enableReinitialize: true,
-    });
+    const { formFields } = useSelector(getApplicantFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setApplicantFormStateEffect({ [propName]: val }));
@@ -31,7 +25,7 @@ const FilesForm = (props) => {
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Name />
                 <AddFiles
                     id="applicantFiles"
@@ -39,7 +33,7 @@ const FilesForm = (props) => {
                     onChange={(files, values) => {
                         onCustomFieldChange(null, values, 'files');
                     }}
-                    value={formik.values.files}
+                    value={formFields.files}
                 />
             </form>
         </FormWrapper>

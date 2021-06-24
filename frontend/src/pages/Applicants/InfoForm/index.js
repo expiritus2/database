@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,12 +21,7 @@ const InfoForm = (props) => {
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getApplicantFormSelector);
-
-    const formik = useFormik({
-        initialValues: { ...formFields },
-        enableReinitialize: true,
-    });
+    const { formFields } = useSelector(getApplicantFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setApplicantFormStateEffect({ [propName]: val }));
@@ -39,18 +33,18 @@ const InfoForm = (props) => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!formik?.values?.messengers?.length) {
+        if (!formFields.messengers?.length) {
             onCustomFieldChange(null, [emptyMessenger], 'messengers');
         }
 
-        if (!formik?.values?.links?.length) {
+        if (!formFields.links?.length) {
             onCustomFieldChange(null, [emptyLink], 'links');
         }
     }, []); // eslint-disable-line
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Name />
                 <Input
                     name="nameLat"
@@ -64,7 +58,7 @@ const InfoForm = (props) => {
                     onChange={(files, values) => {
                         onCustomFieldChange(files, values, 'photos');
                     }}
-                    value={formik.values.photos}
+                    value={formFields.photos}
                     id="applicantPhotos"
                 />
                 <div className={styles.block}>
@@ -73,14 +67,14 @@ const InfoForm = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={formik.values.birthDate}
+                        value={formFields.birthDate}
                     />
                     <Sex
                         name="sex"
                         className={classNames(styles.field, styles.sex)}
                         label={translate.Sex}
                         onChange={onChangeField}
-                        value={formik.values.sex}
+                        value={formFields.sex}
                     />
                 </div>
                 <Phones
@@ -88,28 +82,28 @@ const InfoForm = (props) => {
                     className={styles.field}
                     label={translate.Phone}
                     onChange={(val) => onCustomFieldChange(null, val, 'phones')}
-                    value={formik.values.phones}
+                    value={formFields.phones}
                 />
                 <Emails
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
                     onChange={(val) => onCustomFieldChange(null, val, 'emails')}
-                    value={formik.values.emails}
+                    value={formFields.emails}
                 />
                 <Messengers
                     name="messengers"
                     className={styles.field}
                     label={translate.Messengers}
                     onChange={(val) => onCustomFieldChange(null, val, 'messengers')}
-                    value={formik.values.messengers}
+                    value={formFields.messengers}
                 />
                 <Links
                     name="links"
                     className={styles.field}
                     label={translate.Links}
                     onChange={(val) => onCustomFieldChange(null, val, 'links')}
-                    value={formik.values.links}
+                    value={formFields.links}
                 />
             </form>
         </FormWrapper>

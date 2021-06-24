@@ -8,8 +8,10 @@ import { Select } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { getVocabularyRegionsSelector } from 'store/selectors/vocabulary';
 
+import styles from './styles.module.scss';
+
 const Regions = (props) => {
-    const { className, onChange, value } = props;
+    const { className, onChange, value, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const { regions } = useSelector(getVocabularyRegionsSelector);
@@ -28,6 +30,7 @@ const Regions = (props) => {
                 value={value}
                 options={regions}
             />
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
@@ -36,12 +39,14 @@ Regions.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
+    error: PropTypes.string,
 };
 
 Regions.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
+    error: undefined,
 };
 
 export default Regions;

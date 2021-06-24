@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
-import { setApplicantFormDataEffect } from 'store/effects/forms/applicant';
+import { setInitApplicantFormDataEffect } from 'store/effects/forms/applicant';
 import { useSelector, useDispatch } from 'react-redux';
 import { useOutsideClick, useTranslate } from 'hooks';
 import { OptionsPopup } from 'components';
@@ -33,7 +33,7 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setApplicantFormDataEffect(currentApplicantInfo));
+        dispatch(setInitApplicantFormDataEffect(currentApplicantInfo));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
     };
 

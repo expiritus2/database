@@ -29,3 +29,7 @@ export const showErrorMessage = (err) => {
         return toastr.error(message);
     }
 };
+
+export const convertErrors = (errors) => (errors || []).reduce((acc, error) => (
+    { ...acc, [error?.fields]: error?.message }
+), {});

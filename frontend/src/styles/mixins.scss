@@ -2,9 +2,9 @@
 @import "styles/functions";
 
 @mixin inputError() {
-    font-size: setUnit(14);
-    color: red;
-    margin-top: setUnit(3);
+    color: $error-color;
+    font-size: setUnit(12);
+    padding-top: setUnit(4);
 
     &::first-letter {
         text-transform: uppercase;

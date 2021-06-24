@@ -8,8 +8,10 @@ import { useTranslate } from 'hooks';
 import { getVocabularyPositionsSelector } from 'store/selectors/vocabulary';
 import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
 
+import styles from './styles.module.scss';
+
 const Position = (props) => {
-    const { className, onChange, value } = props;
+    const { className, onChange, value, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const { positions } = useSelector(getVocabularyPositionsSelector);
@@ -29,6 +31,7 @@ const Position = (props) => {
                 value={value}
                 options={positions}
             />
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
@@ -37,12 +40,14 @@ Position.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
+    error: PropTypes.string,
 };
 
 Position.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
+    error: undefined,
 };
 
 export default Position;

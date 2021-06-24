@@ -15,6 +15,6 @@ export default handleActions({
         const currentApplicant = find(applicants, (applicant) => applicant?.id === state?.id);
         return currentApplicant ? { ...currentApplicant } : state;
     },
-    [updateApplicantAction]: (state, { payload }) => get(payload, 'data.result'),
+    [updateApplicantAction]: (state, { payload }) => get(payload, 'data.result', state),
     [resetCurrentApplicantAction]: () => initialData,
 }, initialData);
