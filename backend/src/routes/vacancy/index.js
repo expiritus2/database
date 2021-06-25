@@ -3,18 +3,13 @@ const { body } = require('express-validator');
 const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Vacancy = require('../../models/vacancy');
-const Position = require('../../models/vocabulary/position');
-const Skill = require('../../models/vocabulary/skill');
-const Region = require('../../models/vocabulary/region');
-const User = require('../../models/user');
-const Company = require('../../models/company');
 
-const { VacancyController } = require('../../controllers/vacancyController');
-const Sequelize = require('sequelize');
+const { VacancyController } = require('../../controllers/vacancy/vacancy');
+
+const { includeModels, attributes } = require('../../settings/vacancy');
+const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
-
-const Op = Sequelize.Op;
 
 const middlewares = [
     requireAuth,
@@ -22,62 +17,36 @@ const middlewares = [
     validateRequest,
 ]
 
+router.get('/api/vacancies', requireAuth, async (req, res) => {
+    const options = getExecOptions(req.query);
+    const allApplicants = await Vacancy.findAndCountAll(options);
+
+    res.send({ result: allApplicants });
+});
+
 router.post('/api/vacancies/create', middlewares, async (req, res) => {
     const vacancyController = new VacancyController(req.body);
     const newVacancy = await vacancyController.create();
-    const populatedVacancy = await Vacancy.findByPk(newVacancy.id, {
-        include: [
-            { model: Skill },
-            { model: Position },
-            { model: Region },
-            { model: Company, attributes: ['id', 'name'] },
-            { model: User, attributes: ['id', 'email'], through: { attributes: [] } }
-        ],
-    });
+    const populatedVacancy = await Vacancy.findByPk(newVacancy.id, { include: includeModels, attributes });
 
     res.send(populatedVacancy);
-});
-
-router.get('/api/vacancies', requireAuth, async (req, res) => {
-    const { page, countPerPage, search, active } = req.query || {};
-    const searchCriteria = {
-        where: {
-            [Op.and]: [
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
-                ...(active ? [{ active }] : []),
-            ]
-        }
-    }
-
-    const allContacts = await Vacancy.findAndCountAll({
-        ...searchCriteria,
-        limit: countPerPage || 25,
-        offset: (page * countPerPage) || 0,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: [
-            { model: Skill },
-            { model: Position, attributes: ['id', 'label', 'value'] },
-            { model: Region },
-            { model: Company, attributes: ['id', 'name'] },
-            {
-                model: User,
-                attributes: ['id', 'email'],
-                through: { attributes: [] }
-            }
-        ],
-    });
-
-    res.send({ result: allContacts });
 });
 
 router.put('/api/vacancies/:id', async (req, res) => {
     const savedVacancy = new VacancyController(req.body);
     const updatedVacancy = await savedVacancy.update(req.params.id);
+    const populatedVacancy = await Vacancy.findByPk(updatedVacancy.id, { include: includeModels, attributes });
 
-    res.send(updatedVacancy);
-})
+    res.send({ result: populatedVacancy });
+});
+
+router.delete('/api/vacancies/:id', async (req, res) => {
+    await new VacancyController().delete(req.params.id);
+    const options = getExecOptions(req.query);
+    const allApplicants = await Vacancy.findAndCountAll(options);
+
+    res.send({ result: allApplicants });
+});
 
 module.exports = {
     vacancyRouter: router,

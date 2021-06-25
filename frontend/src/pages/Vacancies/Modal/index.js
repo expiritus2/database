@@ -10,8 +10,9 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { submitVacancyFormEffect, updateVacancyFormEffect, resetVacancyFormEffect } from 'store/effects/forms/vacancy';
+import { createVacancyEffect, updateVacancyEffect, resetVacancyFormEffect } from 'store/effects/forms/vacancy';
 import { getVacanciesEffect } from 'store/effects/vacancies';
+import { resetApplicantFormEffect } from 'store/effects/forms/applicant';
 import ProfileForm from '../ProfileForm';
 import FilesForm from '../FilesForm';
 
@@ -47,15 +48,21 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        let effect = submitVacancyFormEffect;
-        if (modal.mode === EDIT) {
-            effect = updateVacancyFormEffect;
-        }
         setIsPending(true);
-        dispatch(effect({}, {}, (err) => {
+
+        const effect = modal.mode === EDIT ? updateVacancyEffect : createVacancyEffect;
+        dispatch(effect({}, { silent: true }, (err) => {
             if (!err) {
+                if (modal.mode === ADD) {
+                    return dispatch(getVacanciesEffect({}, { silent: true }, () => {
+                        dispatch(resetVacancyFormEffect());
+                        dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                        setIsPending(false);
+                    }));
+                }
+
+                dispatch(resetApplicantFormEffect());
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getVacanciesEffect());
             }
             setIsPending(false);
         }));

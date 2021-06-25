@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { readFiles } from 'helpers';
 import { useTranslate } from 'hooks';
 import { Button, Input, InputLabel } from 'components/Form';
 
@@ -13,9 +14,12 @@ const File = (props) => {
     const [fileValue, setFileValue] = useState(value);
 
     const onChangeHandler = (event) => {
-        const newFile = event.target.files?.[0];
-        setFileValue(newFile);
-        onChange(newFile, event.target.files);
+        readFiles(event.target.files).then((values) => {
+            const newFilesValue = values
+                .map((file) => ({ ...file, data: file?.data ? btoa(file?.data) : undefined }));
+            setFileValue(newFilesValue);
+            onChange(event.target.files, newFilesValue?.[0]);
+        });
     };
 
     const onClickInputField = () => {
@@ -30,7 +34,7 @@ const File = (props) => {
                         className={styles.fileValue}
                         disabled
                         label={label}
-                        value={fileValue?.name || fileValue}
+                        value={fileValue?.filename}
                         onClick={onClickInputField}
                     />
                     <div>

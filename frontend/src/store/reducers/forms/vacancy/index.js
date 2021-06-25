@@ -2,51 +2,67 @@ import { handleActions } from 'redux-actions';
 import {
     resetVacancyFormAction,
     setVacancyFormStateAction,
-    submitVacancyFormAction,
-    uploadVacancyFilesAction,
-    setVacancyFormDataAction,
+    createVacancyAction,
+    setInitVacancyFormDataAction,
+    updateVacancyAction,
 } from 'store/actions/forms/vacancy';
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
+import { IDLE } from 'settings/constants/apiState';
+import { clearErrors } from '../../../helpers';
 
 const initialData = {
-    active: false,
-    position: null,
-    users: [],
-    company: {},
-    contacts: [],
-    salary: {
-        min: '',
-        max: '',
-        currency: '',
+    state: IDLE,
+    data: {
+        active: false,
+        position: null,
+        users: [],
+        company: {},
+        contacts: [],
+        salary: {
+            min: '',
+            max: '',
+            currency: {},
+        },
+        experienceYears: 0,
+        skills: [],
+        workPlaces: [],
+        workSchedule: [],
+        regions: [],
+        test: {},
+        info: '',
+        files: [],
     },
-    experienceYears: 0,
-    skills: [],
-    workPlaces: [],
-    workSchedule: [],
-    regions: [],
-    test: '',
-    info: '',
-    files: [],
+    meta: {},
+    errors: {},
 };
 
 export default handleActions({
     [setVacancyFormStateAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...state.data,
+            ...payload,
+        },
+        errors: clearErrors(state.errors, payload),
     }),
-    [uploadVacancyFilesAction]: (state, { payload }) => ({
+    [createVacancyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [submitVacancyFormAction]: (state, { payload }) => ({
+    [updateVacancyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [setVacancyFormDataAction]: (state, { payload }) => ({
+    [setInitVacancyFormDataAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...payload,
+        },
+        errors: cloneDeep(initialData.errors),
     }),
     [resetVacancyFormAction]: () => initialData,
 }, initialData);

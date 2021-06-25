@@ -35,7 +35,7 @@ const ThroughApplicantLanguage = require('./through/applicantLanguage');
 const ThroughExperiencePosition = require('./through/experiencePosition');
 const ThroughContactPosition = require('./through/contactPosition');
 const ThroughUserVacancy = require('./through/userVacancy');
-const ThroughVacancyPosition = require('./through/vacancyPosition');
+// const ThroughVacancyPosition = require('./through/vacancyPosition');
 const ThroughVacancyRegion = require('./through/vacancyRegion');
 const ThroughUserCompany = require('./through/userCompany');
 const ThroughRegionCompany = require('./through/regionCompany');
@@ -89,22 +89,20 @@ function createAssociations() {
     Experience.belongsToMany(VocabularyPosition, { through: ThroughExperiencePosition });
     VocabularyPosition.belongsToMany(Experience, { through: ThroughExperiencePosition });
 
-    Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
-
-    User.belongsToMany(Vacancy, { through: ThroughUserVacancy });
 
     Vacancy.belongsTo(VocabularyPosition);
-    VocabularyPosition.belongsToMany(Vacancy, { through: ThroughVacancyPosition });
-
-
     Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
-
     Vacancy.belongsTo(Company);
     Company.hasMany(Vacancy);
+    Vacancy.belongsToMany(User, { through: ThroughUserVacancy });
+
+
 
     User.belongsToMany(Company, { through: ThroughUserCompany });
 
     VocabularyRegion.belongsToMany(Company, { through: ThroughRegionCompany });
+
+    Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
 }
 
 module.exports = {

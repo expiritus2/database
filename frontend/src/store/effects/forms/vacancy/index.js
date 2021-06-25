@@ -1,16 +1,14 @@
 import Api from 'store/effects/core/api';
 import {
-    submitVacancyFormAction,
-    uploadVacancyFilesAction,
+    createVacancyAction,
     setVacancyFormStateAction,
     resetVacancyFormAction,
-    setVacancyFormDataAction,
-    updateVacancyFormAction,
+    setInitVacancyFormDataAction,
+    updateVacancyAction,
 } from 'store/actions/forms/vacancy';
 import { createVacancy, updateVacancy } from 'api/vacancies';
-import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
-import { uniqueId } from 'lodash-es';
+import { get } from 'lodash-es';
 import { prepareData } from './helpers';
 
 export const setVacancyFormStateEffect = (cfg) => (dispatch) => {
@@ -21,70 +19,24 @@ export const resetVacancyFormEffect = () => (dispatch) => {
     dispatch(resetVacancyFormAction());
 };
 
-export const submitVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadVacancyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: submitVacancyFormAction, method: createVacancy });
-    const { forms: { vacancy } } = getState();
+export const createVacancyEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: createVacancyAction, method: createVacancy });
+    const formFields = get(getState(), 'forms.vacancy.data');
 
-    const formData = new FormData();
+    const clonedApplicant = prepareData(formFields);
 
-    if (vacancy?.test) {
-        formData.append('test', vacancy?.test);
-    }
-
-    vacancy?.files?.forEach((file) => {
-        if (file?.data) {
-            formData.append('files', file?.data);
-        }
-    });
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedVacancy = prepareData(vacancy, uploadedFiles);
-
-        dispatch(sendRequest(clonedVacancy, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetVacancyFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedApplicant, options, cb);
 };
 
-export const updateVacancyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadVacancyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: updateVacancyFormAction, method: updateVacancy });
-    const { forms: { vacancy } } = getState();
+export const updateVacancyEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: updateVacancyAction, method: updateVacancy });
+    const formFields = get(getState(), 'forms.vacancy.data');
 
-    const formData = new FormData();
+    const clonedApplicant = prepareData(formFields);
 
-    if (vacancy?.test instanceof File) {
-        formData.append('test', vacancy?.test);
-    }
-
-    vacancy?.files?.filter((file) => file instanceof File).forEach((photo) => {
-        formData.append('photos', photo);
-    });
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedVacancy = prepareData(vacancy, uploadedFiles);
-
-        dispatch(sendRequest(clonedVacancy, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetVacancyFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedApplicant, options, cb);
 };
 
-export const setVacancyFormDataEffect = (cfg) => (dispatch) => {
-    const config = {
-        ...cfg,
-        files: cfg.files.map((fileUrl) => ({ id: uniqueId(), url: fileUrl })),
-    };
-    dispatch(setVacancyFormDataAction(config));
+export const setInitVacancyFormDataEffect = (cfg) => (dispatch) => {
+    dispatch(setInitVacancyFormDataAction(cfg));
 };

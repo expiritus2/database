@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
-import { setVacancyFormDataEffect } from 'store/effects/forms/vacancy';
+import { setInitVacancyFormDataEffect } from 'store/effects/forms/vacancy';
 import { useSelector, useDispatch } from 'react-redux';
 import { useOutsideClick, useTranslate } from 'hooks';
 import { OptionsPopup } from 'components';
@@ -32,7 +32,7 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setVacancyFormDataEffect(currentVacancyInfo));
+        dispatch(setInitVacancyFormDataEffect(currentVacancyInfo));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
     };
 

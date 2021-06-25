@@ -22,7 +22,7 @@ const Messenger = require('../models/messenger');
 const Salary = require('../models/salary');
 const LanguageSkill = require('../models/languageSkill');
 
-const attributes = ['name', 'nameLat', 'inActiveSearch', 'experienceYears', 'info', 'birthDate', 'createdAt', 'updatedAt'];
+const attributes = ['id', 'name', 'nameLat', 'inActiveSearch', 'experienceYears', 'info', 'birthDate', 'createdAt', 'updatedAt'];
 
 const includeModels = [
     {

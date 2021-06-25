@@ -27,7 +27,7 @@ const Recruiters = (props) => {
     return (
         <div className={classNames(styles.recruiters, className)}>
             <Select
-                multiple={false}
+                multiple
                 search
                 label={translate.Recruiters}
                 onChange={onChange}

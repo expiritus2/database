@@ -22,6 +22,13 @@ const middlewares = [
     validateRequest,
 ]
 
+router.get('/api/applicants', requireAuth, async (req, res) => {
+    const options = getExecOptions(req.query);
+    const allApplicants = await Applicant.findAndCountAll(options);
+
+    res.send({ result: allApplicants });
+});
+
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const applicantController = new ApplicantController(req.body);
     const newApplicant = await applicantController.create();
@@ -36,13 +43,6 @@ router.put('/api/applicants/:id', middlewares, async (req, res) => {
     const populatedApplicant = await Applicant.findByPk(updatedApplicant.id, { include: includeModels, attributes });
 
     res.send({ result: populatedApplicant });
-});
-
-router.get('/api/applicants', requireAuth, async (req, res) => {
-    const options = getExecOptions(req.query);
-    const allApplicants = await Applicant.findAndCountAll(options);
-
-    res.send({ result: allApplicants });
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {

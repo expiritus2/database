@@ -1,33 +1,34 @@
-const Vacancy = require('../models/vacancy');
-const Position = require('../models/vocabulary/position');
-const Skill = require('../models/vocabulary/skill');
-const Region = require('../models/vocabulary/region');
-const User = require('../models/user');
-const Company = require('../models/company');
-const DatabaseCreationError = require('../errors/database-creation-error');
-const { omit } = require('lodash');
+const Vacancy = require('../../models/vacancy');
+const Skill = require('../../models/vocabulary/skill');
+const Region = require('../../models/vocabulary/region');
+const User = require('../../models/user');
+const Company = require('../../models/company');
+const DatabaseCreationError = require('../../errors/database-creation-error');
+
+const Position = require('./position');
+const Users = require('./users');
+
+const { includeModels } = require('../../settings/vacancy');
 
 class VacancyController {
     constructor(body) {
         this.body = body;
-        this.regions = this.body.regions;
-        this.skills = this.body.skills;
-        this.position = this.body.position;
-        this.users = this.body.users;
-        this.company = this.body.company;
-
-        this.joinedInfo = omit(this.body, ['regions', 'skills', 'position', 'users']);
     }
 
     create(options = {}) {
         return new Promise(async (resolve) => {
             try {
-                this.newVacancy = await Vacancy.create(this.joinedInfo, options);
-                await this.handlePosition(this.position, this.newVacancy);
-                await this.handleSkills();
-                await this.handleRegions();
-                await this.handleUsers();
-                await this.handleCompany();
+                const { active, experienceYears, info } = this.body;
+                const config  = { active, experienceYears, info };
+                this.newVacancy = await Vacancy.create(config, options);
+
+                await new Position(this.body.position, this.newVacancy).create();
+                await new Users(this.body.users, this.newVacancy).create();
+                // await this.handlePosition(this.position, this.newVacancy);
+                // await this.handleSkills();
+                // await this.handleRegions();
+                // await this.handleUsers();
+                // await this.handleCompany();
 
                 resolve(this.newVacancy);
             } catch (e) {
@@ -39,22 +40,36 @@ class VacancyController {
     update(id) {
         return new Promise(async (resolve) => {
             try {
-                await Vacancy.update(this.joinedInfo, { where: { id } });
-                this.newVacancy = await Vacancy.findByPk(id, { include: { all: true } });
+                const { active, experienceYears, info } = this.body;
+                const storedVacancy = await Vacancy.findByPk(id, { include: includeModels });
 
-                if (this.newVacancy) {
-                    await this.handlePosition(this.position, this.newVacancy, true);
-                    await this.handleSkills(true);
-                    await this.handleRegions(true);
-                    await this.handleUsers(true);
-                    await this.handleCompany(true);
+                if (storedVacancy) {
+                    storedVacancy.active = active;
+                    storedVacancy.experienceYears = experienceYears;
+                    storedVacancy.info = info;
+                    this.updatedVacancy = await storedVacancy.save();
+
+                    await new Position(this.body.position, this.updatedVacancy).update();
+                    await new Users(this.body.users, this.updatedVacancy).update();
+                    //     await this.handlePosition(this.position, this.newVacancy, true);
+                    //     await this.handleSkills(true);
+                    //     await this.handleRegions(true);
+                    //     await this.handleUsers(true);
+                    //     await this.handleCompany(true);
                 }
-
-                resolve(this.newVacancy);
+                resolve(this.updatedVacancy);
             } catch (e) {
                 console.error(e);
                 throw new DatabaseCreationError();
             }
+        });
+    }
+
+    delete(id) {
+        return new Promise(async (resolve) => {
+            await Vacancy.destroy({ where: { id }});
+
+            resolve();
         });
     }
 

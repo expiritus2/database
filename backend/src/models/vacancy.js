@@ -14,29 +14,11 @@ Vacancy.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
-    salary: {
-        type: DataTypes.JSONB,
-    },
     experienceYears: {
         type: DataTypes.FLOAT,
     },
-    place: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    workSchedule: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    test: {
-        type: DataTypes.STRING,
-    },
     info: {
         type: DataTypes.TEXT,
-    },
-    files: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
     },
 }, { sequelize, modelName: 'vacancy' });
 

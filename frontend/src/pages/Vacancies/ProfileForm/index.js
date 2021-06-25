@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { Checkbox, Input, Textarea } from 'components/Form';
@@ -31,12 +30,7 @@ const ProfileForm = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getVacancyFormSelector);
-
-    const formik = useFormik({
-        initialValues: { ...formFields },
-        enableReinitialize: true,
-    });
+    const { formFields } = useSelector(getVacancyFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setVacancyFormStateEffect({ [propName]: val }));
@@ -49,14 +43,14 @@ const ProfileForm = (props) => {
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Checkbox
                     direction={Checkbox.DIRECTION_RIGHT}
                     className={classNames(styles.field, styles.activeSearch)}
                     labelTextClassName={styles.activeSearchText}
                     label={translate.Actives}
                     onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'active')}
-                    checked={formik.values.active}
+                    checked={formFields.active}
                 />
                 <VacancyName
                     className={styles.field}
@@ -124,7 +118,7 @@ const ProfileForm = (props) => {
                 <File
                     id="test"
                     label={translate.Test}
-                    onChange={(newFile) => onCustomFieldChange(null, newFile, 'test')}
+                    onChange={(files, newFile) => onCustomFieldChange(null, newFile, 'test')}
                     value={formFields.test}
                 />
                 <Textarea

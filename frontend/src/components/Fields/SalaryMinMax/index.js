@@ -7,7 +7,7 @@ import { Input } from 'components/Form';
 import { Currency } from 'components';
 import styles from './styles.module.scss';
 
-const SalaryInput = (props) => {
+const SalaryMinMax = (props) => {
     const { className, onCurrencyChange, onChangeMin, onChangeMax, value, interval } = props;
     const { translate } = useTranslate();
 
@@ -43,7 +43,7 @@ const SalaryInput = (props) => {
     );
 };
 
-SalaryInput.propTypes = {
+SalaryMinMax.propTypes = {
     className: PropTypes.string,
     onChangeMin: PropTypes.func,
     onChangeMax: PropTypes.func,
@@ -51,12 +51,12 @@ SalaryInput.propTypes = {
     value: PropTypes.shape({
         min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        currency: PropTypes.string,
+        currency: PropTypes.shape({}),
     }),
     interval: PropTypes.number,
 };
 
-SalaryInput.defaultProps = {
+SalaryMinMax.defaultProps = {
     className: '',
     onChangeMin: () => {},
     onChangeMax: () => {},
@@ -65,4 +65,4 @@ SalaryInput.defaultProps = {
     interval: 500,
 };
 
-export default SalaryInput;
+export default SalaryMinMax;

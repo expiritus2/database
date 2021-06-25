@@ -41,11 +41,11 @@ const listen = () => {
 }
 
 const connectDb = (sync) => {
-    if (!sync) {
-        return listen();
-    }
+    // if (!sync) {
+    //     return listen();
+    // }
 
-    return sequelize.sync({ force: false })
+    return sequelize.sync({ force: sync })
         .then(() => listen())
         .catch((err) => console.log(err));
 }
