@@ -18,7 +18,7 @@ class Phones {
     }
 
     update() {
-        if (!this.phones || !this.phones.length) return Promise.resolve();
+        if (!this.phones) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestPhones = await this.#deleteRemovedPhones();

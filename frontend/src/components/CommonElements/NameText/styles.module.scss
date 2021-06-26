@@ -1,0 +1,13 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.nameText {
+    margin-bottom: setUnit(5);
+    font-size: setUnit(28);
+    font-weight: 700;
+
+    .name {
+        font-size: inherit;
+        font-weight: inherit;
+    }
+}

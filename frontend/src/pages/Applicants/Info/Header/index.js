@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
-import { SubheaderWrapper } from 'components';
+import { SubheaderWrapper, InfoHeaderName } from 'components';
 
 import PaddingWrapper from '../PaddingWrapper';
 
@@ -12,14 +12,14 @@ import styles from './styles.module.scss';
 
 const Header = (props) => {
     const { className } = props;
-    const applicant = useSelector(getCurrentApplicantSelector);
+    const { applicant } = useSelector(getCurrentApplicantSelector);
 
     return (
-        <SubheaderWrapper className={classNames(className)}>
+        <SubheaderWrapper className={classNames(styles.header, className)}>
             <PaddingWrapper>
-                <h2 className={styles.name}>
+                <InfoHeaderName>
                     {applicant?.id ? `${applicant?.name} (#${applicant?.id})` : null}
-                </h2>
+                </InfoHeaderName>
             </PaddingWrapper>
         </SubheaderWrapper>
     );

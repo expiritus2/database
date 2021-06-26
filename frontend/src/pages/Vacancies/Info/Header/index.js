@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
-import { SubheaderWrapper } from 'components';
+import { SubheaderWrapper, InfoHeaderName } from 'components';
 
 import PaddingWrapper from '../PaddingWrapper';
 
@@ -12,16 +12,14 @@ import styles from './styles.module.scss';
 
 const Header = (props) => {
     const { className } = props;
-    const vacancy = useSelector(getCurrentVacancySelector);
+    const { vacancy } = useSelector(getCurrentVacancySelector);
 
     return (
-        <SubheaderWrapper className={classNames(className)}>
+        <SubheaderWrapper className={classNames(styles.header, className)}>
             <PaddingWrapper>
-                <h5>
-                    <span className={styles.name}>
-                        {vacancy?.id ? `${vacancy?.position?.label} (#${vacancy?.id})` : null}
-                    </span>
-                </h5>
+                <InfoHeaderName>
+                    {vacancy?.id ? `${vacancy?.position?.label} (#${vacancy?.id})` : null}
+                </InfoHeaderName>
             </PaddingWrapper>
         </SubheaderWrapper>
     );

@@ -18,7 +18,7 @@ class Links {
     }
 
     update() {
-        if (!this.links || !this.links.length) return Promise.resolve();
+        if (!this.links) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestLinks = await this.#deleteRemovedLinks();

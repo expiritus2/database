@@ -21,7 +21,7 @@ class LanguageSkill {
     }
 
     update() {
-        if (!this.languageSkills || !this.languageSkills.length) return Promise.resolve();
+        if (!this.languageSkills) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestLanguageSkills = await this.#deleteRemovedLanguageSkills();

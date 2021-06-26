@@ -34,11 +34,12 @@ Languages.propTypes = {
     list: PropTypes.arrayOf(PropTypes.shape({
         language: PropTypes.shape({}),
         languageLevel: PropTypes.shape({}),
-    })).isRequired,
+    })),
 };
 
 Languages.defaultProps = {
     className: '',
+    list: [],
 };
 
 export default Languages;

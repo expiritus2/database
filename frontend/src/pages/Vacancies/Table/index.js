@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { setCurrentVacancyEffect } from 'store/effects/vacancies';
+import { getVacancyEffect } from 'store/effects/vacancies';
 import { useTranslate } from 'hooks';
 import { Table as CommonTable } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getVacanciesSelector } from 'store/selectors/vacancies';
+import { getCurrentVacancySelector } from 'store/selectors/vacancy';
 import { SalaryValue } from '../components';
 import Name from './Name';
 
@@ -17,15 +18,16 @@ const VacancyTable = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
     const { data, count } = useSelector(getVacanciesSelector);
+    const { vacancy } = useSelector(getCurrentVacancySelector);
 
     const { translate } = useTranslate();
 
     const getColumns = () => {
         if (!data) return [];
         return [
-            { key: 'id', title: 'ID', width: '10%' },
-            { key: 'salary', title: translate.Salary, width: '20%' },
-            { key: 'name', title: translate.Name, width: '93%' },
+            { key: 'id', title: 'ID', width: '7%' },
+            { key: 'salary', title: translate.Salary, width: '15%' },
+            { key: 'name', title: translate.Name, width: '78%', className: styles.colName },
         ];
     };
 
@@ -39,11 +41,13 @@ const VacancyTable = (props) => {
     };
 
     const onClickRow = (event, rowInfo) => {
-        dispatch(setCurrentVacancyEffect({ id: rowInfo?.id }));
+        if (vacancy?.id !== rowInfo?.id) {
+            dispatch(getVacancyEffect({ id: rowInfo?.id }));
+        }
     };
 
     return (
-        <div className={classNames(styles.applicantsTable, className)}>
+        <div className={classNames(styles.vacancyTable, className)}>
             <CommonTable
                 className={styles.tableHolder}
                 count={count}

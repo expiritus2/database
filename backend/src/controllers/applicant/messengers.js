@@ -18,7 +18,7 @@ class Messengers {
     }
 
     update() {
-        if (!this.messengers || !this.messengers.length) return Promise.resolve();
+        if (!this.messengers) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestMessengers = await this.#deleteRemovedMessengers();

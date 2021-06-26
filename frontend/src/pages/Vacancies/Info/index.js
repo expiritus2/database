@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, InfoItem } from 'components';
+import { ScrollWrapper, InfoItem, PendingWrapper } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
@@ -27,16 +27,16 @@ import styles from './styles.module.scss';
 const Info = (props) => {
     const { className } = props;
     const { translate } = useTranslate();
-    const vacancy = useSelector(getCurrentVacancySelector);
+    const { vacancy, isPending } = useSelector(getCurrentVacancySelector);
 
     return (
         <>
             <Header />
-            {vacancy ? (
+            {vacancy || isPending ? (
                 <>
-                    <Actions />
+                    {!isPending && <Actions />}
                     <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
-                        <div className={styles.details}>
+                        <PendingWrapper isPending={isPending} className={styles.pendingWrapper}>
                             <div className={styles.head}>
                                 <Position position={vacancy?.position} />
                                 <Active value={vacancy?.active} />
@@ -60,7 +60,7 @@ const Info = (props) => {
                                 value={vacancy?.workSchedule?.map((item) => translate[workScheduleMap[item]]).join(', ')}
                             />
                             <Information value={vacancy?.info} />
-                        </div>
+                        </PendingWrapper>
                     </ScrollWrapper>
                 </>
             ) : <Empty />}

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { InfoItem } from 'components';
+import { InfoItem, NameText } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -16,7 +16,7 @@ const Position = (props) => {
         <div className={classNames(styles.position, className)}>
             <InfoItem
                 label=""
-                value={<h5>{position?.label}</h5>}
+                value={<NameText>{position?.label}</NameText>}
             />
         </div>
     );
@@ -26,11 +26,12 @@ Position.propTypes = {
     className: PropTypes.string,
     position: PropTypes.shape({
         label: PropTypes.string,
-    }).isRequired,
+    }),
 };
 
 Position.defaultProps = {
     className: '',
+    position: {},
 };
 
 export default Position;

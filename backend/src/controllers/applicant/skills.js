@@ -20,7 +20,7 @@ class Skills {
     }
 
     update() {
-        if (!this.skills || !this.skills.length) return Promise.resolve();
+        if (!this.skills) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestSkillsIds = await this.#deleteRemovedSkills();

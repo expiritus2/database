@@ -9,7 +9,7 @@ const InfoItem = (props) => {
 
     return (
         <div className={classNames(styles.item, className)}>
-            <div className={styles.label}>{`${label}:`}</div>
+            {label ? <div className={styles.label}>{`${label}:`}</div> : <div className={styles.label} />}
             <div className={styles.value}>{value}</div>
         </div>
     );

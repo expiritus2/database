@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FaEye } from 'react-icons/fa';
+import { Main, Meta } from 'components';
 import Position from '../Position';
 import Skills from '../Skills';
 import Regions from '../Regions';
@@ -15,9 +16,13 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
-                <Position position={position} />
-                <Skills className={styles.skills} skills={skills} />
-                <Regions regions={regions} />
+                <Main>
+                    <Position position={position} />
+                </Main>
+                <Meta>
+                    <Skills className={styles.skills} skills={skills} />
+                    <Regions regions={regions} />
+                </Meta>
             </div>
         </div>
     );

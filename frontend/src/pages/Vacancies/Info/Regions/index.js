@@ -29,11 +29,12 @@ Regions.propTypes = {
     regions: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         number: PropTypes.number,
-    })).isRequired,
+    })),
 };
 
 Regions.defaultProps = {
     className: '',
+    regions: [],
 };
 
 export default Regions;

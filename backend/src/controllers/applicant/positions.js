@@ -20,7 +20,7 @@ class Positions {
     }
 
     update() {
-        if (!this.positions || !this.positions.length) return Promise.resolve();
+        if (!this.positions) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestPositionsIds = await this.#deleteRemovedPositions();

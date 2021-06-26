@@ -31,11 +31,12 @@ Emails.propTypes = {
     className: PropTypes.string,
     emails: PropTypes.arrayOf(PropTypes.shape({
         email: PropTypes.string,
-    })).isRequired,
+    })),
 };
 
 Emails.defaultProps = {
     className: '',
+    emails: [],
 };
 
 export default Emails;

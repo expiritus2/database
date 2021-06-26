@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const { includeModels, attributes } = require('../../../settings/vacancy');
+const { includeModelsLight, attributesLight } = require('../../../settings/vacancy');
 
 const getSearchOptions = (query) => {
     const { search, active } = query || {};
@@ -23,8 +23,8 @@ const getExecOptions = (query) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: includeModels,
-        attributes,
+        include: includeModelsLight,
+        attributes: attributesLight,
     }
 };
 

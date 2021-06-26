@@ -6,7 +6,7 @@ const Vacancy = require('../../models/vacancy');
 
 const { VacancyController } = require('../../controllers/vacancy/vacancy');
 
-const { includeModels, attributes } = require('../../settings/vacancy');
+const { includeModelsFull, attributesFull, includeModelsLight, attributesLight } = require('../../settings/vacancy');
 const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
@@ -19,33 +19,35 @@ const middlewares = [
 
 router.get('/api/vacancies', requireAuth, async (req, res) => {
     const options = getExecOptions(req.query);
-    const allApplicants = await Vacancy.findAndCountAll(options);
+    const allVacancies = await Vacancy.findAndCountAll(options);
 
-    res.send({ result: allApplicants });
+    res.send({ result: allVacancies });
 });
 
-router.post('/api/vacancies/create', middlewares, async (req, res) => {
-    const vacancyController = new VacancyController(req.body);
-    const newVacancy = await vacancyController.create();
-    const populatedVacancy = await Vacancy.findByPk(newVacancy.id, { include: includeModels, attributes });
-
-    res.send(populatedVacancy);
-});
-
-router.put('/api/vacancies/:id', async (req, res) => {
-    const savedVacancy = new VacancyController(req.body);
-    const updatedVacancy = await savedVacancy.update(req.params.id);
-    const populatedVacancy = await Vacancy.findByPk(updatedVacancy.id, { include: includeModels, attributes });
+router.get('/api/vacancies/:id', requireAuth, async (req, res) => {
+    const populatedVacancy = await Vacancy.findByPk(req.params.id, { include: includeModelsFull, attributes: attributesFull});
 
     res.send({ result: populatedVacancy });
+})
+
+router.post('/api/vacancies/create', middlewares, async (req, res) => {
+    const newApplicant = await new VacancyController(req.body).create();
+
+    res.send({ result: newApplicant });
+});
+
+router.put('/api/vacancies/:id', middlewares, async (req, res) => {
+    const updatedVacancy = await new VacancyController(req.body).update(req.params.id);
+
+    res.send({ result: updatedVacancy });
 });
 
 router.delete('/api/vacancies/:id', async (req, res) => {
     await new VacancyController().delete(req.params.id);
     const options = getExecOptions(req.query);
-    const allApplicants = await Vacancy.findAndCountAll(options);
+    const allVacancies = await Vacancy.findAndCountAll(options);
 
-    res.send({ result: allApplicants });
+    res.send({ result: allVacancies });
 });
 
 module.exports = {

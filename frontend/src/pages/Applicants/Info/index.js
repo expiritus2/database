@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, SalaryValue, InfoItem } from 'components';
-
+import { ScrollWrapper, SalaryValue, InfoItem, PendingWrapper } from 'components';
 import { useSelector } from 'react-redux';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
 import { useTranslate } from 'hooks';
@@ -25,51 +24,53 @@ import styles from './styles.module.scss';
 const Info = (props) => {
     const { className } = props;
     const { translate } = useTranslate();
-    const applicant = useSelector(getCurrentApplicantSelector);
+    const { applicant, isPending } = useSelector(getCurrentApplicantSelector);
 
     return (
         <>
             <Header />
-            {applicant ? (
+            {applicant || isPending ? (
                 <>
-                    <Actions />
+                    {!isPending && <Actions />}
                     <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
-                        <Name {...applicant} />
-                        <div className={styles.details}>
-                            <Phones phones={applicant?.phones} />
-                            <Emails emails={applicant?.emails} />
-                            <Messengers list={applicant?.messengers} />
-                            <InfoItem
-                                label={translate.Salary}
-                                value={(
-                                    <SalaryValue
-                                        currency={applicant?.salary?.currency?.label}
-                                        value={applicant?.salary?.amount}
-                                    />
-                                )}
-                            />
-                            <InfoItem
-                                label={translate.Experience}
-                                value={
-                                    applicant?.experienceYears
-                                        ? `${applicant?.experienceYears} ${translate.Years}`
-                                        : ''
-                                }
-                            />
-                            <Positions positions={applicant?.positions} />
-                            <Skills skills={applicant?.skills} />
-                            <InfoItem
-                                label={translate.Place}
-                                value={applicant?.workPlaces?.map((place) => place?.label).join(', ')}
-                            />
-                            <Regions regions={applicant?.regions} />
-                            <InfoItem
-                                label={translate.Education}
-                                value={applicant?.education?.label}
-                            />
-                            <Languages list={applicant?.languageSkills} />
-                            <Information value={applicant?.info} />
-                        </div>
+                        <PendingWrapper isPending={isPending}>
+                            <Name {...applicant} />
+                            <div className={styles.details}>
+                                <Phones phones={applicant?.phones} />
+                                <Emails emails={applicant?.emails} />
+                                <Messengers list={applicant?.messengers} />
+                                <InfoItem
+                                    label={translate.Salary}
+                                    value={(
+                                        <SalaryValue
+                                            currency={applicant?.salary?.currency?.label}
+                                            value={applicant?.salary?.amount}
+                                        />
+                                    )}
+                                />
+                                <InfoItem
+                                    label={translate.Experience}
+                                    value={
+                                        applicant?.experienceYears
+                                            ? `${applicant?.experienceYears} ${translate.Years}`
+                                            : ''
+                                    }
+                                />
+                                <Positions positions={applicant?.positions} />
+                                <Skills skills={applicant?.skills} />
+                                <InfoItem
+                                    label={translate.Place}
+                                    value={applicant?.workPlaces?.map((place) => place?.label).join(', ')}
+                                />
+                                <Regions regions={applicant?.regions} />
+                                <InfoItem
+                                    label={translate.Education}
+                                    value={applicant?.education?.label}
+                                />
+                                <Languages list={applicant?.languageSkills} />
+                                <Information value={applicant?.info} />
+                            </div>
+                        </PendingWrapper>
                     </ScrollWrapper>
                 </>
             ) : <Empty />}

@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 
 const Actions = (props) => {
     const { className } = props;
-    const currentVacancyInfo = useSelector(getCurrentVacancySelector);
+    const { vacancy } = useSelector(getCurrentVacancySelector);
     const dispatch = useDispatch();
     const location = useLocation();
     const { translate } = useTranslate();
@@ -32,7 +32,7 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setInitVacancyFormDataEffect(currentVacancyInfo));
+        dispatch(setInitVacancyFormDataEffect(vacancy));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
     };
 

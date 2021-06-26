@@ -23,11 +23,7 @@ const Active = (props) => {
         <div className={classNames(styles.active, className)}>
             <InfoItem
                 label=""
-                value={(
-                    <div>
-                        <span>{getValue()}</span>
-                    </div>
-                )}
+                value={<div className={styles.text}>{getValue()}</div>}
             />
         </div>
     );
@@ -35,11 +31,12 @@ const Active = (props) => {
 
 Active.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.bool.isRequired,
+    value: PropTypes.bool,
 };
 
 Active.defaultProps = {
     className: '',
+    value: undefined,
 };
 
 export default Active;

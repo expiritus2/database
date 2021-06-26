@@ -18,7 +18,7 @@ import styles from './styles.module.scss';
 
 const Actions = (props) => {
     const { className } = props;
-    const currentApplicantInfo = useSelector(getCurrentApplicantSelector);
+    const { applicant } = useSelector(getCurrentApplicantSelector);
     const dispatch = useDispatch();
     const location = useLocation();
     const { translate } = useTranslate();
@@ -33,12 +33,12 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setInitApplicantFormDataEffect(currentApplicantInfo));
+        dispatch(setInitApplicantFormDataEffect(applicant));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
     };
 
     const onDelete = () => {
-        dispatch(deleteApplicantEffect({ id: currentApplicantInfo.id }));
+        dispatch(deleteApplicantEffect({ id: applicant.id }));
         dispatch(resetApplicantEffect());
     };
 

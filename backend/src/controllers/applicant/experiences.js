@@ -17,7 +17,7 @@ class Experiences {
     }
 
     update() {
-        if (!this.experiences || !this.experiences.length) return Promise.resolve();
+        if (!this.experiences) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestExperiences = await this.#deleteRemovedExperiences();

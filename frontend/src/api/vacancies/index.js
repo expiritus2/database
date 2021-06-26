@@ -12,3 +12,7 @@ export function updateVacancy(cfg) {
 export function getVacancies(cfg) {
     return apiServer.get('/api/vacancies', { params: cfg });
 }
+
+export function getVacancy(cfg) {
+    return apiServer.get(`/api/vacancies/${cfg?.id}`);
+}

@@ -1,145 +1,75 @@
 const VocabularyPosition = require('../models/vocabulary/position');
 const VocabularySkill = require('../models/vocabulary/skill');
 const VocabularyRegion = require('../models/vocabulary/region');
-const VocabularyEducation = require('../models/vocabulary/education');
-const VocabularySex = require('../models/vocabulary/sex');
-const VocabularyMessengerType = require('../models/vocabulary/messengerType');
 const VocabularyCurrency = require('../models/vocabulary/currency');
 const VocabularyWorkPlace = require('../models/vocabulary/workPlace');
-const VocabularyLanguage = require('../models/vocabulary/language');
-const VocabularyLanguageLevel = require('../models/vocabulary/languageLevel');
-const VocabularyPhoneType = require('../models/vocabulary/phoneType');
-const VocabularyLinkType = require('../models/vocabulary/linkType');
+const VocabularyWorkSchedule = require('../models/vocabulary/workSchedule');
 const VocabularyFileType = require('../models/vocabulary/fileType');
 
+const User = require('../models/user');
+
 const File = require('../models/file');
-const Photo = require('../models/photo');
-const Phone = require('../models/phone');
-const Email = require('../models/email');
-const Link = require('../models/link');
-const Experience = require('../models/experience');
-const Messenger = require('../models/messenger');
-const Salary = require('../models/salary');
-const LanguageSkill = require('../models/languageSkill');
+const SalaryRange = require('../models/salaryRange');
 
-const attributes = ['id', 'active', 'experienceYears', 'info', 'createdAt', 'updatedAt'];
+const attributesLight = ['id', 'active', 'experienceYears', 'createdAt', 'updatedAt'];
+const attributesFull = [...attributesLight, 'info'];
 
-const includeModels = [
+const includeModelsLight = [
     {
         model: VocabularyPosition,
         attributes: ['id', 'label', 'value'],
     },
-    // {
-    //     model: VocabularySkill,
-    //     attributes: ['id', 'label', 'value'],
-    //     through: { attributes: [] },
-    // },
-    // {
-    //     model: VocabularyRegion,
-    //     attributes: ['id', 'label', 'value'],
-    //     through: { attributes: [] },
-    // },
-    // {
-    //     model: VocabularyEducation,
-    //     attributes: ['id', 'label', 'value']
-    // },
-    // {
-    //     model: VocabularySex,
-    //     attributes: ['id', 'label', 'value'],
-    // },
-    // {
-    //     model: VocabularyWorkPlace,
-    //     attributes: ['id', 'label', 'value'],
-    //     through: { attributes: [] },
-    // },
-    // {
-    //     model: Photo,
-    //     separate: true,
-    //     attributes: ['id', 'contentType', 'filename', 'size', 'url'],
-    // },
-    // {
-    //     model: File,
-    //     separate: true,
-    //     attributes: ['id', 'contentType', 'filename', 'size', 'url'],
-    //     include: [
-    //         {
-    //             model: VocabularyFileType,
-    //         }
-    //     ]
-    // },
-    // {
-    //     model: Link,
-    //     attributes: ['id', 'link'],
-    //     include: [
-    //         {
-    //             model: VocabularyLinkType,
-    //             attributes: ['id', 'label', 'value'],
-    //         }
-    //     ]
-    // },
-    // {
-    //     model: Phone,
-    //     attributes: ['id', 'number'],
-    //     include: [
-    //         {
-    //             model: VocabularyPhoneType,
-    //             attributes: ['id', 'label', 'value'],
-    //         }
-    //     ]
-    // },
-    // {
-    //     model: Email,
-    //     separate: true,
-    //     attributes: ['id', 'email']
-    // },
-    // {
-    //     model: Salary,
-    //     attributes: ['id', 'amount'],
-    //     include: [
-    //         { model: VocabularyCurrency }
-    //     ]
-    // },
-    // {
-    //     model: Messenger,
-    //     separate: true,
-    //     attributes: ['id', 'accountName'],
-    //     include: [
-    //         {
-    //             model: VocabularyMessengerType,
-    //             attributes: ['id', 'label', 'value'],
-    //         }
-    //     ]
-    // },
-    // {
-    //     model: Experience,
-    //     separate: true,
-    //     attributes: ['id', 'company', 'period', 'info'],
-    //     include: [
-    //         {
-    //             model: VocabularyPosition,
-    //             attributes: ['id', 'label', 'value'],
-    //             through: { attributes: [] }
-    //         }
-    //     ]
-    // },
-    // {
-    //     model: LanguageSkill,
-    //     attributes: ['id'],
-    //     through: { attributes: [] },
-    //     include: [
-    //         {
-    //             model: VocabularyLanguage,
-    //             attributes: ['id', 'label', 'value'],
-    //         },
-    //         {
-    //             model: VocabularyLanguageLevel,
-    //             attributes: ['id', 'label', 'value'],
-    //         }
-    //     ]
-    // }
+    {
+        model: SalaryRange,
+        attributes: ['id', 'min', 'max'],
+        include: [
+            { model: VocabularyCurrency }
+        ]
+    },
+    {
+        model: VocabularySkill,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+    {
+        model: VocabularyRegion,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+]
+
+const includeModelsFull = [
+    ...includeModelsLight,
+    {
+        model: VocabularyWorkPlace,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+    {
+        model: VocabularyWorkSchedule,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+    {
+        model: File,
+        separate: true,
+        attributes: ['id', 'contentType', 'filename', 'size', 'url'],
+        include: [
+            {
+                model: VocabularyFileType,
+            }
+        ]
+    },
+    {
+        model: User,
+        attributes: ['id', 'email'],
+        through: { attributes: [] },
+    },
 ]
 
 module.exports = {
-    attributes,
-    includeModels,
+    attributesLight,
+    attributesFull,
+    includeModelsLight,
+    includeModelsFull,
 }

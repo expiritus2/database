@@ -1,18 +1,25 @@
 import { handleActions } from 'redux-actions';
-import { getVacanciesAction, resetCurrentVacancyAction, setCurrentVacancyAction } from 'store/actions/vacancies';
-import { get, find } from 'lodash-es';
+import { resetCurrentVacancyAction, getVacancyAction } from 'store/actions/vacancies';
+import { updateVacancyAction } from 'store/actions/forms/vacancy';
+import { get } from 'lodash-es';
+import { IDLE } from 'settings/constants/apiState';
 
-const initialData = null;
+const initialData = {
+    state: IDLE,
+    data: null,
+    meta: {},
+};
 
 export default handleActions({
-    [setCurrentVacancyAction]: (state, { payload }) => ({
-        ...state,
-        ...payload,
+    [getVacancyAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
     }),
-    [getVacanciesAction]: (state, { payload }) => {
-        const vacancies = get(payload, 'data.result.rows');
-        const currentVacancy = find(vacancies, (applicant) => applicant?.id === state?.id);
-        return currentVacancy ? { ...currentVacancy } : state;
-    },
+    [updateVacancyAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
     [resetCurrentVacancyAction]: () => initialData,
 }, initialData);

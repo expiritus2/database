@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { setCurrentApplicantEffect } from 'store/effects/applicants';
 import { useTranslate } from 'hooks';
 import { Table as CommonTable, SalaryValue } from 'components';
-
+import { getApplicantEffect } from 'store/effects/applicants';
 import { useSelector, useDispatch } from 'react-redux';
 import { getApplicantsSelector } from 'store/selectors/applicants';
+import { getCurrentApplicantSelector } from 'store/selectors/applicant';
 import Name from './Name';
 
 import styles from './styles.module.scss';
@@ -16,6 +16,7 @@ const ApplicantTable = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
     const { data, count } = useSelector(getApplicantsSelector);
+    const { applicant } = useSelector(getCurrentApplicantSelector);
 
     const { translate } = useTranslate();
 
@@ -38,7 +39,9 @@ const ApplicantTable = (props) => {
     };
 
     const onClickRow = (event, rowInfo) => {
-        dispatch(setCurrentApplicantEffect({ id: rowInfo?.id }));
+        if (rowInfo?.id !== applicant?.id) {
+            dispatch(getApplicantEffect({ id: rowInfo?.id }));
+        }
     };
 
     return (

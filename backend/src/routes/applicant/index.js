@@ -6,7 +6,7 @@ const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
 
 const { ApplicantController } = require('../../controllers/applicant/applicant');
-const { includeModels, attributes } = require('../../settings/applicant');
+const { includeModelsLight, includeModelsFull, attributesLight, attributesFull } = require('../../settings/applicant');
 const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
@@ -29,20 +29,22 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
     res.send({ result: allApplicants });
 });
 
-router.post('/api/applicants/create', middlewares, async (req, res) => {
-    const applicantController = new ApplicantController(req.body);
-    const newApplicant = await applicantController.create();
-    const populatedApplicant = await Applicant.findByPk(newApplicant.id, { include: includeModels, attributes });
+router.get('/api/applicants/:id', requireAuth, async (req, res) => {
+    const populatedApplicant = await Applicant.findByPk(req.params.id, { include: includeModelsFull, attributes: attributesFull});
 
     res.send({ result: populatedApplicant });
+})
+
+router.post('/api/applicants/create', middlewares, async (req, res) => {
+    const newApplicant = await new ApplicantController(req.body).create();
+
+    res.send({ result: newApplicant });
 });
 
 router.put('/api/applicants/:id', middlewares, async (req, res) => {
-    const savedApplicant = new ApplicantController(req.body);
-    const updatedApplicant = await savedApplicant.update(req.params.id);
-    const populatedApplicant = await Applicant.findByPk(updatedApplicant.id, { include: includeModels, attributes });
+    const updatedApplicant = await new ApplicantController(req.body).update(req.params.id);
 
-    res.send({ result: populatedApplicant });
+    res.send({ result: updatedApplicant });
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {

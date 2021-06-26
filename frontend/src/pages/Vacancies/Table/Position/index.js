@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { NameText } from 'components';
 import styles from './styles.module.scss';
 
 const Position = (props) => {
     const { position, className } = props;
 
     return (
-        <h5 className={classNames(styles.position, className)}>
-            {position}
-        </h5>
+        <div className={classNames(styles.position, className)}>
+            <NameText>{position}</NameText>
+        </div>
     );
 };
 

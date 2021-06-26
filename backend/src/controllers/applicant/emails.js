@@ -20,7 +20,7 @@ class Emails {
     }
 
     update() {
-        if (!this.emails || !this.emails.length) return Promise.resolve();
+        if (!this.emails) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestEmails = await this.#deleteRemovedEmails(this.applicant.id);

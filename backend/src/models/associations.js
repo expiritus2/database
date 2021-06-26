@@ -2,6 +2,7 @@ const User = require('./user');
 const Applicant = require('./applicant');
 const Experience = require('./experience');
 const Salary = require('./salary');
+const SalaryRange = require('./salaryRange');
 const Contact = require('./contact');
 const Vacancy = require('./vacancy');
 const Company = require('./company');
@@ -21,6 +22,7 @@ const VocabularyLanguage = require('./vocabulary/language');
 const VocabularyLanguageLevel = require('./vocabulary/languageLevel');
 const VocabularyCurrency = require('./vocabulary/currency');
 const VocabularyWorkPlace = require('./vocabulary/workPlace');
+const VocabularyWorkSchedule = require('./vocabulary/workSchedule');
 const VocabularyPhoneType = require('./vocabulary/phoneType');
 const VocabularyFileType = require('./vocabulary/fileType');
 const VocabularyMessengerType = require('./vocabulary/messengerType');
@@ -37,71 +39,68 @@ const ThroughContactPosition = require('./through/contactPosition');
 const ThroughUserVacancy = require('./through/userVacancy');
 // const ThroughVacancyPosition = require('./through/vacancyPosition');
 const ThroughVacancyRegion = require('./through/vacancyRegion');
+const ThroughVacancySkill = require('./through/vacancySkill');
+const ThroughVacancyWorkPlace = require('./through/vacancyWorkPlace');
+const ThroughVacancyWorkSchedule = require('./through/vacancyWorkSchedule');
 const ThroughUserCompany = require('./through/userCompany');
 const ThroughRegionCompany = require('./through/regionCompany');
 
 function createAssociations() {
     Applicant.belongsToMany(VocabularyPosition, { through: ThroughApplicantPosition });
-
     Applicant.belongsToMany(VocabularySkill, { through: ThroughApplicantSkill });
-
     Applicant.belongsToMany(VocabularyRegion, { through: ThroughApplicantRegion });
-
     Applicant.belongsToMany(VocabularyWorkPlace, { through: ThroughApplicantWorkPlace });
-
-    Applicant.belongsTo(VocabularyEducation);
-    Applicant.belongsTo(VocabularySex);
-
-    Salary.belongsTo(Applicant);
-    Applicant.hasOne(Salary);
-    Salary.belongsTo(VocabularyCurrency);
-
-    File.belongsTo(Applicant);
-    File.belongsTo(VocabularyFileType);
-    Applicant.hasMany(File);
-
-    Photo.belongsTo(Applicant);
-    Applicant.hasMany(Photo);
-
-    Phone.belongsTo(Applicant);
-    Phone.belongsTo(VocabularyPhoneType);
-    Applicant.hasMany(Phone);
-
-    Applicant.hasMany(Messenger);
-    Messenger.belongsTo(Applicant);
-    Messenger.belongsTo(VocabularyMessengerType);
-
-    Applicant.hasMany(Email);
-    Email.belongsTo(Applicant);
-
-    Applicant.hasMany(Link);
-    Link.belongsTo(Applicant);
-    Link.belongsTo(VocabularyLinkType);
-
-    LanguageSkill.belongsTo(VocabularyLanguage);
-    LanguageSkill.belongsTo(VocabularyLanguageLevel);
     Applicant.belongsToMany(LanguageSkill, { through: ThroughApplicantLanguage });
-
-
-    Applicant.hasMany(Experience);
-    Experience.belongsTo(Applicant);
-
     Experience.belongsToMany(VocabularyPosition, { through: ThroughExperiencePosition });
     VocabularyPosition.belongsToMany(Experience, { through: ThroughExperiencePosition });
 
+    Applicant.belongsTo(VocabularyEducation);
+    Applicant.belongsTo(VocabularySex);
+    Salary.belongsTo(Applicant);
+    Applicant.hasOne(Salary);
+    Salary.belongsTo(VocabularyCurrency);
+    File.belongsTo(Applicant);
+    File.belongsTo(VocabularyFileType);
+    Applicant.hasMany(File);
+    Photo.belongsTo(Applicant);
+    Applicant.hasMany(Photo);
+    Phone.belongsTo(Applicant);
+    Phone.belongsTo(VocabularyPhoneType);
+    Applicant.hasMany(Phone);
+    Applicant.hasMany(Messenger);
+    Messenger.belongsTo(Applicant);
+    Messenger.belongsTo(VocabularyMessengerType);
+    Applicant.hasMany(Email);
+    Email.belongsTo(Applicant);
+    Applicant.hasMany(Link);
+    Link.belongsTo(Applicant);
+    Link.belongsTo(VocabularyLinkType);
+    LanguageSkill.belongsTo(VocabularyLanguage);
+    LanguageSkill.belongsTo(VocabularyLanguageLevel);
+    Applicant.hasMany(Experience);
+    Experience.belongsTo(Applicant);
+
+
+    Vacancy.belongsToMany(User, { through: ThroughUserVacancy });
+    Vacancy.belongsToMany(VocabularySkill, { through: ThroughVacancySkill });
+    Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
+    Vacancy.belongsToMany(VocabularyWorkPlace, { through: ThroughVacancyWorkPlace });
+    Vacancy.belongsToMany(VocabularyWorkSchedule, { through: ThroughVacancyWorkSchedule });
 
     Vacancy.belongsTo(VocabularyPosition);
-    Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
     Vacancy.belongsTo(Company);
     Company.hasMany(Vacancy);
-    Vacancy.belongsToMany(User, { through: ThroughUserVacancy });
+    File.belongsTo(Vacancy);
+    File.belongsTo(VocabularyFileType);
+    Vacancy.hasMany(File);
+    SalaryRange.belongsTo(Vacancy);
+    Vacancy.hasOne(SalaryRange);
+    SalaryRange.belongsTo(VocabularyCurrency);
 
 
 
     User.belongsToMany(Company, { through: ThroughUserCompany });
-
     VocabularyRegion.belongsToMany(Company, { through: ThroughRegionCompany });
-
     Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
 }
 

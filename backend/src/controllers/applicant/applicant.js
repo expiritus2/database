@@ -18,7 +18,7 @@ const Links = require('./links');
 const Files = require('./files');
 const Experiences = require('./experiences');
 
-const { includeModels } = require('../../settings/applicant');
+const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/applicant');
 
 class ApplicantController {
     constructor(body) {
@@ -49,6 +49,8 @@ class ApplicantController {
                 await new Files(this.body.files, this.newApplicant).create();
                 await new Experiences(this.body.experiences, this.newApplicant).create();
 
+                this.newApplicant = await Applicant.findByPk(this.newApplicant.id, { include: includeModelsLight, attributes: attributesLight })
+
                 resolve(this.newApplicant);
             } catch (e) {
                 throw new DatabaseCreationError();
@@ -60,7 +62,7 @@ class ApplicantController {
         return new Promise(async (resolve) => {
             try {
                 const { name, nameLat, inActiveSearch, experienceYears, info, birthDate } = this.body;
-                const storedApplicant = await Applicant.findByPk(id, { include: includeModels });
+                const storedApplicant = await Applicant.findByPk(id, { include: includeModelsFull });
 
                 if (storedApplicant) {
                     storedApplicant.name = name;
@@ -89,6 +91,7 @@ class ApplicantController {
                 }
 
 
+                this.updatedApplicant = await Applicant.findByPk(id, { include: includeModelsFull });
                 resolve(this.updatedApplicant);
             } catch (e) {
                 console.error(e);

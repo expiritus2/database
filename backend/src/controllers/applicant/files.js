@@ -17,7 +17,7 @@ class Files {
     }
 
     update() {
-        if (!this.files || !this.files.length) return Promise.resolve();
+        if (!this.files) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestFiles = await this.#deleteRemovedFiles();

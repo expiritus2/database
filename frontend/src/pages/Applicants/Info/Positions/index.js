@@ -29,11 +29,12 @@ Positions.propTypes = {
     positions: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         number: PropTypes.number,
-    })).isRequired,
+    })),
 };
 
 Positions.defaultProps = {
     className: '',
+    positions: [],
 };
 
 export default Positions;

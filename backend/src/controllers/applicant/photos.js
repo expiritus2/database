@@ -17,7 +17,7 @@ class Photos {
     }
 
     update() {
-        if (!this.photos || !this.photos.length) return Promise.resolve();
+        if (!this.photos) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestPhotos = await this.#deleteRemovedPhotos();

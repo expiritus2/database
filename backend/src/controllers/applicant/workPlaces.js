@@ -20,7 +20,7 @@ class WorkPlaces {
     }
 
     update() {
-        if (!this.workPlaces || !this.workPlaces.length) return Promise.resolve();
+        if (!this.workPlaces) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestWorkPlacesIds = await this.#deleteRemovedWorkPlaces(this.applicant.id);
@@ -38,7 +38,8 @@ class WorkPlaces {
             resolve();
         });
     }
-    #deleteRemovedWorkPlaces(applicantId) {
+
+    #deleteRemovedWorkPlaces() {
 
         return new Promise(async (resolve) => {
             const prevWorkPlacesIds = this.applicant.workPlaces.map((workPlace) => workPlace.id);

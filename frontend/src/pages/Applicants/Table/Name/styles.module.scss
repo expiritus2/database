@@ -4,11 +4,6 @@
 .name {
     display: flex;
 
-    .main,
-    .meta {
-        line-height: setUnit(21);
-    }
-
     .activeIcon {
         width: setUnit(20);
         height: setUnit(20);
@@ -18,13 +13,5 @@
         &.active {
             visibility: visible;
         }
-    }
-
-    .nameText {
-        margin-bottom: setUnit(5);
-    }
-
-    .main {
-        margin-bottom: setUnit(14);
     }
 }

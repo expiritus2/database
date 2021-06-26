@@ -24,6 +24,10 @@ const Recruiters = (props) => {
         users.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
     );
 
+    const createValue = () => (
+        value.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
+    );
+
     return (
         <div className={classNames(styles.recruiters, className)}>
             <Select
@@ -31,7 +35,7 @@ const Recruiters = (props) => {
                 search
                 label={translate.Recruiters}
                 onChange={onChange}
-                value={value}
+                value={createValue()}
                 options={createOptions()}
             />
         </div>

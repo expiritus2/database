@@ -13,7 +13,6 @@ import {
     Place,
     WorkSchedules,
     Regions,
-    File,
     VacancyName,
 } from 'components';
 
@@ -77,13 +76,13 @@ const ProfileForm = (props) => {
                 <SalaryMinMax
                     className={styles.field}
                     onChangeMin={(e, value) => {
-                        onCustomFieldChange(null, { ...formFields.salary, min: value }, 'salary');
+                        onCustomFieldChange(null, { ...formFields.salary, min: value }, 'salaryRange');
                     }}
                     onChangeMax={(e, value) => {
-                        onCustomFieldChange(null, { ...formFields.salary, max: value }, 'salary');
+                        onCustomFieldChange(null, { ...formFields.salary, max: value }, 'salaryRange');
                     }}
-                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salary')}
-                    value={formFields?.salary}
+                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salaryRange')}
+                    value={formFields?.salaryRange}
                 />
                 <Input
                     isNumberFormat
@@ -114,12 +113,6 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={formFields.regions}
-                />
-                <File
-                    id="test"
-                    label={translate.Test}
-                    onChange={(files, newFile) => onCustomFieldChange(null, newFile, 'test')}
-                    value={formFields.test}
                 />
                 <Textarea
                     name="info"

@@ -1,14 +1,13 @@
 import Api from 'store/effects/core/api';
 import {
     getVacanciesAction,
-    setCurrentVacancyAction,
     resetCurrentVacancyAction,
     setVacanciesSearchAction,
     requestRefreshVacanciesAction,
+    getVacancyAction,
 } from 'store/actions/vacancies';
-import { getVacancies } from 'api/vacancies';
+import { getVacancies, getVacancy } from 'api/vacancies';
 import { getState } from 'store';
-import { get } from 'lodash-es';
 
 export const getVacanciesEffect = (cfg, options = {}, cb) => {
     const { vacancies } = getState();
@@ -25,14 +24,10 @@ export const getVacanciesEffect = (cfg, options = {}, cb) => {
     return sendRequest(config, options, cb);
 };
 
-export const setCurrentVacancyEffect = (cfg) => (dispatch) => {
-    const state = getState();
-    const vacancies = get(state, 'vacancies.data.rows', []);
-    const vacancyInfo = vacancies.find((vacancy) => vacancy.id === cfg?.id);
+export const getVacancyEffect = (cfg, options = {}, cb) => {
+    const sendRequest = Api.execResult({ action: getVacancyAction, method: getVacancy });
 
-    if (vacancyInfo) {
-        dispatch(setCurrentVacancyAction(vacancyInfo));
-    }
+    return sendRequest(cfg, options, cb);
 };
 
 export const resetVacancyEffect = () => (dispatch) => {

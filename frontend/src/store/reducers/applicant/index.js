@@ -1,20 +1,25 @@
 import { handleActions } from 'redux-actions';
-import { getApplicantsAction, resetCurrentApplicantAction, setCurrentApplicantAction } from 'store/actions/applicants';
+import { getApplicantAction, resetCurrentApplicantAction } from 'store/actions/applicants';
 import { updateApplicantAction } from 'store/actions/forms/applicant';
-import { get, find } from 'lodash-es';
+import { get } from 'lodash-es';
+import { IDLE } from 'settings/constants/apiState';
 
-const initialData = null;
+const initialData = {
+    state: IDLE,
+    data: null,
+    meta: {},
+};
 
 export default handleActions({
-    [setCurrentApplicantAction]: (state, { payload }) => ({
-        ...state,
-        ...payload,
+    [getApplicantAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
     }),
-    [getApplicantsAction]: (state, { payload }) => {
-        const applicants = get(payload, 'data.result.rows');
-        const currentApplicant = find(applicants, (applicant) => applicant?.id === state?.id);
-        return currentApplicant ? { ...currentApplicant } : state;
-    },
-    [updateApplicantAction]: (state, { payload }) => get(payload, 'data.result', state),
+    [updateApplicantAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
     [resetCurrentApplicantAction]: () => initialData,
 }, initialData);

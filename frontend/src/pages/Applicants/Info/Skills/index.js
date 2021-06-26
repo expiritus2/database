@@ -29,11 +29,12 @@ Skills.propTypes = {
     skills: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         number: PropTypes.number,
-    })).isRequired,
+    })),
 };
 
 Skills.defaultProps = {
     className: '',
+    skills: [],
 };
 
 export default Skills;

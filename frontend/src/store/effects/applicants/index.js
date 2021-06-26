@@ -1,14 +1,14 @@
 import Api from 'store/effects/core/api';
 import {
     getApplicantsAction,
-    setCurrentApplicantAction,
+    // setCurrentApplicantAction,
     resetCurrentApplicantAction,
     setApplicantsSearchAction,
     deleteApplicantAction,
+    getApplicantAction,
 } from 'store/actions/applicants';
-import { getApplicants, deleteApplicant } from 'api/applicants';
+import { getApplicants, deleteApplicant, getApplicant } from 'api/applicants';
 import { getState } from 'store';
-import { get } from 'lodash-es';
 import { getSearchConfig } from './helpers';
 
 export const getApplicantsEffect = (cfg, options = {}, cb) => {
@@ -18,16 +18,6 @@ export const getApplicantsEffect = (cfg, options = {}, cb) => {
     const config = getSearchConfig(cfg, applicants);
 
     return sendRequest(config, options, cb);
-};
-
-export const setCurrentApplicantEffect = (cfg) => (dispatch) => {
-    const state = getState();
-    const applicants = get(state, 'applicants.data.rows', []);
-    const applicant = applicants.find((candidate) => candidate.id === cfg?.id);
-
-    if (applicant) {
-        dispatch(setCurrentApplicantAction(applicant));
-    }
 };
 
 export const resetApplicantEffect = () => (dispatch) => {
@@ -50,4 +40,10 @@ export const deleteApplicantEffect = (cfg, options, cb) => {
     };
 
     return sendRequest(config, options, cb);
+};
+
+export const getApplicantEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: getApplicantAction, method: getApplicant });
+
+    return sendRequest(cfg, options, cb);
 };

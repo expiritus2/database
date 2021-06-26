@@ -18,7 +18,7 @@ const initialData = {
         users: [],
         company: {},
         contacts: [],
-        salary: {
+        salaryRange: {
             min: '',
             max: '',
             currency: {},
@@ -26,9 +26,8 @@ const initialData = {
         experienceYears: 0,
         skills: [],
         workPlaces: [],
-        workSchedule: [],
+        workSchedules: [],
         regions: [],
-        test: {},
         info: '',
         files: [],
     },

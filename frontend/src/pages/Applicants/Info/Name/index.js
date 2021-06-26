@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Avatar } from 'components';
-
+import { Avatar, NameText } from 'components';
 import { useTranslate } from 'hooks';
 import styles from './styles.module.scss';
 
@@ -15,11 +14,11 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <Avatar src={photos?.[0]?.url} />
             <div className={styles.texts}>
-                <h2 className={styles.nameText}>{name}</h2>
-                <p className={styles.nameLat}>{nameLat}</p>
-                <p className={styles.inActiveSearch}>
+                <NameText className={styles.nameText}>{name}</NameText>
+                <NameText className={styles.nameLat}>{nameLat}</NameText>
+                <NameText className={styles.inActiveSearch}>
                     {inActiveSearch ? translate.InActiveSearch : translate.InNotActiveSearch}
-                </p>
+                </NameText>
                 <p className={styles.sex}>{sex?.label}</p>
             </div>
         </div>
@@ -43,7 +42,7 @@ Name.defaultProps = {
     className: '',
     name: '',
     nameLat: '',
-    sex: '',
+    sex: {},
     photos: [],
     inActiveSearch: false,
 };

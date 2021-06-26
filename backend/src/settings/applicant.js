@@ -22,9 +22,10 @@ const Messenger = require('../models/messenger');
 const Salary = require('../models/salary');
 const LanguageSkill = require('../models/languageSkill');
 
-const attributes = ['id', 'name', 'nameLat', 'inActiveSearch', 'experienceYears', 'info', 'birthDate', 'createdAt', 'updatedAt'];
+const attributesLight = ['id', 'name', 'nameLat', 'inActiveSearch', 'createdAt', 'updatedAt'];
+const attributesFull = [...attributesLight, 'experienceYears', 'info', 'birthDate'];
 
-const includeModels = [
+const includeModelsLight = [
     {
         model: VocabularyPosition,
         attributes: ['id', 'label', 'value'],
@@ -40,6 +41,11 @@ const includeModels = [
         attributes: ['id', 'label', 'value'],
         through: { attributes: [] },
     },
+]
+
+
+const includeModelsFull = [
+    ...includeModelsLight,
     {
         model: VocabularyEducation,
         attributes: ['id', 'label', 'value']
@@ -141,6 +147,8 @@ const includeModels = [
 ]
 
 module.exports = {
-    attributes,
-    includeModels,
+    attributesFull,
+    attributesLight,
+    includeModelsFull,
+    includeModelsLight,
 }

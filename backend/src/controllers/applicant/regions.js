@@ -20,7 +20,7 @@ class Regions {
     }
 
     update() {
-        if (!this.regions || !this.regions.length) return Promise.resolve();
+        if (!this.regions) return Promise.resolve();
 
         return new Promise(async (resolve) => {
             const newestRegionsIds = await this.#deleteRemovedRegions();
