@@ -26,7 +26,7 @@ const VacancyTable = (props) => {
         if (!data) return [];
         return [
             { key: 'id', title: 'ID', width: '7%' },
-            { key: 'salary', title: translate.Salary, width: '15%' },
+            { key: 'salaryRange', title: translate.Salary, width: '15%' },
             { key: 'name', title: translate.Name, width: '78%', className: styles.colName },
         ];
     };
@@ -35,7 +35,7 @@ const VacancyTable = (props) => {
         if (!data) return [];
         return data?.map((row) => ({
             id: row?.id,
-            salary: <SalaryValue value={row?.salary} currency={row?.salary?.currency} />,
+            salaryRange: <SalaryValue value={row?.salaryRange} currency={row?.salaryRange?.currency?.label} />,
             name: <Name {...row} />,
         }));
     };

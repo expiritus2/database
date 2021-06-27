@@ -9,8 +9,10 @@ import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
 
 import { Select } from 'components/Form';
 
+import styles from './styles.module.scss';
+
 const VacancyName = (props) => {
-    const { className, onChange, value } = props;
+    const { className, onChange, value, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const { positions } = useSelector(getVocabularyPositionsSelector);
@@ -20,7 +22,7 @@ const VacancyName = (props) => {
     }, []); // eslint-disable-line
 
     return (
-        <div className={classNames(className)}>
+        <div className={classNames(styles.vacancyName, className)}>
             <Select
                 multiple={false}
                 search
@@ -29,6 +31,7 @@ const VacancyName = (props) => {
                 value={value}
                 options={positions}
             />
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
@@ -40,12 +43,14 @@ VacancyName.propTypes = {
         value: PropTypes.string,
     }),
     onChange: PropTypes.func,
+    error: PropTypes.string,
 };
 
 VacancyName.defaultProps = {
     className: '',
     value: {},
     onChange: () => {},
+    error: undefined,
 };
 
 export default VacancyName;

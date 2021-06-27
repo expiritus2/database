@@ -11,6 +11,7 @@ import { FiSettings } from 'react-icons/fi';
 import { GrEdit } from 'react-icons/gr';
 import { EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
+import { deleteVacancyEffect, resetVacancyEffect } from 'store/effects/vacancies';
 import PaddingWrapper from '../PaddingWrapper';
 
 import styles from './styles.module.scss';
@@ -36,6 +37,11 @@ const Actions = (props) => {
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
     };
 
+    const onDelete = () => {
+        dispatch(deleteVacancyEffect({ id: vacancy.id }));
+        dispatch(resetVacancyEffect());
+    };
+
     return (
         <PaddingWrapper className={classNames(styles.actions, className)}>
             <span ref={settingsRef}>
@@ -47,7 +53,7 @@ const Actions = (props) => {
                     <li>{translate.PrintCard}</li>
                     <li>{translate.CopyCard}</li>
                     <li>{translate.History}</li>
-                    <li>{translate.Delete}</li>
+                    <li onClick={onDelete}>{translate.Delete}</li>
                 </ul>
             </OptionsPopup>
             <GrEdit onClick={onEdit} className={styles.edit} />

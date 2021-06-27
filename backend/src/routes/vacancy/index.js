@@ -6,14 +6,16 @@ const Vacancy = require('../../models/vacancy');
 
 const { VacancyController } = require('../../controllers/vacancy/vacancy');
 
-const { includeModelsFull, attributesFull, includeModelsLight, attributesLight } = require('../../settings/vacancy');
+const { includeModelsFull, attributesFull } = require('../../settings/vacancy');
 const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
 
 const middlewares = [
     requireAuth,
-    // [body('name').not().isEmpty().withMessage('Name is required')],
+    body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
+    body('skills').isArray().not().isEmpty().withMessage('Skills is required'),
+    body('position').not().isEmpty().withMessage('Position is required'),
     validateRequest,
 ]
 

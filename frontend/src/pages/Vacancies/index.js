@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
-import { getVacanciesEffect, setVacanciesSearchEffect, requestRefreshVacanciesEffect } from 'store/effects/vacancies';
+import { getVacanciesEffect, setVacanciesSearchEffect } from 'store/effects/vacancies';
 import { getVacanciesSearchSelector, getVacanciesSelector } from 'store/selectors/vacancies';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
 import AddModal from './Modal';
@@ -46,7 +46,7 @@ const Vacancies = () => {
                         onSearch={onSearchHandler}
                         onActive={onActiveHandler}
                         searchSelector={getVacanciesSearchSelector}
-                        refreshEffect={requestRefreshVacanciesEffect}
+                        refreshEffect={(cfg, options, cb) => getVacanciesEffect(cfg, { ...options, silent: true }, cb)}
                     />
                     <ScrollWrapper>
                         <PendingWrapper

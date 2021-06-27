@@ -45,7 +45,10 @@ const Info = (props) => {
                             <InfoItem
                                 label={translate.Salary}
                                 value={(
-                                    <SalaryValue value={vacancy?.salary} currency={vacancy?.currency} />
+                                    <SalaryValue
+                                        value={vacancy?.salaryRange}
+                                        currency={vacancy?.salaryRange?.currency?.label}
+                                    />
                                 )}
                             />
                             <InfoItem label={translate.ExperienceYears} value={vacancy?.experienceYears} />

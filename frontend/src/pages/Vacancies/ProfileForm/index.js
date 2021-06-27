@@ -29,7 +29,7 @@ const ProfileForm = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const { formFields } = useSelector(getVacancyFormSelector);
+    const { formFields, errors } = useSelector(getVacancyFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setVacancyFormStateEffect({ [propName]: val }));
@@ -55,6 +55,7 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'position')}
                     value={formFields.position}
+                    error={errors?.position}
                 />
                 <Recruiters
                     name="users"
@@ -76,12 +77,12 @@ const ProfileForm = (props) => {
                 <SalaryMinMax
                     className={styles.field}
                     onChangeMin={(e, value) => {
-                        onCustomFieldChange(null, { ...formFields.salary, min: value }, 'salaryRange');
+                        onCustomFieldChange(null, { ...formFields.salaryRange, min: value }, 'salaryRange');
                     }}
                     onChangeMax={(e, value) => {
-                        onCustomFieldChange(null, { ...formFields.salary, max: value }, 'salaryRange');
+                        onCustomFieldChange(null, { ...formFields.salaryRange, max: value }, 'salaryRange');
                     }}
-                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salary, currency: e.target.value }, 'salaryRange')}
+                    onCurrencyChange={(e) => onCustomFieldChange(null, { ...formFields.salaryRange, currency: e.target.value }, 'salaryRange')}
                     value={formFields?.salaryRange}
                 />
                 <Input
@@ -98,6 +99,7 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'skills')}
                     value={formFields.skills}
+                    error={errors?.skills}
                 />
                 <Place
                     className={styles.field}
@@ -113,6 +115,7 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={formFields.regions}
+                    error={errors?.regions}
                 />
                 <Textarea
                     name="info"

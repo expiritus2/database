@@ -3,11 +3,12 @@ import {
     getVacanciesAction,
     resetCurrentVacancyAction,
     setVacanciesSearchAction,
-    requestRefreshVacanciesAction,
     getVacancyAction,
+    deleteVacancyAction,
 } from 'store/actions/vacancies';
-import { getVacancies, getVacancy } from 'api/vacancies';
+import { getVacancies, getVacancy, deleteVacancy } from 'api/vacancies';
 import { getState } from 'store';
+import { getSearchConfig } from './helpers';
 
 export const getVacanciesEffect = (cfg, options = {}, cb) => {
     const { vacancies } = getState();
@@ -39,7 +40,15 @@ export const setVacanciesSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setVacanciesSearchAction({ ...(vacancies?.search || {}), ...cfg }));
 };
 
-export const requestRefreshVacanciesEffect = Api.execResult({
-    action: requestRefreshVacanciesAction,
-    method: getVacancies,
-});
+export const deleteVacancyEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: deleteVacancyAction, method: deleteVacancy });
+
+    const { vacancies } = getState();
+
+    const config = {
+        id: cfg?.id,
+        ...getSearchConfig(cfg, vacancies),
+    };
+
+    return sendRequest(config, options, cb);
+};

@@ -36,8 +36,7 @@ const ThroughApplicantWorkPlace = require('./through/applicantWorkPlace');
 const ThroughApplicantLanguage = require('./through/applicantLanguage');
 const ThroughExperiencePosition = require('./through/experiencePosition');
 const ThroughContactPosition = require('./through/contactPosition');
-const ThroughUserVacancy = require('./through/userVacancy');
-// const ThroughVacancyPosition = require('./through/vacancyPosition');
+const ThroughVacancyUser = require('./through/vacancyUser');
 const ThroughVacancyRegion = require('./through/vacancyRegion');
 const ThroughVacancySkill = require('./through/vacancySkill');
 const ThroughVacancyWorkPlace = require('./through/vacancyWorkPlace');
@@ -81,7 +80,7 @@ function createAssociations() {
     Experience.belongsTo(Applicant);
 
 
-    Vacancy.belongsToMany(User, { through: ThroughUserVacancy });
+    Vacancy.belongsToMany(User, { through: ThroughVacancyUser });
     Vacancy.belongsToMany(VocabularySkill, { through: ThroughVacancySkill });
     Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
     Vacancy.belongsToMany(VocabularyWorkPlace, { through: ThroughVacancyWorkPlace });

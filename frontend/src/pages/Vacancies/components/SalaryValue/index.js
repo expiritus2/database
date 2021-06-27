@@ -34,7 +34,6 @@ SalaryValue.propTypes = {
     value: PropTypes.shape({
         min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        currency: PropTypes.string,
     }),
     currency: PropTypes.string,
 };

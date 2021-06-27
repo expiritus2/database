@@ -1,11 +1,8 @@
 import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
-import {
-    getVacanciesAction,
-    requestRefreshVacanciesAction,
-    setVacanciesSearchAction,
-} from 'store/actions/vacancies';
-import { get } from 'lodash-es';
+import { getVacanciesAction, setVacanciesSearchAction, deleteVacancyAction } from 'store/actions/vacancies';
+import { updateVacancyAction } from 'store/actions/forms/vacancy';
+import { cloneDeep, get } from 'lodash-es';
 
 const initialData = {
     state: IDLE,
@@ -24,12 +21,32 @@ export default handleActions({
         data: get(payload, 'data.result', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [requestRefreshVacanciesAction]: (state, { payload }) => ({
+    [deleteVacancyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         data: get(payload, 'data.result', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),
+    [updateVacancyAction]: (state, { payload }) => {
+        const data = get(payload, 'data.result', initialData.data);
+        const rows = cloneDeep(state?.data?.rows) || [];
+
+        const updatedIndex = rows.findIndex((vacancy) => vacancy?.id === data?.id);
+
+        if (updatedIndex !== -1) {
+            rows[updatedIndex] = data;
+        }
+
+        return ({
+            ...state,
+            state: payload.state,
+            data: {
+                ...(state?.data || []),
+                rows,
+            },
+            meta: get(payload, 'meta', initialData.meta),
+        });
+    },
     [setVacanciesSearchAction]: (state, { payload }) => ({
         ...state,
         search: { ...payload },

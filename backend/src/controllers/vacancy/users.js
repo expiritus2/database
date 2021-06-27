@@ -1,4 +1,4 @@
-const ThroughVacancyUser = require('../../models/through/userVacancy');
+const ThroughVacancyUser = require('../../models/through/vacancyUser');
 
 class Users {
     constructor(users, vacancy) {
@@ -23,12 +23,23 @@ class Users {
         if (!this.users || !this.users.length) return Promise.resolve();
 
         return new Promise(async (resolve) => {
+            await ThroughVacancyUser.destroy({ where: { vacancyId: this.vacancy.id }});
+
             for await (const user of this.users) {
                 if (user.id) {
-                    await ThroughVacancyUser.destroy({ where: { userId: user.id }});
                     await this.vacancy.addUser(user.id)
                 }
             }
+            resolve();
+        });
+    }
+
+    delete(vacancyId) {
+        if (!this.users || !this.users.length) return Promise.resolve();
+
+        return new Promise(async (resolve) => {
+            await ThroughVacancyUser.destroy({ where: { vacancyId }});
+
             resolve();
         });
     }

@@ -25,7 +25,7 @@ const Recruiters = (props) => {
     );
 
     const createValue = () => (
-        value.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))
+        value.map((user) => ({ id: user?.id, label: user?.email || user?.label, value: user?.id }))
     );
 
     return (

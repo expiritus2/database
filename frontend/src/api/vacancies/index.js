@@ -13,6 +13,10 @@ export function getVacancies(cfg) {
     return apiServer.get('/api/vacancies', { params: cfg });
 }
 
+export function deleteVacancy(cfg) {
+    return apiServer.delete(`/api/vacancies/${cfg.id}`);
+}
+
 export function getVacancy(cfg) {
     return apiServer.get(`/api/vacancies/${cfg?.id}`);
 }
