@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
-import { getCompaniesEffect, setCompaniesSearchEffect, requestRefreshCompaniesEffect } from 'store/effects/companies';
+import { getCompaniesEffect, setCompaniesSearchEffect } from 'store/effects/companies';
 import { getCompaniesSearchSelector, getCompaniesSelector } from 'store/selectors/companies';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
 import AddModal from './Modal';
@@ -46,7 +46,7 @@ const Companies = () => {
                         onSearch={onSearchHandler}
                         onActive={onActiveHandler}
                         searchSelector={getCompaniesSearchSelector}
-                        refreshEffect={requestRefreshCompaniesEffect}
+                        refreshEffect={(cfg, options, cb) => getCompaniesEffect(cfg, { ...options, silent: true }, cb)}
                     />
                     <ScrollWrapper>
                         <PendingWrapper

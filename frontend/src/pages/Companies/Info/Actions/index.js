@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { getCurrentCompanySelector } from 'store/selectors/company';
-import { setCompanyFormDataEffect } from 'store/effects/forms/company';
+import { setInitCompanyFormDataEffect } from 'store/effects/forms/company';
 import { useSelector, useDispatch } from 'react-redux';
 import { useOutsideClick, useTranslate } from 'hooks';
 import { OptionsPopup } from 'components';
@@ -11,13 +11,14 @@ import { FiSettings } from 'react-icons/fi';
 import { GrEdit } from 'react-icons/gr';
 import { EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
+import { deleteCompanyEffect, resetCompanyEffect } from 'store/effects/companies';
 import PaddingWrapper from '../PaddingWrapper';
 
 import styles from './styles.module.scss';
 
 const Actions = (props) => {
     const { className } = props;
-    const currentCompanyInfo = useSelector(getCurrentCompanySelector);
+    const { company } = useSelector(getCurrentCompanySelector);
     const dispatch = useDispatch();
     const location = useLocation();
     const { translate } = useTranslate();
@@ -32,8 +33,13 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setCompanyFormDataEffect(currentCompanyInfo));
+        dispatch(setInitCompanyFormDataEffect(company));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
+    };
+
+    const onDelete = () => {
+        dispatch(deleteCompanyEffect({ id: company.id }));
+        dispatch(resetCompanyEffect());
     };
 
     return (
@@ -47,7 +53,7 @@ const Actions = (props) => {
                     <li>{translate.PrintCard}</li>
                     <li>{translate.CopyCard}</li>
                     <li>{translate.History}</li>
-                    <li>{translate.Delete}</li>
+                    <li onClick={onDelete}>{translate.Delete}</li>
                 </ul>
             </OptionsPopup>
             <GrEdit onClick={onEdit} className={styles.edit} />

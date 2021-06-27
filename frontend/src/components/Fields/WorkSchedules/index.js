@@ -8,7 +8,7 @@ import { useTranslate } from 'hooks';
 import { Select } from 'components/Form';
 import styles from './styles.module.scss';
 
-const WorkSchedule = (props) => {
+const WorkSchedules = (props) => {
     const { className, onChange, value } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
@@ -32,16 +32,16 @@ const WorkSchedule = (props) => {
     );
 };
 
-WorkSchedule.propTypes = {
+WorkSchedules.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.arrayOf(PropTypes.string)]),
 };
 
-WorkSchedule.defaultProps = {
+WorkSchedules.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
 };
 
-export default WorkSchedule;
+export default WorkSchedules;

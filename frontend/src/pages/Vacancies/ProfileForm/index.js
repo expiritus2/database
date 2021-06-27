@@ -10,8 +10,9 @@ import {
     Contacts,
     SalaryMinMax,
     Skills,
-    Place,
+    WorkPlaces,
     WorkSchedules,
+    WorkTypes,
     Regions,
     VacancyName,
 } from 'components';
@@ -101,7 +102,7 @@ const ProfileForm = (props) => {
                     value={formFields.skills}
                     error={errors?.skills}
                 />
-                <Place
+                <WorkPlaces
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'workPlaces')}
                     value={formFields.workPlaces}
@@ -110,6 +111,11 @@ const ProfileForm = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'workSchedules')}
                     value={formFields.workSchedules}
+                />
+                <WorkTypes
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'workTypes')}
+                    value={formFields.workTypes}
                 />
                 <Regions
                     className={styles.field}

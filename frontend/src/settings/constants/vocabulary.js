@@ -1,7 +1,7 @@
 import {
     EventTypes, LanguageLevels, Languages, LinkTypes, MessengersTypes, PhoneTypes,
     Positions, Regions, Skills, WorkPlaces, WorkSchedules, WorkTypes, Educations,
-    Currencies, FileTypes, Sexs,
+    Currencies, FileTypes, Sexs, Activities,
 } from 'components/App/VocabularyModal/ModalContent/Tabs';
 
 export const vocabularyTabsIds = {
@@ -21,10 +21,12 @@ export const vocabularyTabsIds = {
     currencies: 'currencies',
     fileTypes: 'fileTypes',
     sexs: 'sexs',
+    activities: 'activities',
 };
 
 export const getVocabularyTabs = (translate) => [
     { id: vocabularyTabsIds.skills, label: translate.Skills, Component: Skills },
+    { id: vocabularyTabsIds.activities, label: translate.Activity, Component: Activities },
     { id: vocabularyTabsIds.positions, label: translate.Position, Component: Positions },
     { id: vocabularyTabsIds.regions, label: translate.Regions, Component: Regions },
     { id: vocabularyTabsIds.workTypes, label: translate.WorkTypes, Component: WorkTypes },

@@ -10,7 +10,7 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { submitCompanyFormEffect, updateCompanyFormEffect, resetCompanyFormEffect } from 'store/effects/forms/company';
+import { createCompanyEffect, updateCompanyFormEffect, resetCompanyFormEffect } from 'store/effects/forms/company';
 import { getCompaniesEffect } from 'store/effects/companies';
 import Form from '../Form';
 
@@ -46,15 +46,21 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        let effect = submitCompanyFormEffect;
-        if (modal.mode === EDIT) {
-            effect = updateCompanyFormEffect;
-        }
         setIsPending(true);
-        dispatch(effect({}, {}, (err) => {
+
+        const effect = modal.mode === EDIT ? updateCompanyFormEffect : createCompanyEffect;
+        dispatch(effect({}, { silent: true }, (err) => {
             if (!err) {
+                if (modal.mode === ADD) {
+                    return dispatch(getCompaniesEffect({}, { silent: true }, () => {
+                        dispatch(resetCompanyFormEffect());
+                        dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                        setIsPending(false);
+                    }));
+                }
+
+                dispatch(resetCompanyFormEffect());
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getCompaniesEffect());
             }
             setIsPending(false);
         }));

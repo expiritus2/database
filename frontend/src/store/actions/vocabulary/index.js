@@ -18,3 +18,4 @@ export * from './educations';
 export * from './currencies';
 export * from './fileTypes';
 export * from './sexs';
+export * from './activities';

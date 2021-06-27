@@ -21,6 +21,7 @@ import users from './users';
 import companies from './companies';
 import contacts from './contacts';
 import sexs from './sexs';
+import activities from './activities';
 
 export default combineReducers({
     mode,
@@ -43,4 +44,5 @@ export default combineReducers({
     [vocabularyTabsIds.currencies]: currencies,
     [vocabularyTabsIds.fileTypes]: fileTypes,
     [vocabularyTabsIds.sexs]: sexs,
+    [vocabularyTabsIds.activities]: activities,
 });

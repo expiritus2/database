@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
 import { useTranslate } from 'hooks';
 
-import { capitalize } from 'lodash-es';
 import { workScheduleMap } from 'settings/constants/workSchedule';
 import Actions from './Actions';
 import Header from './Header';
@@ -42,6 +41,7 @@ const Info = (props) => {
                                 <Active value={vacancy?.active} />
                             </div>
                             <Recruiters value={vacancy?.users} />
+                            <InfoItem label={translate.Company} value={vacancy?.company?.name} />
                             <InfoItem
                                 label={translate.Salary}
                                 value={(
@@ -56,11 +56,11 @@ const Info = (props) => {
                             <Regions regions={vacancy?.regions} />
                             <InfoItem
                                 label={translate.Place}
-                                value={vacancy?.place?.map((place) => translate[capitalize(place)]).join(', ')}
+                                value={vacancy?.workPlaces?.map((place) => place?.label).join(', ')}
                             />
                             <InfoItem
                                 label={translate.WorkSchedule}
-                                value={vacancy?.workSchedule?.map((item) => translate[workScheduleMap[item]]).join(', ')}
+                                value={vacancy?.workSchedules?.map((item) => item?.label).join(', ')}
                             />
                             <Information value={vacancy?.info} />
                         </PendingWrapper>

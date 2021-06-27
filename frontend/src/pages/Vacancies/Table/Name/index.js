@@ -10,7 +10,7 @@ import Regions from '../Regions';
 import styles from './styles.module.scss';
 
 const Name = (props) => {
-    const { className, active, position, skills, regions } = props;
+    const { className, active, position, skills, regions, company } = props;
 
     return (
         <div className={classNames(styles.name, className)}>
@@ -20,7 +20,8 @@ const Name = (props) => {
                     <Position position={position} />
                 </Main>
                 <Meta>
-                    <Skills className={styles.skills} skills={skills} />
+                    <div className={styles.company}>{company}</div>
+                    <Skills skills={skills} />
                     <Regions regions={regions} />
                 </Meta>
             </div>
@@ -34,6 +35,7 @@ Name.propTypes = {
     skills: PropTypes.arrayOf(PropTypes.string),
     regions: PropTypes.arrayOf(PropTypes.string),
     active: PropTypes.bool.isRequired,
+    company: PropTypes.string,
 };
 
 Name.defaultProps = {
@@ -41,6 +43,7 @@ Name.defaultProps = {
     position: '',
     skills: [],
     regions: [],
+    company: '',
 };
 
 export default Name;

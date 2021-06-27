@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
 import { Checkbox, Input, Textarea } from 'components/Form';
-import { Education, Position, Skills, Place, Languages, Regions, SalaryInput } from 'components';
+import { Education, Positions, Skills, WorkPlaces, Languages, Regions, SalaryInput } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -69,7 +69,7 @@ const ProfileForm = (props) => {
                     onChange={onChangeField}
                     value={formFields.education}
                 />
-                <Position
+                <Positions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
                     value={formFields.positions}
@@ -81,7 +81,7 @@ const ProfileForm = (props) => {
                     value={formFields.skills}
                     error={errors.skills}
                 />
-                <Place
+                <WorkPlaces
                     className={styles.field}
                     label={translate.Place}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'workPlaces')}

@@ -1,18 +1,25 @@
 import { handleActions } from 'redux-actions';
-import { getCompaniesAction, resetCurrentCompanyAction, setCurrentCompanyAction } from 'store/actions/companies';
-import { get, find } from 'lodash-es';
+import { getCompanyAction, resetCurrentCompanyAction } from 'store/actions/companies';
+import { updateCompanyAction } from 'store/actions/forms/company';
+import { get } from 'lodash-es';
+import { IDLE } from 'settings/constants/apiState';
 
-const initialData = null;
+const initialData = {
+    state: IDLE,
+    data: null,
+    meta: {},
+};
 
 export default handleActions({
-    [setCurrentCompanyAction]: (state, { payload }) => ({
-        ...state,
-        ...payload,
+    [getCompanyAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
     }),
-    [getCompaniesAction]: (state, { payload }) => {
-        const contacts = get(payload, 'data.result.rows');
-        const currentCompany = find(contacts, (applicant) => applicant?.id === state?.id);
-        return currentCompany ? { ...currentCompany } : state;
-    },
+    [updateCompanyAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
     [resetCurrentCompanyAction]: () => initialData,
 }, initialData);

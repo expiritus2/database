@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash-es';
 import { IoIosRemoveCircle } from 'react-icons/io';
 import { useTranslate } from 'hooks';
 import { Button, Input } from 'components/Form';
+import { emptyAddress } from 'settings/constants/templates';
 
 import styles from './styles.module.scss';
 
@@ -15,14 +16,14 @@ const Addresses = (props) => {
     const [values, setValues] = useState(value);
 
     const onAdd = () => {
-        const newValue = [...values, ...Addresses.defaultProps.value];
+        const newValue = [...values, emptyAddress];
         setValues(newValue);
         onChange(newValue);
     };
 
     const onChangeHandler = (event, index) => {
         const clonedValues = cloneDeep(values);
-        clonedValues.splice(index, 1, event.target.value);
+        clonedValues[index].name = event.target.value;
         setValues(clonedValues);
         onChange(clonedValues);
     };
@@ -42,7 +43,7 @@ const Addresses = (props) => {
                     <Input
                         label={translate.Address}
                         className={styles.number}
-                        value={val}
+                        value={val?.name}
                         onChange={(event) => onChangeHandler(event, index)}
                     />
                     {values?.length > 1 && (
@@ -57,13 +58,15 @@ const Addresses = (props) => {
 
 Addresses.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.arrayOf(PropTypes.string),
+    value: PropTypes.arrayOf(PropTypes.shape({
+        name: '',
+    })),
     onChange: PropTypes.func,
 };
 
 Addresses.defaultProps = {
     className: '',
-    value: [''],
+    value: [emptyAddress],
     onChange: () => {},
 };
 

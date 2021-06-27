@@ -10,9 +10,9 @@ class WorkSchedules {
         if (!this.workSchedules || !this.workSchedules.length) return Promise.resolve();
 
         return new Promise(async (resolve) => {
-            for await (const workPlace of this.workSchedules) {
-                if (workPlace && workPlace.id) {
-                    await this.vacancy.addWorkSchedule(workPlace.id);
+            for await (const workSchedule of this.workSchedules) {
+                if (workSchedule && workSchedule.id) {
+                    await this.vacancy.addWorkSchedule(workSchedule.id);
                 }
             }
             resolve();
@@ -42,8 +42,8 @@ class WorkSchedules {
     #deleteRemovedWorkSchedules() {
 
         return new Promise(async (resolve) => {
-            const prevWorkSchedulesIds = this.vacancy.workSchedules.map((workPlace) => workPlace.id);
-            const newWorkSchedulesIds = this.workSchedules.map((workPlace) => workPlace.id);
+            const prevWorkSchedulesIds = this.vacancy.workSchedules.map((workSchedule) => workSchedule.id);
+            const newWorkSchedulesIds = this.workSchedules.map((workSchedule) => workSchedule.id);
 
             for await (const prevWorkScheduleId of prevWorkSchedulesIds) {
                 if (!newWorkSchedulesIds.includes(prevWorkScheduleId)) {

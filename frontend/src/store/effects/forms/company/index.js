@@ -1,15 +1,14 @@
 import Api from 'store/effects/core/api';
 import {
-    submitCompanyFormAction,
-    uploadCompanyFilesAction,
+    createCompanyAction,
     setCompanyFormStateAction,
     resetCompanyFormAction,
-    setCompanyFormDataAction,
-    updateCompanyFormAction,
+    setInitCompanyFormDataAction,
+    updateCompanyAction,
 } from 'store/actions/forms/company';
-import { createCompany, updateCompany } from 'api/companies';
-import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
+import { get } from 'lodash-es';
+import { createCompany, updateCompany } from 'api/companies';
 import { prepareData } from './helpers';
 
 export const setCompanyFormStateEffect = (cfg) => (dispatch) => {
@@ -20,56 +19,24 @@ export const resetCompanyFormEffect = () => (dispatch) => {
     dispatch(resetCompanyFormAction());
 };
 
-export const submitCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadCompanyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: submitCompanyFormAction, method: createCompany });
-    const { forms: { company } } = getState();
+export const createCompanyEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: createCompanyAction, method: createCompany });
+    const formFields = get(getState(), 'forms.company.data');
 
-    const formData = new FormData();
+    const clonedCompany = prepareData(formFields);
 
-    if (company?.logo) {
-        formData.append('logo', company.logo);
-    }
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFile } = response || {};
-        const clonedCompany = prepareData(company, uploadedFile);
-
-        dispatch(sendRequest(clonedCompany, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetCompanyFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedCompany, options, cb);
 };
 
-export const updateCompanyFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadCompanyFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: updateCompanyFormAction, method: updateCompany });
-    const { forms: { company } } = getState();
+export const updateCompanyFormEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: updateCompanyAction, method: updateCompany });
+    const formFields = get(getState(), 'forms.company.data');
 
-    const formData = new FormData();
+    const clonedCompany = prepareData(formFields);
 
-    if (company?.logo instanceof File) {
-        formData.append('logo', company.logo);
-    }
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFile } = response || {};
-        const clonedCompany = prepareData(company, uploadedFile);
-
-        dispatch(sendRequest(clonedCompany, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetCompanyFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedCompany, options, cb);
 };
 
-export const setCompanyFormDataEffect = (cfg) => (dispatch) => {
-    dispatch(setCompanyFormDataAction(cfg));
+export const setInitCompanyFormDataEffect = (cfg) => (dispatch) => {
+    dispatch(setInitCompanyFormDataAction(cfg));
 };

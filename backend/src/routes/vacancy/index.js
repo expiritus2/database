@@ -15,7 +15,7 @@ const middlewares = [
     requireAuth,
     body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
     body('skills').isArray().not().isEmpty().withMessage('Skills is required'),
-    body('position').not().isEmpty().withMessage('Position is required'),
+    body('position').not().isEmpty().withMessage('Positions is required'),
     validateRequest,
 ]
 

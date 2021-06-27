@@ -13,6 +13,7 @@ const Messenger = require('./messenger');
 const LanguageSkill = require('./languageSkill');
 const Email = require('./email');
 const Link = require('./link');
+const Address = require('./address');
 
 const VocabularyPosition = require('./vocabulary/position');
 const VocabularySkill = require('./vocabulary/skill');
@@ -23,11 +24,13 @@ const VocabularyLanguageLevel = require('./vocabulary/languageLevel');
 const VocabularyCurrency = require('./vocabulary/currency');
 const VocabularyWorkPlace = require('./vocabulary/workPlace');
 const VocabularyWorkSchedule = require('./vocabulary/workSchedule');
+const VocabularyWorkType = require('./vocabulary/workType');
 const VocabularyPhoneType = require('./vocabulary/phoneType');
 const VocabularyFileType = require('./vocabulary/fileType');
 const VocabularyMessengerType = require('./vocabulary/messengerType');
 const VocabularySex = require('./vocabulary/sex');
 const VocabularyLinkType = require('./vocabulary/linkType');
+const VocabularyActivity = require('./vocabulary/activity');
 
 const ThroughApplicantPosition = require('./through/applicantPosition');
 const ThroughApplicantSkill = require('./through/applicantSkill');
@@ -41,8 +44,10 @@ const ThroughVacancyRegion = require('./through/vacancyRegion');
 const ThroughVacancySkill = require('./through/vacancySkill');
 const ThroughVacancyWorkPlace = require('./through/vacancyWorkPlace');
 const ThroughVacancyWorkSchedule = require('./through/vacancyWorkSchedule');
-const ThroughUserCompany = require('./through/userCompany');
-const ThroughRegionCompany = require('./through/regionCompany');
+const ThroughVacancyWorkType = require('./through/vacancyWorkType');
+const ThroughCompanyUser = require('./through/companyUser');
+const ThroughCompanyRegion = require('./through/companyRegion');
+const ThroughCompanyActivity = require('./through/companyActivity');
 
 function createAssociations() {
     Applicant.belongsToMany(VocabularyPosition, { through: ThroughApplicantPosition });
@@ -85,6 +90,7 @@ function createAssociations() {
     Vacancy.belongsToMany(VocabularyRegion, { through: ThroughVacancyRegion });
     Vacancy.belongsToMany(VocabularyWorkPlace, { through: ThroughVacancyWorkPlace });
     Vacancy.belongsToMany(VocabularyWorkSchedule, { through: ThroughVacancyWorkSchedule });
+    Vacancy.belongsToMany(VocabularyWorkType, { through: ThroughVacancyWorkType });
 
     Vacancy.belongsTo(VocabularyPosition);
     Vacancy.belongsTo(Company);
@@ -98,8 +104,23 @@ function createAssociations() {
 
 
 
-    User.belongsToMany(Company, { through: ThroughUserCompany });
-    VocabularyRegion.belongsToMany(Company, { through: ThroughRegionCompany });
+    Company.belongsToMany(User, { through: ThroughCompanyUser });
+    Company.belongsToMany(VocabularyRegion, { through: ThroughCompanyRegion });
+
+    Photo.belongsTo(Company);
+    Company.hasOne(Photo);
+
+    Address.belongsTo(Company);
+    Company.hasMany(Address);
+
+    Company.hasMany(Link);
+    Link.belongsTo(Company);
+    Link.belongsTo(VocabularyLinkType);
+
+    Company.belongsToMany(VocabularyActivity, { through: ThroughCompanyActivity });
+
+
+
     Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
 }
 

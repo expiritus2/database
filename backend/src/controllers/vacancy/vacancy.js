@@ -8,7 +8,9 @@ const Skills = require('./skills');
 const WorkPlaces = require('./workPlaces');
 const Regions = require('./regions');
 const WorkSchedules = require('./workSchedules');
+const WorkTypes = require('./workTypes');
 const Files = require('./files');
+const Company = require('./company');
 
 const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/vacancy');
 
@@ -26,11 +28,13 @@ class VacancyController {
 
                 await new Position(this.body.position, this.newVacancy).create();
                 await new Users(this.body.users, this.newVacancy).create();
+                await new Company(this.body.company, this.newVacancy).create();
                 await new SalaryRange(this.body.salaryRange, this.newVacancy).create();
                 await new Skills(this.body.skills, this.newVacancy).create();
                 await new WorkPlaces(this.body.workPlaces, this.newVacancy).create();
                 await new Regions(this.body.regions, this.newVacancy).create();
                 await new WorkSchedules(this.body.workSchedules, this.newVacancy).create();
+                await new WorkTypes(this.body.workTypes, this.newVacancy).create();
                 await new Files(this.body.files, this.newVacancy).create();
 
                 this.newVacancy = await Vacancy.findByPk(this.newVacancy.id, { include: includeModelsLight, attributes: attributesLight })
@@ -56,11 +60,13 @@ class VacancyController {
 
                     await new Position(this.body.position, this.updatedVacancy).update();
                     await new Users(this.body.users, this.updatedVacancy).update();
+                    await new Company(this.body.company, this.updatedVacancy).update();
                     await new SalaryRange(this.body.salaryRange, this.updatedVacancy).update();
                     await new Skills(this.body.skills, this.updatedVacancy).update();
                     await new WorkPlaces(this.body.workPlaces, this.updatedVacancy).update();
                     await new Regions(this.body.regions, this.updatedVacancy).update();
                     await new WorkSchedules(this.body.workSchedules, this.updatedVacancy).update();
+                    await new WorkTypes(this.body.workTypes, this.updatedVacancy).update();
                     await new Files(this.body.files, this.updatedVacancy).update();
                 }
 

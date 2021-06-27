@@ -5,19 +5,19 @@ class Company {
     }
 
     create() {
-        if (!this.company) return Promise.resolve();
+        if (!this.company && !this.company.id) return Promise.resolve();
 
         return new Promise(async (resolve) => {
-
+            await this.vacancy.setCompany(this.company.id)
             resolve();
         });
     }
 
     update() {
-        if (!this.company) return Promise.resolve();
+        if (!this.company || !this.company.id) return Promise.resolve();
 
         return new Promise(async (resolve) => {
-
+            await this.vacancy.setCompany(this.company.id);
             resolve();
         });
     }

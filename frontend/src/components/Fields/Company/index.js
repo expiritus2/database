@@ -21,8 +21,10 @@ const Company = (props) => {
     }, []); // eslint-disable-line
 
     const createOptions = () => (
-        companies.map((company) => ({ id: company?.id, label: company?.name, value: company?.name }))
+        companies.map((company) => ({ id: company?.id, label: company?.name, value: company?.id }))
     );
+
+    const createValue = () => ({ id: value?.id, label: value?.name || value?.label, value: value?.id || value?.value });
 
     return (
         <div className={classNames(styles.education, className)}>
@@ -32,7 +34,7 @@ const Company = (props) => {
                 search
                 label={translate.Company}
                 onChange={onChange}
-                value={value}
+                value={createValue()}
                 options={createOptions()}
             />
         </div>
@@ -43,6 +45,9 @@ Company.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        name: PropTypes.string,
+        label: PropTypes.string,
         value: PropTypes.string,
     }),
     name: PropTypes.string,

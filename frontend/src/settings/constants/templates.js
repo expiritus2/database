@@ -4,3 +4,4 @@ export const emptyLanguageSkill = { language: '', languageLevel: {} };
 export const emptyPhone = { number: '', phoneType: {} };
 export const emptyEmail = { email: '' };
 export const emptySalary = { amount: '', currency: {} };
+export const emptyAddress = { name: '' };

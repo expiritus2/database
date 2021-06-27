@@ -12,7 +12,7 @@ const Empty = (props) => {
 
     return (
         <div className={classNames(styles.empty, className)}>
-            <div>{translate.EmptyContact}</div>
+            <div>{translate.EmptyCompany}</div>
         </div>
     );
 };

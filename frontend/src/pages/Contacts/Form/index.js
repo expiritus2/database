@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Company, Position, AddPhoto, Sex, Phones, Emails } from 'components';
+import { Company, Positions, AddPhoto, Sex, Phones, Emails } from 'components';
 import { Input, DatePicker } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -52,7 +52,7 @@ const Form = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'company')}
                     value={formik.values.company}
                 />
-                <Position
+                <Positions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
                     value={formik.values.positions}

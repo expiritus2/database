@@ -1,7 +1,6 @@
 import Api from 'store/effects/core/api';
 import {
     getApplicantsAction,
-    // setCurrentApplicantAction,
     resetCurrentApplicantAction,
     setApplicantsSearchAction,
     deleteApplicantAction,

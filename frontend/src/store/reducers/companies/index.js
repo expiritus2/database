@@ -2,10 +2,12 @@ import { handleActions } from 'redux-actions';
 import { IDLE } from 'settings/constants/apiState';
 import {
     getCompaniesAction,
-    requestRefreshCompaniesAction,
     setCompaniesSearchAction,
+    deleteCompanyAction,
 } from 'store/actions/companies';
-import { get } from 'lodash-es';
+
+import { updateCompanyAction } from 'store/actions/forms/company';
+import { cloneDeep, get } from 'lodash-es';
 
 const initialData = {
     state: IDLE,
@@ -24,7 +26,7 @@ export default handleActions({
         data: get(payload, 'data.result', initialData.data),
         meta: get(payload, 'meta', initialData.meta),
     }),
-    [requestRefreshCompaniesAction]: (state, { payload }) => ({
+    [deleteCompanyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         data: get(payload, 'data.result', initialData.data),
@@ -34,4 +36,24 @@ export default handleActions({
         ...state,
         search: { ...payload },
     }),
+    [updateCompanyAction]: (state, { payload }) => {
+        const data = get(payload, 'data.result', initialData.data);
+        const rows = cloneDeep(state?.data?.rows) || [];
+
+        const updatedIndex = rows.findIndex((applicant) => applicant?.id === data?.id);
+
+        if (updatedIndex !== -1) {
+            rows[updatedIndex] = data;
+        }
+
+        return ({
+            ...state,
+            state: payload.state,
+            data: {
+                ...(state?.data || []),
+                rows,
+            },
+            meta: get(payload, 'meta', initialData.meta),
+        });
+    },
 }, initialData);

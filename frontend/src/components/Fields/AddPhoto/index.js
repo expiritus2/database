@@ -10,7 +10,7 @@ import { cloneDeep } from 'lodash-es';
 import styles from './styles.module.scss';
 
 const AddPhoto = (props) => {
-    const { id: elementId, className, onChange, value } = props;
+    const { id: elementId, className, onChange, value, multiple } = props;
     const [filesValue, setFilesValue] = useState(value);
 
     const fileInputField = useRef();
@@ -18,35 +18,74 @@ const AddPhoto = (props) => {
     const onChangeHandler = (event) => {
         readFiles(event.target.files)
             .then((values) => {
-                const newFilesValue = values
-                    .map((file) => ({ ...file, data: file?.data ? btoa(file?.data) : undefined }));
-                const combinedFiles = [...filesValue, ...newFilesValue];
-                setFilesValue(combinedFiles);
-                onChange(event.target.files, combinedFiles);
+                if (multiple) {
+                    const newFilesValue = values
+                        .map((file) => ({ ...file, data: file?.data ? btoa(file?.data) : undefined }));
+                    const combinedFiles = [...(filesValue || []), ...newFilesValue];
+                    setFilesValue(combinedFiles);
+                    onChange(event.target.files, combinedFiles);
+                } else {
+                    if (!values?.length) {
+                        setFilesValue(null);
+                        return onChange(event.target.files, null);
+                    }
+                    const file = values?.[0];
+                    const preparedFile = { ...file, data: file?.data ? btoa(file?.data) : undefined };
+                    setFilesValue(preparedFile);
+                    onChange(event.target.files, preparedFile);
+                }
             });
     };
 
     const onRemove = (event, index) => {
         event.stopPropagation();
         event.preventDefault();
-        const clonedPreviewValue = cloneDeep(filesValue);
 
-        clonedPreviewValue.splice(index, 1);
-        setFilesValue(clonedPreviewValue);
+        if (multiple) {
+            const clonedPreviewValue = cloneDeep(filesValue);
 
-        onChange([], clonedPreviewValue);
+            clonedPreviewValue.splice(index, 1);
+            setFilesValue(clonedPreviewValue);
+
+            onChange([], clonedPreviewValue);
+        } else {
+            setFilesValue(null);
+            onChange([], null);
+
+            if (fileInputField?.current) {
+                fileInputField.current.value = null;
+            }
+        }
     };
 
-    const getPreview = () => (filesValue?.length ? filesValue.map(({ url, data }, index) => {
+    const getPreview = () => {
+        if (multiple) {
+            if (!filesValue?.length) return null;
+            return (
+                filesValue.map(({ url, data }, index) => {
+                    const previewUrl = url || `data:image/jpeg;base64,${data}`;
+                    return (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <div key={index} className={styles.file}>
+                            <IoIosClose onClick={(event) => onRemove(event, index)} className={styles.removeIcon} />
+                            <img src={previewUrl} alt="" />
+                        </div>
+                    );
+                }));
+        }
+
+        if (!Object.keys(filesValue || {}).length) {
+            return null;
+        }
+        const { url, data } = filesValue || {};
         const previewUrl = url || `data:image/jpeg;base64,${data}`;
         return (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index} className={styles.file}>
-                <IoIosClose onClick={(event) => onRemove(event, index)} className={styles.removeIcon} />
+            <div className={styles.file}>
+                <IoIosClose onClick={(event) => onRemove(event)} className={styles.removeIcon} />
                 <img src={previewUrl} alt="" />
             </div>
         );
-    }) : null);
+    };
 
     const getAddIcon = () => (
         <GrAddCircle className={styles.addIcon} />
@@ -56,12 +95,14 @@ const AddPhoto = (props) => {
         <div className={classNames(styles.filesWrapper, className)}>
             <label className={styles.files} htmlFor={elementId}>
                 {getPreview()}
-                <div className={styles.file}>
-                    {getAddIcon()}
-                </div>
+                {(multiple || (!multiple && !Object.keys(filesValue || {}).length)) && (
+                    <div className={styles.file}>
+                        {getAddIcon()}
+                    </div>
+                )}
                 <input
                     ref={fileInputField}
-                    multiple
+                    multiple={multiple}
                     className={styles.nativeInput}
                     id={elementId}
                     type="file"
@@ -74,9 +115,10 @@ const AddPhoto = (props) => {
 
 AddPhoto.propTypes = {
     className: PropTypes.string,
-    value: PropTypes.arrayOf(PropTypes.any),
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.object]),
     onChange: PropTypes.func,
     id: PropTypes.string.isRequired,
+    multiple: PropTypes.bool,
 };
 
 AddPhoto.defaultProps = {
@@ -84,6 +126,7 @@ AddPhoto.defaultProps = {
     value: null,
     onChange: () => {
     },
+    multiple: true,
 };
 
 export default AddPhoto;

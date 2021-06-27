@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { experienceInitialData } from 'store/reducers/forms/applicant';
 import { Textarea, Button, Input } from 'components/Form';
-import { Period, Position } from 'components';
+import { Period, Positions } from 'components';
 import { setApplicantFormStateEffect } from 'store/effects/forms/applicant';
 import { getApplicantFormSelector } from 'store/selectors/applicantForm';
 
@@ -66,7 +66,7 @@ const ExperienceForm = (props) => {
                                 onChange={(event) => onCustomFieldChange(event.target.value, 'company', index)}
                                 value={company}
                             />
-                            <Position
+                            <Positions
                                 className={styles.field}
                                 onChange={(e, val) => onCustomFieldChange(val, 'positions', index)}
                                 value={positions}

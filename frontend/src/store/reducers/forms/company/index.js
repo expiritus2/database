@@ -2,42 +2,59 @@ import { handleActions } from 'redux-actions';
 import {
     resetCompanyFormAction,
     setCompanyFormStateAction,
-    submitCompanyFormAction,
-    uploadCompanyFilesAction,
-    setCompanyFormDataAction,
+    createCompanyAction,
+    setInitCompanyFormDataAction,
+    updateCompanyAction,
 } from 'store/actions/forms/company';
-import { get } from 'lodash-es';
-import { emptyLink } from 'settings/constants/templates';
+import { cloneDeep, get } from 'lodash-es';
+import { emptyLink, emptyAddress } from 'settings/constants/templates';
+import { IDLE } from 'settings/constants/apiState';
+import { clearErrors } from 'store/helpers';
 
 const initialData = {
-    active: false,
-    name: '',
-    users: [],
-    logo: '',
-    regions: [],
-    links: [emptyLink],
-    addresses: [''],
-    info: '',
+    state: IDLE,
+    data: {
+        active: false,
+        name: '',
+        users: [],
+        photo: null,
+        activities: [],
+        regions: [],
+        links: [emptyLink],
+        addresses: [emptyAddress],
+        info: '',
+    },
+    meta: {},
+    errors: {},
 };
 
 export default handleActions({
     [setCompanyFormStateAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...state.data,
+            ...payload,
+        },
+        errors: clearErrors(state.errors, payload),
     }),
-    [uploadCompanyFilesAction]: (state, { payload }) => ({
+    [createCompanyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [submitCompanyFormAction]: (state, { payload }) => ({
+    [updateCompanyAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [setCompanyFormDataAction]: (state, { payload }) => ({
+    [setInitCompanyFormDataAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...payload,
+        },
+        errors: cloneDeep(initialData.errors),
     }),
     [resetCompanyFormAction]: () => initialData,
 }, initialData);

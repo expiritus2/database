@@ -2,11 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper } from 'components';
+import { ScrollWrapper, PendingWrapper } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentCompanySelector } from 'store/selectors/company';
-// import { useTranslate } from 'hooks';
 
 import Actions from './Actions';
 import Header from './Header';
@@ -16,19 +15,20 @@ import styles from './styles.module.scss';
 
 const Info = (props) => {
     const { className } = props;
-    // const { translate } = useTranslate();
-    const company = useSelector(getCurrentCompanySelector);
+    const { company, isPending } = useSelector(getCurrentCompanySelector);
 
     return (
         <>
             <Header />
-            {company ? (
+            {company || isPending ? (
                 <>
-                    <Actions />
+                    {!isPending && <Actions />}
                     <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
-                        <div className={styles.details}>
-                            Details
-                        </div>
+                        <PendingWrapper isPending={isPending}>
+                            <div className={styles.details}>
+                                Details
+                            </div>
+                        </PendingWrapper>
                     </ScrollWrapper>
                 </>
             ) : <Empty />}

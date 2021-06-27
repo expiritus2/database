@@ -4,9 +4,11 @@ const VocabularyRegion = require('../models/vocabulary/region');
 const VocabularyCurrency = require('../models/vocabulary/currency');
 const VocabularyWorkPlace = require('../models/vocabulary/workPlace');
 const VocabularyWorkSchedule = require('../models/vocabulary/workSchedule');
+const VocabularyWorkType = require('../models/vocabulary/workType');
 const VocabularyFileType = require('../models/vocabulary/fileType');
 
 const User = require('../models/user');
+const Company = require('../models/company');
 
 const File = require('../models/file');
 const SalaryRange = require('../models/salaryRange');
@@ -36,6 +38,10 @@ const includeModelsLight = [
         attributes: ['id', 'label', 'value'],
         through: { attributes: [] },
     },
+    {
+        model: Company,
+        attributes: ['id', 'name'],
+    },
 ]
 
 const includeModelsFull = [
@@ -47,6 +53,11 @@ const includeModelsFull = [
     },
     {
         model: VocabularyWorkSchedule,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+    {
+        model: VocabularyWorkType,
         attributes: ['id', 'label', 'value'],
         through: { attributes: [] },
     },

@@ -27,6 +27,7 @@ const initialData = {
         skills: [],
         workPlaces: [],
         workSchedules: [],
+        workTypes: [],
         regions: [],
         info: '',
         files: [],

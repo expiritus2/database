@@ -10,7 +10,7 @@ import { getVocabularyPositionsEffect } from 'store/effects/vocabulary';
 
 import styles from './styles.module.scss';
 
-const Position = (props) => {
+const Positions = (props) => {
     const { className, onChange, value, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
@@ -36,18 +36,18 @@ const Position = (props) => {
     );
 };
 
-Position.propTypes = {
+Positions.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.arrayOf(PropTypes.shape({})),
     error: PropTypes.string,
 };
 
-Position.defaultProps = {
+Positions.defaultProps = {
     className: '',
     onChange: () => {},
     value: [],
     error: undefined,
 };
 
-export default Position;
+export default Positions;

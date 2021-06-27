@@ -20,6 +20,7 @@ import {
     saveVocabularyCurrencyEffect,
     saveVocabularyFileTypeEffect,
     saveVocabularySexEffect,
+    saveVocabularyActivityEffect,
 } from 'store/effects/vocabulary';
 import { Input, Button } from 'components/Form';
 import { getVocabularyModeSelector } from 'store/selectors/vocabulary';
@@ -66,6 +67,7 @@ const AddMode = (props) => {
             case vocabularyTabsIds.currencies: return saveVocabularyCurrencyEffect;
             case vocabularyTabsIds.fileTypes: return saveVocabularyFileTypeEffect;
             case vocabularyTabsIds.sexs: return saveVocabularySexEffect;
+            case vocabularyTabsIds.activities: return saveVocabularyActivityEffect;
             default: return () => {};
         }
     };

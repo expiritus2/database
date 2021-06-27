@@ -22,6 +22,7 @@ import {
     saveVocabularyCurrenciesEffect,
     saveVocabularyFileTypesEffect,
     saveVocabularySexsEffect,
+    saveVocabularyActivitiesEffect,
 } from 'store/effects/vocabulary';
 import { Button } from 'components/Form';
 import { useTranslate, useOutsideClick } from 'hooks';
@@ -73,6 +74,7 @@ const ContentHeader = (props) => {
             case vocabularyTabsIds.currencies: return saveVocabularyCurrenciesEffect;
             case vocabularyTabsIds.fileTypes: return saveVocabularyFileTypesEffect;
             case vocabularyTabsIds.sexs: return saveVocabularySexsEffect;
+            case vocabularyTabsIds.activities: return saveVocabularyActivitiesEffect;
             default: return () => {};
         }
     }, [activeTab]);

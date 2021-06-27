@@ -4,63 +4,50 @@ const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Company = require('../../models/company');
 
-const { CompanyController } = require('../../controllers/companyController');
-const Sequelize = require('sequelize');
+const { CompanyController } = require('../../controllers/company/company');
+const { includeModelsFull, attributesFull } = require('../../settings/company');
+const { getExecOptions } = require('./helpers');
 
 const router = express.Router();
 
-const Op = Sequelize.Op;
-
 const middlewares = [
     requireAuth,
-    [body('name').not().isEmpty().withMessage('Name is required')],
+    // [body('name').not().isEmpty().withMessage('Name is required')],
     validateRequest,
-]
-
-router.post('/api/companies/create', middlewares, async (req, res) => {
-    const companyController = new CompanyController(req.body);
-    const newCompany = await companyController.create();
-    const populatedCompany = await Company.findByPk(newCompany.id, {
-        include: {
-            all: true,
-        }
-    });
-
-    res.send(populatedCompany);
-});
+];
 
 router.get('/api/companies', requireAuth, async (req, res) => {
-    const { page, countPerPage, search, active } = req.query || {};
-    const searchCriteria = {
-        where: {
-            [Op.and]: [
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
-                ...(active ? [{ active }] : []),
-            ]
-        }
-    }
-
-    const allCompanies = await Company.findAndCountAll({
-        ...searchCriteria,
-        limit: countPerPage || 25,
-        offset: (page * countPerPage) || 0,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: {
-            all: true,
-        },
-    });
+    const options = getExecOptions(req.query);
+    const allCompanies = await Company.findAndCountAll(options);
 
     res.send({ result: allCompanies });
 });
 
-router.put('/api/companies/:id', async (req, res) => {
-    const savedCompany = new CompanyController(req.body);
-    const updatedCompany = await savedCompany.update(req.params.id);
+router.get('/api/companies/:id', requireAuth, async (req, res) => {
+    const populatedCompany = await Company.findByPk(req.params.id, { include: includeModelsFull, attributes: attributesFull});
 
-    res.send(updatedCompany);
+    res.send({ result: populatedCompany });
 })
+
+router.post('/api/companies/create', middlewares, async (req, res) => {
+    const newCompany = await new CompanyController(req.body).create();
+
+    res.send({ result: newCompany });
+});
+
+router.put('/api/companies/:id', middlewares, async (req, res) => {
+    const updatedCompany = await new CompanyController(req.body).update(req.params.id);
+
+    res.send({ result: updatedCompany });
+});
+
+router.delete('/api/companies/:id', async (req, res) => {
+    await new CompanyController().delete(req.params.id);
+    const options = getExecOptions(req.query);
+    const allCompanies = await Company.findAndCountAll(options);
+
+    res.send({ result: allCompanies });
+});
 
 module.exports = {
     companyRouter: router,

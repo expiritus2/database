@@ -6,7 +6,7 @@ const validateRequest = require('../../middlewares/validate-request');
 const Applicant = require('../../models/applicant');
 
 const { ApplicantController } = require('../../controllers/applicant/applicant');
-const { includeModelsLight, includeModelsFull, attributesLight, attributesFull } = require('../../settings/applicant');
+const { includeModelsFull, attributesFull } = require('../../settings/applicant');
 const { getExecOptions } = require('./helpers');
 
 const router = express.Router();

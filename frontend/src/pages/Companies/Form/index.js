@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
-import { Regions, Links, Addresses, Recruiters, File } from 'components';
+import { Activities, Regions, Links, Addresses, Recruiters, AddPhoto } from 'components';
 import { Checkbox, Input, Textarea } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,18 +13,14 @@ import { setCompanyFormStateEffect } from 'store/effects/forms/company';
 import { FormWrapper } from '../componets';
 
 import styles from './styles.module.scss';
+import { emptyLink, emptyMessenger } from '../../../settings/constants/templates';
 
 const Form = (props) => {
     const { className } = props;
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getCompanyFormSelector);
-
-    const formik = useFormik({
-        initialValues: { ...formFields },
-        enableReinitialize: true,
-    });
+    const { formFields } = useSelector(getCompanyFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setCompanyFormStateEffect({ [propName]: val }));
@@ -36,23 +31,29 @@ const Form = (props) => {
         dispatch(setCompanyFormStateEffect({ [name]: value }));
     };
 
+    useEffect(() => {
+        if (!formFields.links?.length) {
+            onCustomFieldChange(null, [emptyLink], 'links');
+        }
+    }, []); // eslint-disable-line
+
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
                 <Checkbox
                     direction={Checkbox.DIRECTION_RIGHT}
                     className={classNames(styles.field, styles.active)}
                     labelTextClassName={styles.activeText}
-                    label={translate.InActiveSearch}
-                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'inActiveSearch')}
-                    checked={formik.values.inActiveSearch}
+                    label={translate.SheActive}
+                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'active')}
+                    checked={formFields.active}
                 />
                 <Input
                     name="name"
                     className={classNames(className, styles.field)}
                     label={translate.Calling}
                     onChange={onChangeField}
-                    value={formik.values.name}
+                    value={formFields.name}
                 />
                 <Recruiters
                     name="users"
@@ -60,11 +61,19 @@ const Form = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'users')}
                     value={formFields.users}
                 />
-                <File
-                    id="logo"
-                    label={translate.Logo}
-                    onChange={(newFile) => onCustomFieldChange(null, newFile, 'logo')}
-                    value={formFields.logo}
+                <AddPhoto
+                    className={styles.field}
+                    onChange={(files, values) => {
+                        onCustomFieldChange(files, values, 'photo');
+                    }}
+                    value={formFields.photo}
+                    id="companyLogo"
+                    multiple={false}
+                />
+                <Activities
+                    className={styles.field}
+                    onChange={(e, val) => onCustomFieldChange(e, val, 'activities')}
+                    value={formFields.activities}
                 />
                 <Regions
                     className={styles.field}

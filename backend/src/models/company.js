@@ -17,16 +17,6 @@ Company.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
-    logo: {
-        type: DataTypes.STRING,
-    },
-    links: {
-        type: DataTypes.JSONB,
-    },
-    addresses: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
     info: {
         type: DataTypes.TEXT,
     },

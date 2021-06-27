@@ -12,3 +12,11 @@ export function updateCompany(cfg) {
 export function getCompanies(cfg) {
     return apiServer.get('/api/companies', { params: cfg });
 }
+
+export function deleteCompany(cfg) {
+    return apiServer.delete(`/api/companies/${cfg.id}`);
+}
+
+export function getCompany(cfg) {
+    return apiServer.get(`/api/companies/${cfg.id}`);
+}

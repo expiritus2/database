@@ -15,7 +15,11 @@
         }
     }
 
-    .skills {
-        margin-top: setUnit(10);
+    .company {
+        font-weight: 700;
+        font-style: italic;
+        font-size: setUnit(22);
+        letter-spacing: setUnit(1.1);
+        margin-bottom: setUnit(4);
     }
 }

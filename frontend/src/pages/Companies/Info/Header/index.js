@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { getCurrentCompanySelector } from 'store/selectors/company';
-import { SubheaderWrapper } from 'components';
+import { SubheaderWrapper, InfoHeaderName } from 'components';
 
 import PaddingWrapper from '../PaddingWrapper';
 
@@ -12,16 +12,14 @@ import styles from './styles.module.scss';
 
 const Header = (props) => {
     const { className } = props;
-    const contact = useSelector(getCurrentCompanySelector);
+    const { company } = useSelector(getCurrentCompanySelector);
 
     return (
-        <SubheaderWrapper className={classNames(className)}>
+        <SubheaderWrapper className={classNames(styles.header, className)}>
             <PaddingWrapper>
-                <h5>
-                    <span className={styles.name}>
-                        {contact?.id ? `${contact?.name} (#${contact?.id})` : null}
-                    </span>
-                </h5>
+                <InfoHeaderName>
+                    {company?.id ? `${company?.name} (#${company?.id})` : null}
+                </InfoHeaderName>
             </PaddingWrapper>
         </SubheaderWrapper>
     );

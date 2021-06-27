@@ -2,8 +2,16 @@
 @import "styles/variables";
 
 .name {
+    display: flex;
 
-    .positions {
-        margin-top: setUnit(10);
+    .activeIcon {
+        width: setUnit(20);
+        height: setUnit(20);
+        margin-right: setUnit(10);
+        visibility: hidden;
+
+        &.active {
+            visibility: visible;
+        }
     }
 }
