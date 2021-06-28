@@ -122,6 +122,19 @@ function createAssociations() {
 
 
     Contact.belongsToMany(VocabularyPosition, { through: ThroughContactPosition });
+    Contact.belongsTo(Company);
+
+    Contact.hasMany(Photo);
+    Photo.belongsTo(Contact);
+
+    Contact.hasMany(Phone);
+    Phone.belongsTo(Contact);
+    Phone.belongsTo(VocabularyPhoneType);
+
+    Contact.hasMany(Email);
+    Email.belongsTo(Contact);
+
+    Contact.belongsTo(VocabularySex);
 }
 
 module.exports = {

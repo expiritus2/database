@@ -10,7 +10,7 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { createCompanyEffect, updateCompanyFormEffect, resetCompanyFormEffect } from 'store/effects/forms/company';
+import { createCompanyEffect, updateCompanyEffect, resetCompanyFormEffect } from 'store/effects/forms/company';
 import { getCompaniesEffect } from 'store/effects/companies';
 import Form from '../Form';
 
@@ -48,7 +48,7 @@ const ModalComponent = ({ className }) => {
     const onSubmit = () => {
         setIsPending(true);
 
-        const effect = modal.mode === EDIT ? updateCompanyFormEffect : createCompanyEffect;
+        const effect = modal.mode === EDIT ? updateCompanyEffect : createCompanyEffect;
         dispatch(effect({}, { silent: true }, (err) => {
             if (!err) {
                 if (modal.mode === ADD) {

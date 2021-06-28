@@ -17,22 +17,8 @@ Contact.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
-    photos: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
     birthDate: {
         type: DataTypes.DATE,
-    },
-    sex: {
-        type: DataTypes.STRING,
-    },
-    emails: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
-    },
-    phones: {
-        type: DataTypes.JSONB,
     },
 }, { sequelize, modelName: 'contact' });
 

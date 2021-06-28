@@ -6,7 +6,15 @@
     height: 100%;
     border-right: 1px solid $border-gray-color;
 
+    .colName {
+        padding-left: setUnit(40) !important;
+    }
+
     .tableHolder {
         height: 100%;
+    }
+
+    .contactRow {
+        cursor: pointer;
     }
 }

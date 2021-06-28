@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
-import { getContactsEffect, setContactsSearchEffect, requestRefreshContactsEffect } from 'store/effects/contacts';
+import { getContactsEffect, setContactsSearchEffect } from 'store/effects/contacts';
 import { getContactsSearchSelector, getContactsSelector } from 'store/selectors/contacts';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
 import AddModal from './Modal';
@@ -46,7 +46,7 @@ const Contacts = () => {
                         onSearch={onSearchHandler}
                         onActive={onActiveHandler}
                         searchSelector={getContactsSearchSelector}
-                        refreshEffect={requestRefreshContactsEffect}
+                        refreshEffect={(cfg, options, cb) => getContactsEffect(cfg, { ...options, silent: true }, cb)}
                     />
                     <ScrollWrapper>
                         <PendingWrapper

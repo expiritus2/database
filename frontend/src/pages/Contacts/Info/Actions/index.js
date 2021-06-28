@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { getCurrentContactSelector } from 'store/selectors/contact';
-import { setContactFormDataEffect } from 'store/effects/forms/contact';
+import { setInitContactFormDataEffect } from 'store/effects/forms/contact';
 import { useSelector, useDispatch } from 'react-redux';
 import { useOutsideClick, useTranslate } from 'hooks';
-import { OptionsPopup } from 'components';
+import { OptionsPopup, PaddingWrapper } from 'components';
 import { FiSettings } from 'react-icons/fi';
 import { GrEdit } from 'react-icons/gr';
 import { EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
-import PaddingWrapper from '../PaddingWrapper';
+import { deleteContactEffect, resetContactEffect } from 'store/effects/contacts';
 
 import styles from './styles.module.scss';
 
 const Actions = (props) => {
     const { className } = props;
-    const currentContactInfo = useSelector(getCurrentContactSelector);
+    const { contact } = useSelector(getCurrentContactSelector);
     const dispatch = useDispatch();
     const location = useLocation();
     const { translate } = useTranslate();
@@ -32,8 +32,13 @@ const Actions = (props) => {
     };
 
     const onEdit = () => {
-        dispatch(setContactFormDataEffect(currentContactInfo));
+        dispatch(setInitContactFormDataEffect(contact));
         dispatch(openModalEffect({ modalId: location.pathname, open: true, mode: EDIT }));
+    };
+
+    const onDelete = () => {
+        dispatch(deleteContactEffect({ id: contact.id }));
+        dispatch(resetContactEffect());
     };
 
     return (
@@ -47,7 +52,7 @@ const Actions = (props) => {
                     <li>{translate.PrintCard}</li>
                     <li>{translate.CopyCard}</li>
                     <li>{translate.History}</li>
-                    <li>{translate.Delete}</li>
+                    <li onClick={onDelete}>{translate.Delete}</li>
                 </ul>
             </OptionsPopup>
             <GrEdit onClick={onEdit} className={styles.edit} />

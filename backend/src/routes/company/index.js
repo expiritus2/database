@@ -12,7 +12,11 @@ const router = express.Router();
 
 const middlewares = [
     requireAuth,
-    // [body('name').not().isEmpty().withMessage('Name is required')],
+    [
+        body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
+        body('activities').isArray().not().isEmpty().withMessage('Activities is required'),
+        body('name').not().isEmpty().withMessage('Name is required')
+    ],
     validateRequest,
 ];
 

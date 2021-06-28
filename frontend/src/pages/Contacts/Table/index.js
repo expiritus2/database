@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { setCurrentContactEffect } from 'store/effects/contacts';
+import { getContactEffect } from 'store/effects/contacts';
 import { useTranslate } from 'hooks';
 import { Table as CommonTable } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getContactsSelector } from 'store/selectors/contacts';
+import { getCurrentContactSelector } from 'store/selectors/contact';
 import Name from './Name';
 
 import styles from './styles.module.scss';
@@ -16,6 +17,7 @@ const ContactTable = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
     const { data, count } = useSelector(getContactsSelector);
+    const { contact } = useSelector(getCurrentContactSelector);
 
     const { translate } = useTranslate();
 
@@ -23,7 +25,7 @@ const ContactTable = (props) => {
         if (!data) return [];
         return [
             { key: 'id', title: 'ID', width: '15%' },
-            { key: 'name', title: translate.Name, width: '93%' },
+            { key: 'name', title: translate.Name, width: '93%', className: styles.colName },
         ];
     };
 
@@ -36,7 +38,9 @@ const ContactTable = (props) => {
     };
 
     const onClickRow = (event, rowInfo) => {
-        dispatch(setCurrentContactEffect({ id: rowInfo?.id }));
+        if (rowInfo?.id !== contact?.id) {
+            dispatch(getContactEffect({ id: rowInfo?.id }));
+        }
     };
 
     return (
@@ -48,6 +52,7 @@ const ContactTable = (props) => {
                 data={getRows()}
                 selectable={false}
                 onClickRow={onClickRow}
+                rowClassName={styles.contactRow}
             />
         </div>
     );

@@ -3,22 +3,26 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FaEye } from 'react-icons/fa';
-import { Main, Meta, NameText } from 'components';
+import { TableMain, TableMeta, NameText } from 'components';
 import styles from './styles.module.scss';
 
 const Name = (props) => {
-    const { className, name, active } = props;
+    const { className, name, active, activities } = props;
 
     return (
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
-                <Main>
+                <TableMain>
                     <NameText>{name}</NameText>
-                </Main>
-                <Meta>
-                    meta
-                </Meta>
+                </TableMain>
+                <TableMeta>
+                    <div>
+                        {(activities || []).map((activity) => (
+                            <div key={activity.id} className={styles.activity}>{activity?.label}</div>
+                        ))}
+                    </div>
+                </TableMeta>
             </div>
         </div>
     );
@@ -28,11 +32,13 @@ Name.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string.isRequired,
     active: PropTypes.bool,
+    activities: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Name.defaultProps = {
     className: '',
     active: false,
+    activities: [],
 };
 
 export default Name;

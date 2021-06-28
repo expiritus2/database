@@ -1,38 +1,22 @@
 import Api from 'store/effects/core/api';
 import {
     getContactsAction,
-    setCurrentContactAction,
     resetCurrentContactAction,
     setContactsSearchAction,
-    requestRefreshContactsAction,
+    deleteContactAction,
+    getContactAction,
 } from 'store/actions/contacts';
-import { getContacts } from 'api/contacts';
+import { getContacts, deleteContact, getContact } from 'api/contacts';
 import { getState } from 'store';
-import { get } from 'lodash-es';
+import { getSearchConfig } from './helpers';
 
 export const getContactsEffect = (cfg, options = {}, cb) => {
+    const sendRequest = Api.execResult({ action: getContactsAction, method: getContacts });
     const { contacts } = getState();
 
-    const sendRequest = Api.execResult({ action: getContactsAction, method: getContacts });
-
-    const config = {
-        search: contacts?.search?.string || undefined,
-        active: contacts?.search?.active || undefined,
-        page: cfg?.page ?? contacts?.meta?.page,
-        countPerPage: cfg?.countPerPage ?? contacts?.meta?.countPerPage,
-    };
+    const config = getSearchConfig(cfg, contacts);
 
     return sendRequest(config, options, cb);
-};
-
-export const setCurrentContactEffect = (cfg) => (dispatch) => {
-    const state = getState();
-    const contacts = get(state, 'contacts.data.rows', []);
-    const contactInfo = contacts.find((contact) => contact.id === cfg?.id);
-
-    if (contactInfo) {
-        dispatch(setCurrentContactAction(contactInfo));
-    }
 };
 
 export const resetContactEffect = () => (dispatch) => {
@@ -44,7 +28,21 @@ export const setContactsSearchEffect = (cfg = {}) => (dispatch) => {
     dispatch(setContactsSearchAction({ ...(contacts?.search || {}), ...cfg }));
 };
 
-export const requestRefreshContactsEffect = Api.execResult({
-    action: requestRefreshContactsAction,
-    method: getContacts,
-});
+export const deleteContactEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: deleteContactAction, method: deleteContact });
+
+    const { contacts } = getState();
+
+    const config = {
+        id: cfg?.id,
+        ...getSearchConfig(cfg, contacts),
+    };
+
+    return sendRequest(config, options, cb);
+};
+
+export const getContactEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: getContactAction, method: getContact });
+
+    return sendRequest(cfg, options, cb);
+};

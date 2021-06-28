@@ -2,21 +2,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, SalaryValue, InfoItem, PendingWrapper } from 'components';
+import {
+    ScrollWrapper,
+    SalaryValue,
+    InfoItem,
+    PendingWrapper,
+    InfoPositions,
+    InfoEmails,
+    InfoPhones,
+    Information,
+    InfoLinks,
+    InfoRegions,
+    InfoSkills,
+} from 'components';
 import { useSelector } from 'react-redux';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
 import { useTranslate } from 'hooks';
+import { getDate } from 'helpers/date';
 import Name from './Name';
 import Actions from './Actions';
 import Header from './Header';
 import Empty from './Empty';
-import Phones from './Phones';
-import Emails from './Emails';
 import Languages from './Languages';
-import Positions from './Positions';
-import Skills from './Skills';
-import Regions from './Regions';
-import Information from './Information';
 import Messengers from './Messengers';
 
 import styles from './styles.module.scss';
@@ -36,8 +43,8 @@ const Info = (props) => {
                         <PendingWrapper isPending={isPending}>
                             <Name {...applicant} />
                             <div className={styles.details}>
-                                <Phones phones={applicant?.phones} />
-                                <Emails emails={applicant?.emails} />
+                                <InfoPhones phones={applicant?.phones} />
+                                <InfoEmails emails={applicant?.emails} />
                                 <Messengers list={applicant?.messengers} />
                                 <InfoItem
                                     label={translate.Salary}
@@ -56,18 +63,20 @@ const Info = (props) => {
                                             : ''
                                     }
                                 />
-                                <Positions positions={applicant?.positions} />
-                                <Skills skills={applicant?.skills} />
+                                <InfoPositions positions={applicant?.positions} />
+                                <InfoSkills skills={applicant?.skills} />
                                 <InfoItem
                                     label={translate.Place}
                                     value={applicant?.workPlaces?.map((place) => place?.label).join(', ')}
                                 />
-                                <Regions regions={applicant?.regions} />
+                                <InfoRegions list={applicant?.regions} />
                                 <InfoItem
                                     label={translate.Education}
                                     value={applicant?.education?.label}
                                 />
                                 <Languages list={applicant?.languageSkills} />
+                                <InfoLinks list={applicant?.links} />
+                                <InfoItem label={translate.BirthDate} value={getDate(applicant?.birthDate)} />
                                 <Information value={applicant?.info} />
                             </div>
                         </PendingWrapper>

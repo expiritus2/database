@@ -6,13 +6,12 @@ import { getCurrentCompanySelector } from 'store/selectors/company';
 import { setInitCompanyFormDataEffect } from 'store/effects/forms/company';
 import { useSelector, useDispatch } from 'react-redux';
 import { useOutsideClick, useTranslate } from 'hooks';
-import { OptionsPopup } from 'components';
+import { OptionsPopup, PaddingWrapper } from 'components';
 import { FiSettings } from 'react-icons/fi';
 import { GrEdit } from 'react-icons/gr';
 import { EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { deleteCompanyEffect, resetCompanyEffect } from 'store/effects/companies';
-import PaddingWrapper from '../PaddingWrapper';
 
 import styles from './styles.module.scss';
 

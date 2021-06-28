@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useFormik } from 'formik';
 
 import { useTranslate } from 'hooks';
 import { Company, Positions, AddPhoto, Sex, Phones, Emails } from 'components';
-import { Input, DatePicker } from 'components/Form';
+import { Input, DatePicker, Checkbox } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -20,12 +19,7 @@ const Form = (props) => {
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const formFields = useSelector(getContactFormSelector);
-
-    const formik = useFormik({
-        initialValues: { ...formFields },
-        enableReinitialize: true,
-    });
+    const { formFields, errors } = useSelector(getContactFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setContactFormStateEffect({ [propName]: val }));
@@ -38,31 +32,43 @@ const Form = (props) => {
 
     return (
         <FormWrapper className={classNames(styles.wrapper, className)}>
-            <form id={modal.id} onSubmit={formik.handleSubmit}>
+            <form id={modal.id}>
+                <Checkbox
+                    direction={Checkbox.DIRECTION_RIGHT}
+                    className={classNames(styles.field, styles.active)}
+                    labelTextClassName={styles.activeText}
+                    label={translate.SheActive}
+                    onChange={(e, val, isChecked) => onCustomFieldChange(e, isChecked, 'active')}
+                    checked={formFields.active}
+                />
                 <Input
                     name="name"
                     className={classNames(className, styles.field)}
                     label={translate.Name}
                     onChange={onChangeField}
-                    value={formik.values.name}
+                    value={formFields.name}
+                    error={errors.name}
                 />
                 <Company
                     name="company"
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'company')}
-                    value={formik.values.company}
+                    value={formFields.company}
+                    error={errors.company}
                 />
                 <Positions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'positions')}
-                    value={formik.values.positions}
+                    value={formFields.positions}
+                    error={errors.positions}
                 />
                 <AddPhoto
+                    id="contactPhotos"
                     className={styles.field}
-                    onChange={(values) => {
+                    onChange={(files, values) => {
                         onCustomFieldChange(null, values, 'photos');
                     }}
-                    value={formik.values.photos.map((photo) => ({ url: photo }))}
+                    value={formFields.photos}
                 />
                 <div className={styles.block}>
                     <DatePicker
@@ -70,7 +76,7 @@ const Form = (props) => {
                         className={classNames(styles.field, styles.birthDate)}
                         label={translate.BirthDate}
                         onChange={onChangeField}
-                        value={formik.values.birthDate}
+                        value={formFields.birthDate}
                         options={{ enableTime: false }}
                     />
                     <Sex
@@ -78,7 +84,7 @@ const Form = (props) => {
                         className={classNames(styles.field, styles.sex)}
                         label={translate.Sex}
                         onChange={onChangeField}
-                        value={formik.values.sex}
+                        value={formFields.sex}
                     />
                 </div>
                 <Phones
@@ -86,14 +92,14 @@ const Form = (props) => {
                     className={styles.field}
                     label={translate.Phone}
                     onChange={(val) => onCustomFieldChange(null, val, 'phones')}
-                    value={formik.values.phones}
+                    value={formFields.phones}
                 />
                 <Emails
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
                     onChange={(val) => onCustomFieldChange(null, val, 'emails')}
-                    value={formik.values.emails}
+                    value={formFields.emails}
                 />
             </form>
         </FormWrapper>

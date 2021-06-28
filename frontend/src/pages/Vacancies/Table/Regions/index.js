@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Item } from 'components';
+import { TableItem } from 'components';
 import { useTranslate } from 'hooks';
 import styles from './styles.module.scss';
 
@@ -12,7 +12,7 @@ const Regions = (props) => {
 
     return (
         <div className={classNames(styles.skills, className)}>
-            <Item label={`${translate.Regions}: `} value={regions.join(', ')} />
+            <TableItem label={`${translate.Regions}: `} value={regions.join(', ')} />
         </div>
     );
 };

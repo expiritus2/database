@@ -13,9 +13,11 @@ const router = express.Router();
 
 const middlewares = [
     requireAuth,
-    body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
-    body('skills').isArray().not().isEmpty().withMessage('Skills is required'),
-    body('position').not().isEmpty().withMessage('Positions is required'),
+    [
+        body('regions').isArray().not().isEmpty().withMessage('Regions is required'),
+        body('skills').isArray().not().isEmpty().withMessage('Skills is required'),
+        body('position').not().isEmpty().withMessage('Positions is required'),
+    ],
     validateRequest,
 ]
 
@@ -27,7 +29,10 @@ router.get('/api/vacancies', requireAuth, async (req, res) => {
 });
 
 router.get('/api/vacancies/:id', requireAuth, async (req, res) => {
-    const populatedVacancy = await Vacancy.findByPk(req.params.id, { include: includeModelsFull, attributes: attributesFull});
+    const populatedVacancy = await Vacancy.findByPk(req.params.id, {
+        include: includeModelsFull,
+        attributes: attributesFull
+    });
 
     res.send({ result: populatedVacancy });
 })

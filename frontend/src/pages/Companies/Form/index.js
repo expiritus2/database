@@ -10,17 +10,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getCompanyFormSelector } from 'store/selectors/companyForm';
 import { setCompanyFormStateEffect } from 'store/effects/forms/company';
+import { emptyLink } from 'settings/constants/templates';
 import { FormWrapper } from '../componets';
 
 import styles from './styles.module.scss';
-import { emptyLink, emptyMessenger } from '../../../settings/constants/templates';
 
 const Form = (props) => {
     const { className } = props;
     const { translate } = useTranslate();
     const dispatch = useDispatch();
     const modal = useSelector(getModalStateSelector);
-    const { formFields } = useSelector(getCompanyFormSelector);
+    const { formFields, errors } = useSelector(getCompanyFormSelector);
 
     const onCustomFieldChange = (e, val, propName) => {
         dispatch(setCompanyFormStateEffect({ [propName]: val }));
@@ -54,6 +54,7 @@ const Form = (props) => {
                     label={translate.Calling}
                     onChange={onChangeField}
                     value={formFields.name}
+                    error={errors.name}
                 />
                 <Recruiters
                     name="users"
@@ -74,11 +75,13 @@ const Form = (props) => {
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'activities')}
                     value={formFields.activities}
+                    error={errors.activities}
                 />
                 <Regions
                     className={styles.field}
                     onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                     value={formFields.regions}
+                    error={errors.regions}
                 />
                 <Links
                     name="links"

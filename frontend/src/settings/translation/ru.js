@@ -36,7 +36,7 @@ export default {
     Position: 'Позиция',
     Skills: 'Навыки',
     Place: 'Место',
-    Activities: 'Виды деятельности',
+    Activities: 'Области',
     Regions: 'Регионы',
     Address: 'Адрес',
     Languages: 'Языки',

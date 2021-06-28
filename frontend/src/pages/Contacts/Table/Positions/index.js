@@ -7,16 +7,18 @@ import styles from './styles.module.scss';
 const Positions = (props) => {
     const { positions, className } = props;
 
+    if (!positions || !positions?.length) return null;
+
     return (
         <div className={classNames(styles.positions, className)}>
-            {positions.join(', ')}
+            {positions.map((position) => position?.label).join(', ')}
         </div>
     );
 };
 
 Positions.propTypes = {
     className: PropTypes.string,
-    positions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    positions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 Positions.defaultProps = {

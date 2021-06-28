@@ -2,42 +2,59 @@ import { handleActions } from 'redux-actions';
 import {
     resetContactFormAction,
     setContactFormStateAction,
-    submitContactFormAction,
-    uploadContactFilesAction,
-    setContactFormDataAction,
+    createContactAction,
+    setInitContactFormDataAction,
+    updateContactAction,
 } from 'store/actions/forms/contact';
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
+import { emptyEmail, emptyPhone } from 'settings/constants/templates';
+import { IDLE } from 'settings/constants/apiState';
+import { clearErrors } from 'store/helpers';
 
 const initialData = {
-    active: false,
-    name: '',
-    company: {},
-    positions: [],
-    photos: [],
-    birthDate: new Date(),
-    sex: '',
-    phones: [{ type: '', number: '' }],
-    emails: [''],
+    state: IDLE,
+    data: {
+        active: false,
+        name: '',
+        users: [],
+        positions: [],
+        photos: [],
+        birthDate: null,
+        sex: {},
+        phones: [emptyPhone],
+        emails: [emptyEmail],
+    },
+    meta: {},
+    errors: {},
 };
 
 export default handleActions({
     [setContactFormStateAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...state.data,
+            ...payload,
+        },
+        errors: clearErrors(state.errors, payload),
     }),
-    [uploadContactFilesAction]: (state, { payload }) => ({
+    [createContactAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [submitContactFormAction]: (state, { payload }) => ({
+    [updateContactAction]: (state, { payload }) => ({
         ...state,
         state: payload.state,
         meta: get(payload, 'meta', initialData.meta),
+        errors: get(payload, 'errors', initialData.errors),
     }),
-    [setContactFormDataAction]: (state, { payload }) => ({
+    [setInitContactFormDataAction]: (state, { payload }) => ({
         ...state,
-        ...payload,
+        data: {
+            ...payload,
+        },
+        errors: cloneDeep(initialData.errors),
     }),
     [resetContactFormAction]: () => initialData,
 }, initialData);

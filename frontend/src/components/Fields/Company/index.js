@@ -11,7 +11,7 @@ import { Select } from 'components/Form';
 import styles from './styles.module.scss';
 
 const Company = (props) => {
-    const { className, onChange, value, name } = props;
+    const { className, onChange, value, name, error } = props;
     const dispatch = useDispatch();
     const { translate } = useTranslate();
     const { companies } = useSelector(getVocabularyCompaniesSelector);
@@ -37,18 +37,20 @@ const Company = (props) => {
                 value={createValue()}
                 options={createOptions()}
             />
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };
 
 Company.propTypes = {
     className: PropTypes.string,
+    error: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         name: PropTypes.string,
         label: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
     name: PropTypes.string,
 };
@@ -58,6 +60,7 @@ Company.defaultProps = {
     onChange: () => {},
     value: {},
     name: undefined,
+    error: undefined,
 };
 
 export default Company;

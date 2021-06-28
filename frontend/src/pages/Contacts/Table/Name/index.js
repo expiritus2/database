@@ -2,17 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { FaEye } from 'react-icons/fa';
+import { NameText, TableMain, TableMeta } from 'components';
 import Positions from '../Positions';
 
 import styles from './styles.module.scss';
 
 const Name = (props) => {
-    const { className, name, positions } = props;
+    const { className, name, positions, active, company } = props;
 
     return (
         <div className={classNames(styles.name, className)}>
-            <h5>{name}</h5>
-            <Positions className={styles.positions} positions={positions} />
+            <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
+            <div>
+                <TableMain>
+                    <NameText>{name}</NameText>
+                </TableMain>
+                <TableMeta className={styles.meta}>
+                    <div>{company?.name}</div>
+                    <div className={styles.separator}>/</div>
+                    <Positions positions={positions} />
+                </TableMeta>
+            </div>
         </div>
     );
 };
@@ -20,12 +31,18 @@ const Name = (props) => {
 Name.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string.isRequired,
-    positions: PropTypes.arrayOf(PropTypes.string),
+    positions: PropTypes.arrayOf(PropTypes.shape({})),
+    active: PropTypes.bool,
+    company: PropTypes.shape({
+        name: PropTypes.string,
+    }),
 };
 
 Name.defaultProps = {
     className: '',
     positions: [],
+    active: false,
+    company: null,
 };
 
 export default Name;

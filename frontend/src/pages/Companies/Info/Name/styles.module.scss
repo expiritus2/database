@@ -7,7 +7,27 @@
     display: flex;
     align-items: center;
 
+    .nameText {
+        font-size: setUnit(32);
+        font-weight: 700;
+        margin-bottom: setUnit(5);
+    }
+
+    .companyName {
+        font-weight: 500;
+        font-style: italic;
+    }
+
+    .active {
+        font-size: setUnit(17);
+        font-weight: 700;
+    }
+
     .texts {
         margin-left: setUnit(16);
+    }
+
+    .sex {
+        font-weight: 300;
     }
 }

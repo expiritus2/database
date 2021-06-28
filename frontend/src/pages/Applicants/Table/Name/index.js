@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { NameText, Main, Meta } from 'components';
+import { NameText, TableMain, TableMeta } from 'components';
 import { FaEye } from 'react-icons/fa';
 import Positions from '../Positions';
 import Skills from '../Skills';
@@ -17,15 +17,15 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: inActiveSearch })} />
             <div>
-                <Main>
+                <TableMain>
                     <NameText>{name}</NameText>
                     <p>{nameLat}</p>
-                </Main>
-                <Meta>
+                </TableMain>
+                <TableMeta>
                     <Positions positions={positions} />
                     <Skills skills={skills} />
                     <Regions regions={regions} />
-                </Meta>
+                </TableMeta>
             </div>
         </div>
     );

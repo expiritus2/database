@@ -4,9 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { getCurrentCompanySelector } from 'store/selectors/company';
-import { SubheaderWrapper, InfoHeaderName } from 'components';
-
-import PaddingWrapper from '../PaddingWrapper';
+import { SubheaderWrapper, InfoHeaderName, PaddingWrapper } from 'components';
 
 import styles from './styles.module.scss';
 

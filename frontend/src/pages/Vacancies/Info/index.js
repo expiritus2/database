@@ -2,22 +2,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, InfoItem, PendingWrapper } from 'components';
+import { ScrollWrapper, InfoItem, PendingWrapper, InfoRecruiters, InfoRegions, InfoSkills } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
 import { useTranslate } from 'hooks';
 
-import { workScheduleMap } from 'settings/constants/workSchedule';
 import Actions from './Actions';
 import Header from './Header';
 import Empty from './Empty';
 
 import Position from './Position';
 import Active from './Active';
-import Recruiters from './Recruiters';
-import Skills from './Skills';
-import Regions from './Regions';
 import Information from './Information';
 import { SalaryValue } from '../components';
 
@@ -40,7 +36,7 @@ const Info = (props) => {
                                 <Position position={vacancy?.position} />
                                 <Active value={vacancy?.active} />
                             </div>
-                            <Recruiters value={vacancy?.users} />
+                            <InfoRecruiters value={vacancy?.users} />
                             <InfoItem label={translate.Company} value={vacancy?.company?.name} />
                             <InfoItem
                                 label={translate.Salary}
@@ -52,8 +48,8 @@ const Info = (props) => {
                                 )}
                             />
                             <InfoItem label={translate.ExperienceYears} value={vacancy?.experienceYears} />
-                            <Skills skills={vacancy?.skills} />
-                            <Regions regions={vacancy?.regions} />
+                            <InfoSkills skills={vacancy?.skills} />
+                            <InfoRegions regions={vacancy?.regions} />
                             <InfoItem
                                 label={translate.Place}
                                 value={vacancy?.workPlaces?.map((place) => place?.label).join(', ')}

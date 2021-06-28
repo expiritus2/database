@@ -11,7 +11,13 @@ const User = require('../models/user');
 const attributesLight = ['id', 'name', 'active', 'createdAt', 'updatedAt'];
 const attributesFull = [...attributesLight, 'info'];
 
-const includeModelsLight = []
+const includeModelsLight = [
+    {
+        model: VocabularyActivity,
+        attributes: ['id', 'label', 'value'],
+        through: { attributes: [] },
+    },
+]
 
 const includeModelsFull = [
     ...includeModelsLight,
@@ -32,11 +38,6 @@ const includeModelsFull = [
     {
         model: User,
         attributes: ['id', 'email'],
-        through: { attributes: [] },
-    },
-    {
-        model: VocabularyActivity,
-        attributes: ['id', 'label', 'value'],
         through: { attributes: [] },
     },
     {

@@ -28,7 +28,7 @@ export const createCompanyEffect = (cfg, options, cb) => {
     return sendRequest(clonedCompany, options, cb);
 };
 
-export const updateCompanyFormEffect = (cfg, options, cb) => {
+export const updateCompanyEffect = (cfg, options, cb) => {
     const sendRequest = Api.execResult({ action: updateCompanyAction, method: updateCompany });
     const formFields = get(getState(), 'forms.company.data');
 

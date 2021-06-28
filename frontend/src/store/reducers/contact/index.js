@@ -1,18 +1,25 @@
 import { handleActions } from 'redux-actions';
-import { getContactsAction, resetCurrentContactAction, setCurrentContactAction } from 'store/actions/contacts';
-import { get, find } from 'lodash-es';
+import { getContactAction, resetCurrentContactAction } from 'store/actions/contacts';
+import { updateContactAction } from 'store/actions/forms/contact';
+import { get } from 'lodash-es';
+import { IDLE } from 'settings/constants/apiState';
 
-const initialData = null;
+const initialData = {
+    state: IDLE,
+    data: null,
+    meta: {},
+};
 
 export default handleActions({
-    [setCurrentContactAction]: (state, { payload }) => ({
-        ...state,
-        ...payload,
+    [getContactAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
     }),
-    [getContactsAction]: (state, { payload }) => {
-        const contacts = get(payload, 'data.result.rows');
-        const currentContact = find(contacts, (applicant) => applicant?.id === state?.id);
-        return currentContact ? { ...currentContact } : state;
-    },
+    [updateContactAction]: (state, { payload }) => ({
+        state: payload.state,
+        data: get(payload, 'data.result', initialData.data),
+        meta: get(payload, 'meta', initialData.meta),
+    }),
     [resetCurrentContactAction]: () => initialData,
 }, initialData);

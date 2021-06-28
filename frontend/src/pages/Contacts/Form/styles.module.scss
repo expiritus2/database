@@ -23,8 +23,11 @@
     }
 
     .active {
-        margin-top: 2px;
-        margin-bottom: -9px;
+        width: fit-content;
+
+        .activeText {
+            margin-left: setUnit(10);
+        }
     }
 
     .block {

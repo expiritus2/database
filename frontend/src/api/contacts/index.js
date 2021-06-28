@@ -12,3 +12,11 @@ export function updateContact(cfg) {
 export function getContacts(cfg) {
     return apiServer.get('/api/contacts', { params: cfg });
 }
+
+export function deleteContact(cfg) {
+    return apiServer.delete(`/api/contacts/${cfg.id}`);
+}
+
+export function getContact(cfg) {
+    return apiServer.get(`/api/contacts/${cfg.id}`);
+}

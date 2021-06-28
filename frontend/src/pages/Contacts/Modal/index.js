@@ -10,7 +10,7 @@ import { ADD, EDIT } from 'settings/constants/mode';
 import { openModalEffect } from 'store/effects/app';
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
-import { submitContactFormEffect, updateContactFormEffect, resetContactFormEffect } from 'store/effects/forms/contact';
+import { createContactEffect, updateContactEffect, resetContactFormEffect } from 'store/effects/forms/contact';
 import { getContactsEffect } from 'store/effects/contacts';
 import Form from '../Form';
 
@@ -46,18 +46,23 @@ const ModalComponent = ({ className }) => {
     };
 
     const onSubmit = () => {
-        let effect = submitContactFormEffect;
-        if (modal.mode === EDIT) {
-            effect = updateContactFormEffect;
-        }
         setIsPending(true);
+
+        const effect = modal.mode === EDIT ? updateContactEffect : createContactEffect;
         dispatch(effect({}, {}, (err) => {
             if (!err) {
+                if (modal.mode === ADD) {
+                    return dispatch(getContactsEffect({}, { silent: true }, () => {
+                        dispatch(resetContactFormEffect());
+                        dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
+                        setIsPending(false);
+                    }));
+                }
+
+                dispatch(resetContactFormEffect());
                 dispatch(openModalEffect({ modalId: null, open: false, mode: null }));
-                dispatch(getContactsEffect({}, {}, () => {
-                    setIsPending(false);
-                }));
             }
+            setIsPending(false);
         }));
     };
 

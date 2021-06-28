@@ -9,9 +9,8 @@ export const getContactsSelector = createSelector(
         isPending: contacts?.state === PENDING,
         isIdle: contacts?.state === IDLE,
         count: contacts?.data?.count,
-        data: contacts?.data?.rows.map((contact) => ({
-            ...contact,
-            positions: contact?.positions?.map(({ label }) => label),
+        data: contacts?.data?.rows.map((company) => ({
+            ...company,
         })),
         meta: contacts?.meta,
     }),

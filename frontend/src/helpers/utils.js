@@ -2,45 +2,6 @@ export const setUnit = (px) => `${px / 16}rem`;
 
 export const formatNumber = (value, params = {}, locale = 'en-US') => new Intl.NumberFormat(locale, params).format(value);
 
-export function titleCase(str) {
-    if (!str) return '';
-    const wordsArray = str.toLowerCase().split(/\s+/);
-    const upperCased = wordsArray.map((word) => word.charAt(0).toUpperCase() + word.substr(1));
-    return upperCased.join(' ');
-}
-
-export function getImagesPreview(files) {
-    if (!files) {
-        return Promise.reject();
-    }
-
-    const promises = [];
-    const filesArray = Array.from(files);
-
-    filesArray.forEach((file) => {
-        const promise = new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                const { result } = e.target;
-                resolve({
-                    url: result,
-                    data: file,
-                });
-            };
-
-            reader.onerror = () => {
-                reject();
-            };
-
-            reader.readAsDataURL(file);
-        });
-        promises.push(promise);
-    });
-
-    return Promise.all(promises);
-}
-
 export function readFiles(files, cb = (reader, file) => reader.readAsBinaryString(file)) {
     if (!files) {
         return Promise.reject();
@@ -102,9 +63,3 @@ export function downloadFile(blank = false) {
         },
     };
 }
-
-export const cleanOptions = (options) => {
-    if (!options) return options;
-
-    return options.map((option) => ({ id: option?.id, label: option?.label?.trim(), value: option?.value?.trim() }));
-};

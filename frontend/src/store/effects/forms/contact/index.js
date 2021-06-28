@@ -1,15 +1,14 @@
 import Api from 'store/effects/core/api';
 import {
-    submitContactFormAction,
-    uploadContactFilesAction,
+    createContactAction,
     setContactFormStateAction,
     resetContactFormAction,
-    setContactFormDataAction,
-    updateContactFormAction,
+    setInitContactFormDataAction,
+    updateContactAction,
 } from 'store/actions/forms/contact';
 import { createContact, updateContact } from 'api/contacts';
-import { uploadFiles } from 'api/common';
 import { getState } from 'store/index';
+import { get } from 'lodash-es';
 import { prepareData } from './helpers';
 
 export const setContactFormStateEffect = (cfg) => (dispatch) => {
@@ -20,56 +19,24 @@ export const resetContactFormEffect = () => (dispatch) => {
     dispatch(resetContactFormAction());
 };
 
-export const submitContactFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadContactFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: submitContactFormAction, method: createContact });
-    const { forms: { contact } } = getState();
+export const createContactEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: createContactAction, method: createContact });
+    const formFields = get(getState(), 'forms.contact.data');
 
-    const formData = new FormData();
+    const clonedContact = prepareData(formFields);
 
-    contact?.photos?.forEach((photo) => {
-        formData.append('photos', photo);
-    });
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedContact = prepareData(contact, uploadedFiles);
-
-        dispatch(sendRequest(clonedContact, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetContactFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedContact, options, cb);
 };
 
-export const updateContactFormEffect = (cfg, options, cb) => (dispatch) => {
-    const sendUploadFiles = Api.execResult({ action: uploadContactFilesAction, method: uploadFiles });
-    const sendRequest = Api.execResult({ action: updateContactFormAction, method: updateContact });
-    const { forms: { contact } } = getState();
+export const updateContactEffect = (cfg, options, cb) => {
+    const sendRequest = Api.execResult({ action: updateContactAction, method: updateContact });
+    const formFields = get(getState(), 'forms.contact.data');
 
-    const formData = new FormData();
+    const clonedContact = prepareData(formFields);
 
-    contact?.photos?.filter((file) => file instanceof File).forEach((photo) => {
-        formData.append('photos', photo);
-    });
-
-    dispatch(sendUploadFiles(formData, options, (error, response) => {
-        const { data: uploadedFiles } = response || {};
-        const clonedContact = prepareData(contact, uploadedFiles);
-
-        dispatch(sendRequest(clonedContact, options, (err, resp) => {
-            if (!err) {
-                dispatch(resetContactFormEffect());
-            }
-
-            cb?.(err, resp);
-        }));
-    }));
+    return sendRequest(clonedContact, options, cb);
 };
 
-export const setContactFormDataEffect = (cfg) => (dispatch) => {
-    dispatch(setContactFormDataAction(cfg));
+export const setInitContactFormDataEffect = (cfg) => (dispatch) => {
+    dispatch(setInitContactFormDataAction(cfg));
 };
