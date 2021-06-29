@@ -8,15 +8,19 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Emails = (props) => {
+const InfoEmails = (props) => {
     const { className, emails } = props;
     const { translate } = useTranslate();
 
     if (!emails || !emails.length) return null;
 
     const getValue = () => (
-        <div className={styles.emailsValue}>
-            {emails.map(({ id, email }) => <div key={id || email}>{email}</div>)}
+        <div>
+            {emails.map(({ id, email }) => (
+                <div key={id || email}>
+                    <a href={`mailto:${email}`}>{email}</a>
+                </div>
+            ))}
         </div>
     );
 
@@ -27,16 +31,16 @@ const Emails = (props) => {
     );
 };
 
-Emails.propTypes = {
+InfoEmails.propTypes = {
     className: PropTypes.string,
     emails: PropTypes.arrayOf(PropTypes.shape({
         email: PropTypes.string,
     })),
 };
 
-Emails.defaultProps = {
+InfoEmails.defaultProps = {
     className: '',
     emails: [],
 };
 
-export default Emails;
+export default InfoEmails;

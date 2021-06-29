@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FaEye } from 'react-icons/fa';
-import { TableMain, TableMeta, NameText } from 'components';
+import { TableMain, TableMeta, NameText, TableActivities } from 'components';
 import styles from './styles.module.scss';
 
 const Name = (props) => {
@@ -13,15 +13,11 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
-                <TableMain>
+                <TableMain className={styles.main}>
                     <NameText>{name}</NameText>
                 </TableMain>
                 <TableMeta>
-                    <div>
-                        {(activities || []).map((activity) => (
-                            <div key={activity.id} className={styles.activity}>{activity?.label}</div>
-                        ))}
-                    </div>
+                    <TableActivities list={activities} />
                 </TableMeta>
             </div>
         </div>

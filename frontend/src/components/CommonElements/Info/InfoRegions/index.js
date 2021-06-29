@@ -8,14 +8,14 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Regions = (props) => {
+const InfoRegions = (props) => {
     const { className, list } = props;
     const { translate } = useTranslate();
 
     if (!list || !list.length) return null;
 
     return (
-        <div className={classNames(styles.list, className)}>
+        <div className={classNames(styles.infoRegions, className)}>
             <InfoItem
                 label={translate.Regions}
                 value={list.map(({ label }) => label).join(', ')}
@@ -24,7 +24,7 @@ const Regions = (props) => {
     );
 };
 
-Regions.propTypes = {
+InfoRegions.propTypes = {
     className: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
@@ -32,9 +32,9 @@ Regions.propTypes = {
     })),
 };
 
-Regions.defaultProps = {
+InfoRegions.defaultProps = {
     className: '',
     list: [],
 };
 
-export default Regions;
+export default InfoRegions;

@@ -9,7 +9,7 @@ const Item = (props) => {
 
     return (
         <div className={classNames(styles.item, className)}>
-            <span className={styles.label}>{label}</span>
+            {label && <span className={styles.label}>{label}</span>}
             <span className={styles.value}>{value}</span>
         </div>
     );

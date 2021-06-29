@@ -2,11 +2,6 @@
 @import "styles/variables";
 
 .info {
-    &.scroll {
-        height: calc(100vh - 177px);
-        padding: setUnit(16);
-    }
-
     .pendingWrapper {
         height: calc(100% - #{setUnit(5)});
     }

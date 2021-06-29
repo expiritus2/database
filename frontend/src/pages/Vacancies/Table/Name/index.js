@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FaEye } from 'react-icons/fa';
-import { TableMain, TableMeta } from 'components';
+import { TableMain, TableMeta, TableSkills, TableRegions, TableCompany } from 'components';
 import Position from '../Position';
-import Skills from '../Skills';
-import Regions from '../Regions';
 
 import styles from './styles.module.scss';
 
@@ -17,12 +15,12 @@ const Name = (props) => {
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
                 <TableMain>
-                    <Position position={position} />
+                    <Position label={position?.label} />
                 </TableMain>
                 <TableMeta>
-                    <div className={styles.company}>{company}</div>
-                    <Skills skills={skills} />
-                    <Regions regions={regions} />
+                    <TableCompany name={company?.name} />
+                    <TableSkills list={skills} />
+                    <TableRegions list={regions} />
                 </TableMeta>
             </div>
         </div>
@@ -31,11 +29,15 @@ const Name = (props) => {
 
 Name.propTypes = {
     className: PropTypes.string,
-    position: PropTypes.string,
-    skills: PropTypes.arrayOf(PropTypes.string),
-    regions: PropTypes.arrayOf(PropTypes.string),
+    position: PropTypes.shape(({
+        label: PropTypes.string,
+    })),
+    skills: PropTypes.arrayOf(PropTypes.shape({})),
+    regions: PropTypes.arrayOf(PropTypes.shape({})),
     active: PropTypes.bool.isRequired,
-    company: PropTypes.string,
+    company: PropTypes.shape({
+        name: PropTypes.string,
+    }),
 };
 
 Name.defaultProps = {

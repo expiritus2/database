@@ -28,8 +28,8 @@ class ApplicantController {
     create(options = {}) {
         return new Promise(async (resolve) => {
             try {
-                const { name, nameLat, inActiveSearch, experienceYears, info, birthDate } = this.body;
-                const config = { name, nameLat, inActiveSearch, experienceYears, info, birthDate };
+                const { name, nameLat, inActiveSearch, experienceYears, info, birthDate, address } = this.body;
+                const config = { name, nameLat, inActiveSearch, experienceYears, info, birthDate, address };
 
                 this.newApplicant = await Applicant.create(config, options);
 
@@ -61,7 +61,7 @@ class ApplicantController {
     update(id) {
         return new Promise(async (resolve) => {
             try {
-                const { name, nameLat, inActiveSearch, experienceYears, info, birthDate } = this.body;
+                const { name, nameLat, inActiveSearch, experienceYears, info, birthDate, address } = this.body;
                 const storedApplicant = await Applicant.findByPk(id, { include: includeModelsFull });
 
                 if (storedApplicant) {
@@ -71,6 +71,7 @@ class ApplicantController {
                     storedApplicant.experienceYears = experienceYears;
                     storedApplicant.info = info;
                     storedApplicant.birthDate = birthDate;
+                    storedApplicant.address = address;
                     this.updatedApplicant = await storedApplicant.save();
 
                     await new Salary(this.body.salary, this.updatedApplicant).update();

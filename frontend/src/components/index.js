@@ -37,7 +37,7 @@ export { default as Company } from './Fields/Company';
 export { default as Addresses } from './Fields/Addresses';
 export { default as Recruiters } from './Fields/Recruiters';
 export { default as Contacts } from './Fields/Contacts';
-export { default as SalaryMinMax } from './Fields/SalaryMinMax';
+export { default as SalaryRange } from './Fields/SalaryRange';
 export { default as WorkSchedules } from './Fields/WorkSchedules';
 export { default as File } from './Fields/File';
 export { default as VacancyName } from './Fields/VacancyName';

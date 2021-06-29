@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FaEye } from 'react-icons/fa';
-import { NameText, TableMain, TableMeta } from 'components';
-import Positions from '../Positions';
+import { NameText, TableMain, TableMeta, TablePositions } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -15,13 +14,13 @@ const Name = (props) => {
         <div className={classNames(styles.name, className)}>
             <FaEye className={classNames(styles.activeIcon, { [styles.active]: active })} />
             <div>
-                <TableMain>
+                <TableMain className={styles.main}>
                     <NameText>{name}</NameText>
                 </TableMain>
                 <TableMeta className={styles.meta}>
                     <div>{company?.name}</div>
                     <div className={styles.separator}>/</div>
-                    <Positions positions={positions} />
+                    <TablePositions list={positions} />
                 </TableMeta>
             </div>
         </div>

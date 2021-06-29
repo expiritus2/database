@@ -17,13 +17,13 @@ import styles from './styles.module.scss';
 const VacancyTable = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
-    const { data, count } = useSelector(getVacanciesSelector);
+    const { vacancies, count } = useSelector(getVacanciesSelector);
     const { vacancy } = useSelector(getCurrentVacancySelector);
 
     const { translate } = useTranslate();
 
     const getColumns = () => {
-        if (!data) return [];
+        if (!vacancies) return [];
         return [
             { key: 'id', title: 'ID', width: '7%' },
             { key: 'salaryRange', title: translate.Salary, width: '15%' },
@@ -32,8 +32,8 @@ const VacancyTable = (props) => {
     };
 
     const getRows = () => {
-        if (!data) return [];
-        return data?.map((row) => ({
+        if (!vacancies) return [];
+        return vacancies?.map((row) => ({
             id: row?.id,
             salaryRange: <SalaryValue value={row?.salaryRange} currency={row?.salaryRange?.currency?.label} />,
             name: <Name {...row} />,

@@ -7,30 +7,34 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Links = (props) => {
+const InfoLinks = (props) => {
     const { className, list } = props;
 
     if (!list || !list.length) return null;
 
     return (
-        <div className={classNames(styles.languages, className)}>
+        <div className={classNames(styles.infoLinks, className)}>
             {list.map((link) => (
-                <InfoItem key={link?.id} label={link?.linkType?.label} value={<a href={link?.link}>{link?.link}</a>} />
+                <InfoItem
+                    key={link?.id}
+                    label={link?.linkType?.label}
+                    value={<a target="_blank" rel="noreferrer" href={link?.link}>{link?.link}</a>}
+                />
             ))}
         </div>
     );
 };
 
-Links.propTypes = {
+InfoLinks.propTypes = {
     className: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape({
         email: PropTypes.string,
     })),
 };
 
-Links.defaultProps = {
+InfoLinks.defaultProps = {
     className: '',
     list: [],
 };
 
-export default Links;
+export default InfoLinks;

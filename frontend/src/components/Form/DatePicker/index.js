@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import FlatPickr from 'react-flatpickr';
 import classNames from 'classnames';
 
+import 'flatpickr/dist/themes/material_blue.css';
 import styles from './styles.module.scss';
-import './styles.scss';
 
 const DatePicker = (props) => {
     const { id, name, value, onChange, className, options, label } = props;
@@ -27,6 +27,7 @@ const DatePicker = (props) => {
                 onChange={onChangeHandler}
                 options={{
                     enableTime: false,
+                    dateFormat: 'd M, Y',
                     ...options,
                 }}
             />

@@ -8,37 +8,37 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Recruiters = (props) => {
+const InfoRecruiters = (props) => {
     const { className, list } = props;
     const { translate } = useTranslate();
 
     if (!list || !list.length) return null;
 
     const getValue = () => (
-        <div className={styles.languageValue}>
+        <div>
             {list.map(({ id, email }) => (
-                <div key={id}>{email}</div>
+                <div key={id} className={styles.link}>{email}</div>
             ))}
         </div>
     );
 
     return (
-        <div className={classNames(styles.languages, className)}>
+        <div className={classNames(styles.infoRecruiters, className)}>
             <InfoItem label={translate.Recruiters} value={getValue()} />
         </div>
     );
 };
 
-Recruiters.propTypes = {
+InfoRecruiters.propTypes = {
     className: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape({
         email: PropTypes.string,
     })),
 };
 
-Recruiters.defaultProps = {
+InfoRecruiters.defaultProps = {
     className: '',
     list: [],
 };
 
-export default Recruiters;
+export default InfoRecruiters;

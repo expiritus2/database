@@ -8,23 +8,29 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Positions = (props) => {
+const InfoPositions = (props) => {
     const { className, positions } = props;
     const { translate } = useTranslate();
 
     if (!positions || !positions.length) return null;
 
+    const getValue = () => (
+        positions.map((position) => (
+            <div key={position?.id}>{position?.label}</div>
+        ))
+    );
+
     return (
-        <div className={classNames(styles.positions, className)}>
+        <div className={classNames(styles.infoPositions, className)}>
             <InfoItem
                 label={translate.Position}
-                value={positions.map(({ label }) => label).join(', ')}
+                value={getValue()}
             />
         </div>
     );
 };
 
-Positions.propTypes = {
+InfoPositions.propTypes = {
     className: PropTypes.string,
     positions: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
@@ -32,9 +38,9 @@ Positions.propTypes = {
     })),
 };
 
-Positions.defaultProps = {
+InfoPositions.defaultProps = {
     className: '',
     positions: [],
 };
 
-export default Positions;
+export default InfoPositions;

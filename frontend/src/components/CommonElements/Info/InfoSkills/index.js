@@ -8,14 +8,14 @@ import { InfoItem } from 'components';
 
 import styles from './styles.module.scss';
 
-const Skills = (props) => {
+const InfoSkills = (props) => {
     const { className, skills } = props;
     const { translate } = useTranslate();
 
     if (!skills || !skills.length) return null;
 
     return (
-        <div className={classNames(styles.skills, className)}>
+        <div className={classNames(styles.infoSkills, className)}>
             <InfoItem
                 label={translate.Skills}
                 value={skills.map(({ label }) => label).join(', ')}
@@ -24,7 +24,7 @@ const Skills = (props) => {
     );
 };
 
-Skills.propTypes = {
+InfoSkills.propTypes = {
     className: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
@@ -32,9 +32,9 @@ Skills.propTypes = {
     })),
 };
 
-Skills.defaultProps = {
+InfoSkills.defaultProps = {
     className: '',
     skills: [],
 };
 
-export default Skills;
+export default InfoSkills;

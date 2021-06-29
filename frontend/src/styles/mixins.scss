@@ -202,11 +202,8 @@
     box-shadow: 3px 5px 3px -3px rgba(0, 0, 0, 0.2), 3px 3px 3px 0px rgba(0, 0, 0, 0.14), 3px 3px 5px 0px rgba(0, 0, 0, 0.12);
 }
 
-@mixin action-icon() {
-    background-color: $background-light-gray;
-
-    &:hover {
-        background-color: $light-gray;
-    }
+@mixin info-lik {
+    text-decoration:underline;
+    text-decoration-style: dotted;
+    cursor: pointer;
 }
-

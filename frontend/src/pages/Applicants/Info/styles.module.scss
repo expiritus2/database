@@ -2,11 +2,6 @@
 @import "styles/variables";
 
 .info {
-    &.scroll {
-        height: calc(100vh - 177px);
-        padding: setUnit(16);
-    }
-
     .details {
         margin-top: setUnit(20);
     }

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
-    ScrollWrapper,
     SalaryValue,
     InfoItem,
     PendingWrapper,
@@ -14,6 +13,9 @@ import {
     InfoLinks,
     InfoRegions,
     InfoSkills,
+    InfoMessengers,
+    InfoLanguages,
+    InfoScrollWrapper,
 } from 'components';
 import { useSelector } from 'react-redux';
 import { getCurrentApplicantSelector } from 'store/selectors/applicant';
@@ -23,8 +25,6 @@ import Name from './Name';
 import Actions from './Actions';
 import Header from './Header';
 import Empty from './Empty';
-import Languages from './Languages';
-import Messengers from './Messengers';
 
 import styles from './styles.module.scss';
 
@@ -39,13 +39,13 @@ const Info = (props) => {
             {applicant || isPending ? (
                 <>
                     {!isPending && <Actions />}
-                    <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
+                    <InfoScrollWrapper className={classNames(classNames(styles.info), className)}>
                         <PendingWrapper isPending={isPending}>
                             <Name {...applicant} />
                             <div className={styles.details}>
                                 <InfoPhones phones={applicant?.phones} />
                                 <InfoEmails emails={applicant?.emails} />
-                                <Messengers list={applicant?.messengers} />
+                                <InfoMessengers list={applicant?.messengers} />
                                 <InfoItem
                                     label={translate.Salary}
                                     value={(
@@ -74,13 +74,13 @@ const Info = (props) => {
                                     label={translate.Education}
                                     value={applicant?.education?.label}
                                 />
-                                <Languages list={applicant?.languageSkills} />
+                                <InfoLanguages list={applicant?.languageSkills} />
                                 <InfoLinks list={applicant?.links} />
                                 <InfoItem label={translate.BirthDate} value={getDate(applicant?.birthDate)} />
                                 <Information value={applicant?.info} />
                             </div>
                         </PendingWrapper>
-                    </ScrollWrapper>
+                    </InfoScrollWrapper>
                 </>
             ) : <Empty />}
         </>

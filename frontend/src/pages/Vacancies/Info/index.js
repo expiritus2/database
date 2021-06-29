@@ -2,7 +2,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, InfoItem, PendingWrapper, InfoRecruiters, InfoRegions, InfoSkills } from 'components';
+import {
+    InfoItem,
+    PendingWrapper,
+    InfoRecruiters,
+    InfoRegions,
+    InfoSkills,
+    Information,
+    InfoContacts,
+    InfoCompany,
+    InfoScrollWrapper,
+} from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentVacancySelector } from 'store/selectors/vacancy';
@@ -14,7 +24,6 @@ import Empty from './Empty';
 
 import Position from './Position';
 import Active from './Active';
-import Information from './Information';
 import { SalaryValue } from '../components';
 
 import styles from './styles.module.scss';
@@ -30,14 +39,15 @@ const Info = (props) => {
             {vacancy || isPending ? (
                 <>
                     {!isPending && <Actions />}
-                    <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
+                    <InfoScrollWrapper className={classNames(classNames(styles.info), className)}>
                         <PendingWrapper isPending={isPending} className={styles.pendingWrapper}>
                             <div className={styles.head}>
                                 <Position position={vacancy?.position} />
                                 <Active value={vacancy?.active} />
                             </div>
-                            <InfoRecruiters value={vacancy?.users} />
-                            <InfoItem label={translate.Company} value={vacancy?.company?.name} />
+                            <InfoRecruiters list={vacancy?.users} />
+                            <InfoContacts list={vacancy?.contacts} />
+                            <InfoCompany name={vacancy?.company?.name} />
                             <InfoItem
                                 label={translate.Salary}
                                 value={(
@@ -60,7 +70,7 @@ const Info = (props) => {
                             />
                             <Information value={vacancy?.info} />
                         </PendingWrapper>
-                    </ScrollWrapper>
+                    </InfoScrollWrapper>
                 </>
             ) : <Empty />}
         </>

@@ -9,6 +9,7 @@ const VocabularyFileType = require('../models/vocabulary/fileType');
 
 const User = require('../models/user');
 const Company = require('../models/company');
+const Contact = require('../models/contact');
 
 const File = require('../models/file');
 const SalaryRange = require('../models/salaryRange');
@@ -74,6 +75,11 @@ const includeModelsFull = [
     {
         model: User,
         attributes: ['id', 'email'],
+        through: { attributes: [] },
+    },
+    {
+        model: Contact,
+        attributes: ['id', 'name'],
         through: { attributes: [] },
     },
 ]

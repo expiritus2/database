@@ -37,14 +37,19 @@ const ThroughApplicantSkill = require('./through/applicantSkill');
 const ThroughApplicantRegion = require('./through/applicantRegion');
 const ThroughApplicantWorkPlace = require('./through/applicantWorkPlace');
 const ThroughApplicantLanguage = require('./through/applicantLanguage');
+
 const ThroughExperiencePosition = require('./through/experiencePosition');
+
 const ThroughContactPosition = require('./through/contactPosition');
+
 const ThroughVacancyUser = require('./through/vacancyUser');
 const ThroughVacancyRegion = require('./through/vacancyRegion');
 const ThroughVacancySkill = require('./through/vacancySkill');
 const ThroughVacancyWorkPlace = require('./through/vacancyWorkPlace');
 const ThroughVacancyWorkSchedule = require('./through/vacancyWorkSchedule');
 const ThroughVacancyWorkType = require('./through/vacancyWorkType');
+const ThroughVacancyContact = require('./through/vacancyContact');
+
 const ThroughCompanyUser = require('./through/companyUser');
 const ThroughCompanyRegion = require('./through/companyRegion');
 const ThroughCompanyActivity = require('./through/companyActivity');
@@ -94,6 +99,8 @@ function createAssociations() {
 
     Vacancy.belongsTo(VocabularyPosition);
     Vacancy.belongsTo(Company);
+    Vacancy.belongsToMany(Contact, { through: ThroughVacancyContact });
+
     Company.hasMany(Vacancy);
     File.belongsTo(Vacancy);
     File.belongsTo(VocabularyFileType);

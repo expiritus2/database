@@ -7,7 +7,7 @@ const router = express.Router();
 const middlewares = [requireAuth]
 
 router.get('/api/vocabulary/contacts', middlewares, async (req, res) => {
-    const contacts = await Contact.findAll();
+    const contacts = await Contact.findAll({ attributes: ['id', 'name'] });
 
     res.send(contacts);
 });

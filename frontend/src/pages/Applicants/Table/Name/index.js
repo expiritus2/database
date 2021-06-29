@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { NameText, TableMain, TableMeta } from 'components';
+import { NameText, TableMain, TableMeta, TablePositions, TableSkills, TableRegions } from 'components';
 import { FaEye } from 'react-icons/fa';
-import Positions from '../Positions';
-import Skills from '../Skills';
-import Regions from '../Regions';
 
 import styles from './styles.module.scss';
 
@@ -19,12 +16,12 @@ const Name = (props) => {
             <div>
                 <TableMain>
                     <NameText>{name}</NameText>
-                    <p>{nameLat}</p>
+                    <NameText className={styles.nameLat}>{nameLat}</NameText>
                 </TableMain>
                 <TableMeta>
-                    <Positions positions={positions} />
-                    <Skills skills={skills} />
-                    <Regions regions={regions} />
+                    <TablePositions list={positions} />
+                    <TableSkills list={skills} />
+                    <TableRegions list={regions} />
                 </TableMeta>
             </div>
         </div>
@@ -35,9 +32,9 @@ Name.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string.isRequired,
     nameLat: PropTypes.string,
-    positions: PropTypes.arrayOf(PropTypes.string),
-    skills: PropTypes.arrayOf(PropTypes.string),
-    regions: PropTypes.arrayOf(PropTypes.string),
+    positions: PropTypes.arrayOf(PropTypes.shape({})),
+    skills: PropTypes.arrayOf(PropTypes.shape({})),
+    regions: PropTypes.arrayOf(PropTypes.shape({})),
     inActiveSearch: PropTypes.bool,
 };
 

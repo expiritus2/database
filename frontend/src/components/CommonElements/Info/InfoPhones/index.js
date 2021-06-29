@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -8,7 +7,7 @@ import { useTranslate } from 'hooks';
 
 import styles from './styles.module.scss';
 
-const Phones = (props) => {
+const InfoPhones = (props) => {
     const { className, phones } = props;
     const { translate } = useTranslate();
 
@@ -16,9 +15,9 @@ const Phones = (props) => {
 
     return (
         <div className={classNames(styles.phones, className)}>
-            {phones.map((phone, index) => (
+            {phones.map((phone) => (
                 <InfoItem
-                    key={index}
+                    key={phone?.id}
                     label={phone?.phoneType?.label || translate.Phone}
                     value={phone?.number && <FormattedPhone>{phone?.number}</FormattedPhone>}
                 />
@@ -27,7 +26,7 @@ const Phones = (props) => {
     );
 };
 
-Phones.propTypes = {
+InfoPhones.propTypes = {
     className: PropTypes.string,
     phones: PropTypes.arrayOf(PropTypes.shape({
         phoneType: PropTypes.shape({
@@ -37,9 +36,9 @@ Phones.propTypes = {
     })),
 };
 
-Phones.defaultProps = {
+InfoPhones.defaultProps = {
     className: '',
     phones: undefined,
 };
 
-export default Phones;
+export default InfoPhones;

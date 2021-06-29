@@ -7,7 +7,7 @@ const getSearchOptions = (query) => {
     return {
         where: {
             [Op.and]: [
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
+                // ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
                 ...(active ? [{ active }] : []),
             ]
         }

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, PendingWrapper, InfoEmails, InfoPositions, InfoPhones, InfoItem } from 'components';
+import { PendingWrapper, InfoEmails, InfoPositions, InfoPhones, InfoItem, InfoScrollWrapper } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentContactSelector } from 'store/selectors/contact';
@@ -27,7 +27,7 @@ const Info = (props) => {
             {contact || isPending ? (
                 <>
                     <Actions />
-                    <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
+                    <InfoScrollWrapper className={classNames(classNames(styles.info), className)}>
                         <PendingWrapper isPending={isPending}>
                             <Name {...contact} />
                             <InfoEmails emails={contact?.emails} />
@@ -35,7 +35,7 @@ const Info = (props) => {
                             <InfoPhones phones={contact?.phones} />
                             <InfoItem label={translate.BirthDate} value={getDate(contact?.birthDate)} />
                         </PendingWrapper>
-                    </ScrollWrapper>
+                    </InfoScrollWrapper>
                 </>
             ) : <Empty />}
         </>

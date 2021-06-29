@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ScrollWrapper, PendingWrapper, Information, InfoLinks, InfoRecruiters } from 'components';
+import { PendingWrapper, Information, InfoLinks, InfoRecruiters, InfoScrollWrapper } from 'components';
 
 import { useSelector } from 'react-redux';
 import { getCurrentCompanySelector } from 'store/selectors/company';
@@ -26,7 +26,7 @@ const Info = (props) => {
             {company || isPending ? (
                 <>
                     {!isPending && <Actions />}
-                    <ScrollWrapper className={classNames(classNames(styles.info, styles.scroll), className)}>
+                    <InfoScrollWrapper className={classNames(classNames(styles.info), className)}>
                         <PendingWrapper isPending={isPending}>
                             <Name {...company} />
                             <InfoRecruiters list={company?.users} />
@@ -35,7 +35,7 @@ const Info = (props) => {
                             <Addresses list={company?.addresses} />
                             <Information value={company?.info} />
                         </PendingWrapper>
-                    </ScrollWrapper>
+                    </InfoScrollWrapper>
                 </>
             ) : <Empty />}
         </>

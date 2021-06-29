@@ -9,12 +9,7 @@ export const getApplicantsSelector = createSelector(
         isPending: applicants?.state === PENDING,
         isIdle: applicants?.state === IDLE,
         count: applicants?.data?.count,
-        data: applicants?.data?.rows.map((applicant) => ({
-            ...applicant,
-            positions: applicant?.positions?.map(({ label }) => label),
-            skills: applicant?.skills?.map(({ label }) => label),
-            regions: applicant?.regions?.map(({ label }) => label),
-        })),
+        data: applicants?.data?.rows,
         meta: applicants?.meta,
     }),
 );

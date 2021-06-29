@@ -8,7 +8,7 @@ import {
     Company,
     Recruiters,
     Contacts,
-    SalaryMinMax,
+    SalaryRange,
     Skills,
     WorkPlaces,
     WorkSchedules,
@@ -75,7 +75,7 @@ const ProfileForm = (props) => {
                     onChange={(e, val) => onCustomFieldChange(e, val, 'contacts')}
                     value={formFields.contacts}
                 />
-                <SalaryMinMax
+                <SalaryRange
                     className={styles.field}
                     onChangeMin={(e, value) => {
                         onCustomFieldChange(null, { ...formFields.salaryRange, min: value }, 'salaryRange');

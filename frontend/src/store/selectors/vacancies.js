@@ -9,13 +9,7 @@ export const getVacanciesSelector = createSelector(
         isPending: vacancies?.state === PENDING,
         isIdle: vacancies?.state === IDLE,
         count: vacancies?.data?.count,
-        data: vacancies?.data?.rows.map((vacancy) => ({
-            ...vacancy,
-            position: vacancy?.position?.label,
-            company: vacancy?.company?.name,
-            skills: vacancy?.skills?.map(({ label }) => label),
-            regions: vacancy?.regions?.map(({ label }) => label),
-        })),
+        vacancies: vacancies?.data?.rows,
         meta: vacancies?.meta,
     }),
 );

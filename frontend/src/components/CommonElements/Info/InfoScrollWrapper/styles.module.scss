@@ -1,0 +1,8 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.infoScrollWrapper {
+    height: calc(100vh - 178px);
+    padding: setUnit(16);
+    overflow: auto;
+}

@@ -11,6 +11,7 @@ const WorkSchedules = require('./workSchedules');
 const WorkTypes = require('./workTypes');
 const Files = require('./files');
 const Company = require('./company');
+const Contacts = require('./contacts');
 
 const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/vacancy');
 
@@ -36,6 +37,7 @@ class VacancyController {
                 await new WorkSchedules(this.body.workSchedules, this.newVacancy).create();
                 await new WorkTypes(this.body.workTypes, this.newVacancy).create();
                 await new Files(this.body.files, this.newVacancy).create();
+                await new Contacts(this.body.contacts, this.newVacancy).create();
 
                 this.newVacancy = await Vacancy.findByPk(this.newVacancy.id, { include: includeModelsLight, attributes: attributesLight })
 
@@ -68,6 +70,7 @@ class VacancyController {
                     await new WorkSchedules(this.body.workSchedules, this.updatedVacancy).update();
                     await new WorkTypes(this.body.workTypes, this.updatedVacancy).update();
                     await new Files(this.body.files, this.updatedVacancy).update();
+                    await new Contacts(this.body.contacts, this.updatedVacancy).update();
                 }
 
                 this.updatedVacancy = await Vacancy.findByPk(id, { include: includeModelsFull });
@@ -88,6 +91,7 @@ class VacancyController {
             await new Regions().delete(id);
             await new WorkSchedules().delete(id);
             await new Files().delete(id);
+            await new Contacts().delete(id);
 
             await Vacancy.destroy({ where: { id }});
 

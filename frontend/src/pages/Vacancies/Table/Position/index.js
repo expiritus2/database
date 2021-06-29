@@ -6,18 +6,20 @@ import { NameText } from 'components';
 import styles from './styles.module.scss';
 
 const Position = (props) => {
-    const { position, className } = props;
+    const { label, className } = props;
+
+    if (!label) return null;
 
     return (
         <div className={classNames(styles.position, className)}>
-            <NameText>{position}</NameText>
+            <NameText>{label}</NameText>
         </div>
     );
 };
 
 Position.propTypes = {
     className: PropTypes.string,
-    position: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
 };
 
 Position.defaultProps = {

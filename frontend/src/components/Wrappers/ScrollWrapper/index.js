@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const ContentWrapper = (props) => {
+const ScrollWrapper = (props) => {
     const { children, className } = props;
 
     return (
@@ -14,13 +14,13 @@ const ContentWrapper = (props) => {
     );
 };
 
-ContentWrapper.propTypes = {
+ScrollWrapper.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node.isRequired,
 };
 
-ContentWrapper.defaultProps = {
+ScrollWrapper.defaultProps = {
     className: '',
 };
 
-export default ContentWrapper;
+export default ScrollWrapper;

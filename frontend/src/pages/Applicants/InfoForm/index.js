@@ -104,6 +104,7 @@ const InfoForm = (props) => {
                     label={translate.Links}
                     onChange={(val) => onCustomFieldChange(null, val, 'links')}
                     value={formFields.links}
+                    menuTop
                 />
             </form>
         </FormWrapper>

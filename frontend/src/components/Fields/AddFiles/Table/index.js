@@ -29,7 +29,7 @@ const TableComponent = (props) => {
                 index={index}
             />
         ),
-        name: <FileName value={file?.filename} onDelete={(event) => onDeleteFile(event, index)} index={index} />,
+        name: <FileName file={file} onDelete={(event) => onDeleteFile(event, index)} index={index} />,
     }));
 
     return (

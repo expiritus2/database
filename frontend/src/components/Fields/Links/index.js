@@ -15,7 +15,7 @@ import { emptyLink } from 'settings/constants/templates';
 import styles from './styles.module.scss';
 
 const Links = (props) => {
-    const { className, value, onChange } = props;
+    const { className, value, onChange, menuTop } = props;
     const { translate } = useTranslate();
     const [values, setValues] = useState(value);
 
@@ -69,6 +69,7 @@ const Links = (props) => {
                         options={linkTypes}
                         onChange={(event) => onChangeLinkType(event, index)}
                         value={val?.linkType || ''}
+                        menuTop={menuTop}
                     />
                     <Input
                         label={translate.Link}
@@ -90,12 +91,14 @@ Links.propTypes = {
     className: PropTypes.string,
     value: PropTypes.arrayOf(PropTypes.shape({})),
     onChange: PropTypes.func,
+    menuTop: PropTypes.bool,
 };
 
 Links.defaultProps = {
     className: '',
     value: [emptyLink],
     onChange: () => {},
+    menuTop: false,
 };
 
 export default Links;

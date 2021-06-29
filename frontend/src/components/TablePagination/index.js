@@ -34,8 +34,8 @@ const PaginationComponent = (props) => {
         setPageValue(Math.max(0, Math.ceil(count / rowsPerPageValue) - 1));
     };
 
-    const onChangeCountPerPageHandler = (event) => {
-        const newCountPerPage = +event.target.value;
+    const onChangeCountPerPageHandler = (event, val) => {
+        const newCountPerPage = +val?.value;
         onChangeCountPerPage(event, 0, newCountPerPage);
         setPageValue(0);
         setRowsPerPageValue(newCountPerPage);

@@ -55,13 +55,15 @@ const Input = (props) => {
         return true;
     };
 
-    const onPlus = () => {
+    const onPlus = (event) => {
+        event.stopPropagation();
         const newValue = Number(value) + interval;
         const fakeEvent = { target: { value: newValue }, name };
         onChange(fakeEvent, newValue, { value: newValue });
     };
 
-    const onMinus = () => {
+    const onMinus = (event) => {
+        event.stopPropagation();
         if (value <= minNumber) {
             const fakeEvent = { target: { value: minNumber }, name };
             return onChange(fakeEvent, minNumber, { value: minNumber });
@@ -122,6 +124,7 @@ const Input = (props) => {
                         onKeyPress={onKeyPress}
                         onFocus={onFocus}
                         onBlur={onBlur}
+                        autoComplete="off"
                     />
                 )}
                 {type === 'password' && (
