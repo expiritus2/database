@@ -1,0 +1,9 @@
+@import "../../../../styles/functions";
+@import "../../../../styles/variables";
+@import "../Modal/styles.module";
+
+.wrapper {
+    .field {
+        @include field;
+    }
+}

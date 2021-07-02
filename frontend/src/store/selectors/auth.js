@@ -17,3 +17,8 @@ export const getUserRoleSelector = createSelector(
     getUserSelector,
     ({ data }) => get(data, 'role'),
 );
+
+export const getIsAuthSelector = createSelector(
+    getUserSelector,
+    ({ data }) => !!data,
+);

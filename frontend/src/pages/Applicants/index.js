@@ -4,10 +4,17 @@ import classNames from 'classnames';
 
 import { getApplicantsEffect, setApplicantsSearchEffect } from 'store/effects/applicants';
 import { getApplicantsSearchSelector, getApplicantsSelector } from 'store/selectors/applicants';
-import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
-import AddModal from './Modal';
-import Table from './Table';
-import Info from './Info';
+import {
+    Header,
+    ScrollWrapper,
+    ContentWrapper,
+    InfoWrapper,
+    MainWrapper,
+    TablePagination,
+    PendingWrapper,
+    SubHeader,
+} from 'components';
+import { AddModal, ApplicantSearchDrawer, Table, Info } from './components';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +45,7 @@ const Applicants = () => {
     };
 
     return (
-        <>
+        <div>
             <Header />
             <MainWrapper>
                 <ContentWrapper>
@@ -69,7 +76,8 @@ const Applicants = () => {
                 </InfoWrapper>
             </MainWrapper>
             <AddModal />
-        </>
+            <ApplicantSearchDrawer />
+        </div>
     );
 };
 

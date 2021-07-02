@@ -12,6 +12,7 @@ import vacancy from './vacancy';
 import companies from './companies';
 import company from './company';
 import vocabulary from './vocabulary';
+import drawers from './drawers';
 
 export default combineReducers({
     app,
@@ -26,4 +27,5 @@ export default combineReducers({
     companies,
     company,
     vocabulary,
+    drawers,
 });

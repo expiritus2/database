@@ -49,5 +49,7 @@ export { default as ModalTabs } from './ModalTabs';
 export { default as FileType } from './Fields/FileType';
 export { default as Activities } from './Fields/Activities';
 export { default as WorkTypes } from './Fields/WorkTypes';
+export { default as InfoInput } from './Fields/InfoInput';
+export { default as Drawer } from './Drawer';
 
 export * from './CommonElements';

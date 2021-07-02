@@ -7,12 +7,12 @@ import { useTranslate } from 'hooks';
 import styles from './styles.module.scss';
 
 const Name = (props) => {
-    const { name, photos, active, className } = props;
+    const { name, photo, active, className } = props;
     const { translate } = useTranslate();
 
     return (
         <div className={classNames(styles.name, className)}>
-            <Avatar src={photos?.[0]?.url} />
+            <Avatar src={photo?.url} />
             <div className={styles.texts}>
                 <NameText className={styles.nameText}>{name}</NameText>
                 <NameText className={styles.active}>
@@ -26,16 +26,16 @@ const Name = (props) => {
 Name.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string,
-    photos: PropTypes.arrayOf(PropTypes.shape({
+    photo: PropTypes.shape({
         url: PropTypes.string,
-    })),
+    }),
     active: PropTypes.bool,
 };
 
 Name.defaultProps = {
     className: '',
     name: '',
-    photos: [],
+    photo: null,
     active: false,
 };
 

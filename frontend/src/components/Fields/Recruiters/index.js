@@ -16,9 +16,7 @@ const Recruiters = (props) => {
     const { translate } = useTranslate();
     const { users } = useSelector(getVocabularyUsersSelector);
 
-    useEffect(() => {
-        dispatch(getUsersEffect());
-    }, []); // eslint-disable-line
+    useEffect(() => dispatch(getUsersEffect()), []); // eslint-disable-line
 
     const createOptions = () => (
         users.map((user) => ({ id: user?.id, label: user?.email, value: user?.id }))

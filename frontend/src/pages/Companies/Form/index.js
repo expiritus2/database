@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Activities, Regions, Links, Addresses, Recruiters, AddPhoto } from 'components';
-import { Checkbox, Input, Textarea } from 'components/Form';
+import { Activities, Regions, Links, Addresses, Recruiters, AddPhoto, InfoInput } from 'components';
+import { Checkbox, Input } from 'components/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
@@ -97,7 +97,7 @@ const Form = (props) => {
                     onChange={(val) => onCustomFieldChange(null, val, 'addresses')}
                     value={formFields.addresses}
                 />
-                <Textarea
+                <InfoInput
                     name="info"
                     className={styles.field}
                     label={translate.Info}

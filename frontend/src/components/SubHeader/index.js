@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SubheaderWrapper } from 'components';
 
+import ExtendedSearch from './ExtendedSearch';
 import Search from './Search';
 import Active from './Active';
 import Refresh from './Refresh';
@@ -25,6 +26,7 @@ const SubHeader = (props) => {
 
     return (
         <SubheaderWrapper className={classNames(styles.header, className)}>
+            <ExtendedSearch />
             <Search onSearch={onSearchHandler} search={search} className={styles.search} />
             <Active onChange={onActiveHandler} search={search} className={styles.actives} />
             <Refresh refreshEffect={refreshEffect} />

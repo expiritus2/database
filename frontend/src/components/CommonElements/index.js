@@ -23,3 +23,4 @@ export { default as InfoLanguages } from './Info/InfoLanguages';
 export { default as InfoContacts } from './Info/InfoContacts';
 export { default as InfoCompany } from './Info/InfoCompany';
 export { default as InfoScrollWrapper } from './Info/InfoScrollWrapper';
+export { default as InfoActions } from './Info/InfoActions';

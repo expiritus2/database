@@ -1,0 +1,8 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.infoInput {
+    ul, ol {
+        list-style-position: inside;
+    }
+}

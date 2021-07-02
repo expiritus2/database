@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Checkbox, Input, Textarea } from 'components/Form';
+import { Checkbox, Input } from 'components/Form';
 import {
     Company,
     Recruiters,
@@ -15,6 +15,7 @@ import {
     WorkTypes,
     Regions,
     VacancyName,
+    InfoInput,
 } from 'components';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -123,7 +124,7 @@ const ProfileForm = (props) => {
                     value={formFields.regions}
                     error={errors?.regions}
                 />
-                <Textarea
+                <InfoInput
                     name="info"
                     className={styles.field}
                     label={translate.Info}

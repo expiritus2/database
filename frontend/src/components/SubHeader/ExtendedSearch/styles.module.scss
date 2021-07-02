@@ -1,0 +1,17 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.extendedSearch {
+    margin-right: setUnit(20);
+    cursor: pointer;
+    transition: all .1s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    .icon {
+        width: setUnit(25);
+        height: setUnit(25);
+    }
+}

@@ -3,5 +3,5 @@
 
 .mainWrapper {
     display: flex;
-    height: calc(100vh - #{$header-height});
+    height: calc(100vh - #{setUnit($header-height)});
 }

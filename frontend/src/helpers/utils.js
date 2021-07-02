@@ -63,3 +63,17 @@ export function downloadFile(blank = false) {
         },
     };
 }
+
+export const hasVerticalScroll = (node) => {
+    if (node === undefined) {
+        if (window.innerHeight) {
+            return document.body.offsetHeight > window.innerHeight;
+        }
+
+        return document.documentElement.scrollHeight
+            > document.documentElement.offsetHeight
+            || document.body.scrollHeight > document.body.offsetHeight;
+    }
+
+    return node.scrollHeight > node.offsetHeight;
+};

@@ -1,0 +1,66 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.drawer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 999;
+    will-change: right, left, transition, opacity;
+
+    .opacityLayer {
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 99;
+
+        &.hideOpacityLayer {
+            background: none;
+        }
+    }
+
+    .content {
+        background-color: #ffffff;
+        width: setUnit($drawer-width);
+        max-width: 100%;
+        position: absolute;
+        z-index: 999;
+        height: 100%;
+        transition: all 0.3s;
+
+        &.right {
+            right: setUnit(-$drawer-width);
+        }
+
+        &.left {
+            left: setUnit(-$drawer-width);
+        }
+    }
+
+    &.isOpen {
+        pointer-events: auto;
+        opacity: 1;
+
+        .opacityLayer {
+            opacity: 1;
+        }
+
+        .content {
+            &.right {
+                right: 0;
+            }
+
+            &.left {
+                left: 0;
+            }
+        }
+    }
+}
