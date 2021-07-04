@@ -9,6 +9,8 @@ import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';
 import { getUserEmail } from 'store/selectors/auth';
+import { Logger } from 'services';
+import { apiServer } from '../../settings/web-services/api';
 
 import styles from './styles.module.scss';
 
@@ -24,6 +26,18 @@ const Header = () => {
 
     const onVocabulariesClick = () => {
         dispatch(openModalEffect({ modalId: modalsIds.VOCABULARIES, open: true }));
+    };
+
+    const onAddFakeData = () => {
+        apiServer.get(`/api/fake${location.pathname}`).then(() => {
+            Logger.log('Success');
+        });
+    };
+
+    const onDeleteFakeData = () => {
+        apiServer.delete(`/api/fake${location.pathname}`).then(() => {
+            Logger.log('Success');
+        });
     };
 
     return (
@@ -44,23 +58,27 @@ const Header = () => {
                 </nav>
                 <div>
                     <Button
+                        onClick={onAddFakeData}
+                        className={styles.navButton}
+                        title="Add Data"
+                    />
+                    <Button
+                        onClick={onDeleteFakeData}
+                        className={styles.navButton}
+                        title="Delete Data"
+                    />
+                    <Button
                         onClick={onAddHandler}
                         className={styles.navButton}
-                        variant="contained"
-                        color="default"
                         title={translate.Add}
                     />
                     <Button
                         className={styles.navButton}
-                        variant="contained"
-                        color="default"
                         title={userEmail}
                     />
                     <Button
                         onClick={onVocabulariesClick}
                         className={styles.navButton}
-                        variant="contained"
-                        color="default"
                         title={translate.Vocabularies}
                     />
                 </div>

@@ -41,6 +41,13 @@ const includeModelsLight = [
         attributes: ['id', 'label', 'value'],
         through: { attributes: [] },
     },
+    {
+        model: Salary,
+        attributes: ['id', 'amount'],
+        include: [
+            { model: VocabularyCurrency }
+        ]
+    },
 ]
 
 
@@ -98,13 +105,6 @@ const includeModelsFull = [
         model: Email,
         separate: true,
         attributes: ['id', 'email']
-    },
-    {
-        model: Salary,
-        attributes: ['id', 'amount'],
-        include: [
-            { model: VocabularyCurrency }
-        ]
     },
     {
         model: Messenger,

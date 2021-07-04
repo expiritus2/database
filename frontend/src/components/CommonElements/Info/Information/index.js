@@ -16,7 +16,7 @@ const Information = (props) => {
             <PaddingWrapper>
                 <div className={styles.title}>{translate.Info}</div>
                 {/* eslint-disable-next-line react/no-danger */}
-                <div dangerouslySetInnerHTML={{ __html: value }} />
+                <div className={styles.text} dangerouslySetInnerHTML={{ __html: value }} />
             </PaddingWrapper>
         </div>
     );

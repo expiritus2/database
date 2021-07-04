@@ -31,7 +31,7 @@ const initialData = {
         name: '',
         inActiveSearch: false,
         salary: emptySalary,
-        education: '',
+        education: {},
         positions: [],
         skills: [],
         workPlaces: [],

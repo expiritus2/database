@@ -25,6 +25,7 @@ const getExecOptions = (query) => {
         ],
         include: includeModelsLight,
         attributes: attributesLight,
+        distinct: true,
     }
 };
 
