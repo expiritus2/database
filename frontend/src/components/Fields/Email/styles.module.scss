@@ -1,0 +1,37 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.inputWrapper {
+    .label {
+        margin-bottom: setUnit(5);
+    }
+
+    .block {
+        margin-bottom: setUnit(15);
+        display: flex;
+        align-items: center;
+
+        .inputField {
+            width: 100%;
+        }
+
+        .removeIcon {
+            width: setUnit(25);
+            height: setUnit(25);
+            margin-left: setUnit(10);
+            fill: $primary-color;
+            cursor: pointer;
+            position: relative;
+            top: setUnit(10);
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .add {
+        width: 100%;
+    }
+}

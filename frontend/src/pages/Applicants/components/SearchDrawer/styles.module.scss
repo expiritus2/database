@@ -6,6 +6,10 @@
 .applicantSearchDrawer {
     .field {
         @include field;
+
+        &.id {
+            max-width: setUnit(200);
+        }
     }
 
     .contentWrapper {

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { useTranslate } from 'hooks';
-import { Input } from 'components/Form';
-import { Currency } from 'components';
+import { Input, InputLabel } from 'components/Form';
+
 import styles from './styles.module.scss';
 
-const SalaryRange = (props) => {
+const ExperienceRange = (props) => {
     const { className, onChange, value, interval } = props;
     const { translate } = useTranslate();
 
@@ -19,19 +19,15 @@ const SalaryRange = (props) => {
         onChange(event, { ...value, max: val });
     };
 
-    const onCurrencyChange = (event, val) => {
-        onChange(event, { ...value, currency: val });
-    };
-
     return (
-        <div className={classNames(styles.salaryInput, className)}>
+        <div className={classNames(styles.inputWrapper, className)}>
+            <InputLabel label={translate.Experience} />
             <div className={classNames(styles.formControl)}>
                 <Input
                     isNumberFormat
+                    name="min"
                     placeholder={translate.From}
-                    label={translate.Salary}
-                    name="salaryMin"
-                    className={classNames(styles.salary)}
+                    className={classNames(styles.input)}
                     onChange={onChangeMin}
                     value={value?.min}
                     interval={interval}
@@ -39,42 +35,34 @@ const SalaryRange = (props) => {
                 />
                 <Input
                     isNumberFormat
-                    name="salaryMax"
+                    name="max"
                     placeholder={translate.To}
-                    label="&nbsp;"
-                    className={classNames(styles.salary)}
+                    className={classNames(styles.input)}
                     onChange={onChangeMax}
                     value={value?.max}
                     interval={interval}
                     minNumber={0}
-                />
-                <Currency
-                    name="currency"
-                    className={styles.currency}
-                    onChange={onCurrencyChange}
-                    value={value?.currency}
                 />
             </div>
         </div>
     );
 };
 
-SalaryRange.propTypes = {
+ExperienceRange.propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.shape({
         min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        currency: PropTypes.shape({}),
     }),
     interval: PropTypes.number,
 };
 
-SalaryRange.defaultProps = {
+ExperienceRange.defaultProps = {
     className: '',
     onChange: () => {},
     value: {},
-    interval: 500,
+    interval: 1,
 };
 
-export default SalaryRange;
+export default ExperienceRange;

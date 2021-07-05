@@ -1,0 +1,38 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.languageWrapper {
+    .block {
+        display: flex;
+        align-items: center;
+        margin-bottom: setUnit(15);
+    }
+
+    .language {
+        width: 50%;
+    }
+
+    .level {
+        width: 50%;
+        margin-left: setUnit(10);
+    }
+
+    .addLanguage {
+        width: 100%;
+    }
+
+    .removeIcon {
+        width: setUnit(25);
+        height: setUnit(25);
+        margin-left: setUnit(10);
+        fill: $primary-color;
+        cursor: pointer;
+        position: relative;
+        top: setUnit(10);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

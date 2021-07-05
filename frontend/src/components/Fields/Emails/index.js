@@ -23,14 +23,14 @@ const Emails = (props) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1, { email: event.target.value });
         setValues(clonedValues);
-        onChange(clonedValues);
+        onChange(event, clonedValues);
     };
 
     const onRemove = (index) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1);
         setValues(clonedValues);
-        onChange(clonedValues);
+        onChange(null, clonedValues);
     };
 
     return (

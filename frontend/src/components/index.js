@@ -50,6 +50,14 @@ export { default as FileType } from './Fields/FileType';
 export { default as Activities } from './Fields/Activities';
 export { default as WorkTypes } from './Fields/WorkTypes';
 export { default as InfoInput } from './Fields/InfoInput';
+export { default as AgeRange } from './Fields/AgeRange';
+export { default as Language } from './Fields/Language';
+export { default as Phone } from './Fields/Phone';
+export { default as Email } from './Fields/Email';
+export { default as DateRange } from './Fields/DateRange';
+export { default as Messenger } from './Fields/Messenger';
+export { default as Link } from './Fields/Link';
+export { default as ExperienceRange } from './Fields/ExperienceRange';
 export { default as Drawer } from './Drawer';
 
 export * from './CommonElements';

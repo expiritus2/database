@@ -7,27 +7,31 @@ import {
     emptyLink,
     emptyMessenger,
     emptyPhone,
-    emptySalary,
 } from 'settings/constants/templates';
+import { setApplicantsSearchAction } from 'store/actions/applicants';
 
 const initialData = {
     open: false,
     formFields: {
-        name: '',
         inActiveSearch: false,
-        salary: emptySalary,
-        education: '',
+        id: '',
+        name: '',
+        nameLat: '',
+        sex: {},
+        ageRange: { min: '', max: '' },
+        salaryRange: { min: '', max: '', currency: {} },
         positions: [],
         skills: [],
-        workPlaces: [],
         regions: [],
-        languageSkills: [emptyLanguageSkill],
-        photos: [],
-        phones: [emptyPhone],
-        messengers: [emptyMessenger],
-        links: [emptyLink],
-        emails: [emptyEmail],
-        experienceYears: 0,
+        workPlaces: [],
+        experienceRange: { min: '', max: '' },
+        languageSkill: emptyLanguageSkill,
+        phone: emptyPhone,
+        email: emptyEmail,
+        messenger: emptyMessenger,
+        link: emptyLink,
+        updatedAt: null,
+        createdAt: null,
     },
 };
 
@@ -35,6 +39,14 @@ export default handleActions({
     [openApplicantSearchDrawerAction]: (state, { payload }) => ({
         ...state,
         open: get(payload, 'open', initialData.open),
+    }),
+    [setApplicantsSearchAction]: (state, { payload }) => ({
+        ...state,
+        formFields: {
+            ...state.formFields,
+            name: payload?.string || state?.name,
+            inActiveSearch: payload?.active || state?.inActiveSearch,
+        },
     }),
     [setApplicantSearchFieldsAction]: (state, { payload }) => ({
         ...state,

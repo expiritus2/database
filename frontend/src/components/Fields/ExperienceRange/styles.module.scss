@@ -1,13 +1,13 @@
 @import "styles/functions";
 @import "styles/variables";
 
-.salaryInput {
+.inputWrapper {
     .formControl {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
 
-        .salary {
+        .input {
             width: 70%;
             margin-left: setUnit(10);
 
@@ -19,7 +19,6 @@
         .currency {
             width: 30%;
             margin-left: setUnit(10);
-            min-width: setUnit(100);
         }
     }
 }

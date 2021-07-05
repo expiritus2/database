@@ -5,6 +5,10 @@
 
     .numberWrapper {
         position: relative;
+
+        .numberInput {
+            padding-right: setUnit(60);
+        }
     }
 
     .actions {

@@ -101,6 +101,7 @@ const Input = (props) => {
                             onKeyPress={onKeyPress}
                             onFocus={onFocus}
                             onBlur={onBlur}
+                            className={styles.numberInput}
                             {...numberFormatOptions}
                             isAllowed={isAllowed}
                         />

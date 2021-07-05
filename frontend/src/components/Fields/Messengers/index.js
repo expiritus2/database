@@ -33,7 +33,7 @@ const Messengers = (props) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1, { ...clonedValues?.[index], messengerType: event.target.value });
         setValues(clonedValues);
-        onChange(clonedValues);
+        onChange(event, clonedValues);
     };
 
     const onAddMessenger = () => {
@@ -46,14 +46,14 @@ const Messengers = (props) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1, { ...clonedValues?.[index], accountName: event.target.value });
         setValues(clonedValues);
-        onChange(clonedValues);
+        onChange(event, clonedValues);
     };
 
     const onRemove = (index) => {
         const clonedValues = cloneDeep(values);
         clonedValues.splice(index, 1);
         setValues(clonedValues);
-        onChange(clonedValues);
+        onChange(null, clonedValues);
     };
 
     return (

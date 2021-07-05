@@ -87,14 +87,14 @@ const InfoForm = (props) => {
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
-                    onChange={(val) => onCustomFieldChange(null, val, 'emails')}
+                    onChange={(event, val) => onCustomFieldChange(null, val, 'emails')}
                     value={formFields.emails}
                 />
                 <Messengers
                     name="messengers"
                     className={styles.field}
                     label={translate.Messengers}
-                    onChange={(val) => onCustomFieldChange(null, val, 'messengers')}
+                    onChange={(event, val) => onCustomFieldChange(null, val, 'messengers')}
                     value={formFields.messengers}
                 />
                 <Links

@@ -1,0 +1,43 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.inputWrapper {
+    .label {
+        margin-bottom: setUnit(5);
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+        margin-bottom: setUnit(15);
+
+        .type {
+            width: 39%;
+            margin-right: setUnit(10);
+        }
+
+        .link {
+            width: 100%;
+            margin-left: setUnit(10);
+        }
+
+        .removeIcon {
+            width: setUnit(35);
+            height: setUnit(35);
+            margin-left: setUnit(10);
+            fill: $primary-color;
+            cursor: pointer;
+            position: relative;
+            top: setUnit(10);
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .addPhone {
+        width: 100%;
+    }
+}

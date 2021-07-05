@@ -98,7 +98,7 @@ const Form = (props) => {
                     name="emails"
                     className={styles.field}
                     label={translate.Emails}
-                    onChange={(val) => onCustomFieldChange(null, val, 'emails')}
+                    onChange={(event, val) => onCustomFieldChange(null, val, 'emails')}
                     value={formFields.emails}
                 />
             </form>

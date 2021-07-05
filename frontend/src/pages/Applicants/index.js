@@ -14,7 +14,7 @@ import {
     PendingWrapper,
     SubHeader,
 } from 'components';
-import { AddModal, ApplicantSearchDrawer, Table, Info } from './components';
+import { AddModal, SearchDrawer, Table, Info } from './components';
 
 import styles from './styles.module.scss';
 
@@ -76,7 +76,7 @@ const Applicants = () => {
                 </InfoWrapper>
             </MainWrapper>
             <AddModal />
-            <ApplicantSearchDrawer />
+            <SearchDrawer />
         </div>
     );
 };
