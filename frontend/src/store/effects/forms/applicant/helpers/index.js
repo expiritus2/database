@@ -7,7 +7,7 @@ export const prepareData = (cfg) => {
     clonedCfg.birthDate = clonedCfg?.birthDate || undefined;
 
     if (clonedCfg?.salary) {
-        clonedCfg.salary.amount = Number(clonedCfg?.salary?.amount);
+        clonedCfg.salary.amount = parseFloat(clonedCfg?.salary?.amount);
     }
 
     clonedCfg.languageSkills = (clonedCfg?.languageSkills || [])

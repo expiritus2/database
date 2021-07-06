@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ReactSelect from 'react-select';
@@ -12,6 +12,9 @@ const Select = (props) => {
     const { onChange, options, label, className, getCustomStyles } = props;
     const { name, search, multiple, placeholder, value, disabled, error } = props;
     const { settings, menuTop } = props;
+    const [selectValue, setSelectValue] = useState(value);
+
+    useEffect(() => setSelectValue(value), [value]);
 
     const onSelect = (val) => {
         const fakeEvent = { target: { value: val, name } };
@@ -19,8 +22,10 @@ const Select = (props) => {
     };
 
     const getValue = () => {
-        if (Array.isArray(value)) {
-            return value.map((val) => {
+        if (selectValue === null) return selectValue;
+
+        if (Array.isArray(selectValue)) {
+            return selectValue.map((val) => {
                 if (!val?.label && !val?.value) {
                     return options.find((option) => option?.value === val);
                 }
@@ -29,11 +34,11 @@ const Select = (props) => {
             });
         }
 
-        if (!value?.label && !value?.value) {
-            return options.find((option) => option?.value === value);
+        if (!selectValue?.label && !selectValue?.value) {
+            return options.find((option) => option?.value === selectValue);
         }
 
-        return value;
+        return selectValue;
     };
 
     const getStyles = () => {

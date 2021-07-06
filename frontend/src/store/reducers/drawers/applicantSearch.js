@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
-import { openApplicantSearchDrawerAction, setApplicantSearchFieldsAction } from 'store/actions/drawers';
-import { get } from 'lodash-es';
+import { openApplicantSearchDrawerAction, setApplicantSearchFieldsAction, resetApplicantSearchFieldsAction } from 'store/actions/drawers';
+import { cloneDeep, get } from 'lodash-es';
 import {
     emptyEmail,
     emptyLanguageSkill,
@@ -17,7 +17,7 @@ const initialData = {
         id: '',
         name: '',
         nameLat: '',
-        sex: {},
+        sex: null,
         ageRange: { min: '', max: '' },
         salaryRange: { min: '', max: '', currency: {} },
         positions: [],
@@ -54,5 +54,9 @@ export default handleActions({
             ...state.formFields,
             ...payload,
         },
+    }),
+    [resetApplicantSearchFieldsAction]: (state) => ({
+        ...state,
+        formFields: cloneDeep(initialData.formFields),
     }),
 }, initialData);

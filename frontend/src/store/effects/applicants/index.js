@@ -12,9 +12,9 @@ import { getSearchConfig } from './helpers';
 
 export const getApplicantsEffect = (cfg, options = {}, cb) => {
     const sendRequest = Api.execResult({ action: getApplicantsAction, method: getApplicants });
-    const { applicants } = getState();
+    const { applicants, drawers } = getState();
 
-    const config = getSearchConfig(cfg, applicants);
+    const config = getSearchConfig(cfg, applicants, drawers?.applicantSearch?.formFields);
 
     return sendRequest(config, options, cb);
 };

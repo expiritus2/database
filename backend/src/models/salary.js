@@ -12,7 +12,7 @@ Salary.init({
         primaryKey: true,
     },
     amount: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
     },
 }, { sequelize, modelName: 'salary' });
 

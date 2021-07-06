@@ -18,11 +18,12 @@ const Sex = (props) => {
         if (isIdle) {
             dispatch(getVocabularySexsEffect({}, { silent: true }));
         }
-    });
+    }, []); // eslint-disable-line
 
     return (
         <div className={classNames(styles.sexs, className)}>
             <Select
+                id="sex"
                 name={name}
                 label={label}
                 onChange={onChange}

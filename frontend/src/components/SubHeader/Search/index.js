@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -12,6 +12,8 @@ const Search = (props) => {
     const { search, onSearch, className } = props;
     const [searchString, setSearchString] = useState(search?.string || '');
     const { translate } = useTranslate();
+
+    useEffect(() => setSearchString(search?.string || ''), [search?.string]);
 
     const onSearchHandler = (event) => {
         setSearchString(event.target.value);

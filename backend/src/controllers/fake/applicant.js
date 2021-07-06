@@ -33,6 +33,7 @@ const generateFakeData = async () => {
     const emails = await generateEmails();
     const experiences = await generateExperiences();
 
+
     return {
         name: faker.name.findName(),
         inActiveSearch: faker.datatype.boolean(),
@@ -63,7 +64,7 @@ class FakeApplicantController {
     create() {
         return new Promise(async (resolve) => {
             const applicants = [];
-            const array = Array.from({ length: 200 }).fill(null);
+            const array = Array.from({ length: 105 }).fill(null);
             for await (const item of array) {
                 const body = await generateFakeData();
                 const newApplicant = await new ApplicantController(body).create();

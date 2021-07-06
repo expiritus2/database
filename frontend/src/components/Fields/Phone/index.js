@@ -22,7 +22,7 @@ const Phone = (props) => {
         if (isIdle) {
             dispatch(getVocabularyPhoneTypesEffect({}, { silent: true }));
         }
-    });
+    }, []); // eslint-disable-line
 
     const onChangeType = (event) => {
         onChange(event, { ...value, phoneType: event.target.value });
