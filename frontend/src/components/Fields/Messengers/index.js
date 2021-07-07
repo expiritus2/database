@@ -67,7 +67,7 @@ const Messengers = (props) => {
                         className={styles.type}
                         options={messengerTypes}
                         onChange={(event) => onChangeMessenger(event, index)}
-                        value={val?.messengerType || ''}
+                        value={val?.messengerType}
                     />
                     <Input
                         label={translate.AccountName}

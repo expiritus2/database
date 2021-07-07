@@ -19,7 +19,7 @@ const initialData = {
         nameLat: '',
         sex: null,
         ageRange: { min: '', max: '' },
-        salaryRange: { min: '', max: '', currency: {} },
+        salaryRange: { min: '', max: '', currency: null },
         positions: [],
         skills: [],
         regions: [],

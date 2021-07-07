@@ -76,9 +76,11 @@ function createAssociations() {
     Phone.belongsTo(Applicant);
     Phone.belongsTo(VocabularyPhoneType);
     Applicant.hasMany(Phone);
-    Applicant.hasMany(Messenger);
+
     Messenger.belongsTo(Applicant);
     Messenger.belongsTo(VocabularyMessengerType);
+    Applicant.hasMany(Messenger);
+
     Applicant.hasMany(Email);
     Email.belongsTo(Applicant);
     Applicant.hasMany(Link);

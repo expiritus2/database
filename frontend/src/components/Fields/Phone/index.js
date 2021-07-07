@@ -37,14 +37,14 @@ const Phone = (props) => {
             <div className={styles.block}>
                 <Select
                     name="phoneType"
-                    label={translate.Type}
+                    label={translate.Phone}
                     className={styles.type}
                     options={phoneTypes}
                     onChange={onChangeType}
-                    value={value?.phoneType || ''}
+                    value={value?.phoneType}
                 />
                 <PhoneInput
-                    label={translate.Phone}
+                    label="&nbsp;"
                     className={styles.number}
                     value={value?.number}
                     onChange={onChangeNumber}

@@ -38,15 +38,15 @@ const Link = (props) => {
             <div className={styles.block}>
                 <Select
                     name="linkType"
-                    label={translate.Type}
+                    label={translate.Link}
                     className={styles.type}
                     options={linkTypes}
                     onChange={onChangeLinkType}
-                    value={value?.linkType || ''}
+                    value={value?.linkType}
                     menuTop={menuTop}
                 />
                 <Input
-                    label={translate.Link}
+                    label="&nbsp;"
                     className={styles.link}
                     value={value?.link}
                     onChange={onChangeLink}

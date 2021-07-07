@@ -19,6 +19,8 @@ const DateRange = (props) => {
         onChange(event, { ...value, max: val });
     };
 
+    const dateFormat = 'd M, Y H:i';
+
     return (
         <div className={classNames(styles.inputWrapper, className)}>
             <InputLabel label={label} />
@@ -29,7 +31,7 @@ const DateRange = (props) => {
                     className={classNames(styles.date)}
                     onChange={(event, val) => onChangeMin(event, val?.[0])}
                     value={value?.min}
-                    options={{ maxDate: value?.max }}
+                    options={{ maxDate: value?.max, enableTime: true, dateFormat, time_24hr: true }}
                 />
                 <DatePicker
                     name="max"
@@ -37,7 +39,7 @@ const DateRange = (props) => {
                     className={classNames(styles.date)}
                     onChange={(event, val) => onChangeMax(event, val?.[0])}
                     value={value?.max}
-                    options={{ minDate: value?.min }}
+                    options={{ minDate: value?.min, enableTime: true, dateFormat, time_24hr: true }}
                 />
             </div>
         </div>

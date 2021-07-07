@@ -1,7 +1,7 @@
-export const emptyMessenger = { accountName: '', messengerType: {} };
-export const emptyLink = { link: '', linkType: {} };
-export const emptyLanguageSkill = { language: {}, languageLevel: {} };
-export const emptyPhone = { number: '', phoneType: {} };
+export const emptyMessenger = { accountName: '', messengerType: null };
+export const emptyLink = { link: '', linkType: null };
+export const emptyLanguageSkill = { language: null, languageLevel: null };
+export const emptyPhone = { number: '', phoneType: null };
 export const emptyEmail = { email: '' };
-export const emptySalary = { amount: '', currency: {} };
+export const emptySalary = { amount: '', currency: null };
 export const emptyAddress = { name: '' };

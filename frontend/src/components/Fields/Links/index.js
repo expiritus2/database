@@ -68,7 +68,7 @@ const Links = (props) => {
                         className={styles.type}
                         options={linkTypes}
                         onChange={(event) => onChangeLinkType(event, index)}
-                        value={val?.linkType || ''}
+                        value={val?.linkType}
                         menuTop={menuTop}
                     />
                     <Input

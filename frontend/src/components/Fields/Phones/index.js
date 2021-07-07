@@ -66,7 +66,7 @@ const Phones = (props) => {
                         className={styles.type}
                         options={phoneTypes}
                         onChange={(event) => onChangeType(event, index)}
-                        value={val?.phoneType || ''}
+                        value={val?.phoneType}
                     />
                     <PhoneInput
                         label={translate.Phone}
