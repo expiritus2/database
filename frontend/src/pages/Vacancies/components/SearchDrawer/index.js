@@ -21,7 +21,9 @@ import {
     Company,
     Contacts,
     WorkSchedules,
-    WorkTypes, ExperienceRange,
+    WorkTypes,
+    ExperienceRange,
+    DateRange,
 } from 'components';
 import { useTranslate } from 'hooks';
 import { Checkbox, Input } from 'components/Form';
@@ -146,6 +148,20 @@ const VacancySearchDrawer = (props) => {
                             className={styles.field}
                             onChange={(e, val) => onCustomFieldChange(e, val, 'regions')}
                             value={formFields.regions}
+                        />
+                        <DateRange
+                            name="updatedAt"
+                            label={translate.UpdatedAt}
+                            className={styles.field}
+                            onChange={(event, val) => onCustomFieldChange(event, val, 'updatedAt')}
+                            value={formFields?.updatedAt}
+                        />
+                        <DateRange
+                            name="createdAt"
+                            label={translate.CreatedAt}
+                            className={styles.field}
+                            onChange={(event, val) => onCustomFieldChange(event, val, 'createdAt')}
+                            value={formFields?.createdAt}
                         />
                     </form>
                 </div>

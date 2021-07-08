@@ -5,7 +5,7 @@ const { includeModelsFull, includeModelsLight, attributesFull, attributesLight }
 const getSearchOptions = (query) => {
     const { id, search, active, positionId, userIds, salaryMin, salaryMax, currencyId } = query || {};
     const { experienceMin, experienceMax, skillsIds, regionsIds, workPlacesIds } = query || {};
-    const { workSchedulesIds, workTypesIds } = query || {};
+    const { workSchedulesIds, workTypesIds, updatedAtMin, updatedAtMax, createdAtMin, createdAtMax } = query || {};
 
     return {
         where: {
@@ -36,6 +36,14 @@ const getSearchOptions = (query) => {
                 ...(workPlacesIds ? [{ '$workPlaces.id$': { [Op.in]: workPlacesIds } }] : []),
                 ...(workSchedulesIds ? [{ '$workSchedules.id$': { [Op.in]: workSchedulesIds } }] : []),
                 ...(workTypesIds ? [{ '$workTypes.id$': { [Op.in]: workTypesIds } }] : []),
+
+                ...(updatedAtMin && !updatedAtMax ? [{ updatedAt: { [Op.gte]: updatedAtMin } }] : []),
+                ...(updatedAtMax && !updatedAtMin ? [{ updatedAt: { [Op.lte]: updatedAtMax } }] : []),
+                ...(updatedAtMin && updatedAtMax ? [{ updatedAt: { [Op.between]: [updatedAtMin, updatedAtMax] } }] : []),
+
+                ...(createdAtMin && !createdAtMax ? [{ updatedAt: { [Op.gte]: createdAtMin } }] : []),
+                ...(createdAtMax && !createdAtMin ? [{ updatedAt: { [Op.lte]: createdAtMax } }] : []),
+                ...(createdAtMin && createdAtMax ? [{ updatedAt: { [Op.between]: [createdAtMin, createdAtMax] } }] : []),
             ]
         }
     }

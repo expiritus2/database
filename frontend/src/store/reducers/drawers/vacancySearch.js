@@ -22,6 +22,8 @@ const initialData = {
         workSchedules: [],
         workTypes: [],
         regions: [],
+        updatedAt: null,
+        createdAt: null,
     },
 };
 

@@ -18,6 +18,10 @@ export const getSearchConfig = (cfg, vacancies, searchCriteria) => ({
     workTypesIds: searchCriteria?.workTypes
         ? searchCriteria?.workTypes.map((workType) => workType?.id)
         : undefined,
+    updatedAtMin: searchCriteria?.updatedAt?.min || undefined,
+    updatedAtMax: searchCriteria?.updatedAt?.max || undefined,
+    createdAtMin: searchCriteria?.createdAt?.min || undefined,
+    createdAtMax: searchCriteria?.createdAt?.max || undefined,
     search: vacancies?.search?.string || undefined,
     active: vacancies?.search?.active || undefined,
     page: cfg?.page ?? vacancies?.meta?.page,
