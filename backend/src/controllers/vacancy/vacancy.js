@@ -42,8 +42,8 @@ class VacancyController {
                 this.newVacancy = await Vacancy.findByPk(this.newVacancy.id, { include: includeModelsLight, attributes: attributesLight })
 
                 resolve(this.newVacancy);
-            } catch (e) {
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }

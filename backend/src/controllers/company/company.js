@@ -1,5 +1,4 @@
 const Company = require('../../models/company');
-const DatabaseCreationError = require('../../errors/database-creation-error');
 
 const Users = require('./users');
 const Photo = require('./photo');
@@ -32,8 +31,8 @@ class CompanyController {
                 this.newCompany = await Company.findByPk(this.newCompany.id, { include: includeModelsLight, attributes: attributesLight })
 
                 resolve(this.newCompany);
-            } catch (e) {
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }
@@ -61,9 +60,8 @@ class CompanyController {
 
                 this.updatedCompany = await Company.findByPk(id, { include: includeModelsFull });
                 resolve(this.updatedCompany);
-            } catch (e) {
-                console.error(e);
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }

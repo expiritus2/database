@@ -1,0 +1,32 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+@import "../Modal/styles.module";
+
+.applicantSearchDrawer {
+    .wrapper {
+        height: 100%;
+    }
+
+    .field {
+        @include field;
+
+        &.id {
+            max-width: setUnit(200);
+        }
+    }
+
+    .contentWrapper {
+        padding: setUnit(20);
+        height: calc(100% - #{setUnit(81)});
+        overflow: auto;
+    }
+
+    .active {
+        width: fit-content;
+
+        .activeSerchText {
+            margin-left: setUnit(10);
+        }
+    }
+}

@@ -2,18 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { openApplicantSearchDrawerEffect } from 'store/effects/drawers';
+import { openApplicantSearchDrawerEffect, openVacancySearchDrawerEffect } from 'store/effects/drawers';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { routes } from 'settings/navigation/routes';
 
 import styles from './styles.module.scss';
 
 const ExtendedSearch = (props) => {
     const { className } = props;
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const onClick = () => {
-        dispatch(openApplicantSearchDrawerEffect({ open: true }));
+        let effect;
+        switch (location.pathname) {
+            case routes.applicants: { effect = openApplicantSearchDrawerEffect; break; }
+            case routes.vacancies: { effect = openVacancySearchDrawerEffect; break; }
+            default: { effect = null; break; }
+        }
+
+        if (effect) {
+            dispatch(effect({ open: true }));
+        }
     };
 
     return (

@@ -5,9 +5,7 @@ import classNames from 'classnames';
 import { getVacanciesEffect, setVacanciesSearchEffect } from 'store/effects/vacancies';
 import { getVacanciesSearchSelector, getVacanciesSelector } from 'store/selectors/vacancies';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
-import AddModal from './Modal';
-import Table from './Table';
-import Info from './Info';
+import { AddModal, SearchDrawer, Table, Info } from './components';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +36,7 @@ const Vacancies = () => {
     };
 
     return (
-        <>
+        <div>
             <Header />
             <MainWrapper>
                 <ContentWrapper>
@@ -69,7 +67,8 @@ const Vacancies = () => {
                 </InfoWrapper>
             </MainWrapper>
             <AddModal />
-        </>
+            <SearchDrawer />
+        </div>
     );
 };
 

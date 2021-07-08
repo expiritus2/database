@@ -1,5 +1,3 @@
-const DatabaseCreationError = require('../../errors/database-creation-error');
-
 const Applicant = require('../../models/applicant');
 
 const Salary = require('./salary');
@@ -52,8 +50,8 @@ class ApplicantController {
                 this.newApplicant = await Applicant.findByPk(this.newApplicant.id, { include: includeModelsLight, attributes: attributesLight })
 
                 resolve(this.newApplicant);
-            } catch (e) {
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }
@@ -94,9 +92,8 @@ class ApplicantController {
 
                 this.updatedApplicant = await Applicant.findByPk(id, { include: includeModelsFull });
                 resolve(this.updatedApplicant);
-            } catch (e) {
-                console.error(e);
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }

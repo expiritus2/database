@@ -3,6 +3,8 @@ const Education = require('../../../models/vocabulary/education');
 const Position = require('../../../models/vocabulary/position');
 const Skill = require('../../../models/vocabulary/skill');
 const WorkPlace = require('../../../models/vocabulary/workPlace');
+const WorkSchedule = require('../../../models/vocabulary/workSchedule');
+const WorkType = require('../../../models/vocabulary/workType');
 const Region = require('../../../models/vocabulary/region');
 const Language = require('../../../models/vocabulary/language');
 const LanguageLevel = require('../../../models/vocabulary/languageLevel');
@@ -10,6 +12,7 @@ const Sex = require('../../../models/vocabulary/sex');
 const PhoneType = require('../../../models/vocabulary/phoneType');
 const MessengerType = require('../../../models/vocabulary/messengerType');
 const LinkType = require('../../../models/vocabulary/linkType');
+const User = require('../../../models/user');
 
 const faker = require('faker');
 
@@ -72,12 +75,51 @@ const generateWorkPlaces = () => {
     });
 }
 
+const generateWorkSchedules = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+        const items = await WorkSchedule.findAll() || [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 2 }); i++) {
+            const random = getRecordRandom(items);
+            datas.push(items[random].toJSON());
+        }
+        resolve(datas);
+    });
+}
+
+const generateWorkTypes = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+        const items = await WorkType.findAll() || [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 2 }); i++) {
+            const random = getRecordRandom(items);
+            datas.push(items[random].toJSON());
+        }
+        resolve(datas);
+    });
+}
+
 const generateRegions = () => {
     return new Promise(async (resolve) => {
         const datas = [];
         const items = await Region.findAll() || [];
 
         for (let i = 0; i < faker.datatype.number({ min: 1, max: 3 }); i++) {
+            const random = getRecordRandom(items);
+            datas.push(items[random].toJSON());
+        }
+        resolve(datas);
+    });
+}
+
+const generateUsers = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+        const items = await User.findAll() || [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 1 }); i++) {
             const random = getRecordRandom(items);
             datas.push(items[random].toJSON());
         }
@@ -207,4 +249,7 @@ module.exports = {
     generateLinks,
     generateEmails,
     generateExperiences,
+    generateUsers,
+    generateWorkSchedules,
+    generateWorkTypes,
 }

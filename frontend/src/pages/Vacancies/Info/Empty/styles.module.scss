@@ -1,9 +1,0 @@
-@import "styles/functions";
-@import "styles/variables";
-
-.empty {
-    height: calc(100vh - #{setUnit($header-height * 2)});
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}

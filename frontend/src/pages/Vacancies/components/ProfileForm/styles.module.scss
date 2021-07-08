@@ -1,0 +1,44 @@
+@import "../../../../styles/functions";
+@import "../../../../styles/variables";
+@import "../Modal/styles.module";
+
+.wrapper {
+    padding-top: setUnit(20);
+
+    .field {
+        @include field;
+
+        &.activeSearch {
+            width: fit-content;
+
+            .activeSearchText {
+                margin-left: setUnit(10);
+            }
+        }
+
+        &.birthDate {
+            margin-top: setUnit(15);
+            margin-right: setUnit(10);
+            width: fit-content;
+        }
+
+        &.sex {
+            width: 100%;
+        }
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+    }
+
+    .active {
+        margin-top: 2px;
+        margin-bottom: -9px;
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+    }
+}

@@ -64,7 +64,7 @@ const Info = (props) => {
                                     }
                                 />
                                 <InfoPositions positions={applicant?.positions} />
-                                <InfoSkills skills={applicant?.skills} />
+                                <InfoSkills list={applicant?.skills} />
                                 <InfoItem
                                     label={translate.Place}
                                     value={applicant?.workPlaces?.map((place) => place?.label).join(', ')}

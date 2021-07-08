@@ -11,16 +11,10 @@ import { getState } from 'store';
 import { getSearchConfig } from './helpers';
 
 export const getVacanciesEffect = (cfg, options = {}, cb) => {
-    const { vacancies } = getState();
-
     const sendRequest = Api.execResult({ action: getVacanciesAction, method: getVacancies });
+    const { vacancies, drawers } = getState();
 
-    const config = {
-        search: vacancies?.search?.string || undefined,
-        active: vacancies?.search?.active || undefined,
-        page: cfg?.page ?? vacancies?.meta?.page,
-        countPerPage: cfg?.countPerPage ?? vacancies?.meta?.countPerPage,
-    };
+    const config = getSearchConfig(cfg, vacancies, drawers?.vacancySearch?.formFields);
 
     return sendRequest(config, options, cb);
 };

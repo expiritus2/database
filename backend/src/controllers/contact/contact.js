@@ -1,5 +1,4 @@
 const Contact = require('../../models/contact');
-const DatabaseCreationError = require('../../errors/database-creation-error');
 
 const Company = require('./company');
 const Positions = require('./positions');
@@ -32,8 +31,8 @@ class ContactController {
                 this.newContact = await Contact.findByPk(this.newContact.id, { include: includeModelsLight, attributes: attributesLight });
 
                 resolve(this.newContact);
-            } catch (e) {
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }
@@ -61,9 +60,8 @@ class ContactController {
 
                 this.updatedContact = await Contact.findByPk(id, { include: includeModelsFull });
                 resolve(this.updatedContact);
-            } catch (e) {
-                console.error(e);
-                throw new DatabaseCreationError();
+            } catch (err) {
+                throw err;
             }
         });
     }

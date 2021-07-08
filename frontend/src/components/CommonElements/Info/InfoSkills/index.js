@@ -9,16 +9,16 @@ import { InfoItem } from 'components';
 import styles from './styles.module.scss';
 
 const InfoSkills = (props) => {
-    const { className, skills } = props;
+    const { className, list } = props;
     const { translate } = useTranslate();
 
-    if (!skills || !skills.length) return null;
+    if (!list || !list.length) return null;
 
     return (
         <div className={classNames(styles.infoSkills, className)}>
             <InfoItem
                 label={translate.Skills}
-                value={skills.map(({ label }) => label).join(', ')}
+                value={list.map(({ label }) => label).join(', ')}
             />
         </div>
     );
@@ -26,7 +26,7 @@ const InfoSkills = (props) => {
 
 InfoSkills.propTypes = {
     className: PropTypes.string,
-    skills: PropTypes.arrayOf(PropTypes.shape({
+    list: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         number: PropTypes.number,
     })),
@@ -34,7 +34,7 @@ InfoSkills.propTypes = {
 
 InfoSkills.defaultProps = {
     className: '',
-    skills: [],
+    list: [],
 };
 
 export default InfoSkills;

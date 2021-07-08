@@ -19,11 +19,12 @@ const TableCompany = (props) => {
 
 TableCompany.propTypes = {
     className: PropTypes.string,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
 };
 
 TableCompany.defaultProps = {
     className: '',
+    name: null,
 };
 
 export default TableCompany;

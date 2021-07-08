@@ -8,6 +8,7 @@ const { VacancyController } = require('../../controllers/vacancy/vacancy');
 
 const { includeModelsFull, attributesFull } = require('../../settings/vacancy');
 const { getExecOptions } = require('./helpers');
+const { getPaginatedItems } = require('../../util/handlers');
 
 const router = express.Router();
 
@@ -22,8 +23,13 @@ const middlewares = [
 ]
 
 router.get('/api/vacancies', requireAuth, async (req, res) => {
-    const options = getExecOptions(req.query);
+    const { options, isSearch, page, countPerPage } = getExecOptions(req.query);
     const allVacancies = await Vacancy.findAndCountAll(options);
+
+    if (isSearch) {
+        const { pagedItems } = getPaginatedItems(allVacancies.rows, page, countPerPage);
+        return res.send({ result: { count: allVacancies.count, rows: pagedItems } });
+    }
 
     res.send({ result: allVacancies });
 });
@@ -51,7 +57,7 @@ router.put('/api/vacancies/:id', middlewares, async (req, res) => {
 
 router.delete('/api/vacancies/:id', async (req, res) => {
     await new VacancyController().delete(req.params.id);
-    const options = getExecOptions(req.query);
+    const { options } = getExecOptions(req.query);
     const allVacancies = await Vacancy.findAndCountAll(options);
 
     res.send({ result: allVacancies });

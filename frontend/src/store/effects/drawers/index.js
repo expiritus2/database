@@ -1,1 +1,2 @@
-export * from './searchApplicant';
+export * from './applicantSearch';
+export * from './vacancySearch';
