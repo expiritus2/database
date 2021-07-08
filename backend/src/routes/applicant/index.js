@@ -8,6 +8,7 @@ const Applicant = require('../../models/applicant');
 const { ApplicantController } = require('../../controllers/applicant/applicant');
 const { includeModelsFull, attributesFull } = require('../../settings/applicant');
 const { getExecOptions } = require('./helpers');
+const { getPaginatedItems } = require('../../util/handlers');
 
 const router = express.Router();
 
@@ -23,8 +24,13 @@ const middlewares = [
 ]
 
 router.get('/api/applicants', requireAuth, async (req, res) => {
-    const options = getExecOptions(req.query);
+    const { options, isSearch, page, countPerPage } = getExecOptions(req.query);
     const allApplicants = await Applicant.findAndCountAll(options);
+
+    if (isSearch) {
+        const { pagedItems } = getPaginatedItems(allApplicants.rows, page, countPerPage);
+        return res.send({ result: { count: allApplicants.count, rows: pagedItems } });
+    }
 
     res.send({ result: allApplicants });
 });
@@ -49,7 +55,7 @@ router.put('/api/applicants/:id', middlewares, async (req, res) => {
 
 router.delete('/api/applicants/:id', async (req, res) => {
     await new ApplicantController().delete(req.params.id);
-    const options = getExecOptions(req.query);
+    const { options } = getExecOptions(req.query);
     const allApplicants = await Applicant.findAndCountAll(options);
 
     res.send({ result: allApplicants });

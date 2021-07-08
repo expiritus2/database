@@ -14,7 +14,7 @@ const getSearchOptions = (query) => {
             [Op.and]: [
                 ...(id ? [{ id }] : []),
                 ...(active ? [{ inActiveSearch: active }] : []),
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
+                ...(search ? [{ [Op.or]: [{name: { [Op.iLike]: `%${search}%` }}, {nameLat: { [Op.iLike]: `%${search}%` }}] }] : []),
                 ...(nameLat ? [{ nameLat: { [Op.iLike]: `%${nameLat}%` } }] : []),
                 ...(sexId ? [{ sexId }] : []),
                 ...(ageMin && !ageMax ? [{ birthDate: { [Op.lte]: moment().subtract(ageMin, 'years').toDate() } }] : []),
@@ -56,9 +56,9 @@ const getSearchOptions = (query) => {
                 ...(currencyId? [{ '$salary.currencyId$': currencyId }] : []),
 
 
-                // ...(messengerTypeId ? [{ '$messengers.messengerTypeId$': messengerTypeId }] : []),
-                // ...(accountName ? [{ '$messengers.accountName$': accountName }] : []),
-                // ...(email ? [{ '$email.email$': email }] : []),
+                ...(messengerTypeId ? [{ '$messengers.messengerTypeId$': messengerTypeId }] : []),
+                ...(accountName ? [{ '$messengers.accountName$': accountName }] : []),
+                ...(email ? [{ '$emails.email$': email }] : []),
             ]
         },
     }
@@ -70,17 +70,20 @@ const getExecOptions = (query) => {
     const isSearch = !!Object.keys(search).length;
 
     return {
-        ...getSearchOptions(query),
-        limit: !isSearch ? (countPerPage || 25) : undefined,
-        offset: !isSearch ? ((page * countPerPage) || 0) : undefined,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: !isSearch ? includeModelsLight : includeModelsFull,
-        attributes: !isSearch ? attributesLight : attributesFull,
-        // include: includeModelsLight,
-        // attributes: attributesLight,
-        distinct: true,
+        isSearch,
+        page,
+        countPerPage,
+        options: {
+            ...getSearchOptions(query),
+            limit: !isSearch ? (countPerPage || 25) : undefined,
+            offset: !isSearch ? ((page * countPerPage) || 0) : undefined,
+            order: [
+                ['updatedAt', 'DESC']
+            ],
+            include: !isSearch ? includeModelsLight : includeModelsFull,
+            attributes: !isSearch ? attributesLight : attributesFull,
+            distinct: true,
+        },
     }
 };
 

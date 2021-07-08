@@ -103,12 +103,12 @@ const includeModelsFull = [
     },
     {
         model: Email,
-        separate: true,
+        // separate: true,
         attributes: ['id', 'email']
     },
     {
         model: Messenger,
-        separate: true,
+        // separate: true,
         attributes: ['id', 'accountName'],
         include: [
             {

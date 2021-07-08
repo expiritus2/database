@@ -8,6 +8,7 @@ import {
     resetApplicantSearchFieldsEffect,
     setApplicantSearchFieldsEffect,
 } from 'store/effects/drawers';
+import { resetApplicantEffect, getApplicantsEffect } from 'store/effects/applicants';
 import { getApplicantSearchDrawerSelector } from 'store/selectors/drawers';
 import {
     Drawer, Language, Positions, Regions, Sex,
@@ -19,7 +20,6 @@ import { Checkbox, Input } from 'components/Form';
 import Footer from './Footer';
 
 import styles from './styles.module.scss';
-import { getApplicantsEffect } from '../../../../store/effects/applicants';
 
 const ApplicantSearchDrawer = (props) => {
     const { className } = props;
@@ -42,10 +42,12 @@ const ApplicantSearchDrawer = (props) => {
 
     const onReset = () => {
         dispatch(resetApplicantSearchFieldsEffect());
+        dispatch(resetApplicantEffect());
         dispatch(getApplicantsEffect());
     };
 
     const onSearch = () => {
+        dispatch(resetApplicantEffect());
         dispatch(getApplicantsEffect());
         dispatch(openApplicantSearchDrawerEffect({ open: false }));
     };
