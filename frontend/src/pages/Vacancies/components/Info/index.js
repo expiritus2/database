@@ -11,7 +11,7 @@ import {
     Information,
     InfoContacts,
     InfoCompany,
-    InfoScrollWrapper,
+    InfoScrollWrapper, NameText,
 } from 'components';
 
 import { useSelector } from 'react-redux';
@@ -43,6 +43,7 @@ const Info = (props) => {
                         <PendingWrapper isPending={isPending} className={styles.pendingWrapper}>
                             <div className={styles.head}>
                                 <Position position={vacancy?.position} />
+                                <InfoItem label="" value={<NameText className={styles.companyName}>{vacancy?.company?.name}</NameText>} />
                                 <Active value={vacancy?.active} />
                             </div>
                             <InfoRecruiters list={vacancy?.users} />

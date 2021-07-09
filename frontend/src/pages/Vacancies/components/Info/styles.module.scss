@@ -1,5 +1,5 @@
-@import "../../../../styles/functions";
-@import "../../../../styles/variables";
+@import "styles/functions";
+@import "styles/variables";
 
 .info {
     .pendingWrapper {
@@ -8,5 +8,11 @@
 
     .head {
         margin-bottom: setUnit(20);
+
+        .companyName {
+            font-style: italic;
+            font-size: setUnit(22);
+            font-weight: 500;
+        }
     }
 }

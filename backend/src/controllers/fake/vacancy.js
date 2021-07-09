@@ -11,6 +11,8 @@ const {
     generateUsers,
     generateWorkSchedules,
     generateWorkTypes,
+    generateCompany,
+    generateContacts,
 } = require('./helpers');
 
 const generateFakeData = async () => {
@@ -22,14 +24,16 @@ const generateFakeData = async () => {
     const workPlaces = await generateWorkPlaces();
     const workSchedules = await generateWorkSchedules();
     const workTypes = await generateWorkTypes();
+    const company = await generateCompany();
+    const contacts = await generateContacts();
 
 
     return {
         active: faker.datatype.boolean(),
         position: faker.random.arrayElement(positions),
         users,
-        company: null,
-        contacts: [],
+        company,
+        contacts,
         salaryRange: {
             min: faker.datatype.number({ min: 1000, max: 1500 }),
             max: faker.datatype.number({ min: 1500, max: 5500 }),

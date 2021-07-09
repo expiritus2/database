@@ -15,6 +15,7 @@ const LinkType = require('../../../models/vocabulary/linkType');
 const Activity = require('../../../models/vocabulary/activity');
 const User = require('../../../models/user');
 const Company = require('../../../models/company');
+const Contact = require('../../../models/contact');
 
 const faker = require('faker');
 
@@ -134,8 +135,22 @@ const generateCompany = () => {
         const items = await Company.findAll() || [];
 
         const random = getRecordRandom(items);
-        const company = items[random].toJSON();
-        resolve({ id: company.id, value: company.id, label: company.name });
+        const item = items[random].toJSON();
+        resolve({ id: item.id, value: item.id, label: item.name });
+    });
+}
+
+const generateContacts = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+        const items = await Contact.findAll() || [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 2 }); i++) {
+            const random = getRecordRandom(items);
+            const item = items[random].toJSON();
+            datas.push({ id: item.id, value: item.id, label: item.name });
+        }
+        resolve(datas);
     });
 }
 
@@ -292,4 +307,5 @@ module.exports = {
     generateActivities,
     generateAddresses,
     generateCompany,
+    generateContacts,
 }

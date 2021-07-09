@@ -24,8 +24,8 @@ const ApplicantTable = (props) => {
         if (!data) return [];
         return [
             { key: 'id', title: 'ID', width: '7%' },
-            { key: 'salary', title: translate.Salary, width: '15%' },
-            { key: 'name', title: translate.Name, width: '78%', className: styles.colName },
+            { key: 'salary', title: translate.Salary, width: '17%' },
+            { key: 'name', title: translate.Name, width: '76%', className: styles.colName },
         ];
     };
 
