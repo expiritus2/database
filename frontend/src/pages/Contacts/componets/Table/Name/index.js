@@ -18,7 +18,7 @@ const Name = (props) => {
                     <NameText>{name}</NameText>
                 </TableMain>
                 <TableMeta className={styles.meta}>
-                    <div>{company?.name}</div>
+                    <div className={styles.companyName}>{company?.name}</div>
                     <div className={styles.separator}>/</div>
                     <TablePositions list={positions} />
                 </TableMeta>
