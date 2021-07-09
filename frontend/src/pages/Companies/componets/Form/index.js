@@ -11,7 +11,7 @@ import { getModalStateSelector } from 'store/selectors/app';
 import { getCompanyFormSelector } from 'store/selectors/companyForm';
 import { setCompanyFormStateEffect } from 'store/effects/forms/company';
 import { emptyLink } from 'settings/constants/templates';
-import { FormWrapper } from '../componets';
+import { FormWrapper } from '../index';
 
 import styles from './styles.module.scss';
 

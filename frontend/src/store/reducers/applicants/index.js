@@ -5,7 +5,7 @@ import {
     setApplicantsSearchAction,
     deleteApplicantAction,
 } from 'store/actions/applicants';
-import { resetApplicantSearchFieldsAction, setApplicantSearchFieldsAction } from 'store/actions/drawers';
+import { resetApplicantSearchFieldsAction } from 'store/actions/drawers';
 import { updateApplicantAction } from 'store/actions/forms/applicant';
 import { cloneDeep, get } from 'lodash-es';
 
@@ -35,14 +35,6 @@ export default handleActions({
     [setApplicantsSearchAction]: (state, { payload }) => ({
         ...state,
         search: { ...payload },
-    }),
-    [setApplicantSearchFieldsAction]: (state, { payload }) => ({
-        ...state,
-        search: {
-            ...state.search,
-            string: get(payload, 'name', state.search.string),
-            active: get(payload, 'inActiveSearch', state.search.active),
-        },
     }),
     [updateApplicantAction]: (state, { payload }) => {
         const data = get(payload, 'data.result', initialData.data);

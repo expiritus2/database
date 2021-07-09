@@ -1,6 +1,16 @@
-export const getSearchConfig = (cfg, applicants) => ({
-    search: applicants?.search?.string || undefined,
-    active: applicants?.search?.active || undefined,
-    page: cfg?.page ?? applicants?.meta?.page,
-    countPerPage: cfg?.countPerPage ?? applicants?.meta?.countPerPage,
+export const getSearchConfig = (cfg, companies, searchCriteria) => ({
+    id: searchCriteria?.id || undefined,
+    userIds: searchCriteria?.users ? searchCriteria.users.map((user) => user?.id) : undefined,
+    activitiesIds: searchCriteria?.activities ? searchCriteria.activities.map((activity) => activity?.id) : undefined,
+    regionsIds: searchCriteria?.regions ? searchCriteria?.regions.map((region) => region?.id) : undefined,
+    link: searchCriteria?.link?.link || undefined,
+    linkTypeId: searchCriteria?.link?.linkType?.id || undefined,
+    updatedAtMin: searchCriteria?.updatedAt?.min || undefined,
+    updatedAtMax: searchCriteria?.updatedAt?.max || undefined,
+    createdAtMin: searchCriteria?.createdAt?.min || undefined,
+    createdAtMax: searchCriteria?.createdAt?.max || undefined,
+    search: searchCriteria?.name || companies?.search?.string || undefined,
+    active: companies?.search?.active || undefined,
+    page: cfg?.page ?? companies?.meta?.page,
+    countPerPage: cfg?.countPerPage ?? companies?.meta?.countPerPage,
 });

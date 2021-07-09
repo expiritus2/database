@@ -12,9 +12,9 @@ import { getSearchConfig } from './helpers';
 
 export const getCompaniesEffect = (cfg, options = {}, cb) => {
     const sendRequest = Api.execResult({ action: getCompaniesAction, method: getCompanies });
-    const { companies } = getState();
+    const { companies, drawers } = getState();
 
-    const config = getSearchConfig(cfg, companies);
+    const config = getSearchConfig(cfg, companies, drawers?.companySearch?.formFields);
 
     return sendRequest(config, options, cb);
 };

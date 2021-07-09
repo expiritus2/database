@@ -12,6 +12,7 @@ const Sex = require('../../../models/vocabulary/sex');
 const PhoneType = require('../../../models/vocabulary/phoneType');
 const MessengerType = require('../../../models/vocabulary/messengerType');
 const LinkType = require('../../../models/vocabulary/linkType');
+const Activity = require('../../../models/vocabulary/activity');
 const User = require('../../../models/user');
 
 const faker = require('faker');
@@ -207,6 +208,19 @@ const generateLinks = () => {
     });
 }
 
+const generateActivities = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+        const items = await Activity.findAll() || [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 2 }); i++) {
+            const random = getRecordRandom(items);
+            datas.push(items[random].toJSON());
+        }
+        resolve(datas);
+    });
+}
+
 const generateEmails = () => {
     return new Promise(async (resolve) => {
         const datas = [];
@@ -233,6 +247,18 @@ const generateExperiences = () => {
     });
 }
 
+const generateAddresses = () => {
+    return new Promise(async (resolve) => {
+        const datas = [];
+
+        for (let i = 0; i < faker.datatype.number({ min: 1, max: 3 }); i++) {
+            const address = faker.address.streetAddress();
+            datas.push({ name: address });
+        }
+        resolve(datas);
+    });
+}
+
 module.exports = {
     generateCurrency,
     generateEducation,
@@ -252,4 +278,6 @@ module.exports = {
     generateUsers,
     generateWorkSchedules,
     generateWorkTypes,
+    generateActivities,
+    generateAddresses,
 }

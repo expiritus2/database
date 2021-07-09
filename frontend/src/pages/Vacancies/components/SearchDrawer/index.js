@@ -8,7 +8,7 @@ import {
     resetVacancySearchFieldsEffect,
     setVacancySearchFieldsEffect,
 } from 'store/effects/drawers';
-import { resetVacancyEffect, getVacanciesEffect } from 'store/effects/vacancies';
+import { resetVacancyEffect, getVacanciesEffect, setVacanciesSearchEffect } from 'store/effects/vacancies';
 import { getVacancySearchDrawerSelector } from 'store/selectors/drawers';
 import {
     Drawer,
@@ -55,6 +55,7 @@ const VacancySearchDrawer = (props) => {
         dispatch(resetVacancyEffect());
         dispatch(getVacanciesEffect());
         dispatch(openVacancySearchDrawerEffect({ open: false }));
+        dispatch(setVacanciesSearchEffect({ active: formFields?.active }));
     };
 
     const onKeyPress = (event) => {

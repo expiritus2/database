@@ -5,7 +5,7 @@ import {
     setCompaniesSearchAction,
     deleteCompanyAction,
 } from 'store/actions/companies';
-
+import { resetCompanySearchFieldsAction } from 'store/actions/drawers';
 import { updateCompanyAction } from 'store/actions/forms/company';
 import { cloneDeep, get } from 'lodash-es';
 
@@ -56,4 +56,8 @@ export default handleActions({
             meta: get(payload, 'meta', initialData.meta),
         });
     },
+    [resetCompanySearchFieldsAction]: (state) => ({
+        ...state,
+        search: cloneDeep(initialData.search),
+    }),
 }, initialData);

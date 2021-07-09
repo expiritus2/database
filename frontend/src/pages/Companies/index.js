@@ -5,9 +5,7 @@ import classNames from 'classnames';
 import { getCompaniesEffect, setCompaniesSearchEffect } from 'store/effects/companies';
 import { getCompaniesSearchSelector, getCompaniesSelector } from 'store/selectors/companies';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
-import AddModal from './Modal';
-import Table from './Table';
-import Info from './Info';
+import { AddModal, SearchDrawer, Table, Info } from './componets';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +36,7 @@ const Companies = () => {
     };
 
     return (
-        <>
+        <div>
             <Header />
             <MainWrapper>
                 <ContentWrapper>
@@ -69,7 +67,8 @@ const Companies = () => {
                 </InfoWrapper>
             </MainWrapper>
             <AddModal />
-        </>
+            <SearchDrawer />
+        </div>
     );
 };
 

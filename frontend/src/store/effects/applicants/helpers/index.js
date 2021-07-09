@@ -28,7 +28,7 @@ export const getSearchConfig = (cfg, applicants, searchCriteria) => ({
     updatedAtMax: searchCriteria?.updatedAt?.max || undefined,
     createdAtMin: searchCriteria?.createdAt?.min || undefined,
     createdAtMax: searchCriteria?.createdAt?.max || undefined,
-    search: applicants?.search?.string || undefined,
+    search: searchCriteria?.name || applicants?.search?.string || undefined,
     active: applicants?.search?.active || searchCriteria?.inActiveSearch || undefined,
     page: cfg?.page ?? applicants?.meta?.page,
     countPerPage: cfg?.countPerPage ?? applicants?.meta?.countPerPage,

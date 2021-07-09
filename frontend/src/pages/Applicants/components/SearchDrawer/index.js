@@ -8,7 +8,7 @@ import {
     resetApplicantSearchFieldsEffect,
     setApplicantSearchFieldsEffect,
 } from 'store/effects/drawers';
-import { resetApplicantEffect, getApplicantsEffect } from 'store/effects/applicants';
+import { resetApplicantEffect, getApplicantsEffect, setApplicantsSearchEffect } from 'store/effects/applicants';
 import { getApplicantSearchDrawerSelector } from 'store/selectors/drawers';
 import {
     Drawer, Language, Positions, Regions, Sex,
@@ -50,6 +50,7 @@ const ApplicantSearchDrawer = (props) => {
         dispatch(resetApplicantEffect());
         dispatch(getApplicantsEffect());
         dispatch(openApplicantSearchDrawerEffect({ open: false }));
+        dispatch(setApplicantsSearchEffect({ string: formFields?.name, active: formFields?.inActiveSearch }));
     };
 
     const onKeyPress = (event) => {

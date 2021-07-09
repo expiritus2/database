@@ -3,6 +3,7 @@ import { IDLE } from 'settings/constants/apiState';
 import { getVacanciesAction, setVacanciesSearchAction, deleteVacancyAction } from 'store/actions/vacancies';
 import { updateVacancyAction } from 'store/actions/forms/vacancy';
 import { cloneDeep, get } from 'lodash-es';
+import { resetVacancySearchFieldsAction } from 'store/actions/drawers';
 
 const initialData = {
     state: IDLE,
@@ -50,5 +51,9 @@ export default handleActions({
     [setVacanciesSearchAction]: (state, { payload }) => ({
         ...state,
         search: { ...payload },
+    }),
+    [resetVacancySearchFieldsAction]: (state) => ({
+        ...state,
+        search: cloneDeep(initialData.search),
     }),
 }, initialData);
