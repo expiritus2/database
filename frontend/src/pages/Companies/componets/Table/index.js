@@ -23,8 +23,8 @@ const CompanyTable = (props) => {
     const getColumns = () => {
         if (!data) return [];
         return [
-            { key: 'id', title: 'ID', width: '22%' },
-            { key: 'name', title: translate.Name, width: '78%', className: styles.colName },
+            { key: 'id', title: 'ID', width: '23.79%' },
+            { key: 'name', title: translate.Name, width: '76.21%', className: styles.colName },
         ];
     };
 
