@@ -1,5 +1,5 @@
-@import "../../../../../styles/functions";
-@import "../../../../../styles/variables";
+@import "styles/functions";
+@import "styles/variables";
 
 .name {
     padding-left: setUnit(16);
@@ -8,7 +8,7 @@
     align-items: center;
 
     .nameText {
-        font-size: setUnit(32);
+        font-size: setUnit(30);
         font-weight: 700;
         margin-bottom: setUnit(5);
     }
@@ -16,6 +16,7 @@
     .companyName {
         font-weight: 500;
         font-style: italic;
+        font-size: setUnit(22);
     }
 
     .active {

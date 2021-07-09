@@ -16,7 +16,7 @@ const Position = (props) => {
         <div className={classNames(styles.position, className)}>
             <InfoItem
                 label=""
-                value={<NameText>{position?.label}</NameText>}
+                value={<NameText className={styles.positionName}>{position?.label}</NameText>}
             />
         </div>
     );
