@@ -68,7 +68,7 @@ const VacancySearchDrawer = (props) => {
         <Drawer
             isOpen={open}
             onClose={onClose}
-            className={classNames(styles.applicantSearchDrawer, className)}
+            className={classNames(styles.vacancySearchDrawer, className)}
         >
             <div className={styles.wrapper}>
                 <div className={styles.contentWrapper}>

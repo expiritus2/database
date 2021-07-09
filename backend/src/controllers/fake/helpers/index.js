@@ -14,6 +14,7 @@ const MessengerType = require('../../../models/vocabulary/messengerType');
 const LinkType = require('../../../models/vocabulary/linkType');
 const Activity = require('../../../models/vocabulary/activity');
 const User = require('../../../models/user');
+const Company = require('../../../models/company');
 
 const faker = require('faker');
 
@@ -125,6 +126,16 @@ const generateUsers = () => {
             datas.push(items[random].toJSON());
         }
         resolve(datas);
+    });
+}
+
+const generateCompany = () => {
+    return new Promise(async (resolve) => {
+        const items = await Company.findAll() || [];
+
+        const random = getRecordRandom(items);
+        const company = items[random].toJSON();
+        resolve({ id: company.id, value: company.id, label: company.name });
     });
 }
 
@@ -280,4 +291,5 @@ module.exports = {
     generateWorkTypes,
     generateActivities,
     generateAddresses,
+    generateCompany,
 }

@@ -30,10 +30,12 @@ const Info = (props) => {
                     <InfoScrollWrapper className={classNames(classNames(styles.info), className)}>
                         <PendingWrapper isPending={isPending}>
                             <Name {...contact} />
-                            <InfoEmails emails={contact?.emails} />
-                            <InfoPositions positions={contact?.positions} />
-                            <InfoPhones phones={contact?.phones} />
-                            <InfoItem label={translate.BirthDate} value={getDate(contact?.birthDate)} />
+                            <div className={styles.details}>
+                                <InfoEmails emails={contact?.emails} />
+                                <InfoPositions positions={contact?.positions} />
+                                <InfoPhones phones={contact?.phones} />
+                                <InfoItem label={translate.BirthDate} value={getDate(contact?.birthDate)} />
+                            </div>
                         </PendingWrapper>
                     </InfoScrollWrapper>
                 </>

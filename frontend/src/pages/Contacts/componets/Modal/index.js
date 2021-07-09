@@ -49,7 +49,7 @@ const ModalComponent = ({ className }) => {
         setIsPending(true);
 
         const effect = modal.mode === EDIT ? updateContactEffect : createContactEffect;
-        dispatch(effect({}, {}, (err) => {
+        dispatch(effect({}, { silent: true }, (err) => {
             if (!err) {
                 if (modal.mode === ADD) {
                     return dispatch(getContactsEffect({}, { silent: true }, () => {

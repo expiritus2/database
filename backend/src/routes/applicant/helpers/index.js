@@ -42,14 +42,6 @@ const getSearchOptions = (query) => {
                 ...(linkTypeId ? [{ '$links.linkTypeId$': linkTypeId }] : []),
                 ...(link ? [{ '$links.link$': link }] : []),
 
-                ...(updatedAtMin && !updatedAtMax ? [{ updatedAt: { [Op.gte]: updatedAtMin } }] : []),
-                ...(updatedAtMax && !updatedAtMin ? [{ updatedAt: { [Op.lte]: updatedAtMax } }] : []),
-                ...(updatedAtMin && updatedAtMax ? [{ updatedAt: { [Op.between]: [updatedAtMin, updatedAtMax] } }] : []),
-
-                ...(createdAtMin && !createdAtMax ? [{ updatedAt: { [Op.gte]: createdAtMin } }] : []),
-                ...(createdAtMax && !createdAtMin ? [{ updatedAt: { [Op.lte]: createdAtMax } }] : []),
-                ...(createdAtMin && createdAtMax ? [{ updatedAt: { [Op.between]: [createdAtMin, createdAtMax] } }] : []),
-
                 ...(salaryMin && !salaryMax ? [{ '$salary.amount$': { [Op.gte]: salaryMin } }] : []),
                 ...(salaryMax && !salaryMin ? [{ '$salary.amount$': { [Op.lte]: salaryMax } }] : []),
                 ...(salaryMin && salaryMax ? [{ '$salary.amount$': { [Op.between]: [salaryMin, salaryMax] } }] : []),
@@ -59,6 +51,14 @@ const getSearchOptions = (query) => {
                 ...(messengerTypeId ? [{ '$messengers.messengerTypeId$': messengerTypeId }] : []),
                 ...(accountName ? [{ '$messengers.accountName$': accountName }] : []),
                 ...(email ? [{ '$emails.email$': email }] : []),
+
+                ...(updatedAtMin && !updatedAtMax ? [{ updatedAt: { [Op.gte]: updatedAtMin } }] : []),
+                ...(updatedAtMax && !updatedAtMin ? [{ updatedAt: { [Op.lte]: updatedAtMax } }] : []),
+                ...(updatedAtMin && updatedAtMax ? [{ updatedAt: { [Op.between]: [updatedAtMin, updatedAtMax] } }] : []),
+
+                ...(createdAtMin && !createdAtMax ? [{ updatedAt: { [Op.gte]: createdAtMin } }] : []),
+                ...(createdAtMax && !createdAtMin ? [{ updatedAt: { [Op.lte]: createdAtMax } }] : []),
+                ...(createdAtMin && createdAtMax ? [{ updatedAt: { [Op.between]: [createdAtMin, createdAtMax] } }] : []),
             ]
         },
     }

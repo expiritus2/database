@@ -7,6 +7,7 @@ const Contact = require('../../models/contact');
 const { ContactController } = require('../../controllers/contact/contact');
 const { includeModelsFull, attributesFull } = require('../../settings/contact');
 const { getExecOptions } = require('./helpers');
+const { getPaginatedItems } = require('../../util/handlers');
 
 const router = express.Router();
 
@@ -21,8 +22,13 @@ const middlewares = [
 ]
 
 router.get('/api/contacts', requireAuth, async (req, res) => {
-    const options = getExecOptions(req.query);
+    const { options, isSearch, page, countPerPage } = getExecOptions(req.query);
     const allContacts = await Contact.findAndCountAll(options);
+
+    if (isSearch) {
+        const { pagedItems } = getPaginatedItems(allContacts.rows, page, countPerPage);
+        return res.send({ result: { count: allContacts.count, rows: pagedItems } });
+    }
 
     res.send({ result: allContacts });
 });
@@ -47,7 +53,7 @@ router.put('/api/contacts/:id', middlewares, async (req, res) => {
 
 router.delete('/api/contacts/:id', async (req, res) => {
     await new ContactController().delete(req.params.id);
-    const options = getExecOptions(req.query);
+    const { options } = getExecOptions(req.query);
     const allContacts = await Contact.findAndCountAll(options);
 
     res.send({ result: allContacts });

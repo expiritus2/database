@@ -3,20 +3,26 @@ import {
     getContactsAction,
     resetCurrentContactAction,
     setContactsSearchAction,
-    deleteContactAction,
     getContactAction,
+    deleteContactAction,
 } from 'store/actions/contacts';
-import { getContacts, deleteContact, getContact } from 'api/contacts';
+import { getContacts, getContact, deleteContact } from 'api/contacts';
 import { getState } from 'store';
 import { getSearchConfig } from './helpers';
 
 export const getContactsEffect = (cfg, options = {}, cb) => {
     const sendRequest = Api.execResult({ action: getContactsAction, method: getContacts });
-    const { contacts } = getState();
+    const { contacts, drawers } = getState();
 
-    const config = getSearchConfig(cfg, contacts);
+    const config = getSearchConfig(cfg, contacts, drawers?.contactSearch?.formFields);
 
     return sendRequest(config, options, cb);
+};
+
+export const getContactEffect = (cfg, options = {}, cb) => {
+    const sendRequest = Api.execResult({ action: getContactAction, method: getContact });
+
+    return sendRequest(cfg, options, cb);
 };
 
 export const resetContactEffect = () => (dispatch) => {
@@ -39,10 +45,4 @@ export const deleteContactEffect = (cfg, options, cb) => {
     };
 
     return sendRequest(config, options, cb);
-};
-
-export const getContactEffect = (cfg, options, cb) => {
-    const sendRequest = Api.execResult({ action: getContactAction, method: getContact });
-
-    return sendRequest(cfg, options, cb);
 };

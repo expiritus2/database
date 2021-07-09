@@ -30,6 +30,7 @@ const { activitiesVocabularyRouter } = require('./vocabulary/activities');
 const { fakeApplicantRouter } = require('./fake/applicant');
 const { fakeVacancyRouter } = require('./fake/vacancy');
 const { fakeCompanyRouter } = require('./fake/company');
+const { fakeContactRouter } = require('./fake/contact');
 
 module.exports = (app) => {
     app.use(authRouter);
@@ -64,4 +65,5 @@ module.exports = (app) => {
     app.use(fakeApplicantRouter);
     app.use(fakeVacancyRouter);
     app.use(fakeCompanyRouter);
+    app.use(fakeContactRouter);
 }

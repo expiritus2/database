@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getModalStateSelector } from 'store/selectors/app';
 import { getContactFormSelector } from 'store/selectors/contactForm';
 import { setContactFormStateEffect } from 'store/effects/forms/contact';
-import { FormWrapper } from '../componets';
+import { FormWrapper } from '../index';
 
 import styles from './styles.module.scss';
 

@@ -1,0 +1,11 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid $border-light-gray;
+    height: setUnit(81);
+    padding: 0 setUnit(20);
+}

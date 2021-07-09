@@ -1,31 +1,55 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const { includeModelsLight, attributesLight } = require('../../../settings/contact');
+const { includeModelsFull, includeModelsLight, attributesFull, attributesLight } = require('../../../settings/contact');
 
 const getSearchOptions = (query) => {
-    const { search, active } = query || {};
+    const { id, search, active, companyId, positionsIds, sexId, phoneTypeId, phoneNumber } = query || {};
+    const { updatedAtMin, updatedAtMax, createdAtMin, createdAtMax } = query || {};
+
     return {
         where: {
             [Op.and]: [
-                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
+                ...(id ? [{ id }] : []),
                 ...(active ? [{ active }] : []),
+                ...(search ? [{ name: { [Op.iLike]: `%${search}%` } }] : []),
+                ...(companyId ? [{ companyId }] : []),
+                ...(positionsIds ? [{ '$positions.id$': { [Op.in]: positionsIds } }] : []),
+                ...(sexId ? [{ sexId }] : []),
+                ...(phoneTypeId ? [{ '$phones.phoneTypeId$': phoneTypeId }] : []),
+                ...(phoneNumber ? [{ '$phones.number$': phoneNumber }] : []),
+
+                ...(updatedAtMin && !updatedAtMax ? [{ updatedAt: { [Op.gte]: updatedAtMin } }] : []),
+                ...(updatedAtMax && !updatedAtMin ? [{ updatedAt: { [Op.lte]: updatedAtMax } }] : []),
+                ...(updatedAtMin && updatedAtMax ? [{ updatedAt: { [Op.between]: [updatedAtMin, updatedAtMax] } }] : []),
+
+                ...(createdAtMin && !createdAtMax ? [{ updatedAt: { [Op.gte]: createdAtMin } }] : []),
+                ...(createdAtMax && !createdAtMin ? [{ updatedAt: { [Op.lte]: createdAtMax } }] : []),
+                ...(createdAtMin && createdAtMax ? [{ updatedAt: { [Op.between]: [createdAtMin, createdAtMax] } }] : []),
             ]
         }
     }
 }
 
 const getExecOptions = (query) => {
-    const { page, countPerPage } = query || {};
+    const { page, countPerPage, ...search } = query || {};
+
+    const isSearch = !!Object.keys(search).length;
+
     return {
-        ...getSearchOptions(query),
-        limit: countPerPage || 25,
-        offset: (page * countPerPage) || 0,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: includeModelsLight,
-        attributes: attributesLight,
-        distinct: true,
+        isSearch,
+        page,
+        countPerPage,
+        options: {
+            ...getSearchOptions(query),
+            limit: !isSearch ? (countPerPage || 25) : undefined,
+            offset: !isSearch ? ((page * countPerPage) || 0) : undefined,
+            order: [
+                ['updatedAt', 'DESC']
+            ],
+            include: !isSearch ? includeModelsLight : includeModelsFull,
+            attributes: !isSearch ? attributesLight : attributesFull,
+            distinct: true,
+        }
     }
 };
 

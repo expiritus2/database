@@ -5,9 +5,7 @@ import classNames from 'classnames';
 import { getContactsEffect, setContactsSearchEffect } from 'store/effects/contacts';
 import { getContactsSearchSelector, getContactsSelector } from 'store/selectors/contacts';
 import { Header, ScrollWrapper, ContentWrapper, InfoWrapper, MainWrapper, TablePagination, PendingWrapper, SubHeader } from 'components';
-import AddModal from './Modal';
-import Table from './Table';
-import Info from './Info';
+import { AddModal, SearchDrawer, Table, Info } from './componets';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +36,7 @@ const Contacts = () => {
     };
 
     return (
-        <>
+        <div>
             <Header />
             <MainWrapper>
                 <ContentWrapper>
@@ -69,7 +67,8 @@ const Contacts = () => {
                 </InfoWrapper>
             </MainWrapper>
             <AddModal />
-        </>
+            <SearchDrawer />
+        </div>
     );
 };
 

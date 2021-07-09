@@ -4,7 +4,12 @@ import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { openApplicantSearchDrawerEffect, openVacancySearchDrawerEffect, openCompanySearchDrawerEffect } from 'store/effects/drawers';
+import {
+    openApplicantSearchDrawerEffect,
+    openVacancySearchDrawerEffect,
+    openCompanySearchDrawerEffect,
+    openContactSearchDrawerEffect,
+} from 'store/effects/drawers';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { routes } from 'settings/navigation/routes';
 
@@ -21,6 +26,7 @@ const ExtendedSearch = (props) => {
             case routes.applicants: { effect = openApplicantSearchDrawerEffect; break; }
             case routes.vacancies: { effect = openVacancySearchDrawerEffect; break; }
             case routes.companies: { effect = openCompanySearchDrawerEffect; break; }
+            case routes.contacts: { effect = openContactSearchDrawerEffect; break; }
             default: { effect = null; break; }
         }
 
