@@ -6,3 +6,5 @@ export { default as Applicants } from './Applicants';
 export { default as Companies } from './Companies';
 export { default as Contacts } from './Contacts';
 export { default as Vacancies } from './Vacancies';
+export { default as EnrollAccount } from './EnrollAccount';
+export { default as VerifyEmail } from './VerifyEmail';

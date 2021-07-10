@@ -1,4 +1,4 @@
-const { VacancyController } = require('../vacancy/vacancy');
+const { VacancyController } = require('../vacancy/Vacancy');
 const Vacancy = require('../../models/vacancy');
 const faker = require('faker');
 

@@ -1,4 +1,4 @@
-const { CompanyController } = require('../company/company');
+const { CompanyController } = require('../company/Company');
 const Company = require('../../models/company');
 const faker = require('faker');
 

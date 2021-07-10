@@ -13,6 +13,11 @@ export const getUserEmail = createSelector(
     (user) => get(user, 'data.email'),
 );
 
+export const getUserDisplayName = createSelector(
+    getUserSelector,
+    (user) => get(user, 'data.displayName'),
+);
+
 export const getUserRoleSelector = createSelector(
     getUserSelector,
     ({ data }) => get(data, 'role'),

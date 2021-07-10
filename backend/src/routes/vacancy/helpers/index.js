@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const { includeModelsFull, includeModelsLight, attributesFull, attributesLight } = require('../../../settings/vacancy');
+const { includeModelsFull, includeModelsLight, attributesFull, attributesLight } = require('../../../settings/includeModels/vacancy');
 
 const getSearchOptions = (query) => {
     const { id, search, active, positionId, userIds, salaryMin, salaryMax, currencyId } = query || {};

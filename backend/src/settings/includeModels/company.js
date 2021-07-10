@@ -1,12 +1,12 @@
-const VocabularyLinkType = require('../models/vocabulary/linkType');
-const VocabularyActivity = require('../models/vocabulary/activity');
-const VocabularyRegions = require('../models/vocabulary/region');
+const VocabularyLinkType = require('../../models/vocabulary/linkType');
+const VocabularyActivity = require('../../models/vocabulary/activity');
+const VocabularyRegions = require('../../models/vocabulary/region');
 
-const Address = require('../models/address');
+const Address = require('../../models/address');
 
-const Photo = require('../models/photo');
-const Link = require('../models/link');
-const User = require('../models/user');
+const Photo = require('../../models/photo');
+const Link = require('../../models/link');
+const User = require('../../models/user');
 
 const attributesLight = ['id', 'name', 'active', 'createdAt', 'updatedAt'];
 const attributesFull = [...attributesLight, 'info'];

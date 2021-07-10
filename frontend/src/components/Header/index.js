@@ -8,14 +8,14 @@ import { Button } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';
-import { getUserEmail } from 'store/selectors/auth';
+import { getUserDisplayName } from 'store/selectors/auth';
 import { Logger } from 'services';
 import { apiServer } from '../../settings/web-services/api';
 
 import styles from './styles.module.scss';
 
 const Header = () => {
-    const userEmail = useSelector(getUserEmail);
+    const userDisplayName = useSelector(getUserDisplayName);
     const location = useLocation();
     const dispatch = useDispatch();
     const { translate } = useTranslate();
@@ -74,7 +74,7 @@ const Header = () => {
                     />
                     <Button
                         className={styles.navButton}
-                        title={userEmail}
+                        title={userDisplayName}
                     />
                     <Button
                         onClick={onVocabulariesClick}

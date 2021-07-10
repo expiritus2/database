@@ -1,13 +1,13 @@
 const Contact = require('../../models/contact');
 
-const Company = require('./company');
-const Positions = require('./positions');
-const Photos = require('./photos');
-const Phones = require('./phones');
-const Emails = require('./emails');
-const Sex = require('./sex');
+const Company = require('./Company');
+const Positions = require('./Positions');
+const Photos = require('./Photos');
+const Phones = require('./Phones');
+const Emails = require('./Emails');
+const Sex = require('./Sex');
 
-const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/contact');
+const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/includeModels/contact');
 
 class ContactController {
     constructor(body) {

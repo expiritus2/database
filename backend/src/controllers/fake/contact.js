@@ -1,4 +1,4 @@
-const { ContactController } = require('../contact/contact');
+const { ContactController } = require('../contact/Contact');
 const Contact = require('../../models/contact');
 const faker = require('faker');
 

@@ -7,3 +7,7 @@ export function getCurrentUser() {
 export function login(cfg) {
     return apiServer.post('/api/auth/login', cfg);
 }
+
+export function enrollAccount(cfg) {
+    return apiServer.post('/api/auth/enrollAccount', cfg);
+}

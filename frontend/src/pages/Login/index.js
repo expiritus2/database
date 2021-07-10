@@ -36,9 +36,6 @@ const Login = () => {
     return (
         <div className={styles.formWrapper}>
             <div className={styles.card}>
-                <h5 className={styles.title}>
-                    {translate.Login}
-                </h5>
                 <form onSubmit={formik.handleSubmit}>
                     <Input
                         name="username"

@@ -1,13 +1,13 @@
 const Company = require('../../models/company');
 
-const Users = require('./users');
-const Photo = require('./photo');
-const Activities = require('./activities');
-const Regions = require('./regions');
-const Links = require('./links');
-const Addresses = require('./addresses');
+const Users = require('./Users');
+const Photo = require('./Photo');
+const Activities = require('./Activities');
+const Regions = require('./Regions');
+const Links = require('./Links');
+const Addresses = require('./Addresses');
 
-const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/company');
+const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/includeModels/company');
 
 class CompanyController {
     constructor(body) {

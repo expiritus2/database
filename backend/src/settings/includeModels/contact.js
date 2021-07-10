@@ -1,11 +1,11 @@
-const VocabularyPosition = require('../models/vocabulary/position');
-const VocabularyPhoneType = require('../models/vocabulary/phoneType');
-const VocabularySex = require('../models/vocabulary/sex');
+const VocabularyPosition = require('../../models/vocabulary/position');
+const VocabularyPhoneType = require('../../models/vocabulary/phoneType');
+const VocabularySex = require('../../models/vocabulary/sex');
 
-const Company = require('../models/company');
-const Photo = require('../models/photo');
-const Phone = require('../models/phone');
-const Email = require('../models/email');
+const Company = require('../../models/company');
+const Photo = require('../../models/photo');
+const Phone = require('../../models/phone');
+const Email = require('../../models/email');
 
 const attributesLight = ['id', 'name', 'active', 'createdAt', 'updatedAt'];
 const attributesFull = [...attributesLight, 'birthDate'];

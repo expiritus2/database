@@ -1,22 +1,22 @@
 const Applicant = require('../../models/applicant');
 
-const Salary = require('./salary');
-const Education = require('./education');
-const Positions = require('./positions');
-const Skills = require('./skills');
-const WorkPlaces = require('./workPlaces');
-const Regions = require('./regions');
-const LanguageSkills = require('./languages');
-const Photos = require('./photos');
-const Sex = require('./sex');
-const Phones = require('./phones');
-const Emails = require('./emails');
-const Messengers = require('./messengers');
-const Links = require('./links');
-const Files = require('./files');
-const Experiences = require('./experiences');
+const Salary = require('./Salary');
+const Education = require('./Education');
+const Positions = require('./Positions');
+const Skills = require('./Skills');
+const WorkPlaces = require('./WorkPlaces');
+const Regions = require('./Regions');
+const LanguageSkills = require('./Languages');
+const Photos = require('./Photos');
+const Sex = require('./Sex');
+const Phones = require('./Phones');
+const Emails = require('./Emails');
+const Messengers = require('./Messengers');
+const Links = require('./Links');
+const Files = require('./Files');
+const Experiences = require('./Experiences');
 
-const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/applicant');
+const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/includeModels/applicant');
 
 class ApplicantController {
     constructor(body) {

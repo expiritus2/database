@@ -153,4 +153,13 @@ export default {
     Age: 'Возраст',
     UpdatedAt: 'Изменен',
     CreatedAt: 'Создан',
+    EnrollAccount: 'Регистрация',
+    DisplayName: 'Отображаемое имя',
+    VerifyEmailText: 'Пожалуйста, проверьте почту',
+    ConfirmPassword: 'Подтвердить пароль',
+    PasswordLength: 'Пароль должен состоять не менее чем из 8 символов',
+    PasswordNumber: 'Пароль должен содержать как минимум 1 цифру',
+    PasswordUpperChar: 'Пароль должен содержать хотя бы 1 заглавную букву',
+    PasswordLowerChar: 'Пароль должен содержать хотя бы 1 строчную букву',
+    PasswordsMustMatch: 'Пароли должны совпадать',
 };

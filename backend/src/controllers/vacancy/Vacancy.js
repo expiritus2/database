@@ -1,19 +1,19 @@
 const Vacancy = require('../../models/vacancy');
 const DatabaseCreationError = require('../../errors/database-creation-error');
 
-const Position = require('./position');
-const Users = require('./users');
-const SalaryRange = require('./salaryRange');
-const Skills = require('./skills');
-const WorkPlaces = require('./workPlaces');
-const Regions = require('./regions');
-const WorkSchedules = require('./workSchedules');
-const WorkTypes = require('./workTypes');
-const Files = require('./files');
-const Company = require('./company');
-const Contacts = require('./contacts');
+const Position = require('./Position');
+const Users = require('./Users');
+const SalaryRange = require('./SalaryRange');
+const Skills = require('./Skills');
+const WorkPlaces = require('./WorkPlaces');
+const Regions = require('./Regions');
+const WorkSchedules = require('./WorkSchedules');
+const WorkTypes = require('./WorkTypes');
+const Files = require('./Files');
+const Company = require('./Company');
+const Contacts = require('./Contacts');
 
-const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/vacancy');
+const { includeModelsFull, includeModelsLight, attributesLight } = require('../../settings/includeModels/vacancy');
 
 class VacancyController {
     constructor(body) {

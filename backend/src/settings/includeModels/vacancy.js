@@ -1,18 +1,18 @@
-const VocabularyPosition = require('../models/vocabulary/position');
-const VocabularySkill = require('../models/vocabulary/skill');
-const VocabularyRegion = require('../models/vocabulary/region');
-const VocabularyCurrency = require('../models/vocabulary/currency');
-const VocabularyWorkPlace = require('../models/vocabulary/workPlace');
-const VocabularyWorkSchedule = require('../models/vocabulary/workSchedule');
-const VocabularyWorkType = require('../models/vocabulary/workType');
-const VocabularyFileType = require('../models/vocabulary/fileType');
+const VocabularyPosition = require('../../models/vocabulary/position');
+const VocabularySkill = require('../../models/vocabulary/skill');
+const VocabularyRegion = require('../../models/vocabulary/region');
+const VocabularyCurrency = require('../../models/vocabulary/currency');
+const VocabularyWorkPlace = require('../../models/vocabulary/workPlace');
+const VocabularyWorkSchedule = require('../../models/vocabulary/workSchedule');
+const VocabularyWorkType = require('../../models/vocabulary/workType');
+const VocabularyFileType = require('../../models/vocabulary/fileType');
 
-const User = require('../models/user');
-const Company = require('../models/company');
-const Contact = require('../models/contact');
+const User = require('../../models/user');
+const Company = require('../../models/company');
+const Contact = require('../../models/contact');
 
-const File = require('../models/file');
-const SalaryRange = require('../models/salaryRange');
+const File = require('../../models/file');
+const SalaryRange = require('../../models/salaryRange');
 
 const attributesLight = ['id', 'active', 'experienceYears', 'createdAt', 'updatedAt'];
 const attributesFull = [...attributesLight, 'info'];

@@ -1,8 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
-const ForbiddenError = require('../errors/forbidden-error');
+// const ForbiddenError = require('../errors/forbidden-error');
 
-const { ADMIN, SUPER_ADMIN } = require('../constants/roles');
+const { roles } = require('../settings/constants/user');
 
 const sequelize = require('../util/database');
 
@@ -11,9 +11,9 @@ class User extends Model {
         return bcrypt.compareSync(password, this.password)
     }
 
-    isSuperAdmin(email) {
-        const superAdminEmail = JSON.parse(process.env.SUPER_ADMIN_EMAILS);
-        return superAdminEmail.includes(email);
+    static isSuperAdmin(email) {
+        const superAdminEmails = JSON.parse(process.env.SUPER_ADMIN_EMAILS);
+        return superAdminEmails.includes(email);
     }
 }
 
@@ -29,23 +29,21 @@ User.init({
         unique: true,
         allowNull: false,
     },
+    displayName: {
+        type: DataTypes.STRING,
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
     },
     role: {
         type: DataTypes.STRING,
-        defaultValue: ADMIN,
-    }
+    },
 }, { sequelize, modelName: 'user' });
 
 User.beforeCreate((user) => {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
-    user.role = user.isSuperAdmin(user.email) ? SUPER_ADMIN : ADMIN;
-
-    if (user.role !== SUPER_ADMIN) {
-        throw new ForbiddenError();
-    }
+    user.role = User.isSuperAdmin(user.email) ? roles.SUPER_ADMIN : roles.MANAGER;
 });
 
 module.exports = User;

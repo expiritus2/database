@@ -4,9 +4,9 @@ const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Vacancy = require('../../models/vacancy');
 
-const { VacancyController } = require('../../controllers/vacancy/vacancy');
+const { VacancyController } = require('../../controllers/vacancy/Vacancy');
 
-const { includeModelsFull, attributesFull } = require('../../settings/vacancy');
+const { includeModelsFull, attributesFull } = require('../../settings/includeModels/vacancy');
 const { getExecOptions } = require('./helpers');
 const { getPaginatedItems } = require('../../util/handlers');
 

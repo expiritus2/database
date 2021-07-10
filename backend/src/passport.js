@@ -16,14 +16,13 @@ passport.use(new Strategy(async (username, password, done) => {
     try {
         const user = await User.findOne({ where: { email: username } });
         if (!user) {
-            const newUser = (await User.create({ email: username, password }));
-            done(undefined, { id: newUser.id, email: newUser.email, role: newUser.role });
+            throw new AuthenticationError();
+        }
+
+        if (user.validPassword(password)) {
+            done(undefined, { id: user.id, email: user.email, role: user.role, displayName: user.displayName });
         } else {
-            if (user.validPassword(password)) {
-                done(undefined, { id: user.id, email: user.email, role: user.role });
-            } else {
-                throw new AuthenticationError();
-            }
+            throw new AuthenticationError();
         }
     } catch (err) {
         done(err);

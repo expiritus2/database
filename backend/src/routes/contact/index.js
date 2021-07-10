@@ -4,8 +4,8 @@ const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Contact = require('../../models/contact');
 
-const { ContactController } = require('../../controllers/contact/contact');
-const { includeModelsFull, attributesFull } = require('../../settings/contact');
+const { ContactController } = require('../../controllers/contact/Contact');
+const { includeModelsFull, attributesFull } = require('../../settings/includeModels/contact');
 const { getExecOptions } = require('./helpers');
 const { getPaginatedItems } = require('../../util/handlers');
 

@@ -4,8 +4,8 @@ const requireAuth = require('../../middlewares/require-auth');
 const validateRequest = require('../../middlewares/validate-request');
 const Company = require('../../models/company');
 
-const { CompanyController } = require('../../controllers/company/company');
-const { includeModelsFull, attributesFull } = require('../../settings/company');
+const { CompanyController } = require('../../controllers/company/Company');
+const { includeModelsFull, attributesFull } = require('../../settings/includeModels/company');
 const { getExecOptions } = require('./helpers');
 const { getPaginatedItems } = require('../../util/handlers');
 
