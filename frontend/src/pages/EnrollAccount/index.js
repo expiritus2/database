@@ -53,7 +53,6 @@ const EnrollAccount = () => {
                             onChange={formik.handleChange}
                             value={formik.values.username}
                             error={formik.touched.username && formik.errors.username}
-                            helperText={formik.touched.username ? formik.errors.username : ''}
                         />
                     )}
                     {query?.token && (
@@ -65,7 +64,6 @@ const EnrollAccount = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.displayName}
                                 error={formik.touched.displayName && formik.errors.displayName}
-                                helperText={formik.touched.displayName ? formik.errors.displayName : ''}
                             />
                             <Input
                                 type="password"
@@ -75,7 +73,6 @@ const EnrollAccount = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
                                 error={formik.touched.password && formik.errors.password}
-                                helperText={formik.touched.password ? formik.errors.password : ''}
                             />
                             <Input
                                 type="password"
@@ -85,7 +82,6 @@ const EnrollAccount = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.confirmPassword}
                                 error={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                                helperText={formik.touched.confirmPassword ? formik.errors.confirmPassword : ''}
                             />
                         </>
                     )}

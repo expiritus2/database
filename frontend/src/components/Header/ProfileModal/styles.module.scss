@@ -1,0 +1,31 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.profileModal {
+
+    .profileForm {
+        padding: setUnit(20) setUnit(20) setUnit(32) setUnit(20);
+
+        .field {
+            margin-bottom: setUnit(20);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .modalActions {
+        border-top: 1px solid $border-middle-gray;
+        padding: setUnit(10) setUnit(20);
+    }
+
+    .modalCardContent {
+        max-height: setUnit(585) !important;
+    }
+
+    .cardContent {
+        height: calc(100% - #{setUnit(117)});
+        overflow: auto;
+    }
+}

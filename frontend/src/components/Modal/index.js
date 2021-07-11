@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 const ModalComponent = (props) => {
     const { className, children, open, onClose, closeAfterTransition, title } = props;
     const { cardClassName, cardContentClassName, cardActionsClassName } = props;
-    const { actionsChildren } = props;
+    const { actionsChildren, innerHolderClassName, modalContentClassName } = props;
     const user = useSelector(getUserSelector);
 
     if (!user.data) return null;
@@ -23,6 +23,8 @@ const ModalComponent = (props) => {
             isOpen={open}
             onClose={onClose}
             closeAfterTransition={closeAfterTransition}
+            innerHolderClassName={innerHolderClassName}
+            contentClassName={modalContentClassName}
         >
             {open && (
                 <div className={classNames(styles.card, cardClassName)}>
@@ -46,6 +48,7 @@ const ModalComponent = (props) => {
 
 ModalComponent.propTypes = {
     className: PropTypes.string,
+    innerHolderClassName: PropTypes.string,
     cardClassName: PropTypes.string,
     cardContentClassName: PropTypes.string,
     cardActionsClassName: PropTypes.string,
@@ -55,10 +58,12 @@ ModalComponent.propTypes = {
     closeAfterTransition: PropTypes.bool,
     actionsChildren: PropTypes.node,
     title: PropTypes.string,
+    modalContentClassName: PropTypes.string,
 };
 
 ModalComponent.defaultProps = {
     className: '',
+    innerHolderClassName: '',
     cardClassName: '',
     cardActionsClassName: '',
     cardContentClassName: '',
@@ -66,6 +71,7 @@ ModalComponent.defaultProps = {
     closeAfterTransition: true,
     actionsChildren: undefined,
     title: '',
+    modalContentClassName: '',
 };
 
 export default ModalComponent;

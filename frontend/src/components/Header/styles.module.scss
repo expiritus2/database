@@ -21,6 +21,11 @@
         }
     }
 
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+
     .link {
         color: #ffffff;
         text-decoration: none;

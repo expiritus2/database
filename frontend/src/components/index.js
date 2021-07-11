@@ -57,6 +57,7 @@ export { default as Email } from './Fields/Email';
 export { default as DateRange } from './Fields/DateRange';
 export { default as Messenger } from './Fields/Messenger';
 export { default as Link } from './Fields/Link';
+export { default as Role } from './Fields/Role';
 export { default as ExperienceRange } from './Fields/ExperienceRange';
 export { default as Drawer } from './Drawer';
 

@@ -43,7 +43,7 @@ User.init({
 
 User.beforeCreate((user) => {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
-    user.role = User.isSuperAdmin(user.email) ? roles.SUPER_ADMIN : roles.MANAGER;
+    user.role = User.isSuperAdmin(user.email) ? roles.SUPER_ADMIN : roles.ADMIN;
 });
 
 module.exports = User;

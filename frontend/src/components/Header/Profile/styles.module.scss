@@ -1,0 +1,38 @@
+@import "styles/functions";
+@import "styles/variables";
+@import "styles/mixins";
+
+.profile {
+    position: relative;
+
+    .options {
+        @include box-shadow;
+
+        position: absolute;
+        top: setUnit(42);
+        right: 0;
+        background: #ffffff;
+        border-radius: setUnit(5);
+        overflow: hidden;
+
+        ul {
+            list-style: none;
+        }
+
+        .item {
+            padding: setUnit(10) setUnit(22);
+            cursor: pointer;
+
+            &:hover {
+                background: $primary-color;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .navElement {
+        &.profileButton {
+            margin-right: 0;
+        }
+    }
+}

@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser(async (id, done) => {
-    const user = await User.findOne({ where: { id }, attributes: ['id', 'email', 'role'] });
+    const user = await User.findOne({ where: { id }, attributes: ['id', 'email', 'role', 'displayName'] });
     done(undefined, user);
 });
 

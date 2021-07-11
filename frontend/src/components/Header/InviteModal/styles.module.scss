@@ -1,0 +1,34 @@
+@import "styles/functions";
+@import "styles/variables";
+
+.inviteModal {
+
+    .form {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 setUnit(20);
+
+        .field {
+            margin-bottom: setUnit(20);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .modalActions {
+        border-top: 1px solid $border-middle-gray;
+        padding: setUnit(10) setUnit(20);
+    }
+
+    .modalCardContent {
+        max-height: setUnit(250) !important;
+    }
+
+    .cardContent {
+        height: calc(100% - #{setUnit(127)});
+        overflow: auto;
+    }
+}

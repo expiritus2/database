@@ -8,6 +8,11 @@ export const getUserSelector = createSelector(
     (user) => user,
 );
 
+export const getUserData = createSelector(
+    getUserSelector,
+    (user) => get(user, 'data'),
+);
+
 export const getUserEmail = createSelector(
     getUserSelector,
     (user) => get(user, 'data.email'),

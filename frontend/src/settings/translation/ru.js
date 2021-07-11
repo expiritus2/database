@@ -162,4 +162,12 @@ export default {
     PasswordUpperChar: 'Пароль должен содержать хотя бы 1 заглавную букву',
     PasswordLowerChar: 'Пароль должен содержать хотя бы 1 строчную букву',
     PasswordsMustMatch: 'Пароли должны совпадать',
+    Invite: 'Пригласить',
+    SuperAdmin: 'Супер Админ',
+    Admin: 'Админ',
+    Manager: 'Менеджер',
+    Role: 'Роль',
+    CurrentPassword: 'Текущий пароль',
+    NewPassword: 'Новый пароль',
+    SendInvite: 'Отправить приглашение',
 };

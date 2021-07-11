@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { openModalEffect } from 'store/effects/app';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -8,14 +8,14 @@ import { Button } from 'components/Form';
 import { useTranslate } from 'hooks';
 import { ADD } from 'settings/constants/mode';
 import { routes } from 'settings/navigation/routes';
-import { getUserDisplayName } from 'store/selectors/auth';
 import { Logger } from 'services';
-import { apiServer } from '../../settings/web-services/api';
+import { apiServer } from 'settings/web-services/api';
+
+import Profile from './Profile';
 
 import styles from './styles.module.scss';
 
 const Header = () => {
-    const userDisplayName = useSelector(getUserDisplayName);
     const location = useLocation();
     const dispatch = useDispatch();
     const { translate } = useTranslate();
@@ -56,7 +56,7 @@ const Header = () => {
                         </NavLink>
                     ))}
                 </nav>
-                <div>
+                <div className={styles.actions}>
                     <Button
                         onClick={onAddFakeData}
                         className={styles.navButton}
@@ -73,14 +73,11 @@ const Header = () => {
                         title={translate.Add}
                     />
                     <Button
-                        className={styles.navButton}
-                        title={userDisplayName}
-                    />
-                    <Button
                         onClick={onVocabulariesClick}
                         className={styles.navButton}
                         title={translate.Vocabularies}
                     />
+                    <Profile navButtonClassName={styles.navButton} />
                 </div>
             </div>
         </div>

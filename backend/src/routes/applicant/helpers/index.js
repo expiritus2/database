@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { omit } = require('lodash');
 const moment = require('moment');
 const Op = Sequelize.Op;
 const { includeModelsLight, includeModelsFull, attributesLight, attributesFull } = require('../../../settings/includeModels/applicant');
@@ -67,7 +68,8 @@ const getSearchOptions = (query) => {
 const getExecOptions = (query) => {
     const { page, countPerPage, ...search } = query || {};
 
-    const isSearch = !!Object.keys(search).length;
+    const actualSearch = omit(search, ['active', 'search']);
+    const isSearch = !!Object.keys(actualSearch).length;
 
     return {
         isSearch,
