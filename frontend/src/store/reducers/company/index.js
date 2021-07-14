@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
 import { getCompanyAction, resetCurrentCompanyAction } from 'store/actions/companies';
 import { updateCompanyAction } from 'store/actions/forms/company';
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 import { IDLE } from 'settings/constants/apiState';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -22,4 +23,5 @@ export default handleActions({
         meta: get(payload, 'meta', initialData.meta),
     }),
     [resetCurrentCompanyAction]: () => initialData,
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

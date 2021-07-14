@@ -3,6 +3,7 @@ import { openContactSearchDrawerAction, setContactSearchFieldsAction, resetConta
 import { cloneDeep, get } from 'lodash-es';
 import { setContactsSearchAction } from 'store/actions/contacts';
 import { emptyEmail, emptyPhone } from 'settings/constants/templates';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     open: false,
@@ -46,4 +47,5 @@ export default handleActions({
         ...state,
         formFields: cloneDeep(initialData.formFields),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

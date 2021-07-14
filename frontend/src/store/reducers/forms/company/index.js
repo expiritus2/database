@@ -10,6 +10,7 @@ import { cloneDeep, get } from 'lodash-es';
 import { emptyLink, emptyAddress } from 'settings/constants/templates';
 import { IDLE } from 'settings/constants/apiState';
 import { clearErrors } from 'store/helpers';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -57,4 +58,5 @@ export default handleActions({
         errors: cloneDeep(initialData.errors),
     }),
     [resetCompanyFormAction]: () => initialData,
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

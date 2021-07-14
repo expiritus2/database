@@ -17,6 +17,7 @@ import {
     emptySalary,
 } from 'settings/constants/templates';
 import { IDLE } from 'settings/constants/apiState';
+import { logoutAction } from 'store/actions/auth';
 
 export const experienceInitialData = {
     period: [],
@@ -86,4 +87,5 @@ export default handleActions({
         errors: cloneDeep(initialData.errors),
     }),
     [resetApplicantFormAction]: () => initialData,
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

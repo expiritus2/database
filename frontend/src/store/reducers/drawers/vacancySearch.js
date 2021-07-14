@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import { openVacancySearchDrawerAction, setVacancySearchFieldsAction, resetVacancySearchFieldsAction } from 'store/actions/drawers';
 import { cloneDeep, get } from 'lodash-es';
 import { setVacanciesSearchAction } from 'store/actions/vacancies';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     open: false,
@@ -51,4 +52,5 @@ export default handleActions({
         ...state,
         formFields: cloneDeep(initialData.formFields),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

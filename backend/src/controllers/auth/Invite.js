@@ -2,47 +2,24 @@ const path = require('path');
 const User = require('../../models/user');
 const TokenService = require('../../services/Token');
 const EmailService = require('../../services/Email');
-const ForbiddenError = require('../../errors/forbidden-error');
 const ejs = require('ejs');
 
-class EnrollAccountController {
+class Invite {
     constructor(body, user) {
-        this.email = body.username;
-        this.token = body.token;
-        this.displayName = body.displayName;
-        this.password = body.password;
+        this.email = body.email;
         this.user = user;
-    }
-
-    result() {
-        return new Promise(async (resolve) => {
-            if (!this.token && User.isSuperAdmin(this.email)) {
-                await this.sendMail();
-
-                resolve();
-            } else if (this.token && this.displayName && this.password) {
-                const { email } = TokenService.verify(this.token);
-                const existUser = await User.findOne({ where: { email }});
-
-                if (!existUser) {
-                    await User.create({ email, displayName: this.displayName, password: this.password });
-                }
-
-                resolve({ email });
-            } else {
-                throw new ForbiddenError();
-            }
-        });
     }
 
     sendMail() {
         return new Promise(async (resolve) => {
             const template = await this.#getTemplate();
 
+            const userName = this.user && this.user.displayName ? `${this.user.displayName} пригласил вас` : 'Вы были приглашены';
+
             const email = new EmailService({
                 from: 'Hr database',
                 to: this.email,
-                subject: 'Вы были приглашены в Hr database',
+                subject: `${userName} в Hr database`,
                 html: template,
             });
 
@@ -65,4 +42,4 @@ class EnrollAccountController {
     }
 }
 
-module.exports = EnrollAccountController
+module.exports = Invite

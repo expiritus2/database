@@ -170,4 +170,5 @@ export default {
     CurrentPassword: 'Текущий пароль',
     NewPassword: 'Новый пароль',
     SendInvite: 'Отправить приглашение',
+    Logout: 'Выйти',
 };

@@ -8,6 +8,7 @@ import {
 import { resetCompanySearchFieldsAction } from 'store/actions/drawers';
 import { updateCompanyAction } from 'store/actions/forms/company';
 import { cloneDeep, get } from 'lodash-es';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -60,4 +61,5 @@ export default handleActions({
         ...state,
         search: cloneDeep(initialData.search),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

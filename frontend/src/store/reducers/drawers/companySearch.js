@@ -3,6 +3,7 @@ import { openCompanySearchDrawerAction, setCompanySearchFieldsAction, resetCompa
 import { cloneDeep, get } from 'lodash-es';
 import { setCompaniesSearchAction } from 'store/actions/companies';
 import { emptyLink } from 'settings/constants/templates';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     open: false,
@@ -43,4 +44,5 @@ export default handleActions({
         ...state,
         formFields: cloneDeep(initialData.formFields),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

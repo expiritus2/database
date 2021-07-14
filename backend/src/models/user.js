@@ -15,6 +15,10 @@ class User extends Model {
         const superAdminEmails = JSON.parse(process.env.SUPER_ADMIN_EMAILS);
         return superAdminEmails.includes(email);
     }
+
+    static bcryptPassword(password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    }
 }
 
 User.init({
@@ -42,7 +46,7 @@ User.init({
 }, { sequelize, modelName: 'user' });
 
 User.beforeCreate((user) => {
-    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
+    user.password = User.bcryptPassword(user.password);
     user.role = User.isSuperAdmin(user.email) ? roles.SUPER_ADMIN : roles.ADMIN;
 });
 

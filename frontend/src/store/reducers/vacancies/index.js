@@ -4,6 +4,7 @@ import { getVacanciesAction, setVacanciesSearchAction, deleteVacancyAction } fro
 import { updateVacancyAction } from 'store/actions/forms/vacancy';
 import { cloneDeep, get } from 'lodash-es';
 import { resetVacancySearchFieldsAction } from 'store/actions/drawers';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -56,4 +57,5 @@ export default handleActions({
         ...state,
         search: cloneDeep(initialData.search),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

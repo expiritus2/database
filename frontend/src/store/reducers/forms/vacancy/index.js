@@ -8,6 +8,7 @@ import {
 } from 'store/actions/forms/vacancy';
 import { cloneDeep, get } from 'lodash-es';
 import { IDLE } from 'settings/constants/apiState';
+import { logoutAction } from 'store/actions/auth';
 import { clearErrors } from '../../../helpers';
 
 const initialData = {
@@ -65,4 +66,5 @@ export default handleActions({
         errors: cloneDeep(initialData.errors),
     }),
     [resetVacancyFormAction]: () => initialData,
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

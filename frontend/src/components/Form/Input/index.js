@@ -15,7 +15,7 @@ const Input = (props) => {
     const { placeholder, disabled, error, variant, altLabel, icon, autofocus, classAltLabel } = props;
     const { isNumberFormat, prefix, thousandSeparator, numberFormatOptions, inputClassName } = props;
     const { inputHolderClassName, onKeyPress, onFocus, onBlur, maxNumber, minNumber } = props;
-    const { interval } = props;
+    const { interval, autoComplete } = props;
     const [inputValue, setInputValue] = useState(value);
     const [typeValue, setTypeValue] = useState(type);
 
@@ -125,7 +125,7 @@ const Input = (props) => {
                         onKeyPress={onKeyPress}
                         onFocus={onFocus}
                         onBlur={onBlur}
-                        autoComplete="off"
+                        autoComplete={autoComplete}
                     />
                 )}
                 {type === 'password' && (
@@ -180,6 +180,7 @@ Input.propTypes = {
     maxNumber: PropTypes.number,
     minNumber: PropTypes.number,
     interval: PropTypes.number,
+    autoComplete: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -212,6 +213,7 @@ Input.defaultProps = {
     maxNumber: undefined,
     minNumber: undefined,
     interval: 1,
+    autoComplete: undefined,
 };
 
 export default Input;

@@ -1,6 +1,6 @@
 import Api from 'store/effects/core/api';
-import { requestGetCurrentUserAction, loginAction, enrollAccountAction } from 'store/actions/auth';
-import { getCurrentUser, login, enrollAccount } from 'api/auth';
+import { requestGetCurrentUserAction, loginAction, enrollAccountAction, inviteAction, logoutAction } from 'store/actions/auth';
+import { getCurrentUser, login, enrollAccount, invite, logout } from 'api/auth';
 
 export const loginEffect = Api.execResult({ action: loginAction, method: login });
 export const enrollAccountEffect = (cfg, options, cb) => {
@@ -16,3 +16,5 @@ export const enrollAccountEffect = (cfg, options, cb) => {
     return sendRequest(config, options, cb);
 };
 export const getCurrentUserEffect = Api.execResult({ action: requestGetCurrentUserAction, method: getCurrentUser });
+export const inviteEffect = Api.execResult({ action: inviteAction, method: invite });
+export const logoutEffect = Api.execResult({ action: logoutAction, method: logout });

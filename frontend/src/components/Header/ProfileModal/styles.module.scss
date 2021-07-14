@@ -2,7 +2,6 @@
 @import "styles/variables";
 
 .profileModal {
-
     .profileForm {
         padding: setUnit(20) setUnit(20) setUnit(32) setUnit(20);
 
@@ -13,6 +12,11 @@
                 margin-bottom: 0;
             }
         }
+    }
+
+    .saveBtn {
+        width: setUnit(110);
+        height: setUnit(40);
     }
 
     .modalActions {

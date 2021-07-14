@@ -1,5 +1,6 @@
 @import "styles/functions";
 @import "styles/variables";
+@import "styles/mixins";
 
 .inviteModal {
 
@@ -9,8 +10,23 @@
         height: 100%;
         padding: 0 setUnit(20);
 
+        .inputWrapper {
+            position: relative;
+            width: 100%;
+
+            .error {
+                @include inputError;
+
+                position: absolute;
+                bottom: setUnit(-10);
+            }
+        }
+
         .field {
-            margin-bottom: setUnit(20);
+            &.email {
+                position: relative;
+                top: setUnit(-10)
+            }
 
             &:last-child {
                 margin-bottom: 0;
@@ -24,11 +40,16 @@
     }
 
     .modalCardContent {
-        max-height: setUnit(250) !important;
+        max-height: setUnit(266) !important;
     }
 
     .cardContent {
-        height: calc(100% - #{setUnit(127)});
+        height: calc(100% - #{setUnit(142)});
         overflow: auto;
+    }
+
+    .inviteBtn {
+        min-width: setUnit(212);
+        height: setUnit(40);
     }
 }

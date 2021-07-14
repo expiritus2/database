@@ -4,6 +4,7 @@ import { getContactsAction, setContactsSearchAction, deleteContactAction } from 
 import { updateContactAction } from 'store/actions/forms/contact';
 import { cloneDeep, get } from 'lodash-es';
 import { resetContactSearchFieldsAction } from 'store/actions/drawers';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -56,4 +57,5 @@ export default handleActions({
         ...state,
         search: cloneDeep(initialData.search),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

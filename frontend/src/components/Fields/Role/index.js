@@ -9,7 +9,7 @@ import { rolesOptions } from 'settings/constants/user';
 import styles from './styles.module.scss';
 
 const Role = (props) => {
-    const { className, value, onChange } = props;
+    const { className, value, onChange, disabled } = props;
     const { translate } = useTranslate();
 
     return (
@@ -19,6 +19,7 @@ const Role = (props) => {
                 value={value}
                 label={translate.Role}
                 onChange={onChange}
+                disabled={disabled}
             />
         </div>
     );
@@ -28,12 +29,14 @@ Role.propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
     onChange: PropTypes.func,
+    disabled: PropTypes.bool,
 };
 
 Role.defaultProps = {
     className: '',
     value: null,
     onChange: () => {},
+    disabled: false,
 };
 
 export default Role;

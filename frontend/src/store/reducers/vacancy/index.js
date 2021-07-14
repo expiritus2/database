@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
 import { resetCurrentVacancyAction, getVacancyAction } from 'store/actions/vacancies';
 import { updateVacancyAction } from 'store/actions/forms/vacancy';
-import { get } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 import { IDLE } from 'settings/constants/apiState';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -22,4 +23,5 @@ export default handleActions({
         meta: get(payload, 'meta', initialData.meta),
     }),
     [resetCurrentVacancyAction]: () => initialData,
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

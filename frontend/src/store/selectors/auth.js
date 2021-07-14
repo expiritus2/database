@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { get } from 'lodash-es';
+import { roles } from '../../settings/constants/user';
 
 const localState = ({ user }) => user;
 
@@ -10,7 +11,17 @@ export const getUserSelector = createSelector(
 
 export const getUserData = createSelector(
     getUserSelector,
-    (user) => get(user, 'data'),
+    (user) => get(user, 'data', {}),
+);
+
+export const getUserInfoSelector = createSelector(
+    getUserData,
+    (user) => ({
+        ...user,
+        isSuperAdmin: user?.role === roles.SUPER_ADMIN,
+        isAdmin: user?.role === roles.ADMIN,
+        isManager: user?.role === roles.MANAGER,
+    }),
 );
 
 export const getUserEmail = createSelector(

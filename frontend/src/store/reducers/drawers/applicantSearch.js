@@ -9,6 +9,7 @@ import {
     emptyPhone,
 } from 'settings/constants/templates';
 import { setApplicantsSearchAction } from 'store/actions/applicants';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     open: false,
@@ -59,4 +60,5 @@ export default handleActions({
         ...state,
         formFields: cloneDeep(initialData.formFields),
     }),
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);

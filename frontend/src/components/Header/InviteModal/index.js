@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 
+import { inviteEffect } from 'store/effects/auth';
 import { useTranslate } from 'hooks';
 
 import { Modal } from 'components';
 
 import { useFormik } from 'formik';
-import { Logger } from 'services';
 import styles from './styles.module.scss';
 import { Button, Input } from '../../Form';
 import { ValidationSchema } from './validation';
 
 const InviteModal = (props) => {
     const { className, isOpen, setIsOpen } = props;
+    const dispatch = useDispatch();
+    const [isPending, setIsPending] = useState(false);
     const { translate } = useTranslate();
 
     const formik = useFormik({
         initialValues: { email: '' },
         validationSchema: ValidationSchema(translate),
         onSubmit(values) {
-            Logger.log(values);
+            setIsPending(true);
+            dispatch(inviteEffect(values, {}, (err) => {
+                if (!err) {
+                    setIsOpen(false);
+                    formik.resetForm();
+                }
+                setIsPending(false);
+            }));
         },
     });
 
@@ -37,18 +47,29 @@ const InviteModal = (props) => {
             modalContentClassName={styles.modalCardContent}
             cardContentClassName={styles.cardContent}
             title={translate.Invite}
-            actionsChildren={<Button onClick={formik.submitForm} title={translate.SendInvite} />}
+            actionsChildren={(
+                <Button
+                    isPending={isPending}
+                    onClick={formik.submitForm}
+                    title={translate.SendInvite}
+                    className={styles.inviteBtn}
+                />
+            )}
             cardActionsClassName={styles.modalActions}
         >
             <form className={styles.form} onSubmit={formik.handleSubmit}>
-                <Input
-                    name="email"
-                    className={styles.field}
-                    label={translate.Email}
-                    value={formik?.values?.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && formik.errors.email}
-                />
+                <div className={styles.inputWrapper}>
+                    <Input
+                        name="email"
+                        className={classNames(styles.field, styles.email)}
+                        label={translate.Email}
+                        value={formik?.values?.email}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.touched.email && formik.errors.email && (
+                        <div className={styles.error}>{formik.errors.email}</div>
+                    )}
+                </div>
             </form>
         </Modal>
     );

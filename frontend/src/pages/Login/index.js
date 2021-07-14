@@ -23,7 +23,7 @@ const Login = () => {
         validationSchema: ValidationSchema(translate),
         onSubmit(values) {
             setIsPending(true);
-            dispatch(loginEffect(values, {}, (err) => {
+            dispatch(loginEffect(values, { silent: true }, (err) => {
                 if (!err) {
                     history.push(routes.index);
                 } else {

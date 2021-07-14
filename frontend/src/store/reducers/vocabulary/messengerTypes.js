@@ -8,6 +8,7 @@ import {
     updateVocabularyMessengerTypeAction,
     saveVocabularyMessengerTypesAction,
 } from 'store/actions/vocabulary';
+import { logoutAction } from 'store/actions/auth';
 
 const initialData = {
     state: IDLE,
@@ -51,4 +52,5 @@ export default handleActions({
             data: copyData,
         });
     },
+    [logoutAction]: () => cloneDeep(initialData),
 }, initialData);
