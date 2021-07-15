@@ -2,7 +2,7 @@ const CustomError = require('../errors/custom-error');
 
 const errorHandler = (err, req, res, next) => {
     if (err instanceof CustomError) {
-        return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+        return res.status(err.statusCode || 500).send({ errors: err.serializeErrors() });
     }
 
     console.error(err);

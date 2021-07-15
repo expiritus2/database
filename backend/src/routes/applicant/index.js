@@ -29,28 +29,28 @@ router.get('/api/applicants', requireAuth, async (req, res) => {
 
     if (isSearch) {
         const { pagedItems } = getPaginatedItems(allApplicants.rows, page, countPerPage);
-        return res.send({ result: { count: allApplicants.count, rows: pagedItems } });
+        return res.status(200).send({ result: { count: allApplicants.count, rows: pagedItems } });
     }
 
-    res.send({ result: allApplicants });
+    res.status(200).send({ result: allApplicants });
 });
 
 router.get('/api/applicants/:id', requireAuth, async (req, res) => {
     const populatedApplicant = await Applicant.findByPk(req.params.id, { include: includeModelsFull, attributes: attributesFull});
 
-    res.send({ result: populatedApplicant });
+    res.status(200).send({ result: populatedApplicant });
 })
 
 router.post('/api/applicants/create', middlewares, async (req, res) => {
     const newApplicant = await new ApplicantController(req.body).create();
 
-    res.send({ result: newApplicant });
+    res.status(200).send({ result: newApplicant });
 });
 
 router.put('/api/applicants/:id', middlewares, async (req, res) => {
     const updatedApplicant = await new ApplicantController(req.body).update(req.params.id);
 
-    res.send({ result: updatedApplicant });
+    res.status(200).send({ result: updatedApplicant });
 });
 
 router.delete('/api/applicants/:id', async (req, res) => {
@@ -58,7 +58,7 @@ router.delete('/api/applicants/:id', async (req, res) => {
     const { options } = getExecOptions(req.query);
     const allApplicants = await Applicant.findAndCountAll(options);
 
-    res.send({ result: allApplicants });
+    res.status(200).send({ result: allApplicants });
 });
 
 module.exports = {

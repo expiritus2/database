@@ -1,5 +1,4 @@
 const { authRouter } = require('./auth');
-const { filesRouter } = require('./files');
 const { applicantRouter } = require('./applicant');
 const { contactRouter } = require('./contact');
 const { vacancyRouter } = require('./vacancy');
@@ -34,7 +33,6 @@ const { fakeContactRouter } = require('./fake/contact');
 
 module.exports = (app) => {
     app.use(authRouter);
-    app.use(filesRouter);
     app.use(applicantRouter);
     app.use(contactRouter);
     app.use(vacancyRouter);
